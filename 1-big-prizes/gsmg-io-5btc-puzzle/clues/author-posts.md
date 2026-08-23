@@ -40,9 +40,13 @@ this folder; consult it directly for the community's own write-ups.
 
 The final page (reached after "the Architect Choice" stage) publishes its content
 directly in the page body: a sequence of 1075 single-character tokens, an
-image, and a base64-encoded block. This folder quotes only the two short strings
+image, and a base64-encoded block. This folder quotes only the short strings
 that are the deterministic decoding of that published content, not an
-interpretation: `matrixsumlist` and `ourfirsthintisyourlastcommand` (see
-"What is understood / Mechanism" in the README for how each is decoded). The
+interpretation: `matrixsumlist` and `enter` from the two ab-runs,
+`lastwordsbeforearchichoice` and `thispassword` from the two z-separated digit
+segments, `shabefourfirsthintisyourlastcommand` and `shabefanstoo` read directly,
+and `anstoo` recovered as the sha256 preimage of the page slug that ends the
+stream's phrase (see "What is understood / Mechanism" in the README and
+`analysis/tested.md` sections 14 and 15 for how each is decoded). The
 128-character base64 blob is reproduced in `tools/oracle.py` because it is itself
 the object the final gate is built on.

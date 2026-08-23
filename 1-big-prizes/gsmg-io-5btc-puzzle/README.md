@@ -180,6 +180,17 @@ Reproduced 2026-08-16.
    exactly, with no residual bits.
 8. The final page's HTML markup carries no additional hidden channel beyond the
    1075 tokens, the image, and the two text blocks (checked directly).
+9. The Bifid output's even-position stream is an authored four-letter channel: 285
+   symbols drawn only from B, C, D and E (counts 54, 90, 72, 69), with no public or
+   private account of its encoding. The odd-position stream is the 256-symbol object;
+   the 29 letters dropped from it are all I and O, in the order
+   `OOIIOOOIIOOIOIIOIOOOOIOIIOIOI` (reproduced on the archived capture,
+   2026-08-23; see `analysis/tested.md` section 14).
+10. Ten 32-hex-character gsmg.io slugs exist beyond SalPhaseIon. Three have sha256
+    preimages recovered from the puzzle's own vocabulary:
+    `ourfirsthintisyourlastcommand`, `hopeisthequintessentialhumandelusion`, and
+    `anstoo` (the token stream's final phrase). Seven are open, listed in
+    `analysis/tested.md` section 15.
 
 ## What has been tested
 
@@ -196,6 +207,7 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | Literal password strings harvested from 1,017 archived scripts, replayed under a fixed appearance filter | 116,043 candidates | AES decrypt then address comparison | 0 match | yes | 2026-07-28 |
 | Small-blob pipeline swept for the first time: puzzle vocabulary, stage texts and their word windows, "last words" readings, live-page prose, the system word list, and the confirmed stage passwords | 1,358,577 candidates | corrected oracle, AES decrypt then address comparison | 0 match | yes | 2026-08-19 |
 | Key derivation: the shipped oracle used EVP_BytesToKey/MD5, which fails on both puzzle blobs whose passwords are known | not a sweep | decrypt phase-2 and phase-3 blobs under both digests | MD5 refuted, SHA-256 confirmed | yes | 2026-08-19 |
+| New instruction vocabulary through the corrected oracle: the `anstoo` family, the recovered hash-slug phrases, the four instruction tokens, and one author-hint assembly | 16 candidates | corrected oracle, AES decrypt then address comparison | 16 NO MATCH | yes | 2026-08-23 |
 
 Cumulative: approximately 335.7 million candidates tested as direct reductions of
 the 256-symbol object or the large blob, all negative; a further 116,043-candidate
@@ -213,28 +225,39 @@ explicitly partial, are in `analysis/tested.md`.
    (concatenations, permutations, chained transforms) that this first replay does
    not reach. Confirmed by re-running a script's own generation logic and finding a
    match; killed, stage by stage, by exhausting that logic with none.
-2. **Determine whether the 256-symbol object is the right target at all** (an
+2. **Decode the even-position stream of the Bifid output** (hours of reasoning).
+   The reconstruction on the archived capture exposes 285 symbols drawn from only
+   four letters (B, C, D, E) carrying every even slot of the output: an authored
+   channel with no public account, either a second message, a key or mask for the
+   256-symbol object, or the author's unfound "second way". Confirmed by any
+   encoding that yields a legible string or an address match; killed by exhausting
+   four-symbol encodings at length 285 (which factors 3 x 5 x 19).
+3. **Determine whether the 256-symbol object is the right target at all** (an
    afternoon of reasoning, not a sweep). Every negative in row 1 to row 5 of the
    tested table assumes the key comes directly from this object; the AES-blob route
    this folder's oracle implements is a different, untested-at-scale hypothesis.
    Confirmed by a reduction, other than the ones tried, that matches an address;
    redirected by establishing the AES-blob or "Dualite" route is the real one.
-3. **Identify the single tool reportedly used to build every phase** (hours). An
+4. **Identify the single tool reportedly used to build every phase** (hours). An
    authenticated author statement says one tool built every phase; comparing
    confirmed cipher conventions against one specific public tool's source code
    matches on non-obvious details (no period parameter on its Bifid cipher, a short
    menu of available ciphers). Confirmed by a cipher from that tool's menu
    producing a match on the "Dualite" password or the 256-object reduction; killed
    by exhausting that tool's short menu with no match.
-4. **Follow "esrever", the earliest published hint** (minutes to hours). The
+5. **Follow "esrever", the earliest published hint** (minutes to hours). The
    author's first hint, "reverse" spelled backwards, has been applied to the object
    it was originally paired with but not to the current final-gate objects.
    Confirmed by a reversal (string, bit, or reading-order) of one current object
    matching an address; killed by exhausting the small set of reasonable reversals.
-5. **Read the 29 dropped letters as their own message** (minutes). Reducing the
-   285-letter stream to the 256-symbol object drops exactly 29 letters, never read
-   as an object in their own right. Confirmed by a match or a legible fragment;
-   killed by exhausting the small set of reasonable reading orders.
+6. **Use the 29 dropped bits somewhere** (minutes per reading). The drop sequence
+   `OOIIOOOIIOOIOIIOIOOOOIOIIOIOI` is all I and O, so binary or nothing; standalone
+   readings are exhausted with no legible fragment, so the open question is what
+   they select or gate, plausibly in combination with the even stream of lead 2.
+7. **Preimage the seven remaining hash-slug routes** (minutes per batch). Three of
+   ten fell to sha256 over the puzzle's own phrases in one evening; each newly
+   transcribed stage wording is another candidate batch. Confirmed by a preimage
+   whose page carries content.
 
 Full notes: [analysis/leads.md](analysis/leads.md).
 
@@ -245,6 +268,7 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | `clues/author-posts.md` | public sources for the puzzle's background and stage order, and the 2 short strings decoded verbatim from the final page's own published content |
 | `data/stage-chain.json` | the published stage chain and the two final gates, for the structure figure |
 | `data/pipeline-stages.json` | the 6-stage label list for the derivation pipeline figure |
+| `data/salphaseion-streams.json` | the reconstructed Bifid output's three channels: the 256-symbol object, the 29 dropped letters, and the unexplained four-letter even stream, with parameters and checksums |
 | `analysis/tested.md` | the complete negatives ledger |
 | `analysis/leads.md` | full notes behind the 5 ranked leads |
 | `images/01-structure-stages.svg` | the published stage chain forking into the two final gates |

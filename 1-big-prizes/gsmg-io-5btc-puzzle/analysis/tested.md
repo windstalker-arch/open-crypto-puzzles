@@ -279,6 +279,88 @@ matches the one that issue itself publishes. The table reading is recorded here 
 was independently verified, not because it was posted.
 
 
+## 14. The final page's letter streams: reproduction, two new objects, first readings
+
+Working from the original-era capture of the SalPhaseIon page (2023-06-01 snapshot,
+1075 single-character tokens), the body splits into: a 91-letter run over a to i
+(starting `dbbi`), the 104-token ab-run decoding to `matrixsumlist`, a 570-letter run
+over a to i (starting `faed`), the two z-separated instruction segments, and the small
+blob halves with their 40-token `enter` run. The two long runs are letters, not digits:
+read as uppercase they are exactly the alphabet of the Bifid square's first two rows
+(D, B, I, F, H, C, E, G, A, K), which is why they were previously mislabelled digit
+streams.
+
+Reproduction witness: feeding the 570-letter run to a plain Bifid decryption with the
+keyed square `DBIFHCEG` (J dropped, row-major) and period equal to the full length
+reproduces the documented output byte for byte, starting `BTCSEED`, on 2026-08-23,
+from this folder's own reconstruction of the archived page. The odd-position stream
+again reduces to exactly 256 symbols over 23 letters after removing I and O.
+
+Two objects fall out of the same reconstruction that no public source accounts for:
+
+1. The even-position stream of the Bifid output is 285 symbols drawn from only four
+   letters, B, C, D and E, with counts B=54, C=90, D=72, E=69. A random 25-letter
+   stream restricted to four symbols for 285 positions is not plausible; this is an
+   authored channel whose encoding is unknown.
+2. The 29 dropped letters, in extraction order, are
+   `OOIIOOOIIOOIOIIOIOOOOIOIIOIOI`: every dropped letter is I or O and the sequence
+   reads naturally as binary.
+
+The 91-letter run resists Bifid decryption at periods 91, 13, 7 and 1 under the same
+square; it remains undecoded (uncertified probe, no address comparison involved).
+
+First readings attempted on the even stream, all uncertified explorations rather than
+sweeps: Morse role assignments (0 of 24 legible), Baconian five-bit readings under all
+two-class partitions, both polarities and both directions (nothing English-like),
+base-4 to bytes under all 24 digit orders (best printable ratio 0.46, none readable),
+decimal-to-hex-to-ASCII conversions under four value maps, coordinate recombination
+with the odd stream, and Vigenere shifts mod 25. None produced a legible string; the
+object stays open.
+
+## 15. Hash-slug routes: three sha256 preimages recovered, seven open
+
+Enumeration of archived gsmg.io paths shows ten 32-hex-character slugs beyond the
+SalPhaseIon route. Three fell to direct hashing of lowercase concatenated phrases from
+the puzzle's own vocabulary:
+
+    e24bd2c0fd454632f9fdd26cbdc210597f79e9fca9719c126a6d30cb41ef0238 = ourfirsthintisyourlastcommand
+    c1780cbbaa105784949cd6a2924e1f51a947b4258a0655defd0cd2e6f6544046 = hopeisthequintessentialhumandelusion
+    21ef053324184a4db5dc19b760e2d6ef61b07376a6f8a1514bb529d99de1fe0f = anstoo
+
+`anstoo` is a new string: it ends the token stream (`shabefanstoo`), and the phrase
+pattern of the other preimages confirms the segmentation. The page behind it has no
+archived captures at all.
+
+Still open, listed so nobody re-tests them by accident:
+
+    0b0f37ecaf7107f86ee2f477992f25bc7abe8f799d0dd713658c17d37496ee32
+    10d6a2c5320bfbd47d35f18dd67f177ae5a5f4b5d18a8a5127361c2941a92908
+    673e3b1a60ebe6fc4a8be88acde2600e12afd9efb2543e26b1b30039f8356b0d
+    a2aefdbb953b70aa20d640effda4accee1e1f48acf1e4fcebdc2fc011418b0b1
+    aca20ae7c6b5f425bdd9bd809583b28fd086b3380990689e37b6e94f3fb5ed9a
+    c2eef34b479eb6c89c7aa89c49229ff5f67563da4e56d5782574489c4b776625
+    f9719d6d531e6c3b5129644cd05da57bc6fdd075c9a61267c41d4b9627936096
+
+Related slug-route objects: two pages whose URLs are hex-encoded OpenSSL blobs
+(`Salted__` header, salt `74c974e3f92e64b5`, one 40 bytes and one 112 bytes total).
+An external sweep (puzzlehunt/gsmgio-5btc-puzzle#106) reports zero hits across four
+key derivations, three password encodings and four cipher modes against roughly 56k
+candidates including these; that sweep has not been repeated with this folder's
+candidate families through the corrected oracle.
+
+## 16. New instruction vocabulary through the certified oracle
+
+The strings recovered in sections 14 and 15, as password candidates for the small
+blob through `tools/oracle.py` (selftest passing): `anstoo` in three cases plus the
+spaced form, `ourfirsthintisyourlastcommand` in four forms, 
+`hopeisthequintessentialhumandelusion` in two cases, the four instruction tokens
+individually, and the author-hint assembly
+`yellowblueprimesmatrixsumlistlastwordsbeforearchichoiceyinyang`.
+
+Result: 16 submissions, 16 NO MATCH. Witness: yes, the selftest passes and the same
+run re-confirms that a known stage answer decrypts its own blob. Date: 2026-08-23.
+
+
 ## Cumulative
 
 Across the 7 completed hypothesis families above (rows 1 to 7), 335,724,615

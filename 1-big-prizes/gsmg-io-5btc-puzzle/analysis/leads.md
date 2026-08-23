@@ -84,15 +84,19 @@ Cost: minutes to hours; this is a small, well-defined space, not a sweep.
 
 Reducing the 285-letter pre-reduction stream to the 256-symbol object drops exactly
 29 letters (the I's and O's removed to reach the Base58-safe alphabet). Every
-hypothesis so far treats those 29 letters as discard. They have not been read as a
-message in their own right, in their own extraction order.
+hypothesis so far treats those 29 letters as discard.
 
-What would confirm it: reading the 29 dropped letters (in order of removal) as
-their own object and finding a match, or a legible fragment that leads to one.
-What would kill it: reading them under the small set of reasonable orderings
-(extraction order, position order) and finding neither a match nor a legible
-fragment.
-Cost: minutes; the space is small (29 letters, a handful of reading orders).
+Status as of 2026-08-23: the sequence is now extracted, in extraction order:
+`OOIIOOOIIOOIOIIOIOOOOIOIIOIOI`. Every element is I or O, so the object is binary or
+nothing. Read as a 29-bit integer it gives 103993525 (I=1) or 432877386 (O=1); neither
+is a recognizable constant, and Morse and Baconian readings do not resolve. The simple
+readings are exhausted without a legible fragment; what remains open is whether the
+bits select positions, gate another object (the even-position stream of lead 8 is a
+natural candidate), or encode a short instruction under a framing not yet guessed.
+
+What would confirm it: any reading of those 29 bits that yields a legible fragment or,
+combined with another object, a match.
+Cost: minutes per reading; this is a reasoning lead now, not an extraction one.
 
 ## Where the "Dualite" blob and the second address fit
 
@@ -139,3 +143,40 @@ first pass over the texts currently held and are negative; they do not exhaust t
 instruction, because the phase-1 page is an image whose own wording is not transcribed
 anywhere in this folder.
 Cost: hours, and it needs sources rather than compute.
+
+## 8. Decode the even-position stream of the Bifid output
+
+The Bifid reconstruction on the original-era SalPhaseIon capture (see
+`analysis/tested.md` section 14) exposes an object no public source accounts for: the
+even-position stream of the 570-letter output, 285 symbols drawn from only four
+letters (B=54, C=90, D=72, E=69). A quarter of the alphabet carrying every
+even-position slot for 285 slots is an authored channel, not chance. The odd-position
+stream is already accounted for (it is the 256-symbol object), so this channel is
+either a second message, a key or mask for the first one, or the "second way" the
+author said exists and was never found.
+
+First readings (Morse roles, Baconian partitions, base-4 to bytes under all digit
+orders, decimal-to-hex conversions, coordinate recombination with the odd stream,
+Vigenere shifts) all failed to produce anything legible; see section 14 for the list.
+
+What would confirm it: any encoding that turns the 285 symbols into a legible string,
+a key that matches an address, or a mask that reduces the 256-symbol object to a match.
+What would kill it: exhausting the reasonable encodings of a four-symbol alphabet at
+length 285 with nothing; note the length factors as 3 x 5 x 19, and 57 five-bit groups
+and 95 three-bit groups both divide it exactly.
+Cost: hours of directed reasoning, not a sweep.
+
+## 9. Preimage the seven remaining hash-slug routes
+
+Ten 32-hex gsmg.io slugs exist beyond SalPhaseIon; three fell in one evening to
+sha256 of lowercase concatenated puzzle phrases (`ourfirsthintisyourlastcommand`,
+`hopeisthequintessentialhumandelusion`, `anstoo`; see `analysis/tested.md` section 15).
+Seven remain open, listed there. The pattern is confirmed: lowercase, spaces removed,
+phrases from the puzzle's own text. Each new transcription of stage wording (the
+phase-1 image wording above all, which is not held anywhere in this folder) is also a
+batch of preimage candidates.
+
+What would confirm it: a preimage whose page carries content (the `anstoo` page has
+no archived captures, so its value could not be checked).
+What would kill it: exhausting the transcribed vocabulary against all seven.
+Cost: minutes per batch through sha256; bounded by sources, not compute.
