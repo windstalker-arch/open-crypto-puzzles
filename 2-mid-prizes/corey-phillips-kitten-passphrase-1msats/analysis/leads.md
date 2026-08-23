@@ -33,7 +33,10 @@ the full notes behind each entry.
 - **What would confirm it**: a derived address under BIP44 or BIP49 for any of the 108
   words matching the target.
 - **What would kill it**: 108 candidates times 2 paths, 0 match (expected).
-- **Status**: open, not yet run.
+- **Status**: executed 2026-08-23, closed. Ran on a rebuilt approximation of the corpus
+  (original file not committed to the repo): 153 candidates x 6 paths (m/44' and m/49',
+  change 0/1, index 0/1) = 918 derivations, 0 matches. Witnessed: the public BIP84 test
+  vector was re-found through the identical PATH-walk code. Row added to `tested.md`.
 
 ## 3. Three-word thematic combinator
 

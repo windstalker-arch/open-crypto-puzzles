@@ -138,10 +138,9 @@ exhaustive one.
    explicitly invites
    solvers in his own write-up. Confirmed by any reply that narrows the passphrase;
    killed by no reply, which leaves only the bounded fallbacks below.
-2. **Safety-net derivation on BIP44 and BIP49** (minutes). The puzzle specifies BIP84, but
-   replaying the existing 108-word corpus on BIP44 (`m/44'`) and BIP49 (`m/49'`) at the
-   change level is nearly free and closes off an alternative-derivation explanation.
-   Confirmed by a match on either path; killed by the expected 0 match.
+2. **Safety-net derivation on BIP44 and BIP49** (minutes), executed and closed 2026-08-23:
+   153 rebuilt-corpus candidates x 6 paths = 918 derivations, 0 matches, witnessed against
+   the public BIP84 test vector.
 3. **Three-word thematic combinator** (hours). Only two-word combinations from the
    puzzle's vocabulary have been tested; a three-word extension over the same curated
    list is a bounded, not-yet-run search. Confirmed by a match; killed by a full sweep

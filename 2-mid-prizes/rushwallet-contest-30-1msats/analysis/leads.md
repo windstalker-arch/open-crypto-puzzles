@@ -20,6 +20,11 @@ short, quotable, thematically loaded phrases (see the John Donne and whitepaper-
 material already tested), a quote corpus of this kind is a plausible next family at a low
 cost, on the order of minutes once prepared.
 
+- **Status**: executed 2026-08-23, closed. The original Google Drive link is dead; the run
+  used the Hugging Face mirror `jstet/quotes-500k` (sha256 verified). 493,789 unique quotes,
+  verbatim, 0 matches, witnessed (3/3 sibling passphrases planted and re-found). Row added
+  to `tested.md`.
+
 ## 3. The uncovered tail of the lyrics corpus
 
 The lyrics sweep in the tested ledger covered the most-viewed 301,000-song, 12-million-line

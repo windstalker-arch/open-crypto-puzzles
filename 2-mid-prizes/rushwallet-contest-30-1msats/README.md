@@ -96,20 +96,21 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | Canonical-source exact windows (whitepaper, press release, Donne) | 1,959,326 | 0 match | 2026 |
 | Song lyrics, top 301,000 songs | 52,299,649 | 0 match | 2026 |
 | OCR and community guesses | about 509,399 | 0 match | 2026 |
+| Quotes-500K corpus, verbatim (HF mirror, sha256-verified) | 493,789 unique | 0 match | 2026 |
+| Genesis-block byte-string micro-family | 21 | 0 match | 2026 |
 
-About 95 million candidates in total, 0 matches. I did not plant a known-good passphrase
-inside any of these corpus streams before running them, so I report these as candidates
-consumed, not as certified-witnessed exhaustive sweeps.
+About 95.5 million candidates in total, 0 matches. The last two rows are witnessed runs
+(known-good passphrases planted into the stream and re-found); earlier rows are candidates
+consumed without planted witnesses, as noted on the full ledger.
 
 ## Open leads, ranked
 
 1. **A higher-fidelity copy of the original video** (needs new information). The whiteboard
    and whitepaper page held on camera are only legible above 720p, and no source above 720p
    is currently reachable. Full details in [analysis/leads.md](analysis/leads.md).
-2. **The Quotes-500K corpus** (minutes, once prepared). A public quotation corpus not yet
-   run against the oracle.
-3. **The remaining tail of the lyrics corpus** (larger, lower signal). About 4.7 million
-   further songs beyond the slice already tested.
+2. **The remaining tail of the lyrics corpus** (larger, lower signal). About 4.7 million
+   further songs beyond the slice already tested. The Quotes-500K lead was executed and
+   closed on 2026-08-23: 493,789 unique quotes verbatim, 0 matches, witnessed.
 
 ## Files in this folder
 

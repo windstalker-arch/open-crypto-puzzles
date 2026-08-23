@@ -21,9 +21,12 @@ not as a certified-exhaustive sweep of each corpus.
 | Canonical-source exact windows (Bitcoin whitepaper, KryptoKit press release, John Donne's "Meditation XVII", the genesis-block text, name masks, repetition masks), case and punctuation preserved | 1,959,326 candidates | 0 match | 2026 (round 2) |
 | Song lyrics, most-viewed 301,000-song slice of a genius-song-lyrics corpus | 12,000,079 lines to 52,299,649 candidates | 0 match | 2026 (round 3) |
 | OCR text from video frames (original, RuTube, HQ and 720p sources) plus 20 community guesses from the BitcoinTalk thread | about 1,588 OCR lines plus 20 guesses, about 501,600 to 509,399 candidates with variants | 0 match | 2026 (round 3) |
+| Quotes-500K corpus (Goel/Madhok/Garg, ECIR 2018; original Drive link dead, run off the Hugging Face mirror jstet/quotes-500k, sha256 `8fa4c686...b69941` verified before use), quote field taken verbatim | 499,711 streamed (499,708 rows), 493,789 unique after dropping 5,919 in-corpus duplicates | 0 match | yes: the 3 sibling passphrases were planted at stream head/middle/tail and all 3 re-found by the same code path | ~362/s average CPU over 23 min (853/s cold, throttled) | 2026-08-23 |
+| Genesis-block byte-string micro-family from SVN r133 main.cpp: coinbase scriptSig hex upper/lower, the backwards-text scriptSig string and its reverse, genesis pubkey literal, nBits/nonce/timestamp/block-hash literals, composite "486604799 4 <hex>" forms | 21 | 0 match | yes: 3/3 selftest vectors re-derived in the same process | - | 2026-08-23 |
 
-Cumulative: about 95 million candidates across the rounds above, `FOUND` list empty every
-time.
+Cumulative: about 95.5 million candidates across the rounds above, `FOUND` list empty every
+time. The Quotes-500K and genesis-family rows above are witnessed negatives in this
+project's strict sense; the pre-2026-08-23 rows carry the caveat below.
 
 ## Media channels checked, not brute-forced
 

@@ -22,8 +22,9 @@ own standard this is a well-instrumented negative, not a formally exhaustive one
 | The decoded audio-puzzle message ("i am 24 words long and found on path 84") and 32 minimal variants (case, punctuation, spacing, spelled-out path) | 32 | GPU derivation | 0 match | yes | 690,000/s on a rented GPU | 2026-06-13 |
 | Alternate BIP84 index paths (change/index 0/1, 1/0, 1'/0/0, 0/2) replayed on the Corey-specific corpus | 432 | GPU derivation | 0 match | yes | 690,000/s on a rented GPU | 2026-06-13 |
 | Independent cross-check with a second, separate tool (btcrecover) on the Corey-specific corpus and combinator | 7,454 | CPU, btcrecover | 0 match | yes: recovers the same planted control | 1,000/s on CPU | 2026-06-13 |
+| Safety-net replay on alternate purpose paths BIP44/BIP49: m/44'/0'/0'/{0,1}/{0,1} and m/49'/0'/0'/{0,1}/{0,1}, bech32 P2WPKH encoding compared to the target. Corpus caveat: the original 108-word file is not committed, so this ran on a rebuilt approximation (137 single words mined from his quoted articles/GitHub/employer + 16 signature phrases) | 153 candidates x 6 paths = 918 derivations | CPU derivation, oracle code with PATH varied | 0 match | yes: public BIP84 test vector (abandon...about -> bc1qcr8te4kr609gcawutmrza0j4xv80jy8z306fyu) re-found through the identical PATH-walk code; sister address reproduced | ~150 derivations/s | 2026-08-23 |
 
-Cumulative: 1,155,064,682 candidates tested, 0 matches, across 11 families.
+Cumulative: 1,155,064,682 candidates tested plus the 918-derivation path replay above, 0 matches, across 12 families.
 
 ## Other channels checked, not passphrase sweeps
 

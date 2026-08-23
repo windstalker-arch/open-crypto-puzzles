@@ -2,65 +2,198 @@
   "schema_version": 1,
   "rows": [
     {
-      "slug": "aenigma-shards-nft", "title": "Aenigma Shards (AESH NFT cryptogram)",
-      "tier": "dead-end", "status": "dead-end", "dead_end_reason": "unfunded",
+      "slug": "aenigma-shards-nft",
+      "title": "Aenigma Shards (AESH NFT cryptogram)",
+      "tier": "dead-end",
+      "status": "dead-end",
+      "dead_end_reason": "unfunded",
       "chain": "ethereum",
-      "prize": {"amount": 34, "asset": "ETH", "usd_estimate": null, "usd_snapshot": "2026-08-16", "note": "promised across 10 contingent mint-count tiers; never materialized"},
-      "addresses": [{"address": "0xC77C1CB208356d953439190a94f3C8a4c4f502A3", "chain": "ethereum", "role": "contract", "explorer": "https://etherscan.io/address/0xC77C1CB208356d953439190a94f3C8a4c4f502A3", "verified_on": "2026-08-16", "verified_state": "unfunded"}],
+      "prize": {
+        "amount": 34,
+        "asset": "ETH",
+        "usd_estimate": null,
+        "usd_snapshot": "2026-08-16",
+        "note": "promised across 10 contingent mint-count tiers; never materialized"
+      },
+      "addresses": [
+        {
+          "address": "0xC77C1CB208356d953439190a94f3C8a4c4f502A3",
+          "chain": "ethereum",
+          "role": "contract",
+          "explorer": "https://etherscan.io/address/0xC77C1CB208356d953439190a94f3C8a4c4f502A3",
+          "verified_on": "2026-08-16",
+          "verified_state": "unfunded"
+        }
+      ],
       "difficulty_note": "A promised total is not a funded prize: mint stalled at 72 of 100, contract holds 0 ETH, no puzzle ever released beyond a demo. Check the contract balance, not the marketing.",
       "last_updated": "2026-08-16"
     },
     {
-      "slug": "bam-askabitcoiner-seed-cipher", "title": "BAM x AskABitcoiner 42k Seed Cipher",
-      "tier": "dead-end", "status": "dead-end", "dead_end_reason": "swept-by-third-party",
+      "slug": "bam-askabitcoiner-seed-cipher",
+      "title": "BAM x AskABitcoiner 42k Seed Cipher",
+      "tier": "dead-end",
+      "status": "dead-end",
+      "dead_end_reason": "swept-by-third-party",
       "chain": "bitcoin",
-      "prize": {"amount": 42100, "asset": "sats", "usd_estimate": 27, "usd_snapshot": "2026-08-16"},
-      "addresses": [{"address": "3Q1Qzs6EmTVE4JeUWRJVNxi9v5UJLN2mtc", "chain": "bitcoin", "role": "escrow", "explorer": "https://mempool.space/address/3Q1Qzs6EmTVE4JeUWRJVNxi9v5UJLN2mtc", "verified_on": "2026-08-16", "verified_state": "swept"}],
+      "prize": {
+        "amount": 42100,
+        "asset": "sats",
+        "usd_estimate": 27,
+        "usd_snapshot": "2026-08-16"
+      },
+      "addresses": [
+        {
+          "address": "3Q1Qzs6EmTVE4JeUWRJVNxi9v5UJLN2mtc",
+          "chain": "bitcoin",
+          "role": "escrow",
+          "explorer": "https://mempool.space/address/3Q1Qzs6EmTVE4JeUWRJVNxi9v5UJLN2mtc",
+          "verified_on": "2026-08-16",
+          "verified_state": "swept"
+        }
+      ],
       "difficulty_note": "Swept 2026-06-05 by another solver; passphrase was an artwork title. Reusable: this maker's series uses BIP49 m/49'/0'/0'/0/0 and a passphrase equal to an artwork title, not a block height.",
       "last_updated": "2026-08-16"
     },
     {
-      "slug": "demint-bitcoin-evangelism", "title": "De Mint: Bitcoin Evangelism book puzzle",
-      "tier": "dead-end", "status": "dead-end", "dead_end_reason": "solved-by-others",
+      "slug": "demint-bitcoin-evangelism",
+      "title": "De Mint: Bitcoin Evangelism book puzzle",
+      "tier": "dead-end",
+      "status": "dead-end",
+      "dead_end_reason": "solved-by-others",
       "chain": "bitcoin",
-      "prize": {"amount": 3146386, "asset": "sats", "usd_estimate": 1982, "usd_snapshot": "2026-08-16", "note": "puzzle 1; a later puzzle 2 of 1,000,000 sats had no published escrow"},
+      "prize": {
+        "amount": 3146386,
+        "asset": "sats",
+        "usd_estimate": 1982,
+        "usd_snapshot": "2026-08-16",
+        "note": "puzzle 1; a later puzzle 2 of 1,000,000 sats had no published escrow"
+      },
       "addresses": [],
       "difficulty_note": "Puzzle 1 was cashed by a reader around October 2022 (author confirmed on camera); the escrow was never published. A podcast publish date is not an event date, and a coincidental amount match in a balance dump is not the escrow.",
       "last_updated": "2026-08-16"
     },
     {
-      "slug": "game-of-satoshi-season-1", "title": "The Game of Satoshi (Season 1)",
-      "tier": "dead-end", "status": "dead-end", "dead_end_reason": "custodial",
+      "slug": "game-of-satoshi-season-1",
+      "title": "The Game of Satoshi (Season 1)",
+      "tier": "dead-end",
+      "status": "dead-end",
+      "dead_end_reason": "custodial",
       "chain": "none",
-      "prize": {"amount": 0.21, "asset": "BTC", "usd_estimate": 13230, "usd_snapshot": "2026-08-16", "note": "pool split among top 5000 players, paid by the organizer"},
+      "prize": {
+        "amount": 0.21,
+        "asset": "BTC",
+        "usd_estimate": 13230,
+        "usd_snapshot": "2026-08-16",
+        "note": "pool split among top 5000 players, paid by the organizer"
+      },
       "addresses": [],
       "difficulty_note": "Custodial: the 24 words are a game answer submitted to a server, not a mnemonic controlling a wallet. Ask first: custodial or permissionless? If the answer goes to a server, there is no key to derive.",
       "last_updated": "2026-08-16"
     },
     {
-      "slug": "phemex-dorian-nakamoto", "title": "Phemex Dorian Nakamoto 2.1 BTC puzzle",
-      "tier": "dead-end", "status": "dead-end", "dead_end_reason": "swept-by-third-party",
+      "slug": "ncodemus-as-above-so-below",
+      "title": "ncodemus: As Above, So Below (image treasure hunt)",
+      "tier": "dead-end",
+      "status": "dead-end",
+      "dead_end_reason": "swept-by-third-party",
+      "chain": "ethereum",
+      "prize": {
+        "amount": 0.0617,
+        "asset": "ETH",
+        "usd_estimate": 4003,
+        "usd_snapshot": "2025-08-23",
+        "note": "value at the sweep: 0.0617 ETH native plus 0.0617 WBTC held since 2021-08-01; about USD 1,800 when announced"
+      },
+      "addresses": [
+        {
+          "address": "0xf91A8DcE13AD25E2c256235852F0E7220De2f3fe",
+          "chain": "ethereum",
+          "role": "escrow",
+          "explorer": "https://etherscan.io/address/0xf91A8DcE13AD25E2c256235852F0E7220De2f3fe",
+          "verified_on": "2026-08-23",
+          "verified_state": "swept"
+        }
+      ],
+      "difficulty_note": "Swept 2025-08-23 by an unknown solver, four years after publication; no write-up ever surfaced. Step one was gated behind an NFT purchase, so the public image alone was insufficient by design.",
+      "last_updated": "2026-08-23"
+    },
+    {
+      "slug": "phemex-dorian-nakamoto",
+      "title": "Phemex Dorian Nakamoto 2.1 BTC puzzle",
+      "tier": "dead-end",
+      "status": "dead-end",
+      "dead_end_reason": "swept-by-third-party",
       "chain": "bitcoin",
-      "prize": {"amount": 1.1, "asset": "BTC", "usd_estimate": 69300, "usd_snapshot": "2026-08-16", "note": "on-chain portion; plus a 1 BTC off-chain exchange bonus"},
-      "addresses": [{"address": "1h8BNZkhsPiu6EKazP19WkGxDw3jHf9aT", "chain": "bitcoin", "role": "escrow", "explorer": "https://mempool.space/address/1h8BNZkhsPiu6EKazP19WkGxDw3jHf9aT", "verified_on": "2026-08-16", "verified_state": "swept"}],
+      "prize": {
+        "amount": 1.1,
+        "asset": "BTC",
+        "usd_estimate": 69300,
+        "usd_snapshot": "2026-08-16",
+        "note": "on-chain portion; plus a 1 BTC off-chain exchange bonus"
+      },
+      "addresses": [
+        {
+          "address": "1h8BNZkhsPiu6EKazP19WkGxDw3jHf9aT",
+          "chain": "bitcoin",
+          "role": "escrow",
+          "explorer": "https://mempool.space/address/1h8BNZkhsPiu6EKazP19WkGxDw3jHf9aT",
+          "verified_on": "2026-08-16",
+          "verified_state": "swept"
+        }
+      ],
       "difficulty_note": "Swept 2020-03-21; the sweep transaction exposed the public key. The chain, not the press, is the source of truth: a 2024 article calling it unclaimed was wrong by four years.",
       "last_updated": "2026-08-16"
     },
     {
-      "slug": "wares-wallets-solana", "title": "Wares Wallets (Solana video series)",
-      "tier": "dead-end", "status": "dead-end", "dead_end_reason": "swept-by-third-party",
+      "slug": "wares-wallets-solana",
+      "title": "Wares Wallets (Solana video series)",
+      "tier": "dead-end",
+      "status": "dead-end",
+      "dead_end_reason": "swept-by-third-party",
       "chain": "solana",
-      "prize": {"amount": 0.1, "asset": "SOL", "usd_estimate": 15, "usd_snapshot": "2026-08-16", "note": "per puzzle; marketed higher than the real value"},
-      "addresses": [{"address": "AayfnPQbmjR4nh9MY2EbgghVRLDVLnKDro3AJb9agCZq", "chain": "solana", "role": "escrow", "explorer": "https://solscan.io/account/AayfnPQbmjR4nh9MY2EbgghVRLDVLnKDro3AJb9agCZq", "verified_on": "2026-08-16", "verified_state": "swept"}],
+      "prize": {
+        "amount": 0.1,
+        "asset": "SOL",
+        "usd_estimate": 15,
+        "usd_snapshot": "2026-08-16",
+        "note": "per puzzle; marketed higher than the real value"
+      },
+      "addresses": [
+        {
+          "address": "AayfnPQbmjR4nh9MY2EbgghVRLDVLnKDro3AJb9agCZq",
+          "chain": "solana",
+          "role": "escrow",
+          "explorer": "https://solscan.io/account/AayfnPQbmjR4nh9MY2EbgghVRLDVLnKDro3AJb9agCZq",
+          "verified_on": "2026-08-16",
+          "verified_state": "swept"
+        }
+      ],
       "difficulty_note": "Checked escrows at 0 SOL; channel inactive since 2025-07-04. Reusable: Solana path m/44'/501'/0' (solana-cli/Solflare), not Phantom's .../0'/0'. Measure the real prize before the marketing number.",
       "last_updated": "2026-08-16"
     },
     {
-      "slug": "zk-guess-chainhackers-31", "title": "ZK Guess #31 (chainhackers, Base)",
-      "tier": "dead-end", "status": "dead-end", "dead_end_reason": "window-closed",
+      "slug": "zk-guess-chainhackers-31",
+      "title": "ZK Guess #31 (chainhackers, Base)",
+      "tier": "dead-end",
+      "status": "dead-end",
+      "dead_end_reason": "window-closed",
       "chain": "base",
-      "prize": {"amount": 0.0025, "asset": "ETH", "usd_estimate": 5, "usd_snapshot": "2026-08-16"},
-      "addresses": [{"address": "0x6F890B08fa4312135E1b4CF03929f8e389A866B4", "chain": "base", "role": "contract", "explorer": "https://basescan.org/address/0x6F890B08fa4312135E1b4CF03929f8e389A866B4", "verified_on": "2026-08-16", "verified_state": "contract-holds-funds"}],
+      "prize": {
+        "amount": 0.0025,
+        "asset": "ETH",
+        "usd_estimate": 5,
+        "usd_snapshot": "2026-08-16"
+      },
+      "addresses": [
+        {
+          "address": "0x6F890B08fa4312135E1b4CF03929f8e389A866B4",
+          "chain": "base",
+          "role": "contract",
+          "explorer": "https://basescan.org/address/0x6F890B08fa4312135E1b4CF03929f8e389A866B4",
+          "verified_on": "2026-08-16",
+          "verified_state": "contract-holds-funds"
+        }
+      ],
       "difficulty_note": "Secret 149 was identified, but a third party guessed it about 40 hours later and the puzzle forfeited. A zero-cost, positive-value action runs immediately.",
       "last_updated": "2026-08-16"
     }

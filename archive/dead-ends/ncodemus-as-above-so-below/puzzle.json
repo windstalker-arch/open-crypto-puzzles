@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "slug": "ncodemus-as-above-so-below",
+  "title": "ncodemus: As Above, So Below (image treasure hunt)",
+  "tier": "dead-end",
+  "status": "dead-end",
+  "dead_end_reason": "swept-by-third-party",
+  "series": null,
+  "author": {
+    "name": "ncodemus",
+    "handles": [
+      "reddit:u/ncodemus",
+      "site:ncodemus.com"
+    ],
+    "url": "https://www.reddit.com/r/bitcoinpuzzles/comments/p9dhjv/currently_over_us3100_in_this_puzzle/"
+  },
+  "published": {
+    "date": "2021-08-28",
+    "url": "https://www.reddit.com/r/bitcoinpuzzles/comments/p9dhjv/currently_over_us3100_in_this_puzzle/"
+  },
+  "chain": "ethereum",
+  "prize": {
+    "amount": 0.0617,
+    "asset": "ETH",
+    "usd_estimate": 4003,
+    "usd_snapshot": "2026-08-16",
+    "note": "0.0617 ETH native and 0.0617 WBTC held on the same address from 2021-08-01 until both were swept on 2025-08-23; about USD 1,800 when announced in 2021 and over USD 4,000 by 2024 per the author's own Reddit updates"
+  },
+  "addresses": [
+    {
+      "address": "0xf91A8DcE13AD25E2c256235852F0E7220De2f3fe",
+      "chain": "ethereum",
+      "role": "escrow",
+      "label": "the announced prize address (held both the native ETH and the WBTC)",
+      "explorer": "https://etherscan.io/address/0xf91A8DcE13AD25E2c256235852F0E7220De2f3fe",
+      "expected": "0 before the sweep; now 0.0000642439 ETH dust residue",
+      "verified_on": "2026-08-23",
+      "verified_state": "swept"
+    }
+  ],
+  "puzzle_type": [
+    "image-stego",
+    "pixel-code"
+  ],
+  "target_format": "an unknown private key or seed phrase for the prize address; the author answered 'private key or seed phrase?' with '... yes. ;-)'",
+  "derivation": {
+    "summary": "a multi-step treasure hunt through a single 5701 x 5701 PNG: the first step was sold only as an OpenSea NFT edition; no public solver is known to have documented even step one before the sweep",
+    "oracle": null,
+    "oracle_certified": false
+  },
+  "difficulty_left": "none",
+  "difficulty_note": "moot: the escrow was swept on 2025-08-23 by an unknown solver, one year before this entry was written",
+  "solutions": [
+    {
+      "lot": "main escrow",
+      "date": "2025-08-23",
+      "answer": "unknown: no solver write-up ever published; the sweep is documented only on-chain",
+      "key_material_disclosed": false,
+      "payout_txid": "0x129d88a09e2b18acbafbae23b080228349f1a4af33fc8004972d6debd7a1451c",
+      "payout_amount": "0.0617 ETH + 0.0617 WBTC",
+      "payout_to": "0x774eaBd231... and 0x774ed5a431...",
+      "explorer": "https://eth.blockscout.com/address/0xf91A8DcE13AD25E2c256235852F0E7220De2f3fe"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Reddit announcement thread, r/bitcoinpuzzles",
+      "url": "https://www.reddit.com/r/bitcoinpuzzles/comments/p9dhjv/currently_over_us3100_in_this_puzzle/",
+      "date": "2021-08-28",
+      "archived": null
+    },
+    {
+      "title": "Puzzle image on IPFS (original PNG)",
+      "url": "https://ipfs.io/ipfs/QmUVA5tq1qrUyQc6mLXUfcL5euw4tm3CXrVky2Jj4AJmbu/nft.png",
+      "date": "2026-08-23",
+      "archived": null
+    },
+    {
+      "title": "OpenSea NFT whose buyers learned step one",
+      "url": "https://opensea.io/assets/ethereum/0x9b54e03cb137e4157029e915fa00d76830251072/3",
+      "date": "2026-08-23",
+      "archived": null
+    },
+    {
+      "title": "HomelessPhD's independent research notes (community mirror of findings)",
+      "url": "https://github.com/HomelessPhD/AsAbove_SoBelow",
+      "date": "2025-09-10",
+      "archived": null
+    },
+    {
+      "title": "Sweep day transactions, Blockscout",
+      "url": "https://eth.blockscout.com/address/0xf91A8DcE13AD25E2c256235852F0E7220De2f3fe",
+      "date": "2026-08-23",
+      "archived": null
+    }
+  ],
+  "third_party_material": "no third-party material reproduced here; the puzzle image and the community notes are linked, not copied",
+  "last_updated": "2026-08-23"
+}
