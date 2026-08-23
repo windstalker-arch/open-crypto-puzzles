@@ -60,6 +60,47 @@ What would kill it: a full metadata re-read producing nothing new; there is no
 natural exhaustion point for this lead beyond a careful, complete pass.
 Cost: an hour of directed reading, not a sweep.
 
+### Status: executed 2026-08-23; it found new words
+
+Both 2020 Wayback captures were re-read field by field (`20200626184951` for
+the video, `20201026062858` for the blog). Surfaces never previously read as
+word sources:
+
+- the video page's `keywords` meta element (YouTube's own tag field):
+  "mining rig, mining hardware, guntis vitolins, bitcoin, ethereum, top
+  altcoins, altseason, portfolio, altcoins for 2020, bitcoin generator".
+  Filtered against the BIP39 list, nothing new: none of these are dictionary
+  members beyond already-pooled `top`;
+- the video description's formatting layer: 26 identical `hole` emoji
+  characters (U+1F573) framing the contact and link blocks, plus the literal
+  strings "Follow me", "Signup", "Share this Video", "Telegram chat". New
+  BIP39 members among these: `hole`, `share`, `chat`;
+- the blog `<head>` `og:description` ("Crypto is of the chain... what 2020
+  will bring... it should be a good year... if they not going to act as soon
+  as possible they might be left"): new BIP39 members `possible`, `bring`,
+  `good`, `act`, `soon`, `left`, `month`, `year`. Notably `possible` is the
+  very word the author used in his own substring example;
+- the blog `<title>` element and site categories: nothing additional beyond
+  pooled `update`.
+
+New candidates by source side:
+
+| Side | New candidates | Source |
+|---|---|---|
+| video (6-word half) | `hole`, `share`, `chat` | description emoji framing and link-block labels |
+| post (6-word half) | `possible`, `bring`, `good`, `act`, `soon`, `left`, `month`, `year` | og:description |
+
+The `hole` finding has a second reading worth recording: 26 identical emoji
+are also a countable marker. If they are a tally rather than a word, they may
+index a position or pick between the `fog`/`cloud` branches instead of
+contributing a list element.
+
+Sizing an exhaustive sweep with all 11 additions under the R1b protocol
+(anchors fixed, `fork`/`fiber` floating) prices out above the R1b run itself
+(10.75 billion derivations, about 4.5 hours on the validated GPU kernel).
+Treat it as the next GPU-priced run alongside lead 1's liaison extension;
+it is not phone work.
+
 ## Community correction: R1 pool provenance (issue #10)
 
 HPreziosa (issue #10) grepped the 2020 Wayback captures of the video and blog and reports
