@@ -10784,3 +10784,11 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   Nothing in the catalog is a family we have NOT already closed over dbbib_91/faed_570.
 - RESULT: inert; no new family, no battery. Tool not runnable as GUI here regardless.
 - IMPACT: none to gates.
+
+### late-248 (2026-09-20) -- gist Badbird5907 ROTCipher.java steer: inert (2026-09-20)
+- CONTEXT: steer "check https://gist.github.com/Badbird5907/469953d10c88536f098fa62406adca09".
+- AUDIT: single-file Java ROT codec (generic Caesar-family shift, w/ trivial rotate(); also
+  uses "==" on strings - invalid JS-eval semantics, irrelevant). 2021-09-22, no puzzle
+  anchors. Rot/ROT13/Caesar family closed over dbbib_91/faed_570.
+- RESULT: inert; closed without battery.
+- IMPACT: none to gates.
