@@ -10606,3 +10606,13 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   assembled text remains the human-confirmed "white rabbit nostalgic alice childhood".
 - IMPACT: no new on-page material; confirms live pieces unchanged from archive. Gates unchanged.
   The 3 never-archived endpoints remain blocked on Wayback accessibility.
+
+### late-235 (2026-09-20) -- ~/RSA-Prime-Number-Encryption audited: inert (2026-09-20)
+- CONTEXT: steer "check ~/RSA-Prime-Number-Encryption" (local dir, origin
+  SriRangaTarun/RSA-Prime-Number-Encryption; HEAD 2d05dc1).
+- AUDIT: from-scratch textbook RSA (ee geekforgeeks), e=5 / fixed n=20711, char-level encrypt
+  with +1750+i//5 offset and a "strong" 10x repeated variant. Educational toy; no puzzle
+  anchors, no keys, no page/blob references. The fixed 20711/e5 toy shares only the puzzle's
+  thematic "primes" keyword. No battery.
+- RESULT: inert; closed without battery.
+- IMPACT: none to gates.
