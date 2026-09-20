@@ -10852,3 +10852,17 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   task. No GPU-relevant training runnable here regardless.
 - RESULT: inert; closed without battery.
 - IMPACT: none to gates.
+
+### late-254 (2026-09-20) -- bushe.co/tools/straddling-checkerboard-cipher steer: standard-26 reference, verifies certified top-row mapping (2026-09-20)
+- CONTEXT: steer "check https://bushe.co/tools/straddling-checkerboard-cipher/".
+- AUDIT: in-browser educational straddling-checkerboard tool (Patrick Bushe), pure-26-letter
+  keyed board, two row digits, spaces preserved as literal "/" tokens (NO extra "." or "/" cells).
+  Worked example: MEET AT NOON + keyword EXAMPLE + rows 2,6 -> "40062/362/27282827".
+- CROSS-CHECK: under the standard dedupe-keyword alphabet EXAMPLBCDFGHIJKNOQRSTUVWYZ the
+  example maps M->4 E->0 A->3 T->62 N->27 O->28 - certified_vic build_grid reproduces the
+  TOP-ROW digits exactly (E/M/A); the only difference is we ADD "." and "/" cells (28-cell board),
+  an extension introduced for G-splice batteries late-243, NOT in the scriptural interpreter
+  convention. Streams contain no "/" tokens, so the tool space handling changes nothing.
+- RESULT: tool confirms the standard 26-letter convention; no new parameterization or algorithm;
+  no new battery surface. alice clone (late-253 followup) hung on network - aborted, no ~/alice.
+- IMPACT: none to gates.
