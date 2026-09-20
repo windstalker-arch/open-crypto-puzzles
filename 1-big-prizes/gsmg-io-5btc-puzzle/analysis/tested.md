@@ -10671,3 +10671,11 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   of our artifacts were already negative (late-232/233/238); this draft points nowhere on-blob.
 - RESULT: inert; closes at bounded level. CBOR-family thread fully closed.
 - IMPACT: none to gates.
+
+### late-240 (2026-09-20) -- bitcoin/bitcoin PR #3961 steer: inert (2026-09-20)
+- CONTEXT: steer "check https://github.com/bitcoin/bitcoin/pull/3961".
+- AUDIT: PR #3961 "build: libtoolize bitcoin core" (laanwj, created 2014-03-25, label Build
+  system, NEVER merged). Adds shared-lib targets (libbitcoincore_server/wallet/cli/common.so)
+  via libtool; build-only, no functional/crypto content.
+- RESULT: inert; closed without battery.
+- IMPACT: none to gates.
