@@ -10644,3 +10644,17 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   header. Lossless PNG -> a covert payload would survive; none present.
 - RESULT: tool operational; LSB-covert-channel reading of the composite is clean.
 - IMPACT: none to gates. Tool retained under ~/PNGCrypt for future use.
+
+### late-238 (2026-09-20) -- BlockchainCommons/BCSwiftDCBOR steer: inert + deterministic-CBOR ruling (2026-09-20)
+- CONTEXT: steer "check https://github.com/BlockchainCommons/BCSwiftDCBOR". Continued the
+  CBOR/COSE/NanoCBOR/twyatt/pycose thread.
+- AUDIT: Swift library implementing deterministic CBOR (RFC 8949 + dCBOR: definite-length
+  containers, canonical key order, minimal int encoding). Swift-only, no puzzle content. README
+  fetched (79 lines) - generic codec, no anchors.
+- RULING: dCBOR REQUIRES definite-length arrays. B1_79.bin leading byte is 0x9f (INDEFINITE
+  array) followed by an indefinite tag-chain - B1 cannot be deterministic CBOR under ANY key.
+  B2_79.bin opens map(16)/text(15) then incoherent bytes - already known key-material blob
+  (late-232 full CBOR decode over B1/B2/cosmic/island was negative). Determinism adds no new
+  support.
+- RESULT: inert; DCBOR reading of the blobs closed. Blockchain Commons thread done.
+- IMPACT: none to gates.
