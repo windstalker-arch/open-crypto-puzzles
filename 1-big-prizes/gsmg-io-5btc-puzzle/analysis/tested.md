@@ -10616,3 +10616,15 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   thematic "primes" keyword. No battery.
 - RESULT: inert; closed without battery.
 - IMPACT: none to gates.
+
+### late-236 (2026-09-20) -- ~/VisualCryptography audited: inert + jigsaw share-overlay probe negative (2026-09-20)
+- CONTEXT: steer "check ~/VisualCryptography" (origin Srinayan/VisualCryptography; HEAD 8262716).
+- AUDIT: CMY color-decomposition + ordered-dither halftone + share generator (Naor-Shamir style
+  visual crypto for color images; citeseer reference). Academic demo; no puzzle anchors.
+- PROBE (share-overlay mechanic on the LIVE jigsaw pieces, which the repo's mechanism would
+  predictively apply to): all 8 gsmg pieces pairwise AND/XOR overlay at aligned crops - pieces
+  are near-solid ink plates (ink-density 0.60-0.91), blue pieces 0.88-0.91; pairwise AND/XOR
+  densities flatline (no letter/glyph contrast vs null), i.e. NO share reconstruction reveals
+  text. Consistent with prior "pieces are decoys" closures.
+- RESULT: repo inert; visual-crypto-overlay reading of the jigsaw closed at bounded level.
+- IMPACT: none to gates.
