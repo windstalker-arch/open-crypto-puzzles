@@ -10792,3 +10792,18 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   anchors. Rot/ROT13/Caesar family closed over dbbib_91/faed_570.
 - RESULT: inert; closed without battery.
 - IMPACT: none to gates.
+
+### late-249 (2026-09-20) -- dead-end endpoint hunt re-attempted: live 404 persists, Wayback shows NO captures for the 3 routes (2026-09-20)
+- CONTEXT: "continue" -> executed the designated remaining local item (network-window retry
+  for followthewhiterabbit / TheArchitectChoice / hopeisthequintessentialhumandelusion).
+- METHOD: (1) live gsmg.io all 3 paths -> 404 (9B nginx). (2) archive.org availability API ->
+  429 (throttled); CDX -> 000 (timeout). (3) direct web.archive.org/web/<ts>/... for
+  followthewhiterabbit at 3 timestamps -> each 200 but 38,712-B body = the gsmg.io SPA SHELL
+  (title "GSMG"; i18n dict of the GSMG trading-bot platform; links gsmg.io/js/app, js/vendor,
+  css/app, manifest) - i.e., NO snapshot of the route exists; Wayback served the site root
+  instead. Transcribed into gsmg.io manifest.
+- RESULT: the 3 routes were never separately archived; live 404 unchanged. The gsmg.io host
+  is a crypto trading-bot product whose SPA once routed /followthewhiterabbit client-side.
+  Dead-end hunt CLOSED as far as this network allows.
+- IMPACT: none to gates; removes the "endpoints might appear under a Wayback window" hope.
+  Lead-0 remains the only genuinely open route (external input required).
