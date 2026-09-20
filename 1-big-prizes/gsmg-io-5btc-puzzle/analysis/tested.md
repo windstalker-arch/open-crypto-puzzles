@@ -10874,3 +10874,12 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   anywhere outside .venv (only filename hit: push_notification_auth.py). "Rabbit" here = the
   A2A whiteboarding mascot, unrelated to the puzzle phrase (Alice rabbit). Inert; no battery.
 - IMPACT: none to gates.
+### late-256 (2026-09-20) -- SymmetricChaos/ClassicCrypto steer: inert (duplicate closed catalog, NO straddling/VIC) (2026-09-20)
+- CONTEXT: steer "check https://github.com/SymmetricChaos/ClassicCrypto".
+- AUDIT: hobby Python classic-cipher library (2018, 10 stars). Full tree inventoried: ADFGX/ADFGVX,
+  Affine, Autokey, Bifid, Caesar, Chaocipher, Columnar, DRYAD, Enigma/M209/SIGABA, Foursquare, Hill, Hutton,
+  Morse, Nihilist, Nomenclator, Playfair, Polybius, Quagmire, Substitution, Trifid, Vigenere, + crackers.
+- NOTE: NO straddling-checkerboard and NO VIC module exists in this repo - i.e. no new keyed-board lattice
+  point to extract. Every present family already closed; Bifid independently cross-checked late-245.
+- RESULT: inert; closed without battery.
+- IMPACT: none to gates.
