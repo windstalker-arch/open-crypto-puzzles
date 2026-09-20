@@ -10518,3 +10518,23 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 - IMPACT: closed the community-issue re-scan loop; confirmed our archive is current and ahead on the
   inner-blob password; sharpens "still missing" to (operation, Halves-reduction, three dead-endpoint
   contents, jigsaw OCR). Gates unchanged.
+
+### late-228 (2026-09-20) -- Reduction(SOURCE_4) half-key sweep (community #111 BetterHalf lead), 0 MATCH both gates (2026-09-20)
+- CONTEXT: community issue #111 (0xyph3r) postulates BetterHalf = Reduction(SOURCE_4) XOR
+  gros[1161:1177], FH = gros[0::4][:16] XOR gros[1145:1161] = 8048c428a6faf6d3df77db13ca68766d;
+  SOURCE_4 (48B) is ON-PAGE data (b64 "QvX0t8v3..XwGuN/jJ" == our captured blob tail region);
+  gros[1161:1177] = 3be6ecf1d5c126e50f25ded3bc8fb6d9. #106 Part B debunks the H/BH wave as fake
+  (padding-only AES evidence 1/236; #104 retraction); still ran the one locally-checkable lead.
+- METHOD: tools/reduction_source4_sweep.py - 216 Reduction primitives (16B slices, strides,
+  2-byte parity XORs, pair-XOR spreads, diffs, mod-256 column sums, xor-triples, half strides,
+  base64 re-decode, COPY-64). For each, BH = R(SOURCE_4) XOR gros[1161:1177]; composed keys
+  FH||BH / BH||FH / FH^BH / BH^FH -> k*G pubkey h160 vs BOTH gate h160s
+  (a9553269572a317e39f0f518cb87c1a0ee1dbae4, 4bc468447fe1b048ad030a2f9a125478eabc4ed6).
+  Plus oracle-string phase: 22 candidate strings (SOURCE_4/G1617/FH/BH/keys hex + base64 +
+  literals half/betterhalf/etc.) fed to BOTH certified oracles (attempt ran raw+sha256-hex x
+  sha256+md5). Selftests rc=0 on both oracles before/after.
+- RESULT: 0 MATCH everywhere. Reduction(SOURCE_4) does not produce a usable half-key through
+  any standard 48B->16B transform, and none of the string forms is a gate password.
+- IMPACT: the BetterHalf/Halves lead is closed at the locally-testable level; consistent with
+  #106's debunking. Gates unchanged. Remaining open: lead-0 dbbib/faed operation; the three
+  never-archived endpoint contents (need Wayback from an unblocked network); live jigsaw OCR.
