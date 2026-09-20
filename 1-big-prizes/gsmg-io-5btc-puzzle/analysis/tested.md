@@ -10771,3 +10771,16 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 - RESULT: inert for lead-0; no new family. Closed without battery (bounded; mechanism
   equivalence documented).
 - IMPACT: none to gates.
+
+### late-247 (2026-09-20) -- guyoung/CaptfEncoder steer: inert (toolbox catalog all closed families) (2026-09-20)
+- CONTEXT: steer "check https://github.com/guyoung/CaptfEncoder" (GUI/Rust CTF suite).
+- AUDIT: catalog mapped to our closed families: ADFGX/ADFGVX (late-58/246 pair-fractionation),
+  Affine (base-N/affine), Atbash/Autokey/Beaufort (x2 impl, pycipher late-221 + secretpy
+  late-245), Caesar/ROT13 (closed), Columnar (rabbit_key_columnar & transpose rows),
+  Hill (matrix/scalar), Playfair/Polybius (keyed squares = crux), Rail-fence/Scytale
+  (transposes closed), Running Key (Vigenere-family), Simple Substitution (= late-243 custom-
+  key family), Baconian + Fractionated Morse (morse_sweep + base-N charsets covered),
+  Four-Square/Porta (digraph/keyed-square variants under the same keyed-alphabet crux).
+  Nothing in the catalog is a family we have NOT already closed over dbbib_91/faed_570.
+- RESULT: inert; no new family, no battery. Tool not runnable as GUI here regardless.
+- IMPACT: none to gates.
