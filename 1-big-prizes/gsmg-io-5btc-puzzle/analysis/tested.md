@@ -10757,3 +10757,17 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 - IMPACT: lead-0 denial-hardening only (implementation-bug vector eliminated for Bifid);
   crux unchanged. Oracle not invoked (certification is hash-against-record, not gate).
   Nothing broadcast; gates unchanged (escrow per late-94).
+
+### late-246 (2026-09-20) -- cassietheobald/cracking-adfgx steer: inert (mechanisms already closed) (2026-09-20)
+- CONTEXT: steer "check https://github.com/cassietheobald/cracking-adfgx" (2018, Python,
+  ADFGX key-length 8/9/10 orthodox cracker).
+- AUDIT: implements two mechanisms - (1) polybius PAIR-fractionation (bi2mono.py: split
+  ciphertext into digraphs, map to letters), (2) IC-ranked COLUMNAR de-transposition under
+  key length 8/9/10, then monoalphabetic solve. Both are already certified-negative on our
+  streams: base-9 PAIR reading of dbbib/faed closed late-58; faed(570) as 15x38/38x15
+  columnar + keyed orderings closed (rabbit_key_columnar late-143, phase1sums_transpose
+  late-207, transpose families throughout). ADFGX ciphertext alphabet {A,D,F,G,X} also
+  doesn't match our 9-symbol {a..i}.
+- RESULT: inert for lead-0; no new family. Closed without battery (bounded; mechanism
+  equivalence documented).
+- IMPACT: none to gates.
