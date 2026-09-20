@@ -10731,3 +10731,12 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   no ciphertool content. Inert.
 - IMPACT: lead-0 crux (keyed-alphabet leap) unchanged; custom-key families now bounded-out.
   Nothing broadcast; gates unchanged (escrow per late-94).
+
+### late-244 (2026-09-20) -- tooling: pip install secretpy (pycipher-style reference codebase) (2026-09-20)
+- CONTEXT: steer "pip install secretpy".
+- SETUP: installed OK; smoke Caesar(3) "hello"->"khoor" round-trips. Includes ADFGX/ADFGVX,
+  Affine, Atbash, Autokey, Bazeries, Beaufort, Bifid + classical family - usable as a SECOND
+  independent implementation for the fractionation/checkerboard families (after pycipher
+  late-220/221).
+- RESULT: operational, no battery run (no steer beyond install). Lead-0/keyed-alphabet crux
+  unchanged. Nothing broadcast; gates unchanged (escrow per late-94).
