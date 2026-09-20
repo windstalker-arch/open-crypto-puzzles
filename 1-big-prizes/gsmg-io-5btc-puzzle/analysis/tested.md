@@ -10703,3 +10703,31 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 - RESULT: negative; the two-door/selection family adds no lift over the ~70 families already
   closed. Confirms the streams need the keyed-alphabet leap (lead-0 crux unchanged).
 - IMPACT: none to gates; certified chain untouched. Flavor steer recorded, closed at bound.
+
+### late-243 (2026-09-20) -- "custom substitution cipher keys" research battery + HF Cipher-AI + mlaux/pandoras-box: negative/inert (2026-09-20)
+- CONTEXT: steer "research custom subtitutions cipher keys"; derived steers: HF model
+  Cipher-AI/Substitution-Cipher-Text-Eng; github.com/mlaux/pandoras-box.
+- RESEARCH NOTE (custom-substitution key families, compact): (a) keyword monoalphabetic /
+  keyed-alphabet-from-keyword (all known sources swept late-204/205/207/213 etc.); (b) custom
+  layout/telephone keyed alphabets (QWERTY/DVORAK/COLEMAK/AZERTY row-orders, T9/phone-pad,
+  numeric-digit custom rows) - NEW here; (c) digraph/trigraph squares (Bifid/VIC/ADFGX - closed);
+  (d) running/keystream keys (closed); (e) learned-ML substitution solvers - monoalphabetic only.
+- BATTERY (tools/custom_keyed_seeds_sweep.py, retained): 50 unique keyed-28 keywords
+  (G1 certified-phrase words: WHITERABBIT/THESEEDISPLANTED/ALICE/NOSTALGIC/CHILDHOOD/
+  THEARCHITECTCHOICE/COSMICDUALITY/YINYANG/YELLOWBLUE/PRIMES + fusions; G2 ingredient
+  cross-joins; G3 keyboard/T9/phone-row layouts; G4 address-derived; G5 address nics) x
+  variants {raw, upper, no-dot} x maps {CANON, POS} x escapes {(1,4),(4,1),(1,5),(5,1)} x
+  streams {dbbib_91, faed_570}, certified VIC checkerboard, clean decodes -> {raw, lower,
+  upper, reversed, nospace} -> BOTH oracles in-process.
+- ORACLES: oracle.py + oracle_dualite.py --selftest rc=0 immediately prior.
+- RESULT: 714 clean decodes; small gate 2,142 NO MATCH; dualite gate 2,142 NO MATCH.
+  Custom layout/phone-pad/phrase-word keys do NOT open either funded gate.
+- HF Cipher-AI/Substitution-Cipher-Text-Eng: T5-base text-to-text solver for MONOALPHABETIC
+  ENGLISH substitution only (statistical letter-guesses). Not applicable to the 9-symbol
+  VIC/Bifid keyed-checkerboard streams (leading letters aren't known English ciphertext);
+  ~900MB transformer, not run. Audit-inert.
+- mlaux/pandoras-box: "Reverse engineering tools for Pandora's Box N-in-1 JAMMA boards"
+  (arcade multiboard, C, 2KB, 2018) - hardware tooling, name-only collision with the myth;
+  no ciphertool content. Inert.
+- IMPACT: lead-0 crux (keyed-alphabet leap) unchanged; custom-key families now bounded-out.
+  Nothing broadcast; gates unchanged (escrow per late-94).
