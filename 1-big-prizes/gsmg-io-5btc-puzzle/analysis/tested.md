@@ -11019,3 +11019,28 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   map for lead-0; the interpreter-per-position / second-layer conclusion (late-265) stands.
 - WITNESS: estate 955 API (name/desc/parcels/owner), peer catalyst scene+audio hashes (QmeRy5MjmEZ2...),
   ffprobe duration/streams, repeated spectrogram runs. rc=n/a (no oracle battery).
+### late-267 (2026-09-20) -- LIVE static map found: gsmg.io/puzzle still serves the white-rabbit grid = follow-white-rabbit-grid.json (transpose), both today and in the 2020 puzzle-era capture
+- STEER: revisit of the "not static map?" question with Wayback now reachable (archive.org/is reachable again;
+  DNS for timetravel.mementoweb.org still fails). Sequence: fetch gsmg.io/puzzle today AND 2020-11-09 capture.
+- LIVE TODAY: GET https://gsmg.io/puzzle returns a 1048x1556 PNG directly (not the SPA html; the row=PNG bytes
+  are served with 200). It is a "MEGANIGMA" poster: 14x14 grid of 75px cells occupying the top-left 1050px,
+  a white-rabbit glitch figure, brand caps row, red rule, and a field of noise-glyph text below.
+  9 yellow + 15 blue 75x75 cells EXACTLY = follow-white-rabbit-grid.json [blue x]/[yellow x] lists under
+  TRANSPOSE (cell at image (cx,cy) == json (cy,cx)). Also equals follow_the_white_rabbit.png (350px,
+  5-color: 25px cells, exact transpose of the JSON) -- the same map rendered at 25px and at 75px.
+- 2020-11-09 CApture of https://gsmg.io/Puzzle (puzzle era): Vue SPA, title GSMG, csrf IihRVW2g5dovtfObNivDjnesXDt7uG1k7jf1hkTF
+  (random csrf, not a string clue), route /puzzle -> component t5W0 -> render: h1 "GSMG MEGANIGMA || 5 BTC"
+  + img src=/img/follow_the_white_rabbit.png alt="Follow the white rabbit". IDENTICAL component in the
+  2026-replay app bundle tied to the same route. So the static map is stable across 2020 and today.
+- RE-READ: late-266 said "DCL chain does not supply a static map". That was about the Decentraland content.
+  This row SUPERSEDES part of that framing: the author DID post a static map, the white-rabbit grid still on
+  gsmg.io/puzzle. The grid is exactly the map file data/follow-white-rabbit-grid.json that the repo already
+  held, but its official public embedding as the puzzle page's only image was NOT previously established
+  (follow_the_white_rabbit.png / /puzzle equivalent). New: grid.png = current live puzzle page image.
+- INTERPRETER IMPLICATION: the last remaining "static map" candidate that is genuinely the puzzle's own asset
+  is now confirmed and exactly located. 15 blue + 9 yellow = 24 colored cells on a 14x14 board, 196 cells.
+  Not yet analyzed as an interpreter input for dbbib/faed (next battery: treat the board as a route map of
+  the 24 colored cells; read colors/order, compare against the streams under the certified readers).
+- WITNESS: curl gsmg.io/puzzle (PNG 1048x1556, 28727B), curl gsmg.io/img/follow_the_white_rabbit.png (PNG 350,
+  1958B) == archive replay identical; web.archive.org /Puzzle 20201109085204 html+app.js (route t5W0 render
+  string matched verbatim in both 2020 and 2026 bundles). rc=n/a (no oracle battery yet).
