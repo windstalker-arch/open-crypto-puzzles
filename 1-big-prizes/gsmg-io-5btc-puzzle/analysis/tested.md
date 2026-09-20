@@ -10594,3 +10594,15 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   COSE tag; first-64-byte scan also clean (island "tag@24" is an incidental prefix, not a COSE item).
 - RESULT: inert; COSE framing hypothesis closed.
 - IMPACT: none to gates.
+
+### late-234 (2026-09-20) -- live jigsaw OCR re-attempt on /theseedisplanted pieces: filename-only, no new text (2026-09-20)
+- CONTEXT: "go" - executed the last locally-actionable open item: the live jigsaw pieces
+  (gsmg.io/theseedisplanted still serves the static page; 8 PNGs re-fetched into
+  usr/tmp/opencode/jigsaw/).
+- METHOD: 8 pieces ~<2KB each, grayscale, 4x LANCZOS upscale, tesseract psm 7/6/11.
+- RESULT: OCR recovers only the on-piece FILENAME overlays (ca / digi / "crypto gic" / n you /
+  ning / t ...), i.e. the same decoy set as before (48 letters, no S/H/E-duplicates needed
+  for the phrase). The small rendered message below the filename stays below OCR resolution;
+  assembled text remains the human-confirmed "white rabbit nostalgic alice childhood".
+- IMPACT: no new on-page material; confirms live pieces unchanged from archive. Gates unchanged.
+  The 3 never-archived endpoints remain blocked on Wayback accessibility.
