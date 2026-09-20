@@ -10628,3 +10628,19 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   text. Consistent with prior "pieces are decoys" closures.
 - RESULT: repo inert; visual-crypto-overlay reading of the jigsaw closed at bounded level.
 - IMPACT: none to gates.
+
+### late-237 (2026-09-20) -- setup ~/PNGCrypt (AbdulBaasith005/PNGCrypt) + LSB probe of clues/puzzle.png: NEGATIVE (2026-09-20)
+- CONTEXT: steer "setup ~/PNGCrypt" (origin AbdulBaasith005/PNGCrypt; HEAD a779c9d; tooling row,
+  same pattern as pycipher late-220).
+- SETUP: pip pycryptodome + numpy (OK); cv2 4.14.0 present; OpenSSL 3.6.3. RSA-2048 keys
+  generated (private.pem / public.pem in ~/PNGCrypt); smoke: AES-256-EAX + RSA-OAEP envelope +
+  LSB embed -> ~/PNGCrypt/steg_out.png round-trips msg "msg_for_smoke_test_gmsmg_2026" exactly.
+  USAGE: python3 pngcrypt.py -e -i IN.png -t msg.txt -pub public.pem -o OUT.png ; -d -i STEG.png
+  -pvt private.pem -o OUT.txt. Layout: 32-bit payload-length header, then b64(RSA-OAEP(AES-key)),
+  then AES-EAX(nonce16+tag16+ct).
+- PROBE (puzzle relevance): LSB-plane read of clues/puzzle.png (1048x1556 RGB): per-channel LSB
+  noise density B 0.571 / G 0.572 / R 0.663; no ASCII windows (>=6 chars) in channel or
+  RGB-interleaved LSB streams; opening 32 bits are 0xff (blank top-left), no pngcrypt length
+  header. Lossless PNG -> a covert payload would survive; none present.
+- RESULT: tool operational; LSB-covert-channel reading of the composite is clean.
+- IMPACT: none to gates. Tool retained under ~/PNGCrypt for future use.
