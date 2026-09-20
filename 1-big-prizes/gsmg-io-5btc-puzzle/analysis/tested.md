@@ -10476,3 +10476,45 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   sub-pixel rendering of the ORIGINAL browser at its exact geometry; the definitive
   content record remains the byte-exact token stream (already certified, and re-verified
   here against the archive a second time). Gates unchanged (escrow per late-94).
+
+### late-227 (2026-09-20) -- deep community re-scan (puzzlehunt/gsmgio-5btc-puzzle issues #106/#108/#111/#109/#105 + live site + dust tx), cross-verified vs local artifacts (2026-09-20)
+- CONTEXT: "research deep what we still miss" -> pulled the up-to-date community issue thread
+  (our mirror was stale; repo pushed 2023 but issues active through 2026-09-20).
+- VERIFIED-CONSISTENT:
+  - Issue #108 "[SOLVED] two typos (b64 pos 18 R->J, 51 k->s) + chain closure": their fixed-blob
+    plaintext K_C1 == 9fa9db91a9dee0e3... == our B1_79[0:32] byte-exact, and == WIF 5K2byJMssx... (#68).
+    => our archived blob already decrypts raw+MD5 to the SAME key material: no typo repair needed,
+    the "typos" are non-material to the certified chain (probably already normalized in the capture).
+  - Issue #106 Part A "oracle KDF correction": does NOT apply to the rebuilt oracle.py - attempt()
+    tries candidate in BOTH raw and sha256(X)-hex form x BOTH EVP digests (sha256 + md5); sha256 leg
+    self-test-anchored via sha256("causality"). evp_bytes_to_key default digest = sha256 (== openssl
+    1.1+ default), MD5 only on the Cosmic-Duality/small-blob legs. Covers their point; no void sweeps
+    in the post-rebuild ledger. (Caveat: pre-rebuild legacy single-leg negatives are not re-anchored.)
+  - Issue #106 Part C sweep closure {MD5,SHA1,SHA256,PBKDF2}x{raw,hex,asis}x{CBC,CFB,OFB,CTR} x 4 blobs
+    mirrors our own commodity closure: consistent.
+  - Issue #106 2023-02-23 author hint (bit-reversed telegram) names password ingredients
+    "yellow blue primes matrixsumlist lastwordsbeforearchichoice yinyang" + "very last step is a true
+    giveaway": validates our RAW_PW composition. 14x14 grid color-frame claim (24 colored cells at
+    spiral positions 5 mod 8; row/col sums) is NOT locally verifiable (our clues/puzzle.png is a
+    1048x1556 composite, no 14x14 grid artifact on disk).
+  - Issue #111 Phase 3.2 inner-blob (salt b45a5e3d827593ca, sha-prefix 291dfd6f...) "unknown password
+    hint: raising the stakes without extra chances of winning" - ALREADY SOLVED in our archive: pw =
+    WIF(K_C1), EVP-MD5 -> B2_79.bin (79B, sha256 b40fce72...) reads K_S1/K_S2/E_S. We are ahead here.
+  - Live: gsmg.io/theseedisplanted STILL SERVES the original static jigsaw page (8 PNGs, hidden form);
+    the SPA root is unrelated. Endpoints followthewhiterabbit / TheArchitectChoice
+    / hopeisthequintessentialhumandelusion return no route; Wayback API unreachable from this network.
+  - Fresh gate dust (blk 964476/964501) traced: single 41.6k-sat sweep tx a751791b... to 8 fixed
+    addresses (864 -> gate1, 546 -> gate2, plus 6 vanity/dust addresses) - a dust/consolidation sweep,
+    NOT a puzzle clue.
+- REMAINING GAPS (ranked): (1) lead-0 dbbib/faed OPERATION (community agrees it is "the last
+  unexplained step"); (2) BetterHalf = Reduction(SOURCE_4) XOR gros[1161:1177] - SOURCE_4 is ON-PAGE
+  data (b64 "QvX0t8v3..XwGuN/jJ"), Reduction unknown, target H160s known - but the H/BH wave is
+  community-debunked (#106 Part B, #104 retraction) => low-medium; (3) the three never-archived
+  endpoints (need Wayback from a different network); (4) live jigsaw re-OCR (phrase already human-
+  confirmed, low).
+- NEGATIVE: no new alphabet for lead-0 (#106 "canonical values via Bifid square rows D=0,B=1,I=2,F=3,
+  H=4,C=5,E=6,G=7,A=8,K=9" is subsumed by the 9! closure). #109/#105 = fake-solution wave / repo-
+  abandoned noise.
+- IMPACT: closed the community-issue re-scan loop; confirmed our archive is current and ahead on the
+  inner-blob password; sharpens "still missing" to (operation, Halves-reduction, three dead-endpoint
+  contents, jigsaw OCR). Gates unchanged.
