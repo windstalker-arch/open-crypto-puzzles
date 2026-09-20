@@ -10866,3 +10866,11 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 - RESULT: tool confirms the standard 26-letter convention; no new parameterization or algorithm;
   no new battery surface. alice clone (late-253 followup) hung on network - aborted, no ~/alice.
 - IMPACT: none to gates.
+### late-255 (2026-09-20) -- ~/RabbitHole steer: inert (A2A agent framework, name-only resonance) (2026-09-20)
+- CONTEXT: steer "check ~/RabbitHole".
+- AUDIT: local clone (Sep 2) of VinsmokeSomya/RabbitHole - MIT LLM multi-agent orchestration
+  framework built on Googles A2A protocol (Google ADK / OpenAI Agent SDK, Streamlit CLI);
+  origin confirmed github.com/VinsmokeSomya/RabbitHole. No cipher/encryption/puzzle content
+  anywhere outside .venv (only filename hit: push_notification_auth.py). "Rabbit" here = the
+  A2A whiteboarding mascot, unrelated to the puzzle phrase (Alice rabbit). Inert; no battery.
+- IMPACT: none to gates.
