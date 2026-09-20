@@ -10581,3 +10581,16 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   positive rate) - random well-formed prefixes, no container semantics, no keys/strings of
   puzzle meaning. Island off=0 tag-13 item is a coincidental prefix, not a bignum document.
 - IMPACT: CBOR-as-encoding hypothesis for the on-disk payloads is closed. Gates unchanged.
+
+### late-233 (2026-09-20) -- TimothyClaeys/pycose steer audited: inert + COSE framing probe negative (2026-09-20)
+- CONTEXT: steer "check https://github.com/TimothyClaeys/pycose". Part of the CBOR/COSE thread
+  (NanoCBOR, twyatt cheatsheet, pycose).
+- AUDIT: pycose = Python implementation of CBOR Encoded Message Syntax (RFC 8152) - Encrypt0/
+  Encrypt/MAC0/MAC/Sign1/Sign + COSE_Key. Standard library, no puzzle content.
+- PROBE: COSE-CBOR messages are identified by a leading CBOR tag byte (Encrypt0=0xd8 0x10,
+  MAC0=0xd8 0x11, Sign1=0xd8 0x12, Sign=0xd8 0x62, Encrypt=0xd9 0x00 0x60, MAC=0xd9 0x00 0x61,
+  COSE_Key=0xc1). Checked B1_79.bin (head 9fa9db..), B2_79.bin (b0 6fa6..), cosmic_plain.bin
+  (44d1..), island212 (4c10..), finalpage-digit-streams.json (7b..): NO artifact starts with any
+  COSE tag; first-64-byte scan also clean (island "tag@24" is an incidental prefix, not a COSE item).
+- RESULT: inert; COSE framing hypothesis closed.
+- IMPACT: none to gates.
