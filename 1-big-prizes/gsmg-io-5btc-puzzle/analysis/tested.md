@@ -10568,3 +10568,16 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   0x9f/0xb0 correspondence is coincidental, not a CBOR structure.
 - RESULT: inert; probe negative.
 - IMPACT: none to gates.
+
+### late-232 (2026-09-20) -- twyatt CBOR-cheatsheet gist steer + full CBOR decode probe of artifacts: NEGATIVE (2026-09-20)
+- CONTEXT: steer "check https://gist.github.com/twyatt/99f329d7eb923f65f4e3c32e95fad00b" - gist is a
+  CBOR (RFC 7049) cheatsheet by twyatt. Follows the NanoCBOR steer (CBOR thread).
+- METHOD: referenced cheatsheet archived to usr/tmp/opencode/cbor_cheatsheet.md. Built a minimal
+  CBOR decoder (major types 0-7 incl. tags, definite-length only) and ran it over B1_79.bin,
+  B2_79.bin, ~/gsmg/cosmic_plain.bin (1327B), and the island-212 (audio offsets 8064..8276):
+  both a whole-file top-level parse and a sliding-offset scan for coherent self-delimiting items.
+- RESULT: NEGATIVE. No artifact parses as a coherent CBOR document. Sliding scans find only
+  chance-rate prefix matches (B1 17 / B2 14 / cosmic 269 / island 39 "items" at expected false-
+  positive rate) - random well-formed prefixes, no container semantics, no keys/strings of
+  puzzle meaning. Island off=0 tag-13 item is a coincidental prefix, not a bignum document.
+- IMPACT: CBOR-as-encoding hypothesis for the on-disk payloads is closed. Gates unchanged.
