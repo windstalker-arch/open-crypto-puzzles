@@ -10807,3 +10807,18 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   Dead-end hunt CLOSED as far as this network allows.
 - IMPACT: none to gates; removes the "endpoints might appear under a Wayback window" hope.
   Lead-0 remains the only genuinely open route (external input required).
+
+### late-250 (2026-09-20) -- Architect "irrational optimism and faith" steer: Architect-line word keyed-28 battery, NEGATIVE (2026-09-20)
+- CONTEXT: steer quoted the Architect's Revolutions credo (echoed by dead route
+  /hopeisthequintessentialhumandelusion; same scene as the two-doors line).
+- GAP: the Architect/Matrix-line WORDS were not yet used as keyed-28 checkerboard keywords
+  (only THEARCHITECTCHOICE/ARCHICHOICE singles were, late-243 G1).
+- BATTERY: 24 seeds from the scene+filmlines (HOPEISTHEQUINTESSENTIALHUMANDELUSION,
+  IRRATIONALOPTIMISMANDFAITH, FAITH, OPTIMISM, HOPE, DELUSION, THEARCHITECT, THEPROPHECY,
+  CHOSENONE, THESOURCE, ZION, MATRIX, REDPILL, MATHEMATICALLY..., + fusions) x maps
+  {CANON, POS} x escapes {(1,4),(4,1)} x streams {dbbib_91, faed_570}, certified VIC
+  checkerboard -> clean decodes -> {raw, lower, upper, reversed, nospace} -> both oracles.
+- ORACLES: oracle.py + oracle_dualite.py --selftest rc=0 immediately prior.
+- RESULT: N=576 oracle candidates x 2 gates, 0 MATCH either address.
+- IMPACT: Architect-line seed family closed; lead-0 crux/by-jump unchanged. Faith honored,
+  mechanically bounded; nothing broadcast; gates unchanged (escrow per late-94).
