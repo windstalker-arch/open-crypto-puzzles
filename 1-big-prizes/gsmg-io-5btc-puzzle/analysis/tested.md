@@ -10944,3 +10944,12 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   only two heuristic maps ever applied to these rows; the author-required map remains the crux.
 - IMPACT: none to gates; lead-0 narrowed from alphabet-search to map-search (smaller, but still
   needs an author-side hint - the map family - not pure compute).
+### late-262 (2026-09-20) -- tonylambiris gist steam: inert (hack.lu CTF packed XOR-key brute force) (2026-09-20)
+- CONTEXT: steer on gist d49109107951c964f42e8d74c0c6ea5c (py3, 1189B).
+- AUDIT: hack.lu CTF "packed" ahead-of-the-grid: brute-forces a 5-char repeating-key XOR over
+  printable-uppercase, keeping printable decodes. Mechanism = repeating-key XOR/Vigenere-XOR
+  streaming-key family - no such artifact in the gsmg evidence chain (9-symbol token alphabets
+  are checkerboard/VIC-era, XOR/OTP/Purple rows already closed); printability filter presumes
+  ASCII plaintext which a 9-symbol XOR ciphertext could not preserve.
+- RESULT: inert; closed without battery. (dict_keyed sweep continues detached.)
+- IMPACT: none to gates.
