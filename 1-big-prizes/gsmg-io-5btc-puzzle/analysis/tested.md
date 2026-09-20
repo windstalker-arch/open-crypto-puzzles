@@ -10679,3 +10679,14 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   via libtool; build-only, no functional/crypto content.
 - RESULT: inert; closed without battery.
 - IMPACT: none to gates.
+
+### late-241 (2026-09-20) -- ~/PKCS7-Padding audited: inert + pad-validity probe N/A (2026-09-20)
+- CONTEXT: steer "check ~/PKCS7-Padding" (origin GRISHNOV/PKCS7-Padding; HEAD 0e2f68c).
+- AUDIT: RFC 5652 PKCS#7 block-padding in C (addPadding/stripPadding + CLI), educational.
+- PROBE: PKCS7-pad-validity battery on certified blobs under EVP-BytesToKey-derived AES-128-CBC:
+  B1_79 and B2_79 are both 79 (=16*4+15) bytes -> len%16=15, i.e. NOT block-multiple CBC messages;
+  both are 32-byte-plus key-material buffers (the certified chain reads 79-byte blobs as
+  skeleton keys, not padded messages). Pad-validity is structurally N/A for them.
+- RESULT: inert; mechanism-probe N/A. No EVP decryption in the certified chain ever passes a
+  full padded CBC block, so no padding-oracle surface is introduced either.
+- IMPACT: none to gates.
