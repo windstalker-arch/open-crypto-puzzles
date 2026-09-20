@@ -10909,3 +10909,13 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   rotor machines closed family, no rotor artifacts); this is a hobbyist workbench for the user,
   not a lead-0 solver. Local patches diverge from upstream score.h/enigma.cpp - do not push.
 - IMPACT: none to gates.
+### late-259 (2026-09-20) -- DaWouw/SCWF steer: inert (CTF cipher toolbox, no straddling/VIC) (2026-09-20)
+- CONTEXT: steer "check https://github.com/DaWouw/SCWF".
+- AUDIT: JS CTF auto-identify/decode toolbox (2019, 80 stars). Full cipher inventory listed:
+  affine/atbash/baconian/base58/64/X/baudotmurray/bifid/caesar/code39/coltrans/digraph/ebcdic/
+  enigma/friedman/hash/lsb/maze/morse/otp/playfair/railfence/rotate/skip/substitute/transposition/
+  vigenere/viewstate/xor + keymaker/guessers. Everything maps 1:1 onto already-closed families;
+  NO straddling-checkerboard and NO VIC module (same gap as ClassicCrypto late-256). bifid.js is a
+  third independent Bifid impl, redundant after the secretpy byte-exact cross-check (late-245).
+- RESULT: inert; closed without battery.
+- IMPACT: none to gates.
