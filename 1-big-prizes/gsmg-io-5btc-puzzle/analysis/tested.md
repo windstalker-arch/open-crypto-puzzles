@@ -10883,3 +10883,16 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   point to extract. Every present family already closed; Bifid independently cross-checked late-245.
 - RESULT: inert; closed without battery.
 - IMPACT: none to gates.
+### late-257 (2026-09-20) -- alice ML cryptogram solver: setup COMPLETE (importable + forward OK) (2026-09-20)
+- CLONE: ~/alice (al-jshen/alice @ 521196a, depth 1), retried after late-253/254 network hang.
+- DEPS: einops+omegaconf installed; torch/numpy/scipy/tqdm already present. datasets still builds
+  pyarrow from source in background (training path only). wandb cannot build here (its mdist tries a
+  Go wandb-core build; Termux sysconfig platform parse fails) -> site-packages/wandb.py no-op shim
+  (init/login/Api/log/finish) satisfies the top-level imports in alice/utils.py and train*.py.
+- SMOKE: Transformer(vocab_size=27, dim=64, n_head=2, n_layer=2).forward on rand ints -> (2,32,27);
+  alice.utils imports clean. usage: cd ~/alice && python (models.transformer.Transformer / train.py).
+- CAVEATS: no pretrained weights (hosted at flatiron users site, ~GB) - fresh model is random; training
+  here is CPU-only and needs datasets+proper wandb. Applicability to lead-0 remains N/A (the crux is a
+  keyed 9-symbol checkerboard, not English substitution ciphertext) - this is a hobbyist workbench, not
+  a solver for the crux.
+- IMPACT: none to gates.
