@@ -10953,3 +10953,9 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   ASCII plaintext which a 9-symbol XOR ciphertext could not preserve.
 - RESULT: inert; closed without battery. (dict_keyed sweep continues detached.)
 - IMPACT: none to gates.
+### late-263 (2026-09-20) -- alexforencich/verilog-axis steer: inert (AXI-Stream FPGA IP cores) (2026-09-20)
+- CONTEXT: steer on github.com/alexforencich/verilog-axis.
+- AUDIT: FPGA AXI-Stream IP core components (FIFOS, adapters, verilog test benches; 2014-2025,
+  Alex Forencich golden-repo). Hardware bus-protocol library - zero crypto/puzzle nexus.
+- RESULT: inert; closed without battery.
+- IMPACT: none to gates.
