@@ -10840,3 +10840,15 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   content, Julia (not runnable-tool relevant here).
 - RESULT: inert; closed without battery.
 - IMPACT: none to gates.
+
+### late-253 (2026-09-20) -- al-jshen/alice steer: inert (ML substitution solver, N/A to lead-0) (2026-09-20)
+- CONTEXT: steer "check https://github.com/al-jshen/alice" (2025, Python, arxiv-class "ALICE:
+  Interpretable neural architecture for substitution ciphers"; transformer cryptogram solver).
+- AUDIT: name coincidence only - "ALICE" acronym (Architecture for Learning Interpretable
+  Cryptogram decEipherment), unrelated to the jigsaw alice phrase. Same applicability ruling
+  as the HF Cipher-AI T5 solver (late-243): it solves ENGLISH letter-substitution cryptograms;
+  our lead-0 streams are 9-symbol keyed-checkerboard/VIC output with no English-alphabet
+  anchor, and the crux (the keyed alphabet/interpreter leap) is not a learnable substitution
+  task. No GPU-relevant training runnable here regardless.
+- RESULT: inert; closed without battery.
+- IMPACT: none to gates.
