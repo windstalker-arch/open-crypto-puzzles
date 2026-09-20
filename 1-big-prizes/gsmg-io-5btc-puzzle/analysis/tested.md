@@ -10740,3 +10740,20 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   late-220/221).
 - RESULT: operational, no battery run (no steer beyond install). Lead-0/keyed-alphabet crux
   unchanged. Nothing broadcast; gates unchanged (escrow per late-94).
+
+### late-245 (2026-09-20) -- secretpy independent Bifid cross-check: PASS (byte-identical to certified) (2026-09-20)
+- CONTEXT: "cross check" (response to my offer after secretpy install late-244). Second
+  independent codebase for the fractionation family (after pycipher Beaufort late-221).
+- METHOD: secretpy.Bifid.decrypt with alphabet="DBIFHCEGAKLMNOPQRSTUVWXYZ" (keyed square,
+  J dropped = the certified construction, period=full) over the AUTHORITATIVE dbbib_91 /
+  faed_570 (uppercased; lower-case stream vs upper square is the only wrinkle - secretpy
+  is case-sensitive).
+- RESULT: faed_570 -> head "BTCSEEDDEOEM..." sha256 0c5d984f... (== certified WITNESS A1);
+  dbbib_91 -> head "BDFCDCHLBEBQFCFW..." sha256 ac4f5a9f... == EXACTLY the late-59 recorded
+  hash. So the certified Bifid(DBIFHCEG) decodes are NOT an implementation artifact - a
+  second library reproduces both byte-for-byte.
+- ADFGX/ADFGVX: N/A as a cross-check here - their ciphertext alphabet is {A,D,F,G,X} (+V),
+  incompatible with the 9-symbol {a..i} streams; no battery.
+- IMPACT: lead-0 denial-hardening only (implementation-bug vector eliminated for Bifid);
+  crux unchanged. Oracle not invoked (certification is hash-against-record, not gate).
+  Nothing broadcast; gates unchanged (escrow per late-94).
