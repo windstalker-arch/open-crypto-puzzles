@@ -10919,3 +10919,12 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   third independent Bifid impl, redundant after the secretpy byte-exact cross-check (late-245).
 - RESULT: inert; closed without battery.
 - IMPACT: none to gates.
+### late-260 (2026-09-20) -- columnar-transposition-brute-force-decipher steer: inert (pycipher ColTrans permutation enumeration, closed) (2026-09-20)
+- CONTEXT: steer on the hywhuangyuwei columnar-transposition brute-force repomirror.
+- AUDIT: trivial Python one-off (2019, 7KB) that enumerates all key permutations via pycipher
+  ColTrans and dictionary-scores the decodes. Mechanism = straight columnar key search - exactly the
+  faed-family read already closed (late-58 base-9 pair reading; late-143 rabbit_key_columnar;
+  late-207 phase1sums_transpose; late-246 ADFGX-cracker audit notes 15x38/38x15 reads closed);
+  pycipher itself was audited/installed at late-220/221. No new lattice point, no new scorer.
+- RESULT: inert; closed without battery.
+- IMPACT: none to gates.
