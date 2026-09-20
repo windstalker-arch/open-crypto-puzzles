@@ -10971,3 +10971,20 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   149-digit VIC decode and adds no digit-stream convention to sweep.
 - RESULT: inert; closed without battery. Secretpy stays a workbench lib (Bifid cross-check only).
 - IMPACT: none to gates.
+### late-265 (2026-09-20) -- Interpreter determination: the page's OWN readers are certified; dbbib needs a positional/second-layer, NOT a static family
+- QUESTION + ANSWER: "what kind of interpreter do we need?" -> the page self-certifies THREE readers (not a new map):
+  1) contiguous a/b runs, a=0,b=1, 8 bits/char -> ASCII words (matrixsumlist, enter) -- bifid_repro-era CERTIFIED.
+  2) z-delimited {a..i}+o groups, a=1..i=9/o=0, digit-string -> single big decimal -> hex -> ASCII
+     -> 'lastwordsbeforearchichoice' (z_segment_1, tokens 766-828) and 'thispassword' (z_segment_2, 830-858). RE-PROVEN this session.
+  3) faed run (195-764) --Bifid(keyed square DBIFHCEGAK..., J dropped, row-major, half-split, period=full)-->
+     plaintext head BTCSEEDDEOEMC... (40 chars vs stored), then position-split -> even_stream(285)/odd_pre_reduction(285),
+     drop {I,O} (29) -> object_256. ALL sha256 vs stored; bifid_repro.py selfcert rc=0.
+- NEW NEGATIVE (witnessed): certified reader #2 swept over EVERY window (len 6-40) of pure-{a..i,o} substrings
+  of dbbib run (0-90) and faed run (195-764): 0 English keyword hits. WITNESS: same code reproduces both certified
+  phrases verbatim from their z-groups. => numeric word-reader is NOT the dbbib/faed interpreter.
+- dbbib run (0-90) under certified reader #3 (same Bifid grid, period=full): head BDFCDCHLBEBQFCFW... -> garbage,
+  NOT a text head (unlike faed->BTCSEED). dbbib has NO certified page role so far.
+- CONCLUSION: interpreter needed for lead-0 is NOT any static family member (not a bijection, not the page's
+  numeric word-reader, not the page's Bifid square at full period). It must be positional/second-layer:
+  a period/keyed-square variant bound to the stream, or a keyless second layer applied between stream and board.
+- IMPACT: gates untouched; dbbib/faed remain the open lead; map-search trivially NOT the answer (family closed).
