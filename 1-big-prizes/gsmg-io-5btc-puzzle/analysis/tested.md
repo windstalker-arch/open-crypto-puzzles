@@ -10690,3 +10690,16 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 - RESULT: inert; mechanism-probe N/A. No EVP decryption in the certified chain ever passes a
   full padded CBC block, so no padding-oracle surface is introduced either.
 - IMPACT: none to gates.
+
+### late-242 (2026-09-20) -- Matrix "Architect Choice" two-doors steer: survivor-selection battery NEGATIVE (2026-09-20)
+- CONTEXT: steer quoted the Matrix Revolutions/Architect final scene (Door Right = return to
+  Source/reload Matrix/rebuild Zion; Door Left = return to Matrix/save Trinity). Maps thematically
+  onto the certified password vocabulary term "archichoice"; NO algorithmic content of its own.
+- BATTERY (bounded, lead-0 "selection to rebuild" family, new for the streams):
+  positions from dbbib(91) -> pick INTO faed(570) fwd/rev walk; every-N decimations of faed and
+  dbbib (N in 2..9,13,23,38); left-half/right-half doors and LR/RL interleaves of faed; remove
+  most-frequent letter groups as excluded "non-survivors" (top 2/3/5). All outputs stay in
+  {a..i}; base9->hex->ASCII reads void; no printable-phrase hit anywhere.
+- RESULT: negative; the two-door/selection family adds no lift over the ~70 families already
+  closed. Confirms the streams need the keyed-alphabet leap (lead-0 crux unchanged).
+- IMPACT: none to gates; certified chain untouched. Flavor steer recorded, closed at bound.
