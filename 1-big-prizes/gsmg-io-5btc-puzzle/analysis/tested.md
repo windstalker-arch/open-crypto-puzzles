@@ -10959,3 +10959,15 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   Alex Forencich golden-repo). Hardware bus-protocol library - zero crypto/puzzle nexus.
 - RESULT: inert; closed without battery.
 - IMPACT: none to gates.
+### late-264 (2026-09-20) -- secretpy API docs audit: secretpy.Vic is a non-standard letter-substitution, INERT (2026-09-20)
+- CONTEXT: steer on secretpy.readthedocs.io/en/latest/api.html.
+- AUDIT: full class inventory (ADFGX/ADFGVX/Affine/Atbash/Autokey/Bazeries/Beaufort/Bifid/
+  Caesar/Progressive/Chao/Columnar/FourSquare/Gronsfeld/Keyword/Myszkowski/Nihilist/Playfair/
+  Polybius/Porta/Rot/Scytale/SimpleSub/ThreeSquare/Trifid/TwoSquare/Vic/Vigenere/Zigzag). All
+  except Vic already in the closed inventory (Bifid independently byte-cross-checked late-245).
+- VIC PROBE: secretpy.Vic(key="0452", alphabet=30-char) tested live: encrypt("attackatdawn") ->
+  "anwhrsanroaeer" (14 chars), decrypt round-trips. It is a LETTER->LETTER 1:1 substitution with
+  char insertion - NOT a digit-output straddling checkerboard; cannot reproduce our certified
+  149-digit VIC decode and adds no digit-stream convention to sweep.
+- RESULT: inert; closed without battery. Secretpy stays a workbench lib (Bifid cross-check only).
+- IMPACT: none to gates.
