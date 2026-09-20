@@ -10896,3 +10896,16 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   keyed 9-symbol checkerboard, not English substitution ciphertext) - this is a hobbyist workbench, not
   a solver for the crux.
 - IMPACT: none to gates.
+### late-258 (2026-09-20) -- the-lambda-way/bruteforce-enigma steer: setup COMPLETE (built + smoke OK) (2026-09-20)
+- CLONE/BUILD: ~/bruteforce-enigma (C++20, g++). Two local build patches for Termux:
+  (1) makefile $TIME pointed at missing /usr/bin/time -> repo-local ./notime wrapper (drops
+  --format/-- and execs); (2) std::execution::par_unseq unavailable in Termux libc++ (no TBB)
+  -> stripped the policy argument from the 22 live sites in source/enigma.cpp + source/score.h
+  (copies/transform_reduce keep valid sequential overloads). Build: crack_enigma 2.2MB OK.
+- SMOKE: ./crack_enigma runs the bundled breaker and recovers clean English from its demo
+  ciphertext (THE ENIGMA CIPHER WAS A FIELD CIPHER USED BY THE GERMANS DURING WORLD WAR II...),
+  scores ~ -1085, multiple ring/rotor ties expected. I.e. tool operational.
+- RELEVANCE: Enigma was NEVER in the puzzles evidence/hint chain (VIC/Bifid/straddling era,
+  rotor machines closed family, no rotor artifacts); this is a hobbyist workbench for the user,
+  not a lead-0 solver. Local patches diverge from upstream score.h/enigma.cpp - do not push.
+- IMPACT: none to gates.
