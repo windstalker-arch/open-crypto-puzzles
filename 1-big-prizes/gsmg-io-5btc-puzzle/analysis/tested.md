@@ -10988,3 +10988,34 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   numeric word-reader, not the page's Bifid square at full period). It must be positional/second-layer:
   a period/keyed-square variant bound to the stream, or a keyless second layer applied between stream and board.
 - IMPACT: gates untouched; dbbib/faed remain the open lead; map-search trivially NOT the answer (family closed).
+### late-266 (2026-09-20) -- Decentraland chain machine-verified end-to-end: author estate #955 scene + audio; no static-map content for lead-0
+- STEER: user: "The White Rabbit Club, Location: Coordinates -65,85 (Festival Land area)"; "-65,85 or -63,86";
+  then three check targets: github.com/decentraland-scenes/white-rabbit,
+  decentraland.org/marketplace/contracts/0x959e104e1a4db6317fa58f8295f586e1a978c297/tokens/955,
+  and a MVMF22 wearable token. Re-opens NOTE 27 (estate was parked 2026-09-10 as "probably a different puzzle").
+- ESTATE #955 (author's ONLY DCL estate, owner 0x5D801b2B0B216790A49898b322246282547b546b):
+  name "gsmg.io magic puzzle piece", desc "White Rabbits everywhere", 2 parcels (-41,-16)/(-41,-17), created 2018-11-08.
+  Marketplace total=1 for that owner -> no other estate. NOT at -65,85.
+- WHITE RABBIT CLUB (user coord -65,85 / -63,86): scene repo decentraland-scenes/white-rabbit = DCL scaffold
+  nightclub, estate layout 24 parcels = 6x4 (x -66..-61, y 85..88), base -66,85. LIVE scene at -65,85 is a
+  DIFFERENT 16-parcel "The Voice" deployment (timestamp 1683879477311), owner field EMPTY, not the gsmg author.
+  -> The club scene is a Decentraland-scenes TEMPLATE example; -65,85/-63,86 are inside its 6x4 estate but
+  the estate is not owned by the puzzle author. No author cross-link beyond the white-rabbit motif.
+- DEPLOYED SCENE on estate #955 (peer catalyst, entities/scene pointer -41,-16): SINGLE deployment
+  (timestamp 1582211536189 = 2020-02-20), title "GSMG.io Puzzle piece", owner = author address, main bin/game.js.
+  Content = ONLY 3 files: bin/game.js (164915 B compiled SDK skeleton), scene.json (title/owner/parcels only),
+  sounds/puzzlepiece.mp3. No models, no textures, no text content. game.js grep: NO puzzle strings anywhere
+  (pure @decentraland engine runtime + empty scene scaffolding).
+- AUDIO RE-VERIFY (correcting late-92's poisoned artifact): the peer load-balancer returned an 84-byte file
+  that is literally an HTTP 404 JSON body ("No content found with hash ..."), NOT the audio. Real file from
+  peer-eu1/peer-lb/peer-ec2: 212031 B, ID3v2.3 from Logic Pro X 10.4.1, duration 5.198 s, stereo 44.1kHz.
+  Fresh STFT spectrograms at nperseg 1024/2048/4096 over L, R, L-R (invert-L remix), and mono: NO painted
+  glyphs, NO narrowband text carriers. Only broadband low-freq pad + sparse 2.6kHz transients.
+  -> Confirms late-92 conclusion on the REAL file: puzzlepiece.mp3 carries no spectrogram message.
+- INTERPRETER RELEVANCE: The White Rabbit Club is a 24-cell 6x4 map, and the puzzle's own follow-white-rabbit-grid.json is ALSO 24
+  cells (15 blue + 9 yellow over a 14x14 range). That 24-cell coincidence is noted but NOT a static
+  interpreter: mapping the 24 DCL parcels onto the 24-cell grid yields no connection to dbbib/faed (no author
+  ownership, no content, no colors = no key). GC: the DCL chain is fully verified and does not supply a static
+  map for lead-0; the interpreter-per-position / second-layer conclusion (late-265) stands.
+- WITNESS: estate 955 API (name/desc/parcels/owner), peer catalyst scene+audio hashes (QmeRy5MjmEZ2...),
+  ffprobe duration/streams, repeated spectrogram runs. rc=n/a (no oracle battery).
