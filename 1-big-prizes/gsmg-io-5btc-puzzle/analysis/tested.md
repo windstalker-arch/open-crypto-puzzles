@@ -10547,3 +10547,24 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   No battery (precedents late-211/216/222/225).
 - RESULT: inert; closed without battery.
 - IMPACT: none to gates. Registers the last gsmg-keyword repo hit as noise.
+
+### late-230 (2026-09-20) -- steer "rbrbrbrbbb" color-read battery: 0 MATCH both gates (2026-09-20)
+- CONTEXT: user steered token "rbrbrbrbbb" as a COLOR READ (r=red, b=blue), matching the
+  puzzle's red/blue color-frame language (issue #106: K,B=1 / W,Y=0 bit conventions).
+- METHOD: bit-string "rbrbrbrbbb" under both conventions (r=1/b=0 and r=0/b=1), forward and
+  reversed: 1010101000(=680/0x2A8), 0101010111(=343/0x157), + 5-bit chunk letters (UH / JW) +
+  spelling forms. 9 candidate strings fed to BOTH certified oracles (selftests rc=0).
+- RESULT: 0 MATCH both gates. Token not a real handle either (GitHub 404 for rbrbrbrbbb and
+  variants).
+- IMPACT: closed; gsmg keyword/user collision noise. None to gates.
+
+### late-231 (2026-09-20) -- bergzand/NanoCBOR steer audited: inert + CBOR-prefix probe negative (2026-09-20)
+- CONTEXT: steer "check https://github.com/bergzand/NanoCBOR".
+- AUDIT: NanoCBOR = tiny CBOR (RFC 7049) encoder/decoder for embedded/constrained devices
+  (C, Meson/Ninja, ~600-800B flash). No puzzle content. No battery.
+- PROBE (CBOR reading of our artifacts, since CBOR is a plausible-but-unused encoding):
+  B1_79.bin first byte 0x9f (major-type 4, indefinite array) and B2_79.bin 0xb0 (major 5) are
+  just the first bytes of K_C1 / K_S1 key material - full-length CBOR parse impossible; the
+  0x9f/0xb0 correspondence is coincidental, not a CBOR structure.
+- RESULT: inert; probe negative.
+- IMPACT: none to gates.
