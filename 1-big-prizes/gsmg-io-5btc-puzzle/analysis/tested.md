@@ -10831,3 +10831,12 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   transliteration). No non-ASCII artifact to gain from it.
 - RESULT: inert; closed without battery.
 - IMPACT: none to gates.
+
+### late-252 (2026-09-20) -- ucf-research/BMP-library steer: inert (2026-09-20)
+- CONTEXT: steer "check https://github.com/ucf-research/BMP-library".
+- AUDIT: Julia implementation of "Binary Matrix Products" - a compact tensor-network
+  representation of Boolean functions related to OBDDs (arxiv 2505.01930), 2024 academic
+  library. Name-only resonance with "matrixsumlist"; no puzzle anchors, no ciphertool
+  content, Julia (not runnable-tool relevant here).
+- RESULT: inert; closed without battery.
+- IMPACT: none to gates.
