@@ -10928,3 +10928,19 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   pycipher itself was audited/installed at late-220/221. No new lattice point, no new scorer.
 - RESULT: inert; closed without battery.
 - IMPACT: none to gates.
+### late-261 (2026-09-20) -- Certified FUBCDORA alphabet as direct map on dbbib/faed: NEGATIVE + reframes crux (2026-09-20)
+- 
+  PROBING: the certified_vic selfcert proves the puzzles OWN keyed checkerboard alphabet
+  FUBCDORA.LETHINGKYMVPS.JQZXW (escapes 1,4) decodes the 149-digit block verbatim to
+  INCASEYOU...FUNDSTOLIVE. That certified alphabet was swept here as a MAP on dbbib_91/faed_570
+  for the first time: alphas {certified, halves-swapped, alt3} x {CANON, POS} x escapes
+  {(1,4),(4,1)} x {dbbib, faed}: 24 decodes, q=0 everywhere but ALL uniform flat letter soup
+  (no English, no word fragments) - identical noise class to the random-keyword batteries.
+- TOOL retained: tools/lead0_eyeball.py (fixed: lowercase-only clean() was rejecting ALL-CAPS
+  certified decodes; M.__name__ on dicts) renders the certified keyed-family decodes for human
+  eyes - inspection confirms no English under any G1-G4 keyword either.
+- REFRAME: the leap can NOT be the checkerboard alphabet or the keyword (certified alpha is known);
+  it is the a..i/o->DIGIT MAP (or a second layer) for dbbib/faed specifically. CANON/POS are the
+  only two heuristic maps ever applied to these rows; the author-required map remains the crux.
+- IMPACT: none to gates; lead-0 narrowed from alphabet-search to map-search (smaller, but still
+  needs an author-side hint - the map family - not pure compute).
