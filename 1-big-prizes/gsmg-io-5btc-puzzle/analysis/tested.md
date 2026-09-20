@@ -10658,3 +10658,16 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   support.
 - RESULT: inert; DCBOR reading of the blobs closed. Blockchain Commons thread done.
 - IMPACT: none to gates.
+
+### late-239 (2026-09-20) -- gist KeysSoze/7109a7f... "Standard Encrypted Wallet Payload" BIP draft: document-only, inert (2026-09-20)
+- CONTEXT: steer "check https://gist.github.com/KeysSoze/7109a7f0455897b1930f851bde6337e3".
+- AUDIT: single-file gist bip_wallet_payload.mediawiki (41860B, created 2025-09-05), a DRAFT BIP
+  by "Keyser Soze" (usual-suspects alias; unrelated to puzzle author): canonical CBOR wallet
+  payload (RFC 8949 + BIP380 descriptors), to be wrapped in COSE_Encrypt0/-Encrypt envelopes.
+  Document only - no tools/artifacts.
+- RULING: payload is required to be a deterministic CBOR MAP (spec test vectors all start
+  0xa3/0xa4...) inside a COSE-tagged envelope. B1_79 heads 0x9f (indefinite array), B2 0xb0
+  (map but incoherent key-material blob); no COSE tag (late-233). All CBOR/COSE/dCBOR readings
+  of our artifacts were already negative (late-232/233/238); this draft points nowhere on-blob.
+- RESULT: inert; closes at bounded level. CBOR-family thread fully closed.
+- IMPACT: none to gates.
