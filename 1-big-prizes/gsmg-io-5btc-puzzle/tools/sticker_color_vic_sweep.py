@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """sticker_color_vic_sweep.py -- the SalPhaseIon sticker-strip COLOR ORDER as keyed-28
-vowel-ish alphabet keywords over dbbib(69)/faed(570), certified VIC decoder, both gates.
+vowel-ish alphabet keywords over dbbib(91)/faed(570), certified VIC decoder, both gates.
 
-The dbbib stream is read from the image-verified 69-token form in
-data/finalpage-digit-streams.json (`dbbib`). The earlier on-disk `tmp/grid_dbbib.txt`
-91-token form is a transcription artifact (a spurious 22-char middle run absent from the
-image) and is NOT used here.
+STREAM CORRECTION (2026-09-19): the dbbib textarea on the archived live page holds 91
+letters; both Wayback captures (2023-06-01 and 2026-04-05, HTTP 200) reproduce the
+91-token stream `dbbib_91` byte-for-byte and the binary runs [91:195]="matrixsumlist",
+[959:999]="enter", z-segments and faed(570) identically. The 69-token `dbbib` field is a
+shallow-OCR crop that dropped chars [44:66]; every 69-stream decode is void and every
+'??_vic69_*' artifact is superseded. This tool therefore reads the AUTHORITATIVE 91-token
+form d["dbbib_91"] (same stream certified_vic.py already uses).
 
 Genuinely-new cell vs the recorded rows:
 - late-83/84/86/86b/90/93: the strip's color ORDER was oracle-fed only as raw LITERAL
@@ -51,13 +54,13 @@ OGDIR = "/data/data/com.termux/files/home"
 DATA = os.path.join(ROOT, "data", "finalpage-digit-streams.json")
 d = json.loads(Path(DATA).read_text())
 FAED = d["faed_570"].rstrip("z")
-DBBI = d["dbbib"]
-assert len(FAED) == 570 and len(DBBI) == 69, (len(FAED), len(DBBI))
+DBBI = d["dbbib_91"]
+assert len(FAED) == 570 and len(DBBI) == 91, (len(FAED), len(DBBI))
 
 ORACLE_SMALL = os.path.join(ROOT, "tools", "oracle.py")
 ORACLE_DUAL = os.path.join(ROOT, "tools", "oracle_dualite.py")
-OUT = os.path.join(OGDIR, "tmp", "sticker_color_vic69_cands.txt")
-OUT_LIT = os.path.join(OGDIR, "tmp", "sticker_color_vic69_literals.txt")
+OUT = os.path.join(OGDIR, "tmp", "sticker_color_vic91_cands.txt")
+OUT_LIT = os.path.join(OGDIR, "tmp", "sticker_color_vic91_literals.txt")
 
 # Pixel-certified strip class runs (analysis/sticker_bands_color.txt, two-pass identical)
 BOTTOM = "RbRRbbRbRRORR"   # 13 tiles L->R
@@ -195,7 +198,7 @@ def main(gen_only=False):
             alphab.append((seed, a))
     print(f"keyed-28 alphabets: {len(alphab)}", flush=True)
 
-    streams = {"dbbib69": DBBI, "faed570": FAED}
+    streams = {"dbbib91": DBBI, "faed570": FAED}
     maps = {"CANON": CANON, "POS": POS}
     escape_pairs = [(a, b) for a in range(10) for b in range(10) if a != b]
     escape_pairs = [(1, 4)] + [p for p in escape_pairs if p != (1, 4)]

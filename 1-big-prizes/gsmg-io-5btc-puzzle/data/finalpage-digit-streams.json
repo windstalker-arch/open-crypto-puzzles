@@ -1,0 +1,90 @@
+{
+  "_provenance": {
+    "source": "SalPhaseIon page live textarea (corrected 2026-09-12) + community README transcription",
+    "recovered": "2026-08-27",
+    "status": "raw, undecoded",
+    "note": "CORRECTION (2026-09-12, supersedes '_provenance' OCR claim below): the AUTHORITATIVE section-1 stream is the 91-token dbbib (tokens 0-90 of the live page), verified byte-identical on the live site (HTTP 200, gsmg.io/89727c...), Wayback Machine snapshots 2023-06-01 and 2026-04-05, and community README line 371; see analysis/tested.md rows 193-199. The 69-token value in 'dbbib' below is the superseded shallow-OCR crop of salphaseion_enhanced.png (its 22-char middle run bfdhbeffcdbbfcccgbfbeegg was dropped); the ORIGINAL 'image=69' provenance was itself the OCR artifact (rows 193/4701). Field 'dbbib_91' holds the authoritative stream; 'dbbib' is retained for tool back-compat.",
+    "dbbib_authoritative_outcome": "SETTLED 2026-09-19: dbbib is the 91-token stream. Wayback CDX lists 8 captures of gsmg.io/89727c...; raw id_ fetches of 20230601222752 and 20260405154227 (HTTP 200) reproduce dbbib[0:91]=dbbib_91 AND binary[91:195]->'matrixsumlist', faed[195:765], z_seg1/z_seg2, 'shabef', binary[959:999]->'enter' byte-identically. The 69-token 'dbbib' field is the superseded shallow-OCR crop (dropped [44:66]); all *_vic69_* artifacts and any 69-stream sweep are VOID. Tools must read d['dbbib_91'] (as certified_vic.py does). See analysis/tested.md late-204."
+  },
+  "dbbib": "dbbibfbhccbegbihabebeihbeggegebebbgehhebhhfbaggecbedcibfbffgigbeeeabe",
+  "dbbib_len": 69,
+  "faed_570": "faedggeedfcbdabhhggcadcfeddgfdgbgigaaedggiafaecghggcdaihehahbahigceifgbfgefgaifabifagaegeacgbbeagfggeeggafbacgfcdbeiffaafcidahgdeefghhcggaegdebhhegeghcegadfbdiagefcicggifdcgaaggfbigaicfbhecaecbceiaicebgbgiecdeggfgegaedggfiiciiififhggcgfgdcdggefcbeeigefibgibggghhfbcgifdehedfdagicdbhicgaiedaehahghhcihdghfhbiicecbiichihiiigiddgehhdfdchcbafgfbhaheagegecafehgcfggggcagfhhghbaihidiehhfdeggdgcihggggghadahigigbgecgedfcdggaccdehiicigfbffhggaeidbbeibbeiifdgfdhieeeieeecifdgdahdiggfhegfiaffiggbcbcehceabfbedbiibfbfdedeehgigfaaiggagbeiichiedifbehgbccahhbiibibbibdcbahaidhfahiihicz",
+  "faed_570_len": 570,
+  "faed_trailing_z": true,
+  "alphabet": "a b c d e f g h i (plus trailing z as a separator marker on faed)",
+  "canonical_value_mapping": {
+    "note": "proposed by the puzzle's own Bifid square 'DBIFHCEG' row convention; a lead, not confirmed",
+    "D": 0,
+    "B": 1,
+    "I": 2,
+    "F": 3,
+    "H": 4,
+    "C": 5,
+    "E": 6,
+    "G": 7,
+    "A": 8,
+    "K": 9
+  },
+  "dbbib_counts": {
+    "a": 3,
+    "b": 19,
+    "c": 4,
+    "d": 2,
+    "e": 15,
+    "f": 5,
+    "g": 9,
+    "h": 7,
+    "i": 5
+  },
+  "faed_570_counts": {
+    "a": 54,
+    "b": 49,
+    "c": 52,
+    "d": 49,
+    "e": 69,
+    "f": 57,
+    "g": 107,
+    "h": 58,
+    "i": 75,
+    "z": 1
+  },
+  "z_segment_1": "agdafaoaheiecggchgicbbhcgbehcfcoabicfdhhcdbbcagbdaiobbgbeadedde",
+  "z_segment_1_len": 63,
+  "z_segment_2": "cfobfdhgdobdgooiigdocdaoofidh",
+  "z_segment_2_len": 29,
+  "note_z_segments": "middle-band z-delimited word-groups split off the 1075-token page capture (live_salphaseion.txt) at token positions raw[766:829] and raw[830:859]; alphabet {a..i} plus the letter o, with z as a separator at token positions 765, 829, 859, 958. First recorded verbatim here 2026-09-05 (analysis/tested.md sections 125/157); seg1/seg2 were previously quoted only inline in tested.md.",
+  "binary_ab_runs": {
+    "note": "contiguous a/b token runs decoded with a=0, b=1, 8 bits per ASCII char; confirmed against the page's decoded instruction tokens (sections 14-18/44)",
+    "run_1_tokens_91_194_len_104": "matrixsumlist",
+    "run_2_tokens_959_998_len_40": "enter"
+  },
+  "page_anatomy": {
+    "note": "token-position map of the 1075-token body (live_salphaseion.txt, recorded 2026-09-05)",
+    "dbbib_run_tokens_0_90": 91,
+    "matrixsumlist_binary_run_tokens_91_194_len_104": "a/b -> 'matrixsumlist'",
+    "faed_run_tokens_195_764_len_570": "Bifid(DBIFHCEG, full period) -> plaintext head 'BTCSEED...'",
+    "faed_trailing_z_token_765": "word separator",
+    "z_segment_1_tokens_766_828_len_63": "alphabet {a..i}+o",
+    "z_token_829": "word separator",
+    "z_segment_2_tokens_830_858_len_29": "alphabet {a..i}+o",
+    "z_token_859": "word separator",
+    "literal_phrase_tokens_860_896": "'shabef our first hint is your last command' (letter tokens)",
+    "dualite_blob_base64_tokens_897_958": "U2FsdGVkX18tP2/gbcl... (CosmicDuality blob, salt 2d3f6fe06dc950e6)",
+    "z_token_958": "separator",
+    "enter_binary_run_tokens_959_998_len_40": "a/b -> 'enter'",
+    "remaining_tokens_999_1074": "base64 'QvX0t8v3...' tail"
+  },
+  "dbbib_91": "dbbibfbhccbegbihabebeihbeggegebebbgehhebhhfbabfdhbeffcdbbfcccgbfbeeggecbedcibfbffgigbeeeabe",
+  "dbbib_91_len": "91",
+  "dbbib_91_counts": {
+    "a": 3,
+    "b": 25,
+    "c": 8,
+    "d": 4,
+    "e": 18,
+    "f": 10,
+    "g": 10,
+    "h": 8,
+    "i": 5
+  }
+}
