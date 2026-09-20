@@ -10538,3 +10538,12 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 - IMPACT: the BetterHalf/Halves lead is closed at the locally-testable level; consistent with
   #106's debunking. Gates unchanged. Remaining open: lead-0 dbbib/faed operation; the three
   never-archived endpoint contents (need Wayback from an unblocked network); live jigsaw OCR.
+
+### late-229 (2026-09-20) -- robcinko/gsmgwsms audited: inert (2026-09-20)
+- CONTEXT: steer "check robcinko" (hit in GitHub repo search for "gsmg"; 4 stars, pushed 2022).
+- AUDIT: repo = "gsmgGWsms": a Python utility that reads the raw TCP stream from a Yeastar TG
+  series GSM hardware gateway and parses out SMS number + content to a file. No crypto, no
+  puzzle material, no staging/site references - pure keyword collision (GSM gateway vs GSMG.io).
+  No battery (precedents late-211/216/222/225).
+- RESULT: inert; closed without battery.
+- IMPACT: none to gates. Registers the last gsmg-keyword repo hit as noise.
