@@ -57,16 +57,33 @@
   "difficulty_note": "the stage chain to the final page is fully solved and reproducible; the 256-symbol object the puzzle's own Bifid step produces has been tested as a direct 32-byte key reduction across roughly 335.7 million candidates with 0 match; the small blob's AES-decrypt pipeline is certified but no password has been found; a further 116,043-candidate replay of historical literal password guesses is also negative and explicitly partial (dynamically-constructed candidates from the same scripts were never replayed); the larger Dualite blob, which likely gates the second address, has never had any password tested against it",
   "tested_total": { "candidates": 337199235, "families": 10, "certified": true },
   "leads": [
-    { "rank": 1, "title": "re-run anything tested through the shipped oracle, whose key derivation was wrong until 2026-08-19", "cost": "cost of the original sweep", "status": "open" },
-    { "rank": 2, "title": "the small blob is published on the SalPhaseIon page, whose own text names its password", "cost": "hours", "status": "open" },
-    { "rank": 3, "title": "replay the dynamically-constructed candidates a filter bug never reached", "cost": "hours-to-days", "status": "open" },
-    { "rank": 4, "title": "determine whether the 256-symbol object is the right target at all", "cost": "hours", "status": "open" },
-    { "rank": 5, "title": "identify the single tool reportedly used to build every phase", "cost": "hours", "status": "open" },
-    { "rank": 6, "title": "follow esrever, the earliest published hint", "cost": "minutes-to-hours", "status": "open" },
-    { "rank": 7, "title": "read the 29 dropped letters as their own message", "cost": "minutes", "status": "open" }
+    { "rank": 1, "title": "decode the two raw digit streams on the final page (dbbi/91 and faed/570; see data/finalpage-digit-streams.json)", "cost": "insight; naive reads negative", "status": "open" },
+    { "rank": 2, "title": "re-run anything tested through the shipped oracle, whose key derivation was wrong until 2026-08-19", "cost": "cost of the original sweep", "status": "open" },
+    { "rank": 3, "title": "the small blob is published on the SalPhaseIon page, whose own text names its password", "cost": "hours", "status": "open" },
+    { "rank": 4, "title": "replay the dynamically-constructed candidates a filter bug never reached", "cost": "hours-to-days", "status": "open" },
+    { "rank": 5, "title": "determine whether the 256-symbol object is the right target at all", "cost": "hours", "status": "open" },
+    { "rank": 6, "title": "identify the single tool reportedly used to build every phase", "cost": "hours", "status": "open" },
+    { "rank": 7, "title": "follow esrever, the earliest published hint", "cost": "minutes-to-hours", "status": "open" },
+    { "rank": 8, "title": "read the 29 dropped letters as their own message", "cost": "minutes", "status": "open" }
   ],
   "solutions": [],
-  "artifacts": [],
+  "artifacts": [
+    {
+      "path": "data/dcl_worldmap/tiles_current_v1.json",
+      "sha256": "261da241cfc0dcf75e4c233b58483deb43930ad1da517ae8763e267faf168bb0",
+      "source": "https://api.decentraland.org/v1/tiles (2026-09-20), ASCII-sanitized"
+    },
+    {
+      "path": "data/dcl_worldmap/tiles_20201115.json",
+      "sha256": "a96f5f23627dda7fe8f60009b3b64ccbbf050c83a90b26ee295797731d69e3aa",
+      "source": "https://web.archive.org/web/20201115223804/https://api.decentraland.org/v1/tiles, ASCII-sanitized"
+    },
+    {
+      "path": "data/dcl_worldmap/tiles_20190503.json",
+      "sha256": "1f8c9c3829b311cc5b120893f91349623dc89c2eaed740a7c89edaf162fc3a22",
+      "source": "https://web.archive.org/web/20190503170403/https://api.decentraland.org/v1/tiles, ASCII-sanitized"
+    }
+  ],
   "sources": [
     { "title": "GSMG.io, platform site", "url": "https://www.gsmg.io/", "date": "2026-08-16", "archived": null },
     { "title": "Escrow first-funding transaction", "url": "https://mempool.space/tx/73e48ff571a7e9a4387574a50cf2fcb7b21b6ea5702c777a035664df57cbce02", "date": "2019-04-13", "archived": null },
@@ -76,5 +93,5 @@
     { "title": "Community-maintained stage documentation", "url": "https://github.com/puzzlehunt/gsmgio-5btc-puzzle", "date": "2026-08-16", "archived": null }
   ],
   "third_party_material": "no book, article, forum dump, or other bulk third-party material is included; the 2 short strings quoted in clues/author-posts.md are verbatim decodings of the puzzle's own published page content; no Telegram export is quoted, since the puzzle's Telegram group has no stable public URL",
-  "last_updated": "2026-08-19"
+  "last_updated": "2026-08-27"
 }

@@ -50,3 +50,31 @@ stream's phrase (see "What is understood / Mechanism" in the README and
 `analysis/tested.md` sections 14 and 15 for how each is decoded). The
 128-character base64 blob is reproduced in `tools/oracle.py` because it is itself
 the object the final gate is built on.
+
+## 2026-01-01 and 2026-07-12 official hints (NR additions, transcribed 2026-09-07)
+
+The community repo `Naddiseo/gsmgio-5btc-puzzle` carries three hint screenshots
+from 2026 that this folder did not previously mirror (`hints/2026-01-01-new-
+year-hint.png`, `hints/2026-07-12-official-hint.png`, `hints/2026-07-12-other-
+msg.png`). OCR transcriptions from the PNGs (tesseract, 3x upscale, 2026-09-07):
+
+- 2026-01-01: binary text; decodes to "Happy new year! Make the best of
+  everything. Oh, and here's a "tiny hint" <3." (higher and lower halves are
+  spaced ~1 minute apart in the original screenshot.)
+- 2026-07-12 official: "My close friends have the best chance of solving it (a
+  few tried). But they don't have the skills some of you do." with the appended
+  "NOTE: that is a hint."
+- 2026-07-12 other message: "You know what. @SoWut this isn't a request for a
+  hint but I don't thin... Oh....and before I fall asleep. I want to assume it is
+  quite clear I held quite a secret in my head which I seriously wanted to share
+  with the planet... for those who can understand what I meant... The "5" btc was
+  never the actual prize. That was only a tiny fraction."
+
+Interpretive read only, no mechanism deduced (nothing here is a candidate
+string; nothing has been sent to the oracle): the "5 BTC was never the actual
+prize, only a tiny fraction" line joins the "close friends" line as meta-hints
+pointing at a personal/identity-level message held by the author rather than a
+further mechanical cipher stage. Consistent with the author-identity candidate
+family already swept negative (`analysis/tested.md` sections 106 and 108). No new
+actionable input. See `analysis/tested.md` section 188 for the formal non-test
+registration.

@@ -1,0 +1,12 @@
+[package]
+name = "bloomfast"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+fastbloom = { version = "0.17", features = ["serde"], default-features = false }
+bincode = "1.3"
+
+[profile.release]
+lto = true
+opt-level = 3

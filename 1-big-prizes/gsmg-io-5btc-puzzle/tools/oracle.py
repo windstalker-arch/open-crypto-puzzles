@@ -140,13 +140,46 @@ def decrypt_blob(blob_b64: str, password: str, digest: str = "sha256") -> bytes 
 def readings(plain: bytes) -> list[tuple[str, bytes]]:
     """Standard ways to reduce a decrypted plaintext to a 32-byte private key
     candidate, with no judgment on how the bytes look (binary key material is
-    expected, not printable text)."""
+    expected, not printable text).
+
+    The documented 79-byte chain artifact is K_C1(32) || K_C2(32) || E_C(15).
+    Before the readings audit (2026-09-17) only first32 (=K_C1), last32 (a
+    K_C2/E_C straddle, NOT clean), sha256(whole) and sha256(first64) were
+    tried: a correct password whose key lives in the clean K_C2 field, an XOR
+    of the K-fields, or a reversed/field-hash reading would have been reported
+    NO MATCH. This is the full K-field union.
+    """
     out = [("sha256(plaintext)", sha256(plain))]
     if len(plain) >= 32:
         out.append(("first32", plain[:32]))
         out.append(("last32", plain[-32:]))
     if len(plain) >= 64:
         out.append(("sha256(first64)", sha256(plain[:64])))
+        # the two clean 32-byte fields, as scalars and as field-hashes
+        k1, k2 = plain[:32], plain[32:64]
+        out.append(("K_C2_field", k2))
+        out.append(("sha256(K_C2_field)", sha256(k2)))
+        out.append(("sha256(K_C1||K_C2)", sha256(k1 + k2)))
+        out.append(("K_C1_xor_K_C2", bytes(a ^ b for a, b in zip(k1, k2))))
+        out.append(("sha256(K_C1_xor_K_C2)", sha256(bytes(a ^ b for a, b in zip(k1, k2)))))
+    if len(plain) >= 32:
+        # tails, field concats and XORs with the trailing short field zero-padded
+        left = plain[:32]
+        tail15 = plain[64:]
+        out.append(("rev(first32)", plain[:32][::-1]))
+        out.append(("rev(last32)", plain[-32:][::-1]))
+        out.append(("sha256(reversed_plaintext)", sha256(plain[::-1])))
+        if len(plain) >= 64:
+            second = plain[32:64]
+            out.append(("sha256(K_C2||E_C)", sha256(second + tail15)))
+            out.append(("sha256(K_C1||E_C)", sha256(left + tail15)))
+            ec = tail15.ljust(32, b"\x00")
+            out.append(("K_C1_xor_E_Cpad", bytes(a ^ b for a, b in zip(left, ec))))
+            out.append(("K_C2_xor_E_Cpad", bytes(a ^ b for a, b in zip(second, ec))))
+            out.append(("sha256(K_C1_xor_E_Cpad)", sha256(bytes(a ^ b for a, b in zip(left, ec)))))
+            out.append(("sha256(K_C2_xor_E_Cpad)", sha256(bytes(a ^ b for a, b in zip(second, ec)))))
+    # md5 double to 32 bytes (hex form is 32 chars not 32 bytes; use digest paired)
+    out.append(("md5(plaintext)||md5(plaintext)", hashlib.md5(plain).digest() * 2))
     return out
 
 
@@ -166,30 +199,36 @@ def wif_uncompressed(priv_bytes: bytes) -> str:
 
 
 def attempt(candidate: str) -> tuple[bool, dict]:
-    password = hashlib.sha256(candidate.encode("utf-8")).hexdigest()
-    # The puzzle uses both digests on different blobs, and this blob's password is
-    # unknown, so neither can be ruled out. Try both.
-    plains = [(d, decrypt_blob(BLOB_B64, password, d)) for d in ("sha256", "md5")]
-    plains = [(d, p) for d, p in plains if p is not None]
-    if not plains:
-        return False, {"reason": "PKCS7 padding did not validate under either digest"}
-    for digest, plain in plains:
-      for name, key_bytes in readings(plain):
-        if len(key_bytes) != 32:
-            continue
-        try:
-            address, pub_hex = priv_to_address(key_bytes)
-        except Exception:  # noqa: BLE001  out-of-range scalar, etc.
-            continue
-        if address == TARGET_ADDRESS:
-            return True, {
-                "digest": digest,
-                "reading": name,
-                "address": address,
-                "priv_hex": key_bytes.hex(),
-                "wif": wif_uncompressed(key_bytes),
-            }
-    return False, {"reason": "padding valid, no reading matched the address"}
+    # Certified password conventions for this puzzle's blobs:
+    #   phase 2 / phase 3   password = sha256(X).hexdigest(),  SHA-256 EVP digest
+    #   small final gate    password = X (raw string),         MD5 EVP digest
+    #   cosmic duality      password = X (raw string),         MD5 EVP digest
+    # The small gate's raw-X + MD5 form is anchored: it decrypts the 96-byte blob
+    # (salt 3ab585348552415d) to the 79-byte chain-1 artifact B1_79.bin (SHA256
+    # 1449a217...). The sha256(X) transform is retained too because phases 2/3 use
+    # it, and the blob's digest cannot be assumed. Try password in both raw and
+    # sha256-hex form, under both digests, and accept any valid decrypt.
+    for password in (candidate, hashlib.sha256(candidate.encode("utf-8")).hexdigest()):
+        plains = [(d, decrypt_blob(BLOB_B64, password, d)) for d in ("sha256", "md5")]
+        plains = [(d, p) for d, p in plains if p is not None]
+        for digest, plain in plains:
+            for name, key_bytes in readings(plain):
+                if len(key_bytes) != 32:
+                    continue
+                try:
+                    address, _ = priv_to_address(key_bytes)
+                except Exception:  # noqa: BLE001  out-of-range scalar, etc.
+                    continue
+                if address == TARGET_ADDRESS:
+                    return True, {
+                        "password_form": "raw" if password == candidate else "sha256(X)",
+                        "digest": digest,
+                        "reading": name,
+                        "address": address,
+                        "priv_hex": key_bytes.hex(),
+                        "wif": wif_uncompressed(key_bytes),
+                    }
+    return False, {"reason": "no password form/digest/reading matched the address"}
 
 
 def selftest() -> bool:
@@ -240,12 +279,75 @@ def selftest() -> bool:
     print(f"MD5 fails on the phase-2 blob specifically: {'OK' if part2c else 'FAIL'}")
     ok = ok and part2c
 
+    # Part 2d: the small final gate certifies the RAW password form. The known raw
+    # concatenation of the SalPhaseIon tokens (matrixsumlist + enter +
+    # lastwordsbeforearchichoice + thispassword + matrixsumlist) decrypts the 96-byte
+    # blob (salt 3ab585348552415d) with EVP-MD5 to the 79-byte chain-1 artifact
+    # B1_79.bin (SHA256 1449a217...). Same AES/padding code path as attempt(),
+    # password used directly (NOT sha256(X)). This is why attempt() now tries X raw.
+    RAW_PW = "matrixsumlistenterlastwordsbeforearchichoicethispasswordmatrixsumlist"
+    RAW_PLAIN_SHA = "1449a2178eea7c0e3fabac8c1ad2afa294be4fc1800c594a025a056e88c626bf"
+    _check = decrypt_blob(BLOB_B64, RAW_PW, "md5")
+    raw_ok = _check is not None and sha256(_check).hex() == RAW_PLAIN_SHA
+    print(f"small-blob re-decrypts under raw password + MD5 -> B1_79.bin: {'OK' if raw_ok else 'FAIL'}")
+    ok = ok and raw_ok
+    # And the sha256(X) form must NOT be what opens it (it is the falsified premise).
+    _hex_only = decrypt_blob(BLOB_B64, hashlib.sha256(RAW_PW.encode()).hexdigest(), "md5")
+    raw_excl = _hex_only is None
+    print(f"sha256(hex) form on the same password yields no padding: {'OK' if raw_excl else 'FAIL'}")
+    ok = ok and raw_excl
+
+    # Part 2e: the extended K-field readings (readings-audit, 2026-09-17) are
+    # shape-certified against the real 79-byte artifact: first32 IS the chain-1
+    # key K_C1, and the new construction readings are unambiguous slices/hashes
+    # that all land on 32-byte values the address pipeline can consume. This is
+    # a positive control tied to published material, not a self-made digest.
+    _b1 = decrypt_blob(BLOB_B64, RAW_PW, "md5")
+    _names = dict(readings(_b1))
+    first32_ok = _names.get("first32") == _b1[:32]
+    k2_field_ok = _names.get("K_C2_field") == _b1[32:64]
+    k1_ok = k2_ok = xor_ok = tails_ok = rev_ok = True
+    k1, k2, tail15 = _b1[:32], _b1[32:64], _b1[64:]
+    if len(tail15) == 15:
+        k1_ok = _names.get("sha256(K_C1||K_C2)") == sha256(k1 + k2)
+        k2_ok = _names.get("sha256(K_C2||E_C)") == sha256(k2 + tail15)
+        ec = tail15.ljust(32, b"\x00")
+        xor_ok = _names.get("K_C1_xor_K_C2") == bytes(a ^ b for a, b in zip(k1, k2))
+        tails_ok = _names.get("rev(last32)") == _b1[-32:][::-1]
+        rev_ok = _names.get("sha256(reversed_plaintext)") == sha256(_b1[::-1])
+    shape_ok = first32_ok and k2_field_ok and k1_ok and k2_ok and xor_ok and tails_ok and rev_ok
+    _all32 = all(len(v) == 32 for v in _names.values())
+    print(f"extended K-field readings shape-certified on B1_79 (all 32B, known fields): "
+          f"{'OK' if shape_ok and _all32 else 'FAIL'}")
+    ok = ok and shape_ok and _all32
+
     # Part 3: the real blob decodes to the documented shape (96 bytes total,
     # 8-byte salt, 80 bytes ciphertext = 5 AES blocks), independent of password.
     raw = base64.b64decode(BLOB_B64)
     part3 = raw[:8] == b"Salted__" and len(raw) == 96 and raw[8:16].hex() == "3ab585348552415d"
     print(f"published blob shape (96 bytes, salt 3ab585348552415d): {'OK' if part3 else 'FAIL'}")
     ok = ok and part3
+
+    # Part 4: byte-exact provenance of BLOB_B64 from the page itself. On the
+    # 2023-06-01 byte-exact textarea capture, the blob is printed split around the
+    # second a/b run: [64-char head ending '9z'] [40-char a/b run] [64-char tail].
+    # Re-joining head + tail reproduces BLOB_B64 exactly; removing the embedded run is
+    # the only edit needed. The two a/b runs on the page decode (a=0, b=1, 8 bits per
+    # byte) to the password tokens 'matrixsumlist' and 'enter' that feed RAW_PW.
+    _run_msl = "abbabbababbaaaababbbabaaabbbaabaabbabaababbbbaaaabbbaabbabbbabababbabbababbabbaaabbabaababbbaabbabbbabaa"
+    _run_enter = "abbaabababbabbbaabbbabaaabbaabababbbaaba"
+    _dec = lambda _r: bytes(
+        int("".join("0" if c == "a" else "1" for c in _r)[i : i + 8], 2)
+        for i in range(0, len(_r), 8)
+    )
+    part4a = _dec(_run_msl) == b"matrixsumlist" and _dec(_run_enter) == b"enter"
+    part4b = BLOB_B64.startswith("U2FsdGVkX186tYU0hVJBXXUnBUO7C0+X4KUWnWkCvoZSxbRD3wNsGWVHefvdrd9z")
+    part4c = BLOB_B64.endswith("QvX0t8v3jPB4okpspxebRi6sE1BMl5HI8Rku+KejUqTvdWOX6nQjSpepXwGuN/jJ")
+    part4d = len(_run_msl) == 104 and len(_run_enter) == 40
+    part4 = part4a and part4b and part4c and part4d
+    print(f"page provenance: blob split around a/b runs; runs decode to "
+          f"'matrixsumlist'/'enter'; head+tail == BLOB_B64: {'OK' if part4 else 'FAIL'}")
+    ok = ok and part4
 
     if ok:
         print("SELFTEST OK")

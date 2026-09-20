@@ -217,7 +217,23 @@ explicitly partial, are in `analysis/tested.md`.
 
 ## Open leads, ranked
 
-1. **Replay the dynamically-constructed candidates a filter bug never reached**
+1. **Decode the two raw digit streams on the final page** (insight, not a sweep;
+   naive reads already negative). The final page's token stream carries two digit
+   strings over {a..i} - a `dbbib`-headed 69-token run (image-verified 2026-08-27;
+   the earlier 91-token README value included a 22-char middle run not in the image)
+   and a `faed`-headed 570-token
+   run with one trailing `z` - which are the objects the decoded instruction token
+   `matrixsumlist` ("sum the matrix") addresses. They were not in this folder until
+   2026-08-27 and are now recorded verbatim in
+   [data/finalpage-digit-streams.json](data/finalpage-digit-streams.json). An
+   independent multi-session community analysis (puzzlehunt/gsmgio-5btc-puzzle
+   issues #93 and #106) reached the same conclusion and could not crack them
+   either (#93: `dbbib`=key, `faed`=payload in a VIC/straddling-checkerboard style
+   whose keyed alphabet is unreconstructed). Confirmed by a decode yielding a
+   legible instruction or an X whose sha256 decrypts the small blob to
+   `1GSMG1JC9`; killed by showing the streams are padding or exhausting the
+   keyed-checkerboard constructions.
+2. **Replay the dynamically-constructed candidates a filter bug never reached**
    (hours to days). A 2026-07-28 review found that an appearance-based acceptance
    filter had silently rejected the correct answer shape in 98 of 213 historical
    scripts. A first replay resubmitted 116,043 literal strings from those scripts
@@ -225,36 +241,36 @@ explicitly partial, are in `analysis/tested.md`.
    (concatenations, permutations, chained transforms) that this first replay does
    not reach. Confirmed by re-running a script's own generation logic and finding a
    match; killed, stage by stage, by exhausting that logic with none.
-2. **Decode the even-position stream of the Bifid output** (hours of reasoning).
+3. **Decode the even-position stream of the Bifid output** (hours of reasoning).
    The reconstruction on the archived capture exposes 285 symbols drawn from only
    four letters (B, C, D, E) carrying every even slot of the output: an authored
    channel with no public account, either a second message, a key or mask for the
    256-symbol object, or the author's unfound "second way". Confirmed by any
    encoding that yields a legible string or an address match; killed by exhausting
    four-symbol encodings at length 285 (which factors 3 x 5 x 19).
-3. **Determine whether the 256-symbol object is the right target at all** (an
+4. **Determine whether the 256-symbol object is the right target at all** (an
    afternoon of reasoning, not a sweep). Every negative in row 1 to row 5 of the
    tested table assumes the key comes directly from this object; the AES-blob route
    this folder's oracle implements is a different, untested-at-scale hypothesis.
    Confirmed by a reduction, other than the ones tried, that matches an address;
    redirected by establishing the AES-blob or "Dualite" route is the real one.
-4. **Identify the single tool reportedly used to build every phase** (hours). An
+5. **Identify the single tool reportedly used to build every phase** (hours). An
    authenticated author statement says one tool built every phase; comparing
    confirmed cipher conventions against one specific public tool's source code
    matches on non-obvious details (no period parameter on its Bifid cipher, a short
    menu of available ciphers). Confirmed by a cipher from that tool's menu
    producing a match on the "Dualite" password or the 256-object reduction; killed
    by exhausting that tool's short menu with no match.
-5. **Follow "esrever", the earliest published hint** (minutes to hours). The
+6. **Follow "esrever", the earliest published hint** (minutes to hours). The
    author's first hint, "reverse" spelled backwards, has been applied to the object
    it was originally paired with but not to the current final-gate objects.
    Confirmed by a reversal (string, bit, or reading-order) of one current object
    matching an address; killed by exhausting the small set of reasonable reversals.
-6. **Use the 29 dropped bits somewhere** (minutes per reading). The drop sequence
+7. **Use the 29 dropped bits somewhere** (minutes per reading). The drop sequence
    `OOIIOOOIIOOIOIIOIOOOOIOIIOIOI` is all I and O, so binary or nothing; standalone
    readings are exhausted with no legible fragment, so the open question is what
-   they select or gate, plausibly in combination with the even stream of lead 2.
-7. **Preimage the seven remaining hash-slug routes** (minutes per batch). Three of
+   they select or gate, plausibly in combination with the even stream of lead 3.
+8. **Preimage the seven remaining hash-slug routes** (minutes per batch). Three of
    ten fell to sha256 over the puzzle's own phrases in one evening; each newly
    transcribed stage wording is another candidate batch. Confirmed by a preimage
    whose page carries content.
@@ -269,8 +285,9 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | `data/stage-chain.json` | the published stage chain and the two final gates, for the structure figure |
 | `data/pipeline-stages.json` | the 6-stage label list for the derivation pipeline figure |
 | `data/salphaseion-streams.json` | the reconstructed Bifid output's three channels: the 256-symbol object, the 29 dropped letters, and the unexplained four-letter even stream, with parameters and checksums |
+| `data/finalpage-digit-streams.json` | the two raw final-page digit streams (dbbib/69 and faed/570) that `matrixsumlist` refers to, transcribed verbatim 2026-08-27 |
 | `analysis/tested.md` | the complete negatives ledger |
-| `analysis/leads.md` | full notes behind the 5 ranked leads |
+| `analysis/leads.md` | full notes behind the ranked leads |
 | `images/01-structure-stages.svg` | the published stage chain forking into the two final gates |
 | `images/02-pipeline-derivation.svg` | the final-gate derivation pipeline for the small blob |
 | `tools/oracle.py` | candidate checker for the small-blob route, certified in two independent parts |

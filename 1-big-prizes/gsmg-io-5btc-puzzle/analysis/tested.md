@@ -11044,3 +11044,105 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 - WITNESS: curl gsmg.io/puzzle (PNG 1048x1556, 28727B), curl gsmg.io/img/follow_the_white_rabbit.png (PNG 350,
   1958B) == archive replay identical; web.archive.org /Puzzle 20201109085204 html+app.js (route t5W0 render
   string matched verbatim in both 2020 and 2026 bundles). rc=n/a (no oracle battery yet).
+### late-268 (2026-09-20) -- FULL Decentraland world map integrated + certified negative: the 24-cell grid is NOT a 14x14 crop of any land-class window, any era, any orientation
+- STEER: user: "get full world map decentraland integrated access with gsmg puzzle solve?" -> acquire the whole
+  Genesis City land map and test the white-rabbit grid as a literal crop of it (the grid colours #3D48CC blue /
+  #FFF200 yellow were read as DCL map palette in late-267; estates/singles are the two "owned" classes on DCL).
+- DATA ACQUIRED (persisted to data/dcl_worldmap/, tool tools/dcl_world_map.py --certified search/witness):
+  * tiles_current_v1.json  = live api.decentraland.org/v1/tiles (13 MB): 92,598 tiles, x -150..163, y -150..158;
+    types {5 district 34210, 7 road 9438, 8 plaza 3588, 9 owned-single 42576, 10 owned-in-estate 2786}.
+  * tiles_20201115.json    = Wayback 2020-11-15 (puzzle era, 4 days after the 2020-11-09 /Puzzle capture): 90,601
+    tiles, x/y -150..150, types {9 40665, 7 9438, 5 33095, 10 3815, 8 3588}.
+  * tiles_20190503.json    = Wayback 2019-05-03 (pre-puzzle): 90,601 tiles, legacy codes {8 40252, 6 9438, 4
+    33095, 7 3588, 9 4228} (district/road/plaza/owned active "ownable" set differs).
+  Also pulled (not persisted, same digest used twice) 2020-10-26, 2020-11-05, 2020-12-18 -- all run below.
+  Full modern JSON (38 MB, api.decentraland.org/v2/tiles -> assets-cdn tiles/v2/latest.json) covers the same
+  world; v2 strings map 1:1 to v1 int codes except v2 uses only 4 classes (owned/district/road/plaza) because
+  type-10 estate-parcels are reported as 'owned' there; estate split taken from v1 -> estate_id present.
+- TEST (tools/dcl_world_map.py exact_crop_search): every ordered pair of land classes (t1=blue, t2=yellow,
+  t1!=t2), every 1 of 8 dihedral transforms of the puzzle grid (id/rot90/180/270/trans/reflX/reflY/anti), every
+  14x14 window of the world (304x304 offsets): require the 15 blue cells ALL ==t1 AND 9 yellow cells ALL==t2 AND
+  the other 172 cells contain NOTHING of t1 or t2 (the grid is an exact 2-colour crop; whiteness = absent class).
+- RESULT: 0 hits on ALL of: 2019-05-03, 2020-10-26, 2020-11-05, 2020-11-15, 2020-12-18, current-v1, current-v2.
+  Counts per matrix: 10x9 ordered class pairs x 8 transforms x 92,416 windows = ~66 M windows/submissions each
+  (7 datasets => ~460 M window candidates), 0 match. Includes blue/yellow = {estate,single} pair (t1/t2 = 9/10)
+  which is the DCL palette reading; that specific pair also 0 hits in all eras.
+- WITNESS: synthetic stamp test inside exact_crop_search -- the 24-cell grid was stamped into a blank window of
+  a copy of the CURRENT world matrix (blue=9, yellow=8, other 172 cells = road 7); the search RE-FOUND that
+  window at the correct coordinates and orientation (witness=PASS for every dataset run). Negative certified.
+- INTERPRETER RELEVANCE: the world map does NOT encode the grid as a static map the puzzle re-uses verbatim
+  (ownership/class crop). DCL land data is therefore not the source of the 24-cell pattern. What REMAINS
+  unexplored as "world-map integration" for lead-0: (a) the 24-cell board as a ROUTE over consecutive walking
+  distances between the coloured cells on the 14x14 board, which is independent of world data, and (b) whether
+  the 24 coloured cells correspond to the 24-parcel layout of a specific estate (estates whose parcel COUNT is
+  24: 15 exist; several are 6x4 blocks like the White-Rabbit-Club template) -> but grid cells are NOT
+  contiguous in any estate's layout when laid over the same 14x14 range, so this is out unless a transform
+  maps estate parcels onto board cells (not found in this battery). GC: world map now a checked-in asset for
+  future batteries; the grid remains the puzzle's own 2-colour map, not a DCL screenshot.
+- WITNESS 2 (name check): "introspected" the author's 2 estate-955 parcels (-41,-16)/(-41,-17) in every
+  snapshot above -- present in all, same estate_id 955, name "gsmg.io magic puzzle piece", owner author
+  address; no other author-owned parcel in the full 92,598-tile dataset. rc=n/a (no oracle battery; map
+  integration produces no candidate inputs). Next: grid-route reading battery on the 24 coloured cells
+  (planned late-269).
+### late-269 (2026-09-20) -- GRID AS ROUTE MAP: the 24 coloured cells, read as traversal edges (distances, turn vectors, colour bits), decode under the certified VIC family -> both oracles, 0 match
+- STEER continuation of late-268: since the 14x14 board is not a crop of the DCL world map, treat the 24
+  coloured cells as a ROUTE MAP (the "world map integrated access" reading): connect the cells in traversals
+  and read the EDGES, not the cells' flat positions. New battery tools/grid_route_battery.py (certified).
+- DATA: follow-white-rabbit-grid.json blue(15)+yellow(9) = 24 cells, rows/cols within 14x14 board.
+- FAMILIES (all new vs rows 182/196-198 which swept cell-position interpreters only):
+  A route distances -- 9 orderings of the 24 cells (row/col-major, sum/diff, dist-from-corner/center,
+     blue-then-yellow, yellow-then-blue, boustrophedon); for each ordering, consecutive-edge manhattan /
+     chebyshev / rounded-euclidean / |dx| / |dy| distances reduced by mod 9, mod 10, and raw (23-edge
+     sequences, digits 0..26) -> 135 digit-stream families.
+  B turn vectors     -- each of the 23 steps as a signed (dx,dy): 9-state dir9, 4-state manhattan dir4.
+  C colour bits      -- blue=1/yellow=0 over each ordering -> 24-bit integer renders (bits, hex, dec,
+     reversed dec/hex, base58, base64 big/little-endian) -> 72 candidate strings.
+- DECODE: every digit stream decoded under ALL 47 ALPHAS (including the certified phase-322 literal
+  "FUBCDORA.LETHINGKYMVPS.JQZXW") x both escape pairs (1,4)/(4,1); clean (?-free, len 8..2000) decodes
+  pushed as raw/lower/upper/reversed answer forms. Total 12,690 decode forms + 72 colour renders
+  = 20,270 unique candidates.
+- ORACLE: all 20,270 fed to BOTH funded gates. oracle.py (small 1.25 BTC): 20,270 submitted, 0 MATCH.
+  oracle_dualite.py (Dualite 3.75 BTC): 20,270 submitted, 0 MATCH. Both exit=1 (no hit), re-verified by
+  direct --stdin runs (files in ~/tmp/opencode/gr_o1.txt, gr_o2.txt: 20270 NO MATCH each).
+- WITNESS (certified): (1) pipeline -- decode(encode(P,'control-board')) == P under both escape pairs
+  (P='IGNEOUSROUTEWITNESS'); (2) route -- synthetic 24-cell grid whose RC-row-major consecutive-manhattan
+  distances equal a chosen 23-digit (1..9) code whose VIC decode is a known clean plaintext
+  ('BOALHGCRDOAROHCODDO'); injection runs through the SAME gen pipeline and the known plaintext is
+  re-found among the candidate forms (selftest OK, 10,837 forms in witness run).
+- INTERPRETER RELEVANCE: route-edge geometry (distances/turns between the 24 coloured cells) does not
+  produce an oracle-password, nor do 24-bit colour renderings. The board-as-static-map and board-as-route
+  readings are both closed under the certified VIC/alphabet family. Remaining reads for the same surface:
+  (a) route as INTERPRETER for the dbbib/faed streams (edge values feeding the 9-letter alphabet, aligned
+  by cell rank) -- distinct from both 182 and this row because the INTERPRETER is built from edges, the
+  ciphertext stays the real dbbib/faed; (b) 8 dihedral variants of the grid for all families here (this
+  row ran the canonical JSON orientation only). Escrows re-checked pre-run (small gate partially-spent OK,
+  Dualite funded-unspent OK); oracle --selftest passed. Counts below exact. rc=n/a (no MATCH).
+
+### late-270 (2026-09-20) -- STEER "check ~/XOREncryption": KyleBanks multi-key cycling-XOR battery, both gates, certified negative
+- STEER: user pointed at ~/XOREncryption (KyleBanks/XOREncryption, MIT, 2013-2020; origin github.com/KyleBanks/XOREncryption, cloned 2026-09-03). It is the classic "Simple XOR Encryption in any language" demo whose primitive is a MULTI-KEY CYCLING XOR: out[i] = in[i] ^ key[i mod len(key)], canonical example key=[K,C,Q] over "kylewbanks.com". No puzzle content of its own; assessed against lead-0 by running the same primitive over every open digit surface and oracling the outputs (tools/xorencryption_steer.py, certified).
+- SURFACES: dbbib(69, image-verified), dbbib_91(91 legacy), faed_570(+trailing z = 571), z_segment_1(63), z_segment_2(29) as input byte-streams (raw letters, canon digits a=1..i=9, reverses); grid surfaces data/follow-white-rabbit-grid.json (24 coloured cells, all 9 traversals) colour-bit serializations (blue=1/yellow=0) and route edge-digit streams (manhattan mod-9/mod-10) re-used as cycle-KEY material.
+- KEY FAMILIES: (A) literal KCQ family [KCQ kcq Qck CKQ KC KQ CQ KQCKQC kylewbanks kylewbanks.com KyleWBanks]; (B) puzzle-token keys [matrixsumlist enter lastwordsbeforearchichoice thispassword shabef yourlastcommand secondanswer salphasion cosmicduality theseedisplanted btcseed followthewhiterabbit fubcdorale thingky mvps thearchitectchoice hopeisthequintessentialhumandelusion gsmg + reverses + canon-digit forms]; (C) grid keys (colour bits + route m9/m10 digit streams + reverses); (D) digital-XOR interpreter variant (letters->canon digits, cycle-XOR of the DIGIT VALUES with KCQ-as-digits (K=11,C=3,Q=17 -> mod-9/mod-10) and with each grid m9 key, then the certified base-10->hex->ASCII z-segment decode applied to every clean digit string).
+- RENDERINGS per XORd stream: raw-ascii (if all-printable) + upper/lower/reversed, hex, reversed-hex, big-int decimal; grid colour-bit serializations alone too.
+- ORACLE: 12,504 unique candidates. oracle.py (small 1.25 BTC): 12,504 submitted, 0 MATCH. oracle_dualite.py (Dualite 3.75 BTC): 12,504 submitted, 0 MATCH. Files: ~/xorencryption_cands.txt (12,516 lines incl. dupes as emitted).
+- WITNESS (certified): (1) repo canonical vector cycle_xor_bytes(cycle_xor("kylewbanks.com","KCQ"),"KCQ") == "kylewbanks.com" (byte-involutive); (2) injection P="CYCLEXORWITNESS" XOR-key "matrixsumlist" -> threaded through the SAME generator -> P re-found among forms (13,848 witness-form candidates). Selftest rc=0. Escrows re-verified today pre-run (small gate partially-spent OK, Dualite funded-unspent OK); both oracles --selftest passed.
+- INTERPRETER RELEVANCE: the multi-key cycling-XOR operation (KCQ demo and any-length puzzle-token/grid keys) over the raw streams and over the certifed-interpreter digit layer produces no oracle-password and no clean instruction. XOR over cycling keys is the same algebraic family as the closed xorstr/xor-halfpair/xor-triangle/chain4 sweeps; the steer adds the specific KyleBanks primitive + grid-key read and is now closed as certified-negative on both funded gates. rc=n/a (no MATCH).
+
+
+### late-271 (2026-09-20) -- GRID AS INTERPRETER (positional route codebook for real dbbib/faed) + 8 dihedral variants: certified negative, both gates, 136,117 unique candidates
+- STEER continuation of late-269's INTERPRETER RELEVANCE: close the two remaining reads of the white-rabbit grid surface -- (a) ROUTE AS INTERPRETER for the REAL dbbib/faed streams (edge values feeding the 9-letter alphabet aligned by cell rank; POSITIONAL codebook, not the closed 9! fixed-map space) and (b) all grid_route families under the 8 dihedral board variants (late-269 ran the canonical JSON orientation only). New battery tools/grid_interpreter_battery.py (certified).
+- (b) DIHEDRAL ROUTE FAMILIES: 8 dihedral transforms (id/rot90/180/270/trans/reflX/reflY/anti) x 9 traversals x 135 edge-digit stream families, each decoded under all 47 ALPHAS x escapes (1,4)/(4,1); clean (?-free, len 8..2000) -> raw/lower/upper/reversed. 101,520 decode forms -> 112,716 unique candidates.
+- (a) POSITIONAL ROUTE CODEBOOK: for every (dihedral, traversal, metric mh/ck/eu/dx/dy, mod 9/10) the per-step edge values define a codebook read at 9 ranks -- B1 ranks of the 9 YELLOW cells and B2 ranks 0..8 of the traversal -- assigned to the 9 letters in canonical order (a..i) and in frequency order (b>a>g>e>i>h>f>c>d); applied alphabet-wise to the REAL streams dbbib(69)/dbbib_91/faed(570); substituted digit strings decoded by the CERTIFIED z-segment interpreter (base-10 -> hex -> ASCII) and by the base-9 big-int -> hex -> ASCII reader. 8,640 substitutions -> 17,280 interpreter decodes -> 11,589 unique candidates.
+- ORACLE: merged 136,117 unique candidates -> BOTH funded gates. oracle.py (small 1.25 BTC): 136,117 submitted, 0 MATCH. oracle_dualite.py (Dualite 3.75 BTC): 136,117 submitted, 0 MATCH. File ~/grid_interpreter_cands.txt (136,117 lines).
+- WITNESS (certified): (1) interpreter pipeline encode->base10->hex->ASCII control P="!aaa" re-found; (2) interp_b9 smoke; (3) dihedral generator: synthetic 24-cell grid whose RC/mh consecutive-manhattan digits equal a chosen code whose VIC decode is a known plaintext -> re-found among the SAME pipeline forms (78,559 witness forms). Selftest rc=0; oracle --selftest re-passed AFTER the battery. Escrows re-verified today (small gate partially-spent OK, Dualite funded-unspent OK).
+- INTERPRETER RELEVANCE: a positional codebook built from the route edges -- where a letter's digit depends on the coords of the step, not on a global permutation -- does not produce an oracle password, nor does any of the 8 dihedral route-map readings. The grid surface is now closed as static-map (late-267/268), route-map (late-269), dihedral-route (this row), and positional-interpreter (this row). lead-0 crux unchanged: the interpreter alphabet is not derived from the white-rabbit grid by any certified mechanical combination. rc=n/a (no MATCH).
+
+### late-272 (2026-09-20) -- STEER "check ~/XORencryptor": HKTITAN/XORencryptor (simple byte-XOR demo, hex output) -- provenance only, same primitive family already certified-negative
+- STEER: user pointed at ~/XORencryptor (cloned 2026-09-03) = HKTITAN/XORencryptor, an educational XOR text-encryption script (encryptor.py): plaintext[i] XOR key[i % len(key)], hex-string ciphertext output, "random same-length key" mode, per-step table printout. Repo also carries LOR.pdf (sha256 894b730b...) and "Mathematical Foundations of XOR Encryption" essay PDF (sha256 fd9ee3ee...) -- scanned, NO gsmg/bitcoin/stream/alphabet content in either.
+- RELATION TO CLOSED SPACE: the primitive is single-key repeating byte-XOR = the KyleBanks cycling-XOR family closed certified-negative in late-270 (12,504 candidates, both gates). The only delta surface, its hex-output form (hex of XOR results), was ALREADY included in late-270's renders() (hex + reversed-hex columns for every XORd stream); the same-length-key OTP mode is educational (one-time pad over a same-length random key is not a meaningful candidate for the puzzle's short-key interpreter family). Certified-negative carries over; nothing new sent to the oracles.
+- WITNESS: n/a (no new oracle battery; relies on late-270's certified witness + the hex-form inclusion there). rc=n/a.
+
+
+### late-273 (2026-09-20) -- CIPHER-BATTERY HARNESS online (tools/cipher_battery.py): pluggable cipher cells x surface sets -> dedupe -> both funded oracles, per-cell injection witness; smoke run reproduces the closed negatives
+- DESIGN (user asked "ciphers could build as batteries?"): yes -- and the repo already ran that way per-hypothesis, but every battery was bespoke. The harness makes a cipher a registered CELL: cell(surface, params) -> clean decoded candidates, with {surface set} x {cell set} x {param variants} runs. Built-in surfaces: data/finalpage-digit-streams.json raw streams (dbbib69/dbbib91/faed570/z_segment_1/z_segment_2), grid traversal digit surfaces (--grid), --string literals. Registered cells: 'vic' (certified 3.2.2 checkerboard decode x all 47 ALPHAS x escapes (1,4),(4,1)), 'interp10' (certified z-segment interpreter: letters->digits -> base-10 -> hex -> ASCII, canon/pos/freq maps), 'interp9' (base-9 big-int -> hex -> ASCII, pos map), 'xor' (cycling byte-XOR, KyleBanks/HKTITAN family, hex + printable renders). Future ciphers plug in as one function.
+- WITNESS (certified): --selftest injects a control plaintext P per cell encoded under that cell's OWN convention and requires re-discovery through the exact same pipeline: BATTERYWITNESS (vic), INTERPRET (interp10, digits avoid 0/9 so the canon 1..9 map roundtrips), PUZZLETEST (interp9; base-9 digits chosen to avoid 9), XORTESTWITNESS (xor, KCQ). rc=0.
+- SMOKE RUN (not a new claim, reproduces already-ledgered negatives through one entry point): 5 raw streams x 4 cells -> 44 cell forms -> 88 unique candidates -> oracle.py 88, 0 MATCH; oracle_dualite.py 88, 0 MATCH. Consistency check with closed rows: vic->keyed-alpa/escape family (sections 24/41, late-58), interp family (notes 2/3/11/12), xor cycle (late-270) as the same pipeline -> all still negative. Harness gives a one-command path for every future surface (new transcriptions, new key material) across the whole certified menu. rc=n/a (no MATCH expected in smoke).

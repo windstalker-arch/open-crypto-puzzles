@@ -1,0 +1,9 @@
+# Certified machine read (no OCR, PIL pixel only) of the bottom colored sticker strip on
+# SalPhaselonCosmicDuality.png  -  left->right ORDER of 46 per-tile dominant color classes.
+# Bottom band (left->right), tile dominant class sequence (R=red,O=orange,Y=yellow,C=cyan,
+# B=blue,b=deep-blue,G=green), '-' = <24px run too small to certify a tile:
+RbOb-RbRB-RbR-RbO-O-b-R-RbR-O-b-R-RbO-R-R-RbR-RO-RbR-R-R-R-RbOR-RO-Rb-Rb-R-Ob-Rb-O-O-b-R-Rb-R-RbR-
+# second band (just above, 8 tiles) left->right:
+b-R-Rb-R-bR-b-bR
+# WOM: tile dominant class differs decisively from page white on every certified tile
+# (two independent passes, identical run lists). Nothing certified as candidate; no oracle.

@@ -158,8 +158,8 @@ def main():
 
     width = int(max_right) + MARGIN
     header = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
-        f'viewBox="0 0 {width} {height}" font-family="{FONT}">',
+        (f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
+        f'viewBox="0 0 {width} {height}" font-family="{FONT}">'),
         f'<rect x="0" y="0" width="{width}" height="{height}" fill="{COLOR_BG}"/>',
     ]
     parts = header + parts

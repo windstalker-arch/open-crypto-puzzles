@@ -1,0 +1,4 @@
+BOT-sticker: 13 tiles left->right dominant colors: RbRRbbRbRRORR
+  (270,575)R | (376,589)b | (446,589)R | ( 90,590)R | (119,590)b | (194,590)b | (234,590)R | (241,590)b | (251,590)R | (302,590)R | (387,590)O | (460,590)R | (339,592)R
+SECOND: 8 tiles left->right dominant colors: bbbRRbRR
+  (178,499)b | (464,499)b | (138,500)b | (222,500)R | (243,500)R | (266,500)b | (346,500)R | (104,502)R
