@@ -44,9 +44,11 @@ streams with the author's keyed alphabet -> `sha256(A)[0:15] == 740a25de4b8e946`
 1. **Interpreter base-9/base-10 -> bigint -> hex -> ASCII**: all injective a..i->digit maps
    and orientations - excluded by the byte-ceiling bound + swept maps. CLOSED.
 2. **Certified checkerboard** `build_grid/decode`: maps {pos, canon, page-typed a..i order,
-   faedgcbhi, all reverses} x escapes {(1,4),(2,5),(0,4),(1,5),(2,4),(1,2)} x widths
-   {none,3,7,13,15,16,19,23,38} x {dbbib, faed, concats, interleave} x 17+ alphabets
-   (2,128 + 15,504 cells). CLOSED (late-337/338, tools/vic_alphamap_grid.py).
+   faedgcbhi, all reverses} × escapes {(1,4),(2,5),(0,4),(1,5),(2,4),(1,2)} × widths
+   {none,3,7,13,15,16,19,23,38} × {dbbib, faed, concats, interleave} × 17+ alphabets
+   (2,128 + 15,504 cells), plus the nest-escape axis (7 pairs derived from the FEFEFE
+   cell (7,4), 54,264 cells). CLOSED (late-337/338/341, tools/vic_alphamap_grid.py +
+   tools/fefefe_esc_battery.py).
 3. **Keyword-keyed alphabets** (VIC family): 98 + 81 + 15 + 17 alphabets, all maps/escapes.
    CLOSED (row194, 3337, 4716).
 4. **drop-g 463-token uniform-8 payload**: checkerboard + ciphertools 19-cipher menu sweep,
