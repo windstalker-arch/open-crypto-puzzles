@@ -50,6 +50,15 @@ def ai_suborder(alpha28: str) -> str:
     return "".join(c.lower() for c in alpha28 if c.upper() in "ABCDEFGHI")
 
 
+def stream_combos() -> list[tuple[str, str]]:
+    return [
+        ("dbbib+p", DBBIB + FAED),
+        ("p+dbbib", FAED + DBBIB),
+        ("dbbib+rep+faed", DBBIB + DBBIB + FAED),
+        ("interleave(dp)", "".join(a + b for a, b in zip(DBBIB, FAED[: len(DBBIB)]))),
+    ]
+
+
 def run_grid() -> list[str]:
     alphabets = [(f"cert:{CERT_ALPHA}", CERT_ALPHA)]
     for kw in KEYWORDS:
@@ -67,10 +76,11 @@ def run_grid() -> list[str]:
         for mname, mraw in maps:
             imap = {c: str(i) for i, c in enumerate(mraw)}
             for esc in ((1, 4), (2, 5)):
-                for trans in ([], [13], [38], [7]):
+                for trans in ([], [13], [38], [7], [3], [15], [16], [19], [23]):
                     for rev in (False, True):
                         ctol = build_grid(alpha28, *esc)
-                        for sname, stream in (("dbbib", DBBIB), ("faed", FAED)):
+                        streams = [("dbbib", DBBIB), ("faed", FAED)] + stream_combos()
+                        for sname, stream in streams:
                             digits = mapped(stream, imap)
                             if rev:
                                 digits = digits[::-1]
@@ -81,7 +91,8 @@ def run_grid() -> list[str]:
                                 out = decode(ldg, ctol, *esc)
                                 cands.append(out)
                                 cells += 1
-    print(f"grid: {len(alphabets)} alphabets x maps fwd/rev x esc x trans x 2 streams "
+    print(f"grid: {len(alphabets)} alphabets x maps fwd/rev x esc x "
+          f"trans{{none,13,38,7,3,15,16,19,23}} x 6 stream forms "
           f"= {cells} decode cells", flush=True)
     return cands
 
