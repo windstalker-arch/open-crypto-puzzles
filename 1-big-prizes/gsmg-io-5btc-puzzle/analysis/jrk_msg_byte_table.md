@@ -1,8 +1,8 @@
-# Jrk (creator) Telegram message byte-frequency table — source capture
+# Jrk (creator) Telegram message byte-frequency table - source capture
 
 Source: https://github.com/SolvingGSMG/puzzle/blob/main/resources/Jrk_messages.md (fetched 2026-09-24, repo at 6 commits).
 Community ("SolvingGSMG", Telegram group "GSMG Puzzle Solvers") scraped the creator's Telegram messages; the RAW message text is
-NOT public — only this first-byte histogram was released. Preserved here as a repo artifact (worksheet for future byte-level
+NOT public - only this first-byte histogram was released. Preserved here as a repo artifact (worksheet for future byte-level
 theories; no candidate value on its own).
 
 First byte of his messages (byte : utf-8 : ascii : count):
