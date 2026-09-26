@@ -77,6 +77,10 @@ streams with the author's keyed alphabet -> `sha256(A)[0:15] == 740a25de4b8e946`
 11. **Community/external**: issues #2..#111, both Bitcointalk threads, SolvingGSMG/puzzle,
     Track-B (39237 post-edit text verified; pre-edit unrecoverable), Jrk Telegram histogram,
     2025-2026 "solution" claims (all fabrication-class). No bankable artifact. CLOSED.
+    Issue #78's two pasted signatures ARE the puzzle key's (their only shared consistent
+    pubkey is exactly Q) but they yield no `d`: the "140 bits of nonce bias" claim needs
+    m >= 5 signatures and only 2 exist, and an exact two-sided BSGS finds no nonce
+    difference up to 2^36 either way. Ledgered UNPROVEN, not a solve. See R-ISSUE78-HNP.
 
 ## The crux (Lead 0)
 
