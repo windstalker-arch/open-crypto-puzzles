@@ -823,6 +823,22 @@ not supply a new mechanical reading; all splits and readings remain oracle-negat
 both dbbib-width (3x23) and the object alphabet (23 letters) is still the one recurring,
 unexploited numeric bridge. Date: 2026-08-27, local.
 
+2026-09-26 addendum (ledger consolidation): the "unexploited" claim above is STALE and is
+superseded; it is retained above only as the 2026-08-27 state of belief. The 23-bridge was
+closed in its joint form by `analysis/tested.md` section 185 (2026-09-07), whose own opening
+line reads "Closes the two recurring 'unexploited numeric bridge' leads in their JOINT forms":
+dbbib 3x23 row/column sums used as a KEY over the 23-letter object alphabet, and the even
+B/C/D/E stream as a SHIFT over object_256, were the only untried combinations, and both are
+oracle-negative on both funded gates (15 small / 14 dualite candidates). Each 23 had already
+been closed individually beforehand (sections 45/49/50/52 for the 3x23 sums, mod-9 and columnar
+forms; 184 for object_256 grid routes; 183 for even-stream 2-bit drives). This note's own
+softer reading -- research note 12 at line 707, "yields no mechanical combination" -- was
+already the accurate one. Do NOT re-open the 23-bridge from this note.
+Second caveat, from the 91-vs-69 stream correction (note 32 below, 2026-09-07): the 3x23
+geometry underpinning half of these tests rests on the 69-token stream, which is a stale
+OCR-derived variant, not ground truth. The true dbbib is 91 = 7x13, for which 23 is not an
+exact divisor. See `analysis/tested.md` R-LEDGER-GAP-2026-09-26.
+
 ### Research note 19 (2026-08-27): corrected color-model labeling -- red/blue anaglyph, green is absent, not a primary palette
 
 User correction: BLACK and WHITE are TONES, not color primaries. Re-labeled the image on true
