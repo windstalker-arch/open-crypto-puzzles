@@ -68,7 +68,12 @@ streams with the author's keyed alphabet -> `sha256(A)[0:15] == 740a25de4b8e946`
    brainwallet/decoy family, jacobian/phase-3.3/issue-56 vocab families, all external claim
    strings. CLOSED.
 10. **Page-grid readings**: 14x14 colors = URL low-bit plane only; yinyang diagonal 91/91
-    real but no yield; FEFEFE nest cell (7,4) decode-irrelevant. CLOSED.
+    real but no yield; FEFEFE nest cell (7,4) decode-irrelevant. CLOSED. NOTE (2026-09-24
+    live deep-check, R-SITE-SNAPSHOT-2026-09-24): the new shutdown homepage "SYSTEM
+    FAILURE" animation carries a hardcoded 14x14 binary finalGrid re-rendering the SAME
+    24-cell white-rabbit board (all 15 blue cells present, 0/9 yellow; P~3e-5) - an homage,
+    not new data; /puzzle poster unchanged; site wind-down confirmed (register/help-center
+    404, beta/help DNS dead, robots Disallow /).
 11. **Community/external**: issues #2..#111, both Bitcointalk threads, SolvingGSMG/puzzle,
     Track-B (39237 post-edit text verified; pre-edit unrecoverable), Jrk Telegram histogram,
     2025-2026 "solution" claims (all fabrication-class). No bankable artifact. CLOSED.
