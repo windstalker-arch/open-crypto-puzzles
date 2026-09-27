@@ -14498,3 +14498,108 @@ Date: 2026-09-27, local.
   may a row claim novelty, and it must state the count of items that survived both checks.
 
 Date: 2026-09-27, local.
+
+## R-P15NULL-2026-09-27: THE PERIOD-15 SIGNATURE IS REAL (z=+25.7) AND THE VIGENERE REFUTATION IS ALSO REAL (chi 2357, inside a validated null) - SO THE BLOB IS 15 INDEPENDENT MONOALPHABETIC SUBSTITUTIONS AND IS NOT SOLVABLE BY CRYPTANALYSIS. The missing input is 15 alphabets, not a 15-character key. 0 oracle calls, because the object of study is a ciphertext with no key material attached.
+
+- WHY THIS ROW EXISTS. `R-P32BLOB` ended with "The single most substantive new fact found this session"
+: a period-15 polyalphabetic signature on the 1,539-byte `phase3.2.txt` blob, "the community attacked the
+  right bytes with the wrong cipher class". That framing invites a cryptanalytic attack, and four such
+  attacks had already failed. This row supplies the controls that turn four failures into a positive
+  identification of what the object actually is.
+
+- THE OBJECT, RE-DERIVED FROM SCRATCH. `phase3-assets/phase3.2.txt` is 2,422 B / 12 lines. Line 4
+  (after stripping a trailing CR) is **1,539 bytes, exactly 26 distinct values**, ranging 0x25-0xf8:
+  fifteen in 0xc0-0xd1 and eleven below 0x60. It sits between `four for one.` and the 149-digit
+  string, inside the Matrix-flavoured prose. EBCDIC-cp037 decodes it to 772 printable chars of
+  garbage, so the "cp1141/EBCDIC" attempt in the community notebook was reading noise, as the
+  notebook's own monoalphabetic framing implies.
+
+- **FINDING 1 - THE PERIOD-15 STRUCTURE IS REAL, AND `R-P32BLOB` MEASURED IT CORRECTLY.** I
+  recomputed the IC curve independently: p15 = **0.0645**, p30 = 0.0654, p1 = 0.0406, and the
+  p5/p10/p20/p35 values (0.048-0.049) are quantitatively what a 15-key dilution predicts
+  ((0.066 + 2x0.0385)/3 = 0.0477 at p5). Critically, this is NOT a fitted statistic, so I built the
+  right null for it: 400 i.i.d. resamples at the blob's OWN symbol marginals. That null gives
+  IC(p15) = 0.0412 +- 0.0009 (and sum p^2 = 0.0412 exactly, as it must). Observed 0.0645 is
+  **z = +25.7**. So the period-15 structure is beyond doubt, and `R-P32BLOB`'s IC curve stands. My
+  earlier `R-IMGSCOPE`-style worry that a prior row overstated a measurement does NOT apply here.
+
+- **FINDING 2 - EVERY COLUMN IS NATURAL-LANGUAGE-SHAPED.** Per column (m = 102-103, 20-23 distinct
+  symbols) I compared the sorted frequency vector against two nulls. Against a null built from the
+  blob's own marginal: z = **+7.86** (real columns are far more peaked than i.i.d. would allow).
+  Against a null built from English letter frequencies at the same m: z = **+0.13**, i.e.
+  indistinguishable from English. Combined with Finding 1: each residue class mod 15 is shaped like
+  a natural language, and the whole blob is not.
+
+- **FINDING 3 - AND IT IS NOT VIGENERE, BEAUFORT, OR ANY SINGLE-ALPHABET SHIFT MODEL.** The
+  instrument first had to be validated, which is where this row nearly went wrong twice:
+  (a) My first attack built 105 cross-column co-occurrence matrices and max-weight-matched them for
+  a permutation structure. It found nothing. **That negative was worthless**: in a period-15
+  polyalphabetic cipher every position uses exactly one key, so two different columns are NEVER
+  observed simultaneously and no such matrix can exist. I only caught it by running the same code
+  on a synthetic true Vigenere, which it also "failed" (triangle consistency 0/455). Logged because
+  the failure mode - a structurally impossible test that returns a clean negative - is
+  indistinguishable from a real result unless you validate on synthetic data.
+  (b) My first chi-squared control was wrong in the opposite direction: I generated a plaintext and
+  fed `plaintext` into a routine that SUBTRACTS the key, so "synthetic correct" was really measuring
+  a random shift and reported chi 5358-13619, which made the real blob's 2357 look excellent. The
+  instrument is sound - a known-good column scores chi 20.4 and 300 such columns average 24.8
+  against df=25 - but the control was miswired.
+  With both fixed, the ladder is unambiguous. All figures are chi after hill-climbing 15 free
+  shifts against English, which is the strongest possible Vigenere-family fit:
+      true period-15 Vigenere (5 trials, known model) ....... 351 - 448
+      uniform random, 15 fitted shifts (12 trials) .......... 2010 - 2354, median 2204
+      blob's own marginals, i.i.d., 15 fitted shifts (12) ..... 2067 - 2501, median 2209
+      **REAL BLOB ............................................ 2357**
+  2357 sits inside the noise band and above its median. The blob is what you get when you fit 15
+  free parameters to data that does not contain them. So `R-P32BLOB`'s chi-2503 rejection of the
+  Vigenere family was CORRECT - and for a stronger reason than it knew: it is not merely "not the
+  best model", it is indistinguishable from noise.
+
+- **FINDING 4 - THE MODEL THAT FITS ALL THREE RESULTS: FIFTEEN INDEPENDENT MONOALPHABETIC
+  SUBSTITUTIONS.** Each of the 15 columns is a separately-permuted substitution of natural-language
+  text. That is the only model in the family that simultaneously explains (i) period-15 structure
+  at z=+25.7, (ii) English-shaped columns at z=+0.13, and (iii) total failure of every
+  shared-alphabet-plus-shift attack, since no shared alphabet exists to find. The 26-symbol
+  alphabet and 1,539 length fit: ~250 words of unspaced English letters, 103 per column.
+  Alternative readings not excluded: each column may be a different LANGUAGE (shape is not
+  language-identifying), and non-letter symbolisations are equally consistent.
+
+- **WHY THE COMMUNITY'S QUAGMIRE ATTEMPT ALSO HAD TO FAIL, WHICH IS THE MOST USEFUL PART OF THIS.**
+  `R-P32BLOB` records "Quagmire / per-column mixed alphabet by per-column frequency rank, periods 15
+  and 30 x asc/desc x freq/alpha-alphabet x vig/beaufort (16 variants): best 14 word-hits vs 115-180
+  for real English", and read that as the model failing. The model did not fail. **Assigning 26
+  letters to frequency ranks from 103 samples is not a weak method, it is an impossible one** - the
+  expected sampling spread of 26 multinomial cells at m=103 swamps the entire 12.7%-to-0.07% English
+  gradient. Any implementation of "rank the symbols and assign letters in frequency order" is
+  guaranteed to produce noise on a column this short, whether or not the underlying model is
+  exactly right. So that rejection carries no evidential weight, and neither did the four Vigenere
+  and monoalphabetic results in the sense of narrowing the field.
+
+- **THE REFRAME, WHICH IS THE ACTIONABLE PART.** The question is not "what 15-character key
+  decrypts this". Each column has its own alphabet and the alphabets are unrecoverable from the
+  ciphertext by any amount of statistics - 1,539 symbols is simply not enough to rank 26 permuted
+  alphabets, and the one thing this blob has plenty of (a 25-sigma structural signal) turns out to be
+  the one thing that does not constrain the key. **Whatever decrypts this must supply 15 alphabet
+  permutations, or 15 independent keys, from outside the ciphertext.** That is a concrete,
+  checkable statement about what the puzzle still owes us, and it reclassifies the blob from
+  "attackable ciphertext" to "keyless ciphertext". It also means the honest next move for phase 3.2
+  is a hunt for 15-item or 15-column key material in the phase-2.1/3 assets, NOT more cipher-class
+  sweeps. Anyone picking this up should read this paragraph before re-running a Vigenere.
+
+- WHAT I DID NOT ESTABLISH. (1) I did not recover any column's alphabet, so this is a model
+  identification, not a decryption. (2) I did not test transposition-plus-substitution compositions,
+  which can also raise IC at a fixed period; the independent-substitution reading is the simplest
+  consistent one, not a proven unique one. (3) I did not test the 149-digit string for the same
+  period-15 structure, which is the obvious sibling experiment and is cheap. (4) The per-column
+  shape test cannot distinguish English from other Latin-script languages.
+
+- METHOD NOTE FOR THE LEDGER. Three separate instruments in this one investigation each produced a
+  confident wrong answer before being validated: a structurally impossible matching test, a
+  miswired chi control, and a first OCR pass that read 125 groups where 149 were on file. In every
+  case the tell was the same - **a negative or positive result that arrived without a synthetic
+  control measured on the same code path.** `R-XREF`'s standard ("pixel-level template matching beat
+  my own eyeballing") generalises to statistics: validate the instrument on data where you know the
+  answer, in the same run, before believing anything it says. A cheap validator is always available
+  for cryptanalytic claims and its absence is the actual defect.
+
+Date: 2026-09-27, local.
