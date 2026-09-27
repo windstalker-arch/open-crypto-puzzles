@@ -15217,3 +15217,62 @@ Date: 2026-09-27, local.
   43-letter run is the only unexplained residue and, sitting inside a joke, is not worth a battery.
 
 Date: 2026-09-27, local.
+
+## R-UNUSEDKEYS-2026-09-27: the 79-byte blobs carry FOUR keys, only one of which was ever used. Tested all of them as passwords against all six blobs - **228 attempts, 0 decrypts.** Also records a naming trap that briefly looked like a jackpot. 0 oracle calls, nothing opened.
+
+- **THE STRUCTURAL POINT, WHICH NO ROW HAD STATED PLAINLY.** `E_S` is not a value to be *found*: per
+  `analysis/RAW_PW.md:27-30`, each 79-byte plaintext is `K1(32) || K2(32) || E(15)`. So
+  `B1_79 = K_C1 | K_C2 | E_C` and `B2_79 = K_S1 | K_S2 | E_S`, and `E_S` is literally
+  `B2_79[64:79] = 740a25de4b8e946d0a5ae2667a23a2` (confirmed: my slice matches the ledger's value
+  exactly, and `E_C = 38d4f4c90cb45fdfc8cff50d0ed1c5` is the prefix of `CHAIN4_PW` as certified). The
+  "E_S hunt" rows are therefore **cross-validation** - looking for that 15-byte value *independently* -
+  not a search for something unknown. That framing was implicit everywhere and explicit nowhere.
+
+- **THE BATTERY, AND IT CLOSES THE THREAD.** Only `WIF(K_C1)` was ever used (it opens BLOB2). The other
+  **three** keys - `K_C2`, `K_S1`, `K_S2` - had **never** been tried as passwords: `grep` for
+  `WIF(K_C2)`/`WIF(K_S1)`/`WIF(K_S2)` against the blobs returns **nothing** in this ledger despite 53/29/27
+  mentions of the key names. I built all four WIFs from scratch (own secp256k1 + base58check; all four
+  scalars verified in `(0,n)`) and ran **19 candidates** (WIF and 64-char-truncated WIF, lower- and
+  upper-case hex, for each of the 4 keys, plus `E_C`, `E_S` and `CHAIN4_PW` in hex) against **all six**
+  certified blobs x {EVP-MD5, EVP-SHA256} = **228 attempts. 0 decrypts.** So the three unused keys are
+  genuinely unused: they are structural filler or they serve a purpose with no ciphertext in our
+  corpus. Either way this direction is now closed and should not be re-run.
+
+- **AND NONE OF THE FOUR IS A GATE.** Derived p2pkh/p2sh/h160 for all four: `K_C1` ->
+  `1GKJzHQkgTBwwEGeXetsTMDoUzvwzs9yb4` (h160 `a80063af2d5cd84166aca6faa7c501821e5ca286`), `K_C2` ->
+  `135Cf6ASyU2PDHuxA1Edc3mHYtxEsZNPCa` (the ledger's corrected `ADDR_C2`, reproduced independently),
+  `K_S1` -> `1MixpoELBvfkFSRUQtDCGXbdG53cjqknZT`, `K_S2` -> `176ysPe7FdevdQjZWaFCK2nnVbzX9Tgydy`.
+  **None** matches the funded gate h160 `a9553269572a317e39f0f518cb87c1a0ee1dbae4`. Independently
+  reconfirms `R-VERIFY`'s "all four ladder addresses differ from both funded gates".
+
+- **TRAP WORTH RECORDING, BECAUSE IT ALMOST FOOLED ME: `author-wallet.txt` IS **OURS**, NOT THE AUTHOR'S.**
+  Cross-referencing the four derived h160s against every corpus, `K_C1`'s h160 matched - inside
+  `~/briefcase/gsmg-private/author-wallet.txt`. That looked like the find of the session: an author
+  document referencing a key from our own chain. It is **circular**. The file's own first line reads
+  *"author wallet / key-material reference - **Generated 2026-09-22**. Sale de derivations verified
+  against certified chain (oracle selftest PASS lineage)"*, and its body is our own findings: the B1/B2
+  field layout, the `RAW_PW` reconstruction, the two funded-gate balances, the DCL estate-955 facts, the
+  `silver_anth` msg 39233 pointer. It is a **research notebook entry with a misleading filename**, in a
+  directory (`gsmg-private`) whose name also reads as "the author's private material". A future session
+  grepping for author artifacts could cite it as authorial attestation for something we ourselves
+  derived. It is not evidence of anything the author did. **Its B1 block, gate balances, DCL facts and
+  K_C1 derivations are reproducible; the rest is our own synthesis and must never be cited as authorial.**
+
+- **AND ONE SUPERSESSION WHILE I WAS IN THERE.** Row 12652 carries
+  *"LABELLED UNCERTIFIED per AGENTS.md rule 6 - there is no witness for this harness, because
+  `K_S1`/`K_S2`/`E_S` exist ONLY in the unverified `author-wallet.txt`"*, warning that
+  `EVP_BytesToKey`-style derivation and *"fields re-keyed"* left `B2` possibly unreachable, and saying
+  explicitly **"Do not cite as a closed lead."** **That caveat is now obsolete.** `data/B2_79.bin`
+  (sha256 `b40fce72ef5638e4`) exists in the repo and `tools/verify_ladder.py` re-derives it byte-exactly
+  from `WIF(K_C1)` under salt `b45a5e3d827593ca` as part of the 41/41 check committed in `5a9062d`.
+  So `K_S1`/`K_S2`/`E_S` are **certified slices of a certified decryption**, not claims from an
+  unverified notebook - and `B2` is a *ciphertext under `WIF(K_C1)`*, never a digest of `B1`'s fields,
+  which disposes of the "is B2 reachable" question rather than leaving it open. The warning is retired
+  **only** on that basis, not because the notebook became trustworthy.
+
+- **STATUS.** Both gates unchanged, nothing opened, no candidate. The key-derivation surface of the
+  two 79-byte blobs is now fully enumerated: 4 keys, 6 blobs, 2 KDFs, every combination of the
+  chain-derived material, all negative. What remains open is unchanged and irreducible from what we
+  hold: the passwords for `9fbc451d` (4,090 B) and `eefc4c5b` (2,432 B), plus Lead 0.
+
+Date: 2026-09-27, local.
