@@ -1,0 +1,29 @@
+{
+ "_row": "R-WRGRID (2026-09-27)",
+ "_note": "COMPLETE 196-cell colour map. follow-white-rabbit-grid.json is LOSSY: it stores only blue+yellow, but the bit assignment is B/K=1 W/Y=0, so the black cells carry 85%% of the 1-bits. Use this file to reproduce the read.",
+ "_read": "CCW spiral from top-left (down the left column first), B/K=1 W/Y=0, MSB-first",
+ "_seed": "gsmg.io/theseedisplanted",
+ "_provenance": "identical in all 196 cells to clues/puzzle.png (cell=75) and to the recovered img/follow_the_white_rabbit.png (cell=25)",
+ "legend": {
+  "B": "blue 63,72,204",
+  "K": "black 0,0,0",
+  "W": "white 255,255,255",
+  "Y": "yellow 255,242,0"
+ },
+ "rows": [
+  "WWKKWBWWKWKKWY",
+  "KKBKWWKKKWBWKK",
+  "KKWKKKWBWWKWWK",
+  "WKKWBWWWWKKKWK",
+  "WBKWWWKKWYWKKW",
+  "KWWKKWYWKWYWKK",
+  "KWWBKKWWWKWYWW",
+  "BKKWWWKWWWKWYW",
+  "WWWKKBWKKKKKWB",
+  "KKBKKKYWKKWWWK",
+  "KKWKWWWYWKKWKK",
+  "KKKKWWKWBWKKWW",
+  "WBWKKKWKWYWKKW",
+  "WKBWKKWKKWBWKK"
+ ]
+}
