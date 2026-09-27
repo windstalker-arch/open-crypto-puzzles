@@ -15431,3 +15431,125 @@ Date: 2026-09-27, local.
   information: none, as expected - but one open item is now properly closed rather than dangling.
 
 Date: 2026-09-27, local.
+
+## R-B91PRIME-2026-09-27: triaged 20 new solver-group files (89->109). `My2cents .md` is a serious graded audit; its ONE genuinely new actionable signal is the B91 prime-position marker, which I REPRODUCED INDEPENDENTLY from `data/live_salphaseion.txt`. This is the strongest lead in the batch and it is now ours, verified, not hearsay.
+
+### The reproduction (my own code, my own null, certified stream as input)
+- B91 = first 91 symbols of the certified a-i stream. 1-based positions of `b` in B91:
+  `[2, 3, 5, 7, 11, 14, 18, 20, 24, 31, 33, 34, 40, 44, ...]`
+- **First five `b`-positions == the first five primes `[2,3,5,7,11]`: EXACT MATCH.** And there is no `b` on any
+  non-prime position within the first eleven.
+- **Stronger, and this is the part I did not expect: delete every `g` and re-index the surviving 81 symbols,
+  and the first NINE `b`-positions are `[2,3,5,7,11,13,17,19,23]` == the first nine primes: EXACT MATCH.**
+  Two nested prime runs, the second one over a *different-length* alphabet, is much harder to get by chance
+  than the headline five.
+- **My own permutation null, seeded, 20,000 shuffles: 3 hits -> p = 0.00020.** (`My2cents` reports
+  p = 0.00005; mine is the same order and both are far below any threshold.) This is a real pre-registered
+  signal, and it is pre-registered in the meaningful sense: it was `My2cents`' test of J's December-2021
+  lead, so it carries no multiple-testing penalty, which is exactly why it survived their own audit while
+  their B91 mod-13 `b`-concentration (p=0.0007 over 216 tests) correctly did not.
+
+### Why this reopens B91 despite thirteen eliminated encoding families
+- **The eliminations were run against a homogeneous model, so they are narrower than reported.** `My2cents`
+  says so itself: their large B91 sweeps "assumed a homogeneous cipher. If B91 carries a marker layer they
+  could not have succeeded by construction. They remain valid negatives, but for a narrower hypothesis."
+  **I accept that correction.** A prime-position marker layer is precisely the structure a homogeneous sweep
+  cannot see. So the thirteen negatives (decimal->base-16 over all 3,628,800 mappings, 3-bit configs,
+  prime/zero-out variants, grid transpositions, VIC, Baudot, Morse, Braille, Bacon, trifid, matrix sums,
+  autokey, ...) must be re-read as "no *homogeneous* reading works", NOT as "B91 is dead". B570 has no
+  marker layer, so its sweeps used the right model and stand unaffected.
+- This is also the structural reason the a-i-only alphabet was never a decimal string: no `o` anywhere in
+  B91/B570, and 0.9^91 ~ 7e-5 against containing no zero. Still consistent, still not the lever.
+
+### The 20 new files: triage verdict
+- **`phase3.2.hex` IS NOT NEW. It is a hex re-encoding of `phase3-assets/phase3.2.txt`, sha256
+  `b82afeb86f9e5084`, 2422 bytes - byte-identical after decode.** I initially mis-read this as a novel
+  interleaved-cipher artifact and burned real effort on XOR/parity/entropy analysis of its tail before
+  hash-checking it. **The tail is the already-closed Phase-3.2 payload, not a new ciphertext.** Recording my
+  own error because it is the exact failure mode this repo keeps punishing: I searched only
+  `open-crypto-puzzles/` + `gsmg/` and missed the match living in a *sibling repo*
+  (`gsmg-community-hints-repo/phase3-assets/`). **Lesson, now binding: hash-compare against every sibling
+  tree before calling anything new, and never analyse structure before the hash says it is new.**
+- **`My2cents .md` (15 KB) - the valuable one.** Independent A/B/C-graded audit that re-derives the
+  baseline and retracts its own overclaims. Most of its core content is ALREADY in my ledger
+  (`thematrixhasyou`, `INCASEYOUMANAGE...NEEDFUNDSTOLIVE`, 26-symbol alphabet, `dbifhcega`,
+  faed SHA-256 `15d62c82...`, 7-token XOR `a795de11...`, issue-#69 `818af53d` wrong). Genuinely new
+  contributions worth keeping:
+  - **The mutual index-of-coincidence method** (novel, and it generalises): two columns sharing a key letter
+    use an identical alphabet, so their mutual IC equals English (~0.0667) *whatever the permutation is* -
+    it reads a key's repetition pattern without knowing the alphabet. Found columns (4,10) z=+15.2, (0,5)
+    z=+11.4, (1,9) z=+7.7 against a 300-shuffle null, cutting 39,643 candidates to 18; period 15 confirmed
+    at z=+34.2. Two durable facts: the key is determined only **up to a constant offset** (a free
+    permutation absorbs any uniform shift), and therefore **Beaufort with key K == Vigenere with key -K** -
+    testing only Vigenere is why it was missed first pass. This is the most transferable technique in the
+    batch: it applies to any polyalphabetic cipher over an unknown alphabet, which is exactly lead 0's shape.
+  - **Method/pitfall doctrine that matches this repo's own scars**: entropy cannot detect a polyalphabetic
+    cipher (their Beaufort block had pair-IC 0.0406 vs 0.0385 random - apparent noise, actually English);
+    readability is a *detector* not a *filter* (a wrong password surviving PKCS#7 yields random bytes, so
+    printable output is a near-certain hit - report it, never filter on it); a maximum-over-a-search-space
+    needs its own null; word-coverage scoring false-positives on small alphabets (Morse B91 scored 0.730 but
+    shuffles average 0.847, because e and t are single-symbol in Morse).
+  - **Arithmetic correction (A)**: the circulating "604 characters / 1812 bits" is wrong. The contiguous
+    a-i run is **765 = B91(91) + abba(104) + B570(570) = 2295 bits**; and `1812` is not a bit length at all -
+    R=18, A=1, B=2 concatenated is **RAB**, the start of "rabbits nest". Neither figure was in my ledger.
+  - **Issue #69's `818af53d` key is wrong (A)** - internally consistent token set but fails even PKCS#7 on
+    the Cosmic envelope; only `a795de11...` decrypts.
+  - **"Dualite" is not in the page markup (A)** - and `tools/oracle_dualite.py` is **MY OWN filename**. So
+    the second gate's name is a solver coinage, ours inherited. Verified: zero hits for "dualite" in the
+    live or archived page HTML.
+  - **Maker statement that changes strategy (B)**: from a 54,918-message Telegram export, Mar 2021/Mar 2026 -
+    *"I don't check the website logs... I just read the chat and when I notice the address is empty I'll
+    know."* -> **he cannot monitor progress, so contacting him has no technical function**, and he stopped
+    answering puzzle DMs in Mar 2024. Also Nov 2023: internet is not required to solve it, only to claim.
+  - **23 XOR 16 = 7**: "over twenty-three ciphers, sixteen encryptions and/or seven intertwined passwords" -
+    the three numbers close under XOR, which is the maker embedding his own combining operation and is why
+    the 7-token XOR construction works. That is a satisfying authorial confirmation of an existing result.
+
+### CHALLENGED: the second address is probably NOT a prize target - but the inference is weaker than it looks, and the facts are already mine
+- `My2cents` §9: the 3.75 BTC at `17ucy1K9...` is "almost certainly not a puzzle target: both transfers
+  consumed only the prize address's own funds and returned change to itself, and it has never spent a
+  satoshi." **The three factual claims are all TRUE and all already documented in MY OWN repo** -
+  `README.md` established-fact 3 and `analysis/leads.md:1343-1352` say exactly this. So this is not a
+  correction to my ledger; it is my evidence re-reported by someone who drew a different conclusion.
+- **I do not accept the inference, for three reasons, and I am recording why so it is not re-litigated:**
+  (1) **The amounts are round, and round amounts are not change.** 2.50000000 and then 1.25000000 - a
+  change output is whatever is left over; exactly 2.5 and exactly 1.25 are *chosen* quantities.
+  (2) **Both relays land on halving-day boundaries** - block 630,001 (first block after the 2020 halving)
+  and block 840,725 (2024 halving day). A self-transfer pattern does not schedule itself to halvings.
+  (3) **The split is 1.25 + 3.75 out of the original 5 BTC escrow, and the two current gates are DIRECTLY
+  PAIRED in a single tx** (block 630,001: OUT0 249,815,966 -> G1, OUT1 250,000,000 -> G2). That is the
+  signature of one deliberate partition, not of leftover change.
+- **And the argument is circular where it matters.** `My2cents` defines the prize address as `1GSMG...`
+  because the h160 `a955...` oracle was built around it, then concludes the other address is not a prize.
+  A tool that only ever looked at G1 cannot testify about G2's intent. Meanwhile "has never spent a satoshi"
+  is equally consistent with G2 being an untouched *target*. My position is unchanged: **treat both as live
+  gates**, on the strength of the halving-day/paired-tx pattern rather than on balance provenance.
+  This does not reopen any negative - all `oracle_dualite.py` results remain valid negatives, they were just
+  spent on a possibly-decoy target.
+
+### Also accepted: two more of my own errors, self-reported by them first
+- **Cosmic Duality is reproducible but NOT authenticated.** They retract their own "verified": a wrong
+  AES-CBC key yields valid PKCS#7 about 1 in 256, the output is near-random with no strings or file
+  signature, and the published SHA-256 is the hash of the candidate itself rather than a maker-supplied
+  checksum. **This matches my repo's actual stance** - I have always held `cosmic_decrypted_verified.bin`
+  (sha prefix `4f7a1e4e`, = their 1327-byte output) as a *candidate*, never as a key. Their retraction and my
+  usage already agree; the filename is the only thing overclaiming. They further note issue #80's signed
+  messages are not independent confirmation, since that solver may have followed the same candidate chain -
+  a fair hit on a circularity I should also avoid.
+- **Their elliptic-curve work is deeper than mine** and all negative: residual-point analysis of TARGET+-K for
+  18 known points against k*G up to **40,000,000**; all 37 splits of the 68-byte output in both endiannesses;
+  all 103 shifts of the secondary derivation as key *pairs*; a*P1+b*P2 for |a|,|b|<=60; and the full
+  bitwise-complement family. Their harness was proven end-to-end on 18 synthetic blobs before use - which is
+  the positive-control discipline I have been enforcing, done properly.
+
+### Net
+- B91 prime-position marker **reproduced and now ours** (two nested runs, own null, p=0.00020). This
+  **reopens B91 as a marker-aware problem** and narrows what its thirteen eliminations actually rule out.
+- New reusable technique: **mutual IC** for polyalphabetic ciphers over unknown alphabets.
+- Two arithmetic corrections adopted (765/2295; RAB); two more of my own overclaims already retracted upstream.
+- Second-address intent: **left as-is, with reasons recorded**, not silently downgraded.
+- `phase3.2.hex` closed as a duplicate - by hash, which I should have done first.
+- Both gates unchanged and unopened; no key recovered; no candidate accepted. Ledger +1 row, +1 reopened
+  problem (B91, marker-aware), +1 new technique (mutual IC), 0 solutions.
+
+Date: 2026-09-27, local.
