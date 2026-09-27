@@ -28,9 +28,15 @@ ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
 def keyed28(keyword):
-    """Certified-shape 28-char keyed alphabet: dedupe(keyword+alphabet)=26 letters,
-    splice '.' and '/' after cols 8 and 18 so row-major slices are 8/10/10 as the
-    certified 3.2.2 grid FUBCDORA.LETHINGKYMVPS.JQZXW (build_grid slices [:8],[8:18],[18:28])."""
+    """28-char keyed alphabet: dedupe(keyword+alphabet)=26 letters, then splice
+    '.' at index 8 and '/' at index 19, giving letter runs 8|10|8 and dcode grid
+    rows [:8],[8:18],[18:28] = 8/10/10 cells with punct at row1-col0 and row2-col0.
+
+    NOTE: this does NOT reproduce the certified board. The real
+    FUBCDORA.LETHINGKYMVPS.JQZXW has punct at 8 and 22 (both '.'), i.e. letter runs
+    8|13|5 and row2-col4 -- not row2-col0. An earlier version of this docstring
+    claimed the 8/18 splice "exactly matched" the certified shape; it does not.
+    See analysis/tested.md R-STRUCT8-13-5-2026-09-26."""
     kw = "".join(ch for ch in keyword.upper() if ch in ALPHA)
     keyed = ""
     for ch in kw + ALPHA:

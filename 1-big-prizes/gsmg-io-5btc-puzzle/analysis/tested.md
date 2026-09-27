@@ -15553,3 +15553,75 @@ Date: 2026-09-27, local.
   problem (B91, marker-aware), +1 new technique (mutual IC), 0 solutions.
 
 Date: 2026-09-27, local.
+
+## R-TRIAGE-2026-09-27: built the procedural fix for the error class that produced tonight's four mistakes. `tools/sibling_index.py` + `tools/triage_new.py` + `tools/test_triage.py` + `analysis/ARTIFACT_FAMILIES.md`. 15/15 tests pass. No new key, no gate opened.
+
+### The failure being fixed
+All four of my errors tonight shared one shape: **I answered an expensive question before a cheap one.**
+- a double-hash of a hash160, reported as an address conflation that does not exist;
+- a base58check omission, reported as a fabricated artifact;
+- "5 segments" that were 2 segments plus a two-stage decode;
+- `phase3.2.hex` analysed as a novel interleaved cipher when it is a hex re-encoding of
+  `phase3.assets/phase3.2.txt` -- which lives in the sibling repo `gsmg-community-hints-repo`,
+  a tree I had never searched.
+The last one is the expensive lesson because the answer already existed: row
+`R-P32BLOB-2026-09-26`, written the day before, records that the solver group re-packages these
+artifacts verbatim AND states the rule in bold -- *"Filename coverage is a worthless proxy; always
+content-grep before spending a session."* I had the rule and did not apply it.
+
+### What the tools do
+- **`tools/sibling_index.py`** - sha256 index over every artifact tree: all ten sibling repos under
+  `1-big-prizes/`, plus `~/gsmg`, `~/briefcase`, the external card, and quarantine. 14 roots, 2,844
+  entries, cached on (size, mtime) so rescan is incremental. Per-root walk status is recorded, so an
+  unreadable root can never masquerade as "no such artifact anywhere".
+- **`tools/triage_new.py`** - the gate. Classifies each input `EXACT` / `REENCODING` / `CONTAINED` /
+  `DISTINCT` and **exits 1 unless everything is DISTINCT**, so the cheap identity check is the only
+  step available first. `--force` overrides, and demands a recorded reason.
+- **`tools/test_triage.py`** - 15 checks, all passing, including the negative case: a genuinely new
+  file must PASS. A gate that blocks everything is as useless as no gate, so both directions are pinned.
+- **`analysis/ARTIFACT_FAMILIES.md`** - the family -> path map, built from index queries rather than
+  memory, and explicitly subordinate to the index so it cannot become a new stale authority.
+
+### The design decision that makes it general
+**A twin is found by hashing the DECODED payload, not by locating the file.** The `phase3.2.hex`
+failure was a path-search failure, and any path search can fail again -- the workspace holds
+`gsmg-io-5btc-puzzle` and `gsmgio-5btc-puzzle`, which differ only in hyphens and hold entirely
+different material (284 files vs 28; the second is a fork-audit bundle, not a copy). Resolving identity
+by content makes the tool immune to which tree I remembered to look in. Run against the same 22-file
+batch, it flags **2 of 22** as already held: `phase3.2.hex` (-> `gsmg-community-hints-repo/phase3-assets/phase3.2.txt`,
+found without my naming that path) and `reproduce_all_bulbs_corrected (1).py` (== `reproduce_all_bulbs_corrected.py`,
+a browser-download duplicate whose FILENAME differs from its twin -- invisible to name matching, and
+something I would have analysed).
+
+### Three bugs I hit while building it, all of the same species
+1. **Glob expansion was wrong and reported success.** `os.path.isabs("~/gsmg")` is False, so the tilde
+   pattern was joined onto the repo parent and matched nothing; `1-big-prizes/*` was resolved against a
+   base that already *was* `1-big-prizes`. The first run indexed **1 root / 87 files** and exited 0 --
+   a silently incomplete index is the exact failure this tool exists to prevent, and it happened in the
+   tool itself. Fixed by expanding `~` first, resolving against a named `SIBLING_BASE`, and now
+   **reporting any pattern that matched nothing**.
+2. **Self-matching defeated the gate.** The index covers the source trees, so every input trivially
+   "matched itself" and read EXACT. Identity is now compared by `(st_dev, st_ino)` as well as path, so a
+   copy reached by a different path is still a twin while the file itself never is.
+3. **Termux path assumption.** `~/usr/tmp/opencode/quarantine` does not exist: on Termux `$PREFIX` is
+   `/data/data/com.termux/files/usr`, NOT under `$HOME`. Now resolved via `$PREFIX` with a `~` fallback.
+
+### Incidental find: an under-inventoried surface
+`gsmgio-5btc-puzzle` (the no-hyphen repo) contains `usr/tmp/opencode/{fork-audit,halbgott}/` -- 28 files
+of **GitHub fork topology and creator-clue analysis** for five forks (`Naddiseo`, `devjotaduo`,
+`halbgott29a`, `kenorb`, `loginwashere`). The `usr/tmp/opencode/` prefix is a packaging artifact, not a
+real path. Ledger coverage is partial: `creator_jrk`, `topology_identifiability`, `loginwashere`,
+`halbgott`, `devjotaduo` have 1-2 mentions each, but **`GSMG_CREATOR_AUTHORED_CLUE_LEDGER.md` (21 KB)
+and `hintgivers_names.txt` have ZERO coverage**, and `kenorb` is never referenced. NOT yet triaged --
+recorded as the next new information class, deliberately not opened in the same session that built the
+tooling. Note these are solver analyses *of* creator statements, not creator material, so they do not
+by themselves change any provenance grade.
+
+### Housekeeping
+`data/sibling_index.json` is a 630 KB regenerable cache holding device-specific absolute paths. It is
+deliberately NOT committed, and should be gitignored -- left alone here because `.gitignore` already
+carries someone else's uncommitted edit in this monorepo, and this commit stages only its own paths.
+Note for the next session: **the git root is `~/open-crypto-puzzles`, one level above this repo, and
+there are 126 uncommitted files from other projects.** Stage by exact path; never `git add -A`.
+
+Date: 2026-09-27, local.

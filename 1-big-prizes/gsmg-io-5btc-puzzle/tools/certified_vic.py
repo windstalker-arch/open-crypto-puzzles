@@ -32,19 +32,27 @@ POS   = {c:i for i,c in enumerate("abcdefghi")}
 ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def keyed28(keyword, punct_letter_pair):
-    """dedupe(keyword+alphabet) to 26 letters, then splice the two punctuation chars
-    '.' and '/' into the positions indicated -> 28-char alphabet (dcode form)."""
+    """MISNAMED / INCOMPLETE. Despite the name and the old docstring, this does
+    NOT build a 28-char alphabet: it returns the 26 LETTERS only, with no
+    punctuation spliced in at all. `punct_letter_pair` is unpacked into `_p1, _p2`
+    and then never used, so the argument has no effect.
+
+    Callers that need a real 28-char board must splice it themselves; three
+    modules (dict_keyed_sweep.py, lead0_eyeball.py, custom_keyed_seeds_sweep.py)
+    import this and re-splice by hand, which is why the gap went unnoticed. For
+    reference the genuine certified board is FUBCDORA.LETHINGKYMVPS.JQZXW, whose
+    two punct cells are BOTH '.' at 0-based 8 and 22 (letter runs 8|13|5) - not
+    '.' and '/'. Behaviour here is left unchanged on purpose; correcting the
+    splice would break those three callers. See analysis/tested.md
+    R-STRUCT8-13-5-2026-09-26.
+    """
     kw = "".join(ch for ch in keyword.upper() if ch in ALPHA)
     keyed = ""
     for ch in kw + ALPHA:
         if ch not in keyed:
             keyed += ch
     assert len(keyed) == 26, keyed
-    _p1, _p2 = punct_letter_pair   # two punctuation symbols
-    # splice: place '.' before a specific letter and '/' before another, forming 28
-    # We model: start from keyed, insert '.' and '/' at two chosen letter boundaries.
-    # Simplest parametrisation that matches FUBCDORA.LETHINGKYMVPS.JQZXW: the '.' occupy
-    # row1-col0 and row2-col0 conceptually; here we keep it generic: insert at indices.
+    _p1, _p2 = punct_letter_pair   # UNUSED - see docstring; no splice is performed
     return keyed
 
 def build_grid(alpha28, e1, e2):

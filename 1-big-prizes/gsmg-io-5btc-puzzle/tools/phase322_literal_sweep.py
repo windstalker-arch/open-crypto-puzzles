@@ -36,7 +36,8 @@ MAPPINGS = [("CANON", CANON), ("POS", POS), ("BIFID", BIFID)]
 ESCAPES  = [(1,4), (2,5), (0,4), (1,2)]
 WIDTHS = {"dbbib": [7, 13, 0], "faed": [15, 38, 19, 13, 0]}
 
-# the literal author-verified 28-char board (dots AT indexes 8 and 18)
+# the literal author-verified 28-char board.  Its two punctuation cells are BOTH
+# '.', at 0-based indexes 8 and 22 (NOT 8 and 18) -- letter runs are 8|13|5.
 LITERAL = "FUBCDORA.LETHINGKYMVPS.JQZXW"
 assert len(LITERAL) == 28
 
