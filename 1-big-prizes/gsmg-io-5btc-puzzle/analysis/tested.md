@@ -14307,3 +14307,98 @@ STATUS UNCHANGED: Lead 0 remains the single live gate, and no new supply route f
 exists in any public archive.
 
 Date: 2026-09-27, local.
+
+## R-FORK-2026-09-27: THE MAINTAINED COMMUNITY FORK CARRIES 77 FILES WE NEVER HAD - 34 AUTHOR HINT IMAGES, TWO PLAINTEXTS, SEVEN AUTHOR-SOLVE NOTEBOOKS - AND IT INDEPENDENTLY CONTAINS THE BYTE-IDENTICAL B2 ENVELOPE. It also hands us LEAD 0's alphabet, which turns out to be the wrong key to the right door.
+
+0 oracle calls for the census; 288 candidate decodes x 2 gates for FINDING 5. 4,485 distinct
+local git blob SHAs hashed across the repo, `~/briefcase`, `~/gsmg` and the Telegram capture.
+D = 1 tarball (15,169,507 B) + 6 tree listings + 11 issue/comment pulls, t = 25 min.
+Both oracles `--selftest` PASS. New material in `data/community-fork-2026-09-27/` (plaintexts
+only, quarantined with provenance).
+
+MOTIVE. `tested.md` has wanted "a new author artifact" since the crux was framed, and the
+ledger's own unblocker #3 lists it. Our author-activity view was frozen at 2026-08-27, so I
+refreshed it: 11 issues changed, #108-#111 new, #69 touched 2026-09-26. The useful fact there
+is structural, not cryptographic - **zero** OWNER/MEMBER/COLLABORATOR comments exist across
+all 11. Naddiseo (CONTRIBUTOR) states it outright in #111: "the puzzle author doesn't
+read/respond to the many github repos. They are community developed", and #105 declares the
+official repo abandoned. So route 3 via GitHub is dead by the maintainer's own testimony, and
+the author's real channel is the Telegram/Discord material our corpus already holds. What the
+refresh DID buy is the maintainer's own fork, which #93 advertises: "I've been maintaining my
+own up-to-date fork". Census by blob SHA (not filename - our repo renames half its images):
+**87 blobs, 77 with SHAs we have never seen.**
+
+FINDING 1 - THE HARD WITNESS THAT MAKES THE ACQUISITION TRUSTWORTHY. The fork ships
+`phase2-assets/phase2.1.txt` (648 B) whose sha256 is
+`e2f9dd65604a3231f8b3301724e8d713a88fffc4b6c7c4aeeb20f58a582b593a` - **byte-identical to the
+phase-2 plaintext this repo derived independently** nine hours ago in `R-BLOBINV` from the
+`06286612` envelope under `sha256("causality")`. I did not choose that file to match; the
+match is the evidence. One hash-identical artifact is enough to stop the "community fork is
+fabricated" worry for the *data* files, and I have copied exactly these two plaintexts into
+the repo, quarantined under `data/community-fork-2026-09-27/` with a provenance note that
+says plainly that nothing there is author-published. `phase3.txt` (4,090 B, sha256
+`c4ad9455...`) comes along as the phase-3 plaintext we previously knew only by reference.
+
+FINDING 2 - B2 IS NOW INDEPENDENTLY ATTESTED, WHICH SETTLES THE PROVENANCE OBJECTION I
+RAISED AGAINST MY OWN RESULT. `R-B2RUNG2` certified that the 96-byte `Salted__` envelope with
+salt `b45a5e3d827593ca` opens under the DERIVED password `WIF(K_C1)` to `B2_79`, and then
+noted the uncomfortable part: the envelope's only provenance was issue #22, i.e. community
+material transcribed in `tools/mirror79_research.py`, so a fair critic could say we had
+certified an arithmetic curiosity of a community artifact. `phase3.2.ipynb` cell 18 quotes
+that envelope verbatim - 96 B, salt `b45a5e3d827593ca`, ct 80 B, sha256
+`291dfd6f3e759ec2e272b35a00c24907da70c3e7a9291b4c13605c7b0b4f3de9`, which is **exactly** the
+hash `R-B2RUNG2` certified. Two unrelated community sources, different files, different
+authors' working styles, same 96 bytes, and the second one files it under *phase 3.2* rather
+than as a loose record. B2 is not an artifact of our own making and not a one-source
+orphan. That is the strongest available statement short of author confirmation, which #111
+says will never come on this tracker.
+
+FINDING 3 - **LEAD 0's ALPHABET IS NOT MISSING. IT IS `fubcdora/lethingkymvpszjqwx.`** The
+page's own odd phrase is the recipe: take `fubcd-king & oracle-queen, thingky mvps`, strip the
+punctuation, drop the repeated letters, append the letters still missing plus `.` and `/`, and
+you get exactly 28 characters. The notebook shows the whole ladder, including the two wrong
+attempts before the right one, and then the proof that it is right: plugging it with the
+phase-3.2 digit stream `1516594312197240916917121375895181314...` into a VIC solve (key digits
+`1` and `4`) returns grammatical English - `IN CASE YOU MANAGE TO CRACK THIS THE PRIVATE KEYS
+BELONG TO HALF AND BETTER HALF AND THEY ALSO NEED FUNDS TO LIVE`. Two independent
+confirmations: the alphabet is forced by the page's text, and it yields a coherent plaintext.
+Worth flagging as a process lesson about our own repo: the usage example in
+`tools/lead0_try.sh` is `FUBCDORA.LETHINGKYMVPS.JQZXW`, which has the two punctuation marks
+**transposed** relative to the real board (`/` after `ora`, `.` last). The escapes in this
+cipher are positional, so an example that is off by two character slots is worse than no
+example - it is a plausible-looking wrong answer sitting in the repo where a reader would
+copy it.
+
+FINDING 4 - THE ARCHITECT MONOLOGUE IN THE NOTEBOOK IS NOT THE PHASE-3 PASSWORD. Cell 15
+concatenates the raw architect speech into one 1,539-character string. I tested it against the
+`9fbc451d` phase-3 envelope under 3 password forms x 3 KDFs: 0 openings, and the length alone
+rules it out (the phase-3 password is 227 characters). That string is our `RAW_PW`, not the
+phase-3 key - a distinction worth having on the record, because "we have the phase 3.2
+notebook" sounds like it should settle phase 3 and does not. Phase 3 remains open; its
+plaintext is now in hand, which is a different and possibly more useful thing.
+
+FINDING 5 - AND THE CRITICAL NEGATIVE: **THE CERTIFIED 3.2.2 GRID DOES NOT FIRE ON THE
+CORRECT ALPHABET.** `bash tools/lead0_try.sh --alphabet "fubcdora/lethingkymvpszjqwx."` runs
+the full proven grid - maps {pos, canon} x escapes {(1,4),(2,5)} x transforms {13, 38, 7} x
+{forward, reverse} = 24 configurations, every decode oracled against BOTH funded gates:
+**288 candidate decodes, 0 matches.** This is the most consequential negative in the project,
+and it is worth being precise about why. For two years the crux has been phrased as "the
+keyed 28-char alphabet is the one unprovided input". It is now provided, by the page, and the
+answer does not open the gates. So the missing thing was never the alphabet itself - it is
+whatever consumes the alphabet for the `dbbib`/`faed` streams, which our byte-ceiling proof
+already showed cannot be the same VIC treatment (570 tokens can only ever yield <=236 bytes,
+and the interpreter's own streams are 91 tokens -> 37-38 bytes). Removing an unknown from the
+crux does not advance the solve, but it relocates the frontier precisely, and it retires the
+"just find the 28 characters" framing that had us waiting on a visual read of the page.
+
+WHAT WE NOW HOLD THAT WE DID NOT. 34 `hints/*.png` author hint images dated 2020-01-14 through
+2024-04-19 (including `cosmic-duality-book.png`, `2022-12-10-cosmic.png`,
+`2023-01-09-prime-number.png`, `2021-12-02-another-door-hint.png`,
+`2021-05-06-salph instructions.png`, `2021-03-01-primes.png`), 9 `phase2.1-assets/*.png`
+(`mr-robot-hsm`, `klingon`, `qwerty`, `coords`, `safenet-coords`, `H-guide`,
+`H-nothing-useful`, `intel-i5`, `mr-robot-search-1`), 6 `phase3-assets/*`, 3
+`decentraland-assets/*`, `phase1-assets/`, and 7 author-solve notebooks totalling ~7 MB. Not
+one of those images has ever been in this repo's analysis. The next real move is to mine them,
+not to widen any cipher battery.
+
+Date: 2026-09-27, local.

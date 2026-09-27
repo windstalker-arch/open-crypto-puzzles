@@ -2,7 +2,7 @@
 # lead0_try.sh <alphabet|keyword> [--keyword] [--dry]
 # One-command human->battery bridge for the Lead-0 interpreter-alphabet leap.
 # Usage:
-#   tools/lead0_try.sh "FUBCDORA.LETHINGKYMVPS.JQZXW"          # verbatim 28-char board
+#   tools/lead0_try.sh "fubcdora/lethingkymvpszjqwx."          # the page-derived board (R-FORK)
 #   tools/lead0_try.sh --keyword "salphasion"                 # keyed board from keyword
 #   tools/lead0_try.sh --dry "MYALPHABET..."                  # decode only, no oracle
 #
