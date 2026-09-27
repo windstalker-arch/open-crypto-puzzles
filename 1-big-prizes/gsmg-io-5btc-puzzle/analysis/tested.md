@@ -14812,7 +14812,10 @@ Date: 2026-09-27, local.
   so the source URLs and capture hashes above are the record.
 
 - **WHAT THIS DOES AND DOES NOT MOVE.** Provenance first: this is an uploader's walkthrough, so
-  `abbaabababbabbbaabbbabaaabbaabababbbaaba` is **community-document content, not an author artifact**,
+  `abbaabababbabbbaabbbabaaabbaabababbbaaba` is **community-document content, not an author artifact**
+  (SUPERSEDED by `R-DIGRUN`: this grading is WRONG - the string is on the live author page and is
+  author content; and this document is a faithful copy of the live layout, so it is not an
+  independent attestation),
   and it gets the same grade as the rest of that document. It is a real 40-character string I had
   written off as noise, sitting immediately between the two halves of the small blob, next to `enter`
   - and `enter` is one of the five RAW_PW components. That is worth a look, and it is a lead, not a
@@ -14820,5 +14823,56 @@ Date: 2026-09-27, local.
   honest summary of these three files is: one was a lossy transcription now replaced from source, one
   turned out never to have been damaged, and the "damaged blob" that anchored my last row was an
   artifact of my own whitespace-joining.
+
+Date: 2026-09-27, local.
+
+## R-DIGRUN-2026-09-27: I TOOK THE `abbaabab...` LEAD BACK UP, IT IS ALREADY CERTIFIED, AND THE ONE REAL FINDING IS A PROVENANCE ERROR IN `R-DMGSRC` - IT IS AUTHOR-PAGE CONTENT, NOT COMMUNITY. Lead closed, nothing re-run. 0 oracle calls, 0 candidates.
+
+- **I TRIED TO REUSE A CLOSED LEAD, AND THE GREP CAUGHT ME.** `R-DMGSRC` flagged the 40-char
+  `abbaabababbabbbaabbbabaaabbaabababbbaaba` as a lead worth looking at. Content-grep first, as I
+  should: six prior mentions. It is not a lead, it is a **certified artifact** - section 74 (run
+  `2_959_998` = `enter`), section 174 (the residue characterisation and the falsification of issue
+  #108's "two typos"), section 179 (258 insertion/transform candidates through the oracle, NO MATCH on
+  both gates), section 3315 (the binary-decode reproduction), and it is recorded as *data* in
+  `data/finalpage-digit-streams.json` at tokens 91..194 and 959..998. I did **not** re-run section
+  179's battery.
+
+- **BUT I DID REPRODUCE IT INDEPENDENTLY, AND MY NUMBERS LAND ON THE RECORDED ONES EXACTLY.** Working
+  from the flattened live capture, not from the ledger's quotes: the small blob's first 64 base64
+  chars sit at token 895, the 40-char a/b run at token 959, the second 64 at token 999, and
+  `shabefanstoo` after. The span is byte-exactly `H1 || residue || H2`; deleting the residue yields
+  canonical BLOB1 at 128 chars. Under a=0/b=1, MSB-first, 8 bits per char, the 40-char residue
+  decodes to `enter` and the longest a/b run in the page (104 chars, 13 bytes, at token 91) decodes to
+  `matrixsumlist`, 13/13 printable. My measured offsets 91 and 959 match the ones already on file.
+  So this is a reproduction of certified fact, not a new finding - which is the useful outcome, since
+  it means the certified transcription still verifies against the live page.
+
+- **THE REAL FINDING: I UNDERSTATED THE PROVENANCE IN `R-DMGSRC`, AND THAT MATTERS.** That row says
+  the 40-char string is "**community-document content, not an author artifact**", on the reasoning
+  that I had found it in an uploader's Scribd walkthrough. That is wrong, and wrong in the direction
+  that makes the artifact look worthless. The string is on the **live author page** - present exactly
+  once each in `data/live_salphaseion.txt` and `data/live_salphaseion.html` - and it is the puzzle's
+  own documented binary-to-ASCII mechanic, which the README already establishes as fact. The correct
+  grade is author content, not community. I graded an author artifact as community because I was
+  looking at the copy of it rather than the thing itself, which is precisely the mistake `R-IMGSCOPE`
+  was written about.
+
+- **AND THE INVERSE FOLLOWS FOR THE SCRIBD DOCUMENT.** Since the document reproduces the live page's
+  layout verbatim - same halves, same residue, same position - it is a **faithful copy, not an
+  independent attestation**, and it adds no evidential weight to anything. Treating "document and
+  live page" as two agreeing sources would be double-counting one source. This is also why the
+  `[Link]`/`phase5.txt` discrepancy in `R-DMGSRC` is best read as the document drifting away from the
+  page over time, not as two witnesses.
+
+- **TWO ERRORS OF MY OWN, RECORDED SO THE NEXT READER DOESN'T INHERIT THEM.** (1) I briefly announced
+  a "period 64" structure in the 104-char run, from three `any()` checks over a candidate list that
+  included the residue's own 40-char run - so `startswith`/`endswith`/`in` were trivially true of it.
+  There is no period-64 structure; the 104-char run is `matrixsumlist` and nothing more. (2) My first
+  splice check compared the wrong span and printed `False`; the correct check passes. Same failure mode
+  as `R-DIG149`: assert against the source, never against a value I typed.
+
+- **STATUS.** Nothing opened, nothing moved at any gate. One lead closed properly with citations
+  instead of left dangling, and one provenance error of mine fixed - which is the better outcome,
+  because a community-graded author artifact is the kind of thing that quietly stops being worked on.
 
 Date: 2026-09-27, local.
