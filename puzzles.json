@@ -714,12 +714,6 @@
         },
         {
           "rank": 9,
-          "title": "read the 29 dropped letters as their own message",
-          "cost": "minutes",
-          "status": "open"
-        },
-        {
-          "rank": 10,
           "title": "the small blob is published on the SalPhaseIon page, whose own text names its password",
           "cost": "hours",
           "status": "open"

@@ -407,12 +407,8 @@ method notes for each row are in `analysis/tested.md`.
 8. **Use the 29 dropped bits somewhere** (minutes per reading). The drop sequence
    `OOIIOOOIIOOIOIIOIOOOOIOIIOIOI` is all I and O, so binary or nothing; standalone
    readings are exhausted with no legible fragment, so the open question is what
-   they select or gate, plausibly in combination with the even stream of lead 3.
-9. **Read the 29 dropped letters as their own message** (minutes). Reducing the
-   285-letter stream to the 256-symbol object drops exactly 29 letters, never read
-   as an object in their own right. Confirmed by a match or a legible fragment;
-   killed by exhausting the small set of reasonable reading orders.
-10. **Preimage the seven remaining hash-slug routes** (minutes per batch). Three of
+   they select or gate, plausibly in combination with the even stream of lead 4.
+9. **Preimage the seven remaining hash-slug routes** (minutes per batch). Three of
    ten fell to sha256 over the puzzle's own phrases in one evening; each newly
    transcribed stage wording is another candidate batch. Confirmed by a preimage
    whose page carries content.

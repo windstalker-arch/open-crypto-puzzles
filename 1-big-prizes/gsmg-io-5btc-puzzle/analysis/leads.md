@@ -1962,3 +1962,36 @@ password of both locks under 7 forms and 2 key derivations (`analysis/tested.md`
 section 15b). The phase 1 image's text is transcribed and tested too (section 19b). What
 survives is a non-literal reading of the two directives.
 Cost: an insight, not a sweep.
+
+## Note 35 (2026-09-27): the "read the 29 dropped letters as their own message" lead is DEAD, not open; the merge had resurrected it
+
+The origin/main merge brought in a ranked lead, "read the 29 dropped letters as their
+own message", whose own stated kill criterion is "killed by exhausting the small set of
+reasonable reading orders". That criterion has been met three separate times, in
+`analysis/tested.md` entries dated well after the lead was written:
+
+- section 60: the direct binary->ascii of `OOIIOOOIIOOIOIIOIOOOOIOIIOIOI` is garbage.
+- section 81 (2026-09-01): the drop token tested directly as the answer X against the
+  funded gate `1GSMG1JC9`, raw plus both polarities = NO MATCH over 5 attempts, with
+  the oracle self-test passing immediately before. "As a standalone X it does not open
+  the gate." The entry also names this as a research-correction already recorded in
+  `leads.md`: the I/O string is the drop-mask record, not a payload.
+- the 2026-09-05 letter-suppression derivation: removing every I and O from
+  `odd_pre_reduction` yields `object_256` exactly, so `dropped_29` is the suppression
+  set re-encoded as redundant 29-bit binary, and its binary content "is not itself a
+  message". That entry closes the "29" ambiguity outright.
+
+Dating settles which side is stale. The lead entered the README in `e924aa3` on
+2026-08-16, the repository's opening "open source my research" commit, and has sat
+untouched since. The exhaustion result is dated 2026-09-01 and 2026-09-05. So this is
+not a conflict between two live hypotheses: it is a lead whose kill condition was met a
+month later, and the merge had re-listed it as open directly beneath our own lead 8,
+which states the same conclusion ("standalone readings are exhausted with no legible
+fragment, so the open question is what they select or gate").
+
+Removed from the ranked list in `README.md` and from `puzzle.json`. The surviving
+question is not the letters read alone but what the 29 bits select or gate, possibly
+combined with the even stream, which is what lead 8 now says on its own.
+
+Status 2026-09-27: closed as a standalone-message route. If a future pass wants to
+revive it, it has to say what reading order the three existing negatives did not cover.
