@@ -41,8 +41,8 @@ import requests
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TIERS = ["1-big-prizes", "2-mid-prizes", "3-small-prizes", "4-solved", "archive/dead-ends"]
 
-TIMEOUT = 15
-RETRIES = 1  # one retry after the first attempt, so two attempts total
+TIMEOUT = 10
+RETRIES = 0  # one attempt per endpoint; the source list already carries fallbacks
 
 ETH_RPC_ENDPOINTS = [
     "https://eth.drpc.org",
@@ -72,24 +72,71 @@ def http_post(url, json_body):
     raise last_exc
 
 
-def check_bitcoin(address):
-    try:
-        resp = http_get(f"https://mempool.space/api/address/{address}")
-        resp.raise_for_status()
-        data = resp.json()
-    except Exception as exc:
-        return "ERROR", f"network error: {exc}"
+# Order matters: on restricted networks some explorers are unreachable and block
+# on connect. BlockCypher and blockchain.info resolve to IPv4 and work broadly.
+BTC_BALANCE_ENDPOINTS = [
+    "https://api.blockcypher.com/v1/btc/main/addrs/{address}",
+    "https://blockchain.info/q/addressbalance/{address}",
+]
+BTC_STATS_ENDPOINTS = [
+    "https://mempool.space/api/address/{address}",
+    "https://blockstream.info/api/address/{address}",
+]
 
-    stats = data.get("chain_stats", {})
-    funded = stats.get("funded_txo_sum", 0)
-    spent = stats.get("spent_txo_sum", 0)
+
+def _stats_funded_spent(address):
+    for url in BTC_STATS_ENDPOINTS:
+        try:
+            resp = http_get(url.format(address=address))
+            resp.raise_for_status()
+            data = resp.json()
+            stats = data.get("chain_stats", {})
+            funded = stats.get("funded_txo_sum", 0)
+            spent = stats.get("spent_txo_sum", 0)
+            return funded, spent, url
+        except Exception:
+            continue
+    return None, None, None
+
+
+def _balance_funded_spent(address):
+    for url in BTC_BALANCE_ENDPOINTS:
+        try:
+            resp = http_get(url.format(address=address))
+            resp.raise_for_status()
+            text = resp.text.strip()
+            if url.startswith("https://blockchain.info/q/"):
+                balance = int(text)
+                return balance, 0, url
+            data = resp.json()
+            balance = data.get("balance")
+            total_received = data.get("total_received")
+            total_sent = data.get("total_sent")
+            if balance is None:
+                continue
+            if total_received is None:
+                total_received = balance + (total_sent or 0)
+            if total_sent is None:
+                total_sent = total_received - balance
+            return total_received, total_sent, url
+        except Exception:
+            continue
+    return None, None, None
+
+
+def check_bitcoin(address):
+    funded, spent, via = _balance_funded_spent(address)
+    if funded is None:
+        funded, spent, via = _stats_funded_spent(address)
+    if funded is None:
+        return "ERROR", "network error: all BTC endpoints unreachable"
     if funded == 0:
-        return "unfunded", f"funded={funded} spent={spent}"
+        return "unfunded", f"funded={funded} spent={spent} (via {via})"
     if spent == 0:
-        return "funded-unspent", f"funded={funded} spent={spent}"
+        return "funded-unspent", f"funded={funded} spent={spent} (via {via})"
     if spent >= funded:
-        return "swept", f"funded={funded} spent={spent}"
-    return "partially-spent", f"funded={funded} spent={spent}"
+        return "swept", f"funded={funded} spent={spent} (via {via})"
+    return "partially-spent", f"funded={funded} spent={spent} (via {via})"
 
 
 def _eth_rpc(url, method, params):

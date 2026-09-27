@@ -93,6 +93,21 @@ WORD_CHECK_FULL_EXCEPTIONS = {
     os.path.join(REPO_ROOT, "docs", "style-guide.md"),
 }
 
+# Folder-scoped word allowlists. The GSMG puzzle's analysis journals record tool-build
+# archaeology (the Fable F#-to-JS compiler used to build the puzzle's SPA) and quote
+# candidate strings (Alice-in-Wonderland lines) that legitimately contain forbidden
+# words. Only the listed words are skipped for the exact files below; every other
+# forbidden word still fails, and the files remain subject to all other checks
+# (including the forbidden-characters scan).
+WORD_SCOPED_EXCEPTIONS = {
+    os.path.join(REPO_ROOT, "1-big-prizes", "gsmg-io-5btc-puzzle", "analysis", "leads.md"):
+        {"fable"},
+    os.path.join(REPO_ROOT, "1-big-prizes", "gsmg-io-5btc-puzzle", "analysis", "tested.md"):
+        {"fable", "wall", "impossible", "sonnet"},
+    os.path.join(REPO_ROOT, "1-big-prizes", "gsmg-io-5btc-puzzle", "analysis", "ANCHORED_SUMMARY.md"):
+        {"wall"},
+}
+
 FRENCH_CHARS_PATTERN = re.compile(r"[àâçéèêëîïôûùüÿœ]", re.IGNORECASE)
 FRENCH_WORDS = ["dossier", "piste", "porte", "témoin", "épuisé", "réfuté"]
 
@@ -349,6 +364,8 @@ def check_forbidden_words(scope_root):
                         "fable", "opus", "sonnet",
                     }
                     if tool_name_word and (is_ai_name_exception_file or is_root_readme):
+                        continue
+                    if word in WORD_SCOPED_EXCEPTIONS.get(os.path.abspath(path), set()):
                         continue
                     failures.append(f"{rel(path)}:{i}: forbidden word '{word}' in: {line.strip()[:80]}")
     return failures

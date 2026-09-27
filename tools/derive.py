@@ -224,12 +224,78 @@ def cmd_hash160script(args) -> str:
     return addr
 
 
+# Known-good BIP39 seed-and-address vectors, end to end: the seed given by
+# "abandon ... about" (empty passphrase) derives these addresses under the
+# listed paths. They are the standard BIP39 test mnemonic used across the
+# ecosystem and are reproduced here every --selftest run so a passing run
+# certifies the BIP39-mnemonic->seed->BIP32/44/49/84->address pipeline accepts
+# a correct candidate. Paths that carry a leading "m/" are run as raw BIP32.
+SELFTEST_VECTORS = [
+    # (mnemonic, path, expected_address)
+    (
+        "abandon abandon abandon abandon abandon abandon abandon abandon "
+        "abandon abandon abandon about",
+        "bip44",
+        "1LqBGSKuX5yYUonjxT5qGfpUsXKYYWeabA",
+    ),
+    (
+        "abandon abandon abandon abandon abandon abandon abandon abandon "
+        "abandon abandon abandon about",
+        "bip49",
+        "37VucYSaXLCAsxYyAPfbSi9eh4iEcbShgf",
+    ),
+    (
+        "abandon abandon abandon abandon abandon abandon abandon abandon "
+        "abandon abandon abandon about",
+        "bip84",
+        "bc1qcr8te4kr609gcawutmrza0j4xv80jy8z306fyu",
+    ),
+    (
+        "abandon abandon abandon abandon abandon abandon abandon abandon "
+        "abandon abandon abandon about",
+        "eth",
+        "0x9858EfFD232B4033E47d90003D41EC34EcaEda94",
+    ),
+]
+
+
+def run_selftest() -> int:
+    failures = 0
+    for mnemonic, path, expected in SELFTEST_VECTORS:
+        class Args:
+            pass
+        args = Args()
+        args.lang = "en"
+        args.mnemonic = mnemonic
+        args.passphrase = ""
+        args.path = path
+        args.count = 1
+        got = cmd_bip39(args).strip()
+        ok = got.strip().lower() == expected.strip().lower()
+        print(
+            f"[selftest] bip39 '{mnemonic[:12]}...' path={path}: "
+            f"{'PASS' if ok else 'FAIL'} (got {got}, expected {expected})"
+        )
+        if not ok:
+            failures += 1
+    if failures:
+        print(f"SELFTEST FAILED ({failures} vector(s) did not reproduce)")
+        return 1
+    print("SELFTEST OK")
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Generic derivation CLI for open-crypto-puzzles candidates."
     )
     parser.add_argument("--target", default=None, help="expected address/value; prints MATCH/NO MATCH")
-    sub = parser.add_subparsers(dest="command", required=True)
+    parser.add_argument(
+        "--selftest",
+        action="store_true",
+        help="verify the known-good BIP39 vectors end to end; prints SELFTEST OK",
+    )
+    sub = parser.add_subparsers(dest="command")
 
     p_bip39 = sub.add_parser("bip39", help="BIP39 mnemonic to addresses")
     p_bip39.add_argument("mnemonic", help="space-separated mnemonic words")
@@ -261,6 +327,13 @@ def main():
     p_h160.add_argument("--target", default=None, help="expected address; prints MATCH/NO MATCH")
 
     args = parser.parse_args()
+
+    if args.selftest:
+        sys.exit(run_selftest())
+
+    if args.command is None:
+        parser.print_usage()
+        sys.exit(1)
 
     if args.command == "bip39":
         result = cmd_bip39(args)

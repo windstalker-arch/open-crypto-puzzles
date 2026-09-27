@@ -16,5 +16,5 @@ puzzle between tiers, only a change in its actual state does (solved, swept, fun
 | [Aoi Nakamoto Quizchain](aoi-nakamoto-quizchain-0-854btc/) | 0.777 BTC | 48,951 | bitcoin | bip39-seed, word-selection | external-info | 2026-08-21 | open |
 | [Peter Todd Hash Collision Bounties](peter-todd-hash-collision-bounties-0-59btc/) | 0.59364885 BTC | 37,400 | bitcoin | hash-collision | research-breakthrough | 2026-08-16 | watch |
 | [Guntis Vitolins: 10 ETH Challenge](guntis-vitolins-metamask-8-6eth/) | 8.612541554256945 ETH | 16,192 | ethereum | bip39-seed, word-selection, video-series | bounded-compute | 2026-08-16 | open |
-| [BLM Collage: Welcome to the Brave New World](blm-brave-new-world-0-2btc/) | 20,107,284 sats | 12,668 | bitcoin | image-stego, word-selection, bip39-seed, text-cipher | insight | 2026-08-16 | open |
+| [BLM Collage: Welcome to the Brave New World](blm-brave-new-world-0-2btc/) | 20,107,284 sats | 12,668 | bitcoin | image-stego, word-selection, bip39-seed, text-cipher | insight | 2026-08-28 | open |
 <!-- generated:end -->

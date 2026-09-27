@@ -38,3 +38,28 @@ recovered-ckeys*
 
 # regenerable tool caches: device-specific absolute paths, no research value
 sibling_index.json
+
+# research CLONES, vendored into the tree by a tool run. `gsmg-community-hints-repo`
+# is a 31 MB clone of silveranth/gsmgio-5btc-puzzle @ dcb6695 and carries its own
+# .git, so `git add` would commit it as a gitlink pointing at a commit the remote
+# does not have. Its provenance is already recorded in
+# 1-big-prizes/gsmg-io-5btc-puzzle/analysis/ARTIFACT_FAMILIES.md; the bytes are
+# re-fetchable, so the clone is not repo content.
+1-big-prizes/gsmg-community-hints-repo/
+1-big-prizes/gsmgio-5btc-puzzle/
+
+# tool scratch. `**/` rather than `*/` because a pattern containing a slash is
+# anchored to this file's directory, so `*/usr/tmp/` would NOT have matched
+# 1-big-prizes/<puzzle>/usr/tmp/ -- checked, not assumed.
+**/usr/tmp/
+**/analysis/tmp/
+**/tools/build/
+**/tools/bitmask/build/
+.bug-hunter/
+
+# compiled artifacts: the sources are tracked, the binaries are not
+# (bloom_dedup.cpp, experm_vic_deriv.c, experm_vic_trans.c). The repository
+# tracks no ELF binary; these three were the only ones.
+1-big-prizes/gsmg-io-5btc-puzzle/tools/bloom_dedup
+1-big-prizes/gsmg-io-5btc-puzzle/tools/experm_vic_deriv
+1-big-prizes/gsmg-io-5btc-puzzle/tools/experm_vic_trans
