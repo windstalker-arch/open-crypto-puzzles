@@ -12603,6 +12603,7 @@ DISPOSITION: **0 candidates, 0 oracle calls, no lead promoted.** Banked: `#8446`
 - **BOTH authorial hints are now fully consumed, and the board is the author's, not the community's:**
   - `phase3.2.txt` line 2 "One for one, four for one" -> **escapes digit1=1, digit2=4**.
   - `phase3.2.txt` line 8 "A fubcd-king & oracle-queen, thingky mvps, on a sad board but as wide as the first one seen." is an **acrostic for the 28-cell board**: `fubcd`(5) + `ora`(3) + `lethingky`(9) + `mvps`(4) + `jqzxw`(5) = 26 letters, letter runs **8|13|5** with the two punct cells at 0-based **8 and 22**. Board = **`FUBCDORA.LETHINGKYMVPS.JQZXW`**.
+    **SEE `R-FUBCD` (2026-09-27): the `jqzxw` ordering is NOT derivable, the seed sentence has NO archived gsmg.io witness, and this string is 1 of 84,240 boards consistent with that sentence. The letter SET is forced; the order and the punctuation are not.**
   - NOTE the separator is **`.` at both 8 and 22**. GitHub issue #76 transcribes it as `FUBCDORA.LETHINGKYMVPS/JQZXW` (a `/` in position 21) - that transcription is WRONG. Matches existing `R-STRUCT8-13-5-2026-09-26`.
 - `R-VIC149` closes the 149-digit question. It was never an A1Z26 concatenation (137 vs 149 digits) and the `amphtaclwmtbvfz` key does NOT transfer (0.101 = chance) - the digit stream is a different layer (straddling checkerboard), so both of my earlier dead ends are now explained rather than merely recorded.
 
@@ -14955,5 +14956,69 @@ Date: 2026-09-27, local.
   definition pinned down, one false alarm retracted, and a re-runnable tool (`python3
   tools/verify_ladder.py`, exit 0) so the next session can confirm the ladder is intact in seconds
   instead of trusting it. Both oracle self-tests pass.
+
+Date: 2026-09-27, local.
+
+## R-FUBCD-2026-09-27: CHECKED `FUBCDORA.LETHINGKYMVPS.JQZXW` AGAINST THE OLD gsmg.io SITE DATA. **Not there, and neither is the sentence it is derived from. The board is 1 of 84,240 boards consistent with its seed - and the seed has no author-side witness at all.** No key, no gate. 0 oracle calls.
+
+- **THE DIRECT ANSWER: 0 hits.** Swept all **399 files** of `~/gsmg/gsmg-web-archive/` (the consolidated
+  mirror + live probe + the 18 MB / 620-urlkey Wayback old-site harvest) for `FUBCDORA`, `fubcd`,
+  `oracle-queen`, `thingky`, `jqzxw`, `sad board`, `as wide as the first`. **All zero**, in both raw
+  and whitespace-stripped form. The board is not on the old site, and - the part that matters more -
+  **the authorial sentence it is built from is not either.**
+
+- **AND THE NULL IS TRUSTWORTHY, BECAUSE I VALIDATED THE SWEEP'S POWER FIRST.** A 0 is worthless if
+  the method cannot see anything. Control: the SalPhaseIon page **is** in the archive and **was**
+  found - `abbaabab` in 4 files, `dbbib` in 5, `our first hint is your last command` in 5, spread
+  across `gsmg.io/`, `gsmg.io.live-2026-09-27/` and `old-site/alpha/89727c59_20260518.html.dec`. The
+  sweep sees page content when page content is there. This is the same discipline as `R-P15NULL`'s
+  nulls, applied to a substring search instead of a statistic.
+
+- **METHOD NOTE, AND IT IS THE THIRD TIME THIS CLASS OF ERROR HAS COST SOMETHING.** My **first** sweep
+  returned 0 for the controls too, and I nearly filed "0 hits" as a result. The cause: that page
+  prints the token stream **space-separated per character** (`a b b a a b a b`, not `abbaabab`), so a
+  contiguous grep is structurally blind to it - the exact trap from `R-DIGRUN`, where a naive
+  `str.find` on the live page returned -1 for a string that is demonstrably present. Every search
+  against this corpus must be whitespace-insensitive. The three repeats are now: `R-IMGSCOPE`
+  (filename hits are not content hits), `R-DMGREC` (whitespace-*joining* invented a blob that never
+  existed), and here (whitespace-*ignoring* hid one that did). Join and strip are opposite errors and
+  both produce confident, wrong negatives.
+
+- **THE SEED SENTENCE'S ONLY WITNESSES ARE COMMUNITY, AND ITS EARLIEST ARE THE BATCH WE ALREADY
+  DISTRUST.** Corpus sweep for the sentence's components: it appears in naddiseo's `phase3-assets/
+  phase3.2.txt`, in the hints-repo clone of the same file, in `briefcase/gsmg-community/README.md`,
+  and in `gsmg_issues_all.json`. The **earliest** dated occurrences are issues **#74 / #75 / #76,
+  2026-02-16** - precisely the batch this ledger already flags as partly AI-generated slop (cf. the
+  `R-EBCDIC1141` note on #69's garbled "Decryption Key Hash"). The three file copies agree verbatim,
+  but they are **one lineage copied forward, not three independent witnesses**. And this is exactly
+  what `R-ARCHIVE-SWEEP` already established: only **two** real server-rendered puzzle pages exist in
+  the whole archive (the PHASE 2 page and SalPhaseIon), the `/salphaseion` crux page was never
+  captured with content, and phase-3.2 is not among them. So "author material" for this sentence has
+  never been verified by anything stronger than a community transcription.
+
+- **THE ACTUAL FINDING, AND IT IS BIGGER THAN THE MISSING STRING: THE BOARD IS UNDERDETERMINED BY
+  84,240x.** I recomputed the derivation from the sentence instead of trusting the ledger, and I get a
+  **different board**. The letter SET is forced - `FUBCD`+`ORA`+`LE`+`THINGKY`+`MVPS` = 21 letters,
+  plus the 5 letters absent from the sentence = 26 - but the **order of those 5 leftovers is not
+  derivable by any rule I could find**: alphabetical gives `JQWXZ`, reverse-alphabetical `ZXWQJ`,
+  QWERTY `QWJZX`, and order-of-first-appearance in the sentence yields only `QW` (the sentence does
+  not even contain `J` or `Z`, so it cannot order them). The certified string uses `JQZXW`, which is
+  none of these - it is a free choice. The two punctuation cells are a second free choice. Total
+  boards consistent with the seed sentence alone: **5! x 27 x 26 = 84,240**. The ledger's
+  `FUBCDORA.LETHINGKYMVPS.JQZXW` is **one** of them.
+
+- **COVERAGE CONSEQUENCE, STATED PLAINLY SO IT IS NOT MISREAD AS A RESULT.** `METHOD-I` (row 11372)
+  runs 24 configs keyed to that exact string, so it covers **1/84,240** of the space the seed
+  sentence actually licenses. That is not a bug and not a refutation - it was a correct test of one
+  specific board - but "the board" was doing more work in the write-up than the derivation supports.
+  FINDING 3's real content survives and should be kept in its precise form: **the letter SET is the
+  author's, the order and the punctuation are the community's, and the sentence carrying even that
+  set is currently community-attested only.** The 8|13|5 segmentation remains closed as a
+  segmentation (its own arithmetic does not depend on the leftover order).
+
+- **STATUS.** Nothing opened, nothing moved, no candidate. This is a provenance and coverage
+  correction, not a cipher result: it does not make the board wrong, it makes the board's authority
+  smaller than the prose around it implied. Given `R-ARCHIVE-SWEEP` already certified the old site
+  exhausted for new puzzle text, no re-fetch can change this - the answer is no, permanently.
 
 Date: 2026-09-27, local.
