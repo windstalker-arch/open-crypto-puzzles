@@ -3,3 +3,38 @@ __pycache__/
 .DS_Store
 .venv/
 *.egg-info/
+
+# key material never goes in this repository; the remote is public
+gsmg-private/
+private/
+*.pem
+*.key
+*.dat
+id_rsa*
+id_ed25519*
+# `.env` and `.env.*` only match files NAMED .env, so `config.env` or
+# `staging.env` slipped through. These two close that; verified with
+# `git check-ignore`, not assumed.
+.env
+.env.*
+*.env
+*.env.*
+Privkey*
+*privkey*
+*private_key*
+*privatekey*
+*secret*
+extracted_keys*
+mkey_parsed*
+recovered-ckeys*
+*wallet*.dat
+*keystore*
+*mnemonic*
+*seed-phrase*
+*seedphrase*
+*credential*
+*.kdbx
+*.jks
+
+# regenerable tool caches: device-specific absolute paths, no research value
+sibling_index.json
