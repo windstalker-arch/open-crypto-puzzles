@@ -13718,3 +13718,50 @@ own wording is not transcribed anywhere in this folder"). Any future sweep of
 "the last words before the Architect Choice" should be built from these
 transcriptions, not from recalled hint fragments. 0 oracle calls, no new spendable
 material, and the `firsttint` correction above is the substantive output.
+
+## 2026-09-27 - R-ARCHCHOICE: the "last words before the Architect Choice" directive is CLOSED on all three readings; recommend DOWN-RANKING it as a lead
+
+The SalPhaseIon page's second directive is `lastwordsbeforearchichoice` +
+`thispassword` = "the last words before the Architect Choice are this password".
+I went after the Architect Choice wording specifically because `leads.md` section 7
+says the last-N-word sweeps "do not exhaust the instruction, because the phase-1 page
+is an image whose own wording is not transcribed anywhere in this folder". That gap is
+now narrower, and chasing it produced a negative result about the LEAD rather than
+about a candidate. Recording it so the lead is not re-opened a fourth time.
+
+**What "the Architect Choice" actually is, verified from the primary source.** I
+re-read the archived page (it is gzip; the `.dec` sibling is the same bytes) rather
+than trusting the stage label. The route is
+`choiceisanillusioncreatedbetweenthosewithpowerandthosewithoutaveryspecialdessertiwroteitmyself`
+and it is one of only three puzzle routes the live apex still serves. It is a real
+page - not the Vue shell - and carries PHASE 2 and PHASE 3 `aes-256-cbc /w base64
+sha-256(password)` blocks, the stream markers `/(aaa, connected enf)`,
+`/(aBa, connected enf)`, `/(aBa, connected not enf)`, the Thevenin/Norton riddle, and
+the instruction `--> parts 1..7 --> sha-256 -> dgst is the password to enter Phase 3.`
+
+**Verification, not new information.** The page prints the chess position as
+`B5KR/1r5B/6R1/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 w - - 0 1`. The certified part-7
+FEN is `B5KR/1r5B/2R5/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 b - - 0 1` - the same
+position with the rook moved g6->c6 and the side to move flipped to black, which is
+precisely the "And now a buddhist is forced to move" resolution already recorded, and
+the page's own `w` version is already among the tested candidates. I am confirming
+the existing record against the source, not extending it.
+
+**The directive has three readings and all three are closed.**
+
+| Reading of "the last words before the Architect Choice" | Status | Evidence |
+|---|---|---|
+| The words before "choice" in the Architect's speech | closed, 0 match | 49,808 contiguous windows up to 14 words, plus 4,174 prefixes/suffixes (`tested.md` 148-149) |
+| The last N words of the stage text preceding that page | closed, 0 match | 5,608 last-N-word readings "in the conventions the pages state" (`tested.md` 147) |
+| Read literally inside the 2023-02-23 hint, where the phrase sits immediately before `archichoice` | degenerate/self-referential | see R-HINT2323 above; yields "last words before" |
+
+**Why I am down-ranking rather than promoting this.** The remaining un-transcribed
+wording that `leads.md` section 7 leans on is the phase-1 image's own text, and
+`clues/puzzle.png` turns out to carry only a title and the address - it does not
+contain the wording that gap is about. So the specific escape hatch that kept this
+lead alive ("needs sources rather than compute", section 7) is now known to be
+pointing at a source that does not hold the text. The phase-2.2 password is already
+certified end to end, so the Architect Choice branch is not where the remaining
+spendable output is. Recommend this lead move from "active" to "closed - revisit only
+if a new Architect-side text is recovered". 0 oracle calls, 0 new candidates, no new
+spendable material; the output is a rank change and a verified primary source.
