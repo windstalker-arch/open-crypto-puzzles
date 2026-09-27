@@ -14134,3 +14134,80 @@ moves no BTC: the ladder has one more honest rung, and the gate key is still an 
 solution that has to come from the SalPhaseIon image, which is where Lead 0 still points.
 
 Date: 2026-09-27, local.
+
+## R-BLOBINV-2026-09-27: THE CORPUS HAS NO MISSING ENVELOPE. Six real encrypted blobs, five open, one blocked - and a PHASE 5 that is named with its password but whose ciphertext we do not have. Closes the falsifiable prediction the B2 rows left open.
+
+7,104 decryptions (37 candidate blobs x 64 passwords x 3 KDFs), 0 oracle calls.
+N = 7,104, D ~ 350/s, t ~ 20 s. Both oracles `--selftest` PASS. New tool
+`tools/blob_inventory.py`. Method note: the passwords are DERIVED values (WIFs of the four
+ladder keys, their hex/raw/sha forms, field concatenations, the chain-4 password, and
+readings of every artifact already decoded) plus the published passwords we actually hold -
+the lesson from `R-B2RUNG2` FINDING 2 applied at corpus scale.
+
+FINDING 1 - THE INVENTORY, verbatim from the tool. Every base64 `Salted__` run in the repo,
+`~/briefcase`, `~/gsmg` and the Telegram capture decodes to 37 candidate blobs, which
+resolve into SIX real ones:
+  2d3f6fe06dc950e6  1328 B ct   OPENED  -> cc, 1327 B, XOR-key dualite / EVP-MD5 (re-derived here)
+  06286612d43ed7ed   656 B ct   OPENED  -> 648 B, 100% printable, sha256("causality") hexdigest / EVP-SHA256 (re-derived here, sha256 e2f9dd65...)
+  3ab585348552415d    80 B ct   OPENED  -> B1_79, the small half, RAW_PW / EVP-MD5
+  b45a5e3d827593ca    80 B ct   OPENED  -> B2_79, CADEIA 2, WIF(K_C1) / EVP-MD5
+  9fbc451d13d071f4  4096 B ct   OPENED  -> phase 3, 4090 B (by reference, see FINDING 5)
+  eefc4c5befc1656a  2432 B ct   BLOCKED -> phase 3.2, the one structurally blocked object
+The other 31 candidates are not blobs: 24 are text-level splits (ciphertext not 16-aligned -
+the base64 run was cut by a line break or a stray character in a transcript), 4 are truncated
+copies whose ciphertext is a byte-prefix of a longer blob with the same salt, and 3 are
+OCR-damaged copies of BLOB1.
+
+FINDING 2 - THE PREDICTION FROM THE B2 ROWS IS ANSWERED, IN THE NEGATIVE. `R-YINYANG-B1B2`
+ended by predicting that a third 96-byte envelope must exist somewhere, with a hard
+verifier. There is none. Not one unopened well-formed blob of any size is hiding in the
+corpus. This is now a machine-checked statement rather than an absence of evidence, and the
+tool re-derives it in a minute. It also retires the search shape those rows recommended -
+"look for a missing blob" - because there is nothing left to look for.
+
+FINDING 3 - THE THREE DAMAGED COPIES, one of which is new to me and settles an old
+eyeball judgement. (a) salt `3ab58494d215415d` in `~/gsmg/SalphaseionHush.py`: the
+ciphertext is byte-identical to BLOB1's and only the SALT is damaged, one byte in the first
+half. The old forensic note called it "a corrupted transcription, not a third envelope" by
+eye; that is now a byte-level test. (b) and (c) the two 128-byte-ct runs in
+`~/briefcase/gsmg-document.txt` and the scribd copy: these look like a 128 B blob with an
+unknown salt and are the most tempting false lead in the corpus, because the document
+prints an `openssl` line right after one of them. They are BLOB1 with 4 damaged base64
+characters and ~67 characters of adjacent page text swallowed into the run - the
+`abbaabab...` clue and the word `enter` are what got eaten. No phase-5 ciphertext hides in
+there.
+
+FINDING 4 - **THERE IS A PHASE 5, ITS PASSWORD IS PRINTED IN THE CORPUS, AND ITS CIPHERTEXT
+IS NOT HERE.** The document carries, verbatim:
+  openssl enc -aes-256-cbc -d -a -in phase5.txt -pass
+  pass: 4447f552c0f76528be4df75028a3ecdb3878bccd46acb4b3fabe6442304fd9c4
+and the ledger contained no mention of a phase 5 at all. My own earlier note had already
+flagged the line as genuine document content and then, correctly, not followed it up. I
+followed it up now: that password in four forms (hex as an ASCII string, hex decoded to 32
+raw bytes, sha256 of each of those) under EVP-SHA256, EVP-MD5 and EVP-SHA1, against all 37
+candidate blobs - 0 openings, and the single valid-padding hit across the whole sweep is a
+1-in-256 coincidence on 79 bytes of noise. So the phase-5 blob is genuinely absent, and it
+is now the ONE named missing encrypted object in the entire corpus, with a fixed and cheap
+verifier: any base64 blob that opens under that password to readable text is phase 5. The
+bar is not high - phase 2's plaintext is 100% printable, so a genuine hit would be obvious
+rather than arguable. Where to look: the phase files are named in the page text but the
+site's own file hosting is gone, so this is a Wayback/asset-recovery problem, not a
+cryptanalysis problem.
+
+FINDING 5 - TWO HONEST LIMITS ON THE TOOL, so its output is not over-read. Phase 3 is
+reported OPENED by reference, not re-derived: its 227-character password is assembled from
+the page's seven parts and is not stored in the repo, so I did not rebuild it here. And the
+"opens to something 85%+ printable" test is a heuristic for text blobs; binary plaintexts
+are only called OPENED when they match a known artifact byte-for-byte. Nothing in the
+inventory depends on either shortcut for its conclusion.
+
+WHAT THIS CHANGES. The decryption ladder has no further rung to climb inside the corpus:
+B1 -> B2 is complete and certified, and the only encrypted objects left in existence for us
+are phase 3.2 (blocked, with a reason) and phase 5 (absent). So the next password cannot come
+from a blob we have not opened - it has to come either from an artifact already in hand
+(which `R-B2RUNG2` FINDING 6 swept with 121 derived candidates) or from the SalPhaseIon
+image, which is where Lead 0 still points. The useful new name on the map is PHASE 5: an
+author-named stage with a published password and a missing file, which is a recovery target
+rather than a search target.
+
+Date: 2026-09-27, local.
