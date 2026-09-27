@@ -73,12 +73,6 @@ DEFAULT_ROOT_GLOBS = [
 # indexed one root instead of ten on the first run.
 SIBLING_BASE = REPO.parent
 
-# On Termux $HOME is /data/data/com.termux/files/home but the writable temp tree
-# lives under $PREFIX (/data/data/com.termux/files/usr), NOT under $HOME -- so
-# "~/usr/tmp/..." matches nothing. Both spellings are tried so the path is
-# correct on Termux and on a normal Linux box alike.
-TEMP_GLOBS = ["{PREFIX}/usr/tmp/opencode/quarantine", "~/usr/tmp/opencode/quarantine"]
-
 SKIP_DIR_NAMES = {".git", "__pycache__", "node_modules", ".cache", ".npm", ".venv"}
 DEFAULT_MAX_BYTES = 64 * 1024 * 1024
 
@@ -111,7 +105,13 @@ def expand_roots(globs, base):
         if "{PREFIX}" not in pattern:
             continue
         patterns.remove(pattern)
-        # Prefer whichever spelling actually exists; unmatched ones are dropped
+        # On Termux $HOME is /data/data/com.termux/files/home but the writable
+        # temp tree lives under $PREFIX (/data/data/com.termux/files/usr), NOT
+        # under $HOME -- so "~/usr/tmp/..." matches nothing there. Both spellings
+        # are tried so the path resolves on Termux and on an ordinary Linux box
+        # alike, which is why the default list carries the {PREFIX} form only and
+        # the alternation lives here rather than in a second constant to keep in
+        # step. Prefer whichever exists; if neither does the pattern is dropped
         # rather than reported, since the alternates are intentional.
         for prefix_root in (prefix, os.path.expanduser("~")):
             concrete = pattern.replace("{PREFIX}", prefix_root)
@@ -237,11 +237,17 @@ def report(cache):
     total = sum(r.get("files", 0) for r in cache["roots"].values())
     problems = {r: s for r, s in cache["roots"].items()
                 if s.get("errors") or s.get("skipped_large")}
+    # A root that is gone from disk still answers --name/--hash from cache, which
+    # reads as "the artifact is there" when the bytes are not. Flag it separately:
+    # this is a missing-tree failure, not an incomplete-walk failure.
+    gone = [r for r in cache["roots"] if not os.path.isdir(r)]
     print("roots indexed : %d" % len(cache["roots"]))
     print("files indexed : %d" % total)
     print("cache         : %s" % CACHE)
     for root, stats in sorted(cache["roots"].items()):
         flag = ""
+        if not os.path.isdir(root):
+            flag += "  STALE(missing on disk)"
         if stats.get("errors"):
             flag += "  ERRORS=%d" % stats["errors"]
         if stats.get("skipped_large"):
@@ -250,7 +256,14 @@ def report(cache):
     if problems:
         print("\nWARNING: %d root(s) incompletely walked -- absence of a hash from this"
               " index is NOT proof of novelty for those trees." % len(problems))
-    return 1 if any(s.get("errors") for s in cache["roots"].values()) else 0
+    if gone:
+        print("\nWARNING: %d indexed root(s) NO LONGER EXIST on disk. --name/--hash still"
+              " answer from cache, so a hit there means 'we once held this', not 'this is"
+              " readable now'. Re-fetch before planning any work that needs the bytes:"
+              % len(gone))
+        for r in gone:
+            print("  %s  (%d files cached)" % (r, cache["roots"][r].get("files", 0)))
+    return 1 if gone or any(s.get("errors") for s in cache["roots"].values()) else 0
 
 
 def main():

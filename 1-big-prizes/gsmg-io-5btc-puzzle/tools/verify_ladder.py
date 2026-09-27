@@ -275,8 +275,8 @@ def main():
         return 1
     ck("sha256(B1_79) == recorded", hashlib.sha256(B1).hexdigest() == REC["B1_79"],
        hashlib.sha256(B1).hexdigest()[:16])
-    disk = (FOLDER / "data/B1_79.bin").read_bytes()
-    ck("B1_79 == data/B1_79.bin on disk", B1 == disk, "%d B" % len(disk))
+    disk = (FOLDER / "data/B1_79B.bin").read_bytes()
+    ck("B1_79 == data/B1_79B.bin on disk", B1 == disk, "%d B" % len(disk))
     ck("BLOB1 re-encrypts from B1_79", enc(B1, RAW_PW, b1raw[8:16], "md5") == b1raw,
        "round-trip exact")
 
@@ -310,8 +310,8 @@ def main():
         return 1
     ck("sha256(B2_79) == recorded", hashlib.sha256(B2).hexdigest() == REC["B2_79"],
        hashlib.sha256(B2).hexdigest()[:16])
-    disk2 = (FOLDER / "data/B2_79.bin").read_bytes()
-    ck("B2_79 == data/B2_79.bin on disk", B2 == disk2, "%d B" % len(disk2))
+    disk2 = (FOLDER / "data/B2_79B.bin").read_bytes()
+    ck("B2_79 == data/B2_79B.bin on disk", B2 == disk2, "%d B" % len(disk2))
     ck("BLOB2 re-encrypts from B2_79", enc(B2, pw2, b2raw[8:16], "md5") == b2raw,
        "round-trip exact")
 

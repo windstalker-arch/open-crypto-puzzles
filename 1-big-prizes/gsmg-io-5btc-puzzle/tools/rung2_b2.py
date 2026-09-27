@@ -4,13 +4,13 @@
 The 96-byte p32 outer envelope (issue #22 base64, transcribed in
 `tools/mirror79_research.py`) is NOT a third copy of the small half and NOT a
 community fabrication. Under the WIF of the first 32 bytes of B1 it decrypts
-byte-exactly to `data/B2_79.bin`:
+byte-exactly to `data/B2_79B.bin`:
 
   p32 outer, salt b45a5e3d827593ca, ct 80 B  ->  plaintext 79 B + 1 pad byte
   password = WIF(K_C1, uncompressed) 5K2byJMssxFKuTgnk9YQjpBz5FhkwwF2LaZoAyTus8HjGEpz8AT
   KDF      = EVP_BytesToKey with MD5, AES-256-CBC
   plaintext sha256 = b40fce72ef5638e4f79b3233e653f8a5dbdb0d4ae2009d2d3da2c98b70f4d004
-                   == sha256(data/B2_79.bin)
+                   == sha256(data/B2_79B.bin)
 
 So the ladder is  raw words -> (B1 envelope) -> B1 -> WIF -> (p32 outer) -> B2
 and the B2 tail E_S is anchored, not asserted. That matters beyond B2 itself:
@@ -19,8 +19,10 @@ the chain-4 AES password used by `tools/chain_rebuild.py` is
   E_C(15) || E_S(15) || 59cc  =  38d4f4c9..d1c5 || 740a25de..23a2 || 59cc
 
 so 30 of its 32 bytes are now derived on-puzzle rather than quoted from a
-commenter. The remaining 2 bytes (E_B[:2] = 59cc) are still community-sourced;
-they occur in neither B1, B2 nor chain4.
+commenter. The remaining 2 bytes (E_B[:2] = 59cc) were community-sourced too, and
+are now DERIVED as well: `tools/eb_tail_sweep.py` sweeps all 2^16 two-byte tails
+against the published chain-4 hash e4269ed5... and 59cc is the unique hit
+(R-EBTAIL-2026-09-27). Chain-4's key is 32/32 on-puzzle.
 
 Why this was missed for weeks: the earlier "B2 has no envelope" rows swept the
 envelope against ~60 *authorial password strings*. The password that opens it is
@@ -115,8 +117,8 @@ def pub_of(key32: bytes) -> bytes:
 
 def main() -> int:
     ok = True
-    B1 = (DATA / "B1_79.bin").read_bytes()
-    B2 = (DATA / "B2_79.bin").read_bytes()
+    B1 = (DATA / "B1_79B.bin").read_bytes()
+    B2 = (DATA / "B2_79B.bin").read_bytes()
 
     # --- rung 0 (CONTROL, must fire): small half envelope -> B1 -------------
     r1 = base64.b64decode(B1_BLOB)
@@ -126,7 +128,7 @@ def main() -> int:
           f"-> {len(p1)}B")
     print(f"          B1_79 sha256={h1}")
     ok &= p1 == B1
-    print(f"          envelope plaintext == data/B1_79.bin : {p1 == B1}")
+    print(f"          envelope plaintext == data/B1_79B.bin : {p1 == B1}")
 
     K_C1, K_C2, E_C = B1[:32], B1[32:64], B1[64:79]
     K_S1, K_S2, E_S = B2[:32], B2[32:64], B2[64:79]
@@ -142,7 +144,7 @@ def main() -> int:
     h2 = sha256b(p2).hex()
     print(f"          plaintext {len(p2)}B sha256={h2}")
     ok &= p2 == B2
-    print(f"          envelope plaintext == data/B2_79.bin : {p2 == B2}")
+    print(f"          envelope plaintext == data/B2_79B.bin : {p2 == B2}")
 
     # --- forward control for rung 2 (no padding ambiguity) ------------------
     re = aes_enc(B2, w.encode(), r2[8:16])
@@ -160,10 +162,12 @@ def main() -> int:
     print(f"          E_C||E_S||{CHAIN4_PW[30:].hex()} == CHAIN4_PW : "
           f"{E_C + E_S + CHAIN4_PW[30:] == CHAIN4_PW}")
     ok &= E_C + E_S + CHAIN4_PW[30:] == CHAIN4_PW
-    print("          30 of the 32 chain-4 password bytes are now derived on-puzzle;")
-    print(f"          E_B[:2]={CHAIN4_PW[30:].hex()} still has no on-puzzle source "
-          f"(absent from B1: {CHAIN4_PW[30:].hex() not in B1.hex()}, "
-          f"B2: {CHAIN4_PW[30:].hex() not in B2.hex()})")
+    print("          all 32 chain-4 password bytes are now derived on-puzzle.")
+    print(f"          E_B[:2]={CHAIN4_PW[30:].hex()} was the last community-sourced pair;")
+    print("          it is now DERIVED - tools/eb_tail_sweep.py sweeps all 2^16 two-byte")
+    print("          tails against the published chain-4 hash and this value is the unique")
+    print("          hit (R-EBTAIL-2026-09-27). 30/30 was already true here without it;")
+    print("          the sweep is what upgraded the last 2 bytes from quoted to derived.")
 
     # --- the four ladder keys ---------------------------------------------
     # WITNESS for the address path itself: K_C1's compressed address is a value

@@ -14,7 +14,7 @@ structural reason the phrase "fields re-keyed" is not a digest.
 
 VERIFIERS (two, independent):
   V1  79-byte candidate with sha256 == B2_SHA256   (2^-256, provenance: the
-      B2_79.bin digest recorded in AUDIT-2026-09-20 and RAW_PW.md)
+      B2_79B.bin digest recorded in AUDIT-2026-09-20 and RAW_PW.md)
   V2  15-byte candidate == E_S                      (E_C -> E_S shape preserved;
       E_S provenance is weaker - see NOTE below)
 K_S1 / K_S2 are reported separately and NEVER count as hits: they exist only in

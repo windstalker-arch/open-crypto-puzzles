@@ -65,6 +65,13 @@ import sibling_index  # noqa: E402
 
 DEFAULT_MAX_SCAN_BYTES = 2 * 1024 * 1024 * 1024
 MIN_DECODE_LEN = 32
+# A containment match must be a real excerpt, not a degenerate one. Without this
+# floor a 1-byte file (a bare newline is common in these trees) is trivially a
+# substring of every text file, and the tool confidently reports all of them as
+# already held. That false positive was found on 2026-09-27: 20 unrelated files
+# were all "contained in" a 1-byte author_nb_pw_battery.txt. Found by direct test,
+# not by reading the output, which is the only reason it was caught at all.
+MIN_CONTAINMENT_LEN = 64
 HEX_RE = re.compile(rb"\A[0-9a-fA-F\s]+\Z")
 B64_RE = re.compile(rb"\A[A-Za-z0-9+/=\s]+\Z")
 
@@ -174,9 +181,16 @@ def make_containment_reader(cache, max_scan_bytes):
         if state["budget"] <= 0:
             state["truncated"] = True
             return None
+        # Both sides of a containment claim must be substantial. A short new file
+        # trivially sits inside a long container; a short container trivially sits
+        # inside a long new file. Either degenerate direction is not evidence.
+        if len(data) < MIN_CONTAINMENT_LEN:
+            return None
         needle = data[:4096] if len(data) > 4096 else data
         for path, meta in eligible:
             size = meta["size"]
+            if size < MIN_CONTAINMENT_LEN:
+                continue
             if state["budget"] - size < 0:
                 state["truncated"] = True
                 break
@@ -187,10 +201,14 @@ def make_containment_reader(cache, max_scan_bytes):
                 continue
             state["budget"] -= len(held)
             state["scanned"] += 1
-            if data in held or (size <= len(data) and held in data):
-                return path
-            if needle in held and len(needle) >= 64:
-                # Cheap prefilter hit: confirm the full containment properly.
+            if len(data) >= len(held):
+                if data in held:
+                    return path
+            else:
+                if held in data:
+                    return path
+            if needle in held:
+                # Prefilter hit: confirm the full containment properly.
                 if data in held:
                     return path
         return None

@@ -204,7 +204,7 @@ def attempt(candidate: str) -> tuple[bool, dict]:
     #   small final gate    password = X (raw string),         MD5 EVP digest
     #   cosmic duality      password = X (raw string),         MD5 EVP digest
     # The small gate's raw-X + MD5 form is anchored: it decrypts the 96-byte blob
-    # (salt 3ab585348552415d) to the 79-byte chain-1 artifact B1_79.bin (SHA256
+    # (salt 3ab585348552415d) to the 79-byte chain-1 artifact B1_79B.bin (SHA256
     # 1449a217...). The sha256(X) transform is retained too because phases 2/3 use
     # it, and the blob's digest cannot be assumed. Try password in both raw and
     # sha256-hex form, under both digests, and accept any valid decrypt.
@@ -283,13 +283,13 @@ def selftest() -> bool:
     # concatenation of the SalPhaseIon tokens (matrixsumlist + enter +
     # lastwordsbeforearchichoice + thispassword + matrixsumlist) decrypts the 96-byte
     # blob (salt 3ab585348552415d) with EVP-MD5 to the 79-byte chain-1 artifact
-    # B1_79.bin (SHA256 1449a217...). Same AES/padding code path as attempt(),
+    # B1_79B.bin (SHA256 1449a217...). Same AES/padding code path as attempt(),
     # password used directly (NOT sha256(X)). This is why attempt() now tries X raw.
     RAW_PW = "matrixsumlistenterlastwordsbeforearchichoicethispasswordmatrixsumlist"
     RAW_PLAIN_SHA = "1449a2178eea7c0e3fabac8c1ad2afa294be4fc1800c594a025a056e88c626bf"
     _check = decrypt_blob(BLOB_B64, RAW_PW, "md5")
     raw_ok = _check is not None and sha256(_check).hex() == RAW_PLAIN_SHA
-    print(f"small-blob re-decrypts under raw password + MD5 -> B1_79.bin: {'OK' if raw_ok else 'FAIL'}")
+    print(f"small-blob re-decrypts under raw password + MD5 -> B1_79B.bin: {'OK' if raw_ok else 'FAIL'}")
     ok = ok and raw_ok
     # And the sha256(X) form must NOT be what opens it (it is the falsified premise).
     _hex_only = decrypt_blob(BLOB_B64, hashlib.sha256(RAW_PW.encode()).hexdigest(), "md5")

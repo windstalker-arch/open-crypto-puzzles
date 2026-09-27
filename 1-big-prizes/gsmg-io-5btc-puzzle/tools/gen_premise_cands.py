@@ -5,7 +5,7 @@ The verified password form for the 96-byte small blob (salt 3ab585348552415d) is
 RAW concatenation of the SalPhaseIon page tokens - the oracle's old sha256(X) hex
 premise is falsified. Certified anchor: the raw string
   matrixsumlist + enter + lastwordsbeforearchichoice + thispassword + matrixsumlist
-decrypts (EVP-MD5) to the 79-byte chain-1 artifact B1_79.bin.
+decrypts (EVP-MD5) to the 79-byte chain-1 artifact B1_79B.bin.
 
 This emits every ordering / repetition / joiner / case family over the page tokens
 (and the known community 7-token superset), one candidate per line on stdout.

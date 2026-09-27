@@ -13,7 +13,7 @@ Everything here is verified against independently-published SHA256 anchors:
             -> 79B = K_S1 || K_S2 || E_S(15B)
             sha256 = b40fce72ef5638e4f79b3233e653f8a5dbdb0d4ae2009d2d3da2c98b70f4d004
             (tools/rung2_b2.py certifies it: the envelope decrypts byte-exactly to
-            data/B2_79.bin and re-encrypts back to the same ciphertext)
+            data/B2_79B.bin and re-encrypts back to the same ciphertext)
   CADEIA 3  Dualite blob (salt 2d3f6fe06dc950e6) L1 decrypt under XOR-key
             a795de117e472590e572dc193130c763e3fb555ee5db9d34494e156152e50735,
             EVP MD5 AES-256-CBC -> 1327B cosmic_correct `cc`
@@ -27,8 +27,10 @@ Everything here is verified against independently-published SHA256 anchors:
             (matches PR #68)
 
 CHAIN4_PW below is E_C(15) || E_S(15) || E_B[:2]. With CADEIA 2 certified, 30 of
-those 32 bytes are derived on-puzzle; E_B[:2] = 59cc is still quoted from the
-community and occurs in neither B1, B2 nor chain4.
+those 32 bytes are derived on-puzzle. The last two are no longer a community quote
+either: `tools/eb_tail_sweep.py` sweeps all 2^16 tails against the published chain-4
+hash and finds exactly one, 59cc (R-EBTAIL-2026-09-27). All 32 bytes are on-puzzle.
+The missing operand is not the key -- it is ca/cosmic_A.
 
 The final step (recover private key k with k*G = (f4d1bbd9..., odd y) from the
 chain4 35x32-byte blocks via an "XOR triangle" using operand ca/cosmic_A) is NOT

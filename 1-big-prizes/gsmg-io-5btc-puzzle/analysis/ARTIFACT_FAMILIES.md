@@ -36,7 +36,7 @@ reachable by two unrelated paths.
 | # | Family | Canonical location | Provenance rule |
 |---|---|---|---|
 | 1 | **Certified ladder** — BLOB1/BLOB2, `B1_79`, `B2_79`, RAW_PW | `~/gsmg/`, mirrored `~/briefcase/gsmg-private/`, `~SD/briefcase/` | re-derive with `tools/verify_ladder.py`; never trust a copied value |
-| 2 | **Phase assets** — `phase2-assets/`, `phase3-assets/` | `~/open-crypto-puzzles/1-big-prizes/**gsmg-community-hints-repo**/` + `~PFX/usr/tmp/opencode/quarantine/naddiseo/…` | **community-attested.** `R-FUBCD`: 0 author witnesses in 399 files. Always label as community |
+| 2 | **Phase assets** — `phase2-assets/`, `phase3-assets/` | `~/open-crypto-puzzles/1-big-prizes/**gsmg-community-hints-repo**/` + `~SD/briefcase/gsmg-fork-naddiseo/` (the maintained fork, 87 files, restored 2026-09-27) | **community-attested.** `R-FUBCD`: 0 author witnesses in 399 files. Always label as community |
 | 3 | **Old-site archive** | `~/gsmg/gsmg-web-archive/` (`SHA256SUMS.txt`, `FETCH-LOG.md`) | **certified exhausted.** Do not re-fetch or reopen |
 | 4 | **Live capture** | `~/gsmg/gsmg-io/gsmg.io.live-2026-09-27/` | author material; the only author-side tree |
 | 5 | **Cosmic Duality** | `~/gsmg/cosmic_decrypted.bin`, `~/briefcase/gsmg-private/`, `~SD/briefcase/` | sha prefix `4f7a1e4e`; **reproducible, NOT authenticated** (valid PKCS#7 occurs ~1/256 by chance) |
@@ -45,6 +45,34 @@ reachable by two unrelated paths.
 | 8 | **Solver group** | `~SD/briefcase/gsmg-solver-group/` (109 files) | third-party. Re-packages families 1–5 **verbatim** — see below |
 | 9 | **Private / author-wallet** | `~/briefcase/gsmg-private/` | **ours, not the author's.** `author-wallet.txt` says "Generated 2026-09-22"; a match inside it is circular |
 | 10 | **Research ledger** (this repo) | `~/open-crypto-puzzles/1-big-prizes/gsmg-io-5btc-puzzle/` | `analysis/tested.md` is the authoritative record |
+| 11 | **Fork snapshot, in-repo** | `data/community-fork-2026-09-27/` (`phase2.1.txt`, `phase3.txt`, `PROVENANCE.md`) | quarantine copy of family 2's two plaintexts. **Zero new bytes**: both files are byte-identical to `gsmg-community-hints-repo/phase2-assets/` (verified 2026-09-27, `R-FORKWIRE`). Never re-analyse from here; cite family 2 |
+
+## The tree that vanished (2026-09-27)
+
+The fork's 87-blob working copy used to live at
+`~PFX/usr/tmp/opencode/quarantine/naddiseo/gsmgio-5btc-puzzle-HEAD/` — a **tool temp
+directory**. It is gone, and the failure was silent, because the index answered
+from cache: `sibling_index.py --name phase3.2.ipynb` returned that path as a
+hit, and `--hash` resolved fork artifacts to files nobody can read any more. A
+lookup that answers from memory of the bytes is worse than one that fails.
+
+Two consequences, both now enforced:
+
+1. `sibling_index.py --stats` flags any cached root that is no longer on disk as
+   `STALE(missing on disk)` and exits non-zero, with the note that a hit there
+   means *we once held this*. The stale root is kept deliberately — its 87 sha256s
+   are the provenance record of what the earlier fetch contained.
+2. Working copies live on the external card (`~SD/briefcase/`), which survives
+   tool temp cleanup. The restore target is `~SD/briefcase/gsmg-fork-naddiseo/`
+   (87 files, 25 MB), and all 87 sha256s match the vanished copy exactly, so the
+   restore is certified rather than assumed.
+
+Do not pin a GitHub tarball by digest. `PROVENANCE.md` recorded
+"tarball sha256 `30b46159a34946a5a094edc8bb61e111`" — 32 hex characters, which
+cannot be a sha256, and the current `master` tarball is neither that value under
+md5 (`5b175c17…`) nor under sha256 (`b9c095f3…`), at 15,169,647 B against the
+recorded 15,169,507 B. Archive tarballs are not byte-stable. Pin the **87-file
+sha256 set** (now in `data/sibling_index.json`); that is what reproduced.
 
 ## Rule the solver group taught us
 
@@ -92,6 +120,9 @@ entirely, since its filename differs from its twin's.
 
 ## Related
 
-- `analysis/tested.md` — the ledger; `R-B91PRIME` (2026-09-27) is the most recent row
+- `analysis/tested.md` — the ledger; `R-FORKWIRE-2026-09-27` is the most recent row
+  (family 11 + the vanished quarantine tree), `R-FORK-2026-09-27` the acquisition
 - `analysis/STATE_BRIEF.md` — reconciled current state and the corpus wall
 - `tools/verify_ladder.py` — 41/41 ladder re-derivation; the model for these tools
+- `tools/sibling_index.py --stats` — must show no `STALE` root before you plan work
+  that needs a specific tree's bytes

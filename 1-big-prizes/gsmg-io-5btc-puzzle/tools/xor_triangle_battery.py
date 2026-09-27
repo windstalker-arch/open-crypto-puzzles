@@ -7,7 +7,7 @@ for the final-gate oracles (small blob + Dualite gate):
 
   inputs  - the 1327-byte cosmic plaintext (re-derived, certified pipeline)
           - the 103x103 bit-matrix row/col sum arrays
-          - data/B1_79.bin, data/B2_79.bin (the two 79-byte artifacts)
+          - data/B1_79B.bin, data/B2_79B.bin (the two 79-byte artifacts)
           - the "base-38 sequence" (sec103) bytes
 
   triangle ops per input sequence s (bytes):
@@ -131,8 +131,8 @@ def _produce(seq, apex):
 
 def load_artifacts():
     arr = {}
-    for label, path in (("B1", os.path.join(BASE, "data", "B1_79.bin")),
-                        ("B2", os.path.join(BASE, "data", "B2_79.bin"))):
+    for label, path in (("B1", os.path.join(BASE, "data", "B1_79B.bin")),
+                        ("B2", os.path.join(BASE, "data", "B2_79B.bin"))):
         arr[label] = Path(path).read_bytes()
     return arr
 

@@ -17,8 +17,8 @@ import coincurve
 
 FOLDER = Path(__file__).resolve().parent.parent
 DATA = FOLDER / "data"
-B1 = (DATA / "B1_79.bin").read_bytes()
-B2 = (DATA / "B2_79.bin").read_bytes()
+B1 = (DATA / "B1_79B.bin").read_bytes()
+B2 = (DATA / "B2_79B.bin").read_bytes()
 
 X = 0xF4D1BBD91E65E2A019566A17574E97DAE908B784B388891848007E4F55D5A464
 Y_EXPECT = 0x9C73D25FC5ED8FD7227CAB0BE4E576C0C6404DB5AA546286563E4BE12BF33559

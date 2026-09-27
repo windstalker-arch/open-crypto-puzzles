@@ -24,7 +24,7 @@
    - True alignment: **off=633** (briefing said 634; off-by-one)
    - `ca[0:905] = c4[246:1151] XOR yl[633:1538]`
    - `ca[:32] == 38d7c0b1...bd25` (the published "keystream" IS `ca[0:32]`)
-   - ca SHA256 = `5940983cfa61...` (does NOT match `cd3fea3d` anchor  -  that was for full file, not 905B segment)
+   - ca SHA256 = `5940983cfa61...` — **RESOLVED 2026-09-27 (`R-CAFULL-2026-09-27`): this row reproduces bit-exactly, and the old parenthetical ("that was for full file, not 905B segment") is RETIRED as an unfalsified assumption.** The alignment `c4[i] <-> yl[i+387]` extrapolates to `ca_full = c4[0:1151] XOR yl[387:1538]` (1151 B, never swept: `R-CA-WINDOWXOR` capped `L` at 905) -> `2b2493c1...`, and the 246 B head -> `1d0eb750...`. Neither hits `cd3fea3d` or `c3b87356`, and the head carries no `+-` marker. `cd3fea3d` is unreachable at ANY length of this alignment and is fabrication-class (#88 anonymous quote, #92 "APPEARS to be"). Scoping: `ca[0:32]` is verified (two independent community artifacts XOR to the English phrase); `ca[32:905]` is propagated, unverified — neither region has ASCII words >=5 chars, and printable fraction (0.378 vs 0.382) does NOT discriminate. **The 10.7M-candidate sweep was aimed at a false anchor; `ca` is closed, not merely unswept.**
 
 5. **k_new from reconstructed ca** (late-30):
    - `k_new = cc[833:865] XOR ca[280:312] = 158cb6a02a13f27e...`
@@ -58,7 +58,7 @@
 
 ### What Changed 2026-09-14 session
 
-1. **Both 79B blobs now on disk**: added `data/B2_79.bin` (chain-2, salt `b45a5e3d827593ca`,
+1. **Both 79B blobs now on disk**: added `data/B2_79B.bin` (chain-2, salt `b45a5e3d827593ca`,
    pw=WIF(K_C1), EVP-MD5) -> 79B = K_S1 `b06fa6f2...` || K_S2 `b11d211c...` || E_S `740a25de...`,
    SHA256 `b40fce72...` (was already verified in late-59 / MEMORY.md). Corrects any lingering
    "C2 not archived" note: the chain is complete, both inner blobs local.

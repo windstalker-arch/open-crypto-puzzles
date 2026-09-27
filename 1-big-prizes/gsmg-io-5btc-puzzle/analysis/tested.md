@@ -7352,7 +7352,7 @@ derivations and the "tiny/tiny fraction" framing. Date: 2026-09-13.
 - 321 UNIQUE reductions: all 32-byte windows (sha256/256d/md5/sha1 + raw), whole/first/last/reversed sha256/256d/512,
   K1/K2/EC as bigint mod n (both endians), XOR families (K1^K2 + hashes + reversed variants), base58/base64/hexstr/
   b58check0x80 encodings hashed, EC/K2/K1 hex-string seeds hashed, K1+K2/K2-K1/K1*K2/K1^K2 mod n. 0 gate hits.
-- Witness: K1->1GKJzHQ... exact (first32 reading re-found); harness reads B1_79.bin (sha256 1449a217...).
+- Witness: K1->1GKJzHQ... exact (first32 reading re-found); harness reads B1_79B.bin (sha256 1449a217...).
 - NOTE (correction): K2-as-32B scalar gives h160 16bba55c... (addr 135Cf6AS...), NOT the ledger's claimed
   K_C2 h160 1123ac501b... (12ZdDsYJ...)  -  that claim belongs to a DIFFERENT reading (uncompressed of another value);
   flagged for ledger cleanup. Both uncompressed/compressed forms of K2 miss the gates.
@@ -7568,14 +7568,14 @@ salt 3ab585348552415d, gate 1GSMG1JC9) AND tools/oracle_dualite.py (cosmic blob,
   sha256(X).hexdigest() (phase-2 convention). The 96-byte small blob (salt 3ab585348552415d,
   gate 1GSMG1JC9) is anchored to the RAW X string + EVP-MD5: the raw concatenation
   matrixsumlist+enter+lastwordsbeforearchichoice+thispassword+matrixsumlist decrypts to the
-  79-byte chain-1 artifact B1_79.bin (SHA256 1449a217..., byte-identical on-disk). That same
+  79-byte chain-1 artifact B1_79B.bin (SHA256 1449a217..., byte-identical on-disk). That same
   string through the OLD oracle -> "NO MATCH" (proved live); as RAW password -> valid PKCS7.
   Therefore ALL prior oracle-swept negatives used the wrong password form for this gate and are
   void as negatives of this gate's X (the phase-2 symmetrical find hashing was correct only for
   phase-2).
 - FIX APPLIED: both oracles' attempt() now try password in BOTH forms - X raw and sha256(X) hex -
   each under BOTH digests (sha256, md5). Selftests extended with the raw-form anchor
-  (small blob re-decrypts to B1_79.bin: PASS; sha256(hex) form yields no padding: PASS). Both
+  (small blob re-decrypts to B1_79B.bin: PASS; sha256(hex) form yields no padding: PASS). Both
   oracles SELFTEST OK after the change (2026-09-14). tools/oracle.py:168, oracle_dualite.py:122.
 - NEW PREMISE-CORRECTED CANDIDATE SPACE (tools/gen_premise_cands.py): the anchored password is a
   raw concatenation of the SalPhaseIon page tokens, so the space = token ordering/repetition
@@ -7635,7 +7635,7 @@ salt 3ab585348552415d, gate 1GSMG1JC9) AND tools/oracle_dualite.py (cosmic blob,
   tools. SMALL GATE 1GSMG1JC9...: 2,733 unique NO MATCH, 0 MATCH (rate ~2.4k cand/s measured in this
   run including interpreter+pipe). DUALITE GATE 17ucy1...: 2,733 unique NO MATCH, 0 MATCH (~1.7k cand/s).
   Witness: oracle --selftest certifies the raw+MD5 small-blob decrypt path (matrixsumlist...matrixsumlist
-  -> B1_79.bin, sha256 1449a217...) as well as the on-chain pubkey->address half; the B1 password string
+  -> B1_79B.bin, sha256 1449a217...) as well as the on-chain pubkey->address half; the B1 password string
   is an intermediate decrypt key, not a gate address key, consistent with all prior rows.
 - SLUG BYPRODUCT: sha256 of each candidate and of its lowercase-de-spaced/alnum forms checked against the
   7 open hash-slugs (tested.md section 15) and chain markers (1449a217 B1_79 / 4f7a1e4e / cd3fea3d /
@@ -7684,7 +7684,7 @@ salt 3ab585348552415d, gate 1GSMG1JC9) AND tools/oracle_dualite.py (cosmic blob,
   (b06fa6f20561756c865dac7190f063480a371e4a13206e529ee7e9078f309c4b) ||
   K_S2 (b11d211ca0a17cd68c580308f3e6f21d3f935c8da3c4373b6f73ab5ccfaea597) ||
   E_S (740a25de4b8e946d0a5ae2667a23a2); sha256 b40fce72ef5638e4f79b3233e653f8a5dbdb0d4ae2009d2d3da2c98b70f4d004.
-  The two 79B blobs now BOTH live on disk as data/B1_79.bin and data/B2_79.bin (new file).
+  The two 79B blobs now BOTH live on disk as data/B1_79B.bin and data/B2_79B.bin (new file).
 - NEW EXECUTABLE BATTERY (tools/mirror79_research.py), the previously-intractable mirror reading:
   treat C1/C2 as a 2x2 matrix of keys [K_C1 K_C2 ; K_S1 K_S2] and SUM THE MATRIX / combine rows,
   cols, diagonals, tails; candidate k accepted iff k*G == X (f4d1bbd9..., odd y) EXACT (the
@@ -8135,7 +8135,7 @@ gates. Pipeline witnesses re-run PASS (H). Date: 2026-09-14.
   password `matrixsumlistenterlastwordsbeforearchichoicethispasswordmatrixsumlist`,
   EVP_BytesToKey MD5 + AES-256-CBC -> pad(0x01), 79-byte plaintext SHA256
   `1449a2178eea7c0e3fabac8c1ad2afa294be4fc1800c594a025a056e88c626bf`, byte-identical on-disk
-  to data/B1_79.bin. Splits: K_C1=`9fa9db91...f4746439`, K_C2=`15173896...6dfe8210`,
+  to data/B1_79B.bin. Splits: K_C1=`9fa9db91...f4746439`, K_C2=`15173896...6dfe8210`,
   E_C(15)=`38d4f4c9...0ed1c5` (== bytes 0-14 of the chain-4 AES key `38d4f4c9...a259cc`,
   matching ANCHORED_SUMMARY.md:134 and tools/chain4_*.py). WIF(K_C1, uncompressed)
   `<WIF(K_C1) REDACTED>` == #108 == PR #68. sha256(X)-hex form
@@ -8282,7 +8282,7 @@ and the user's chess/memory observations; it covers the literary vocabulary and 
 - B. BYTE-SHAPE CRC32 SCAN: real SSKR shares (decoded from app-seed-tool test vector:
   "tuna next keep gyro..." -> 29 bytes = metadata(5) + value(20) + CRC32(4); metadata is
   identifier(16bit) + packed thresholds(4+4+4+4+4+4 bits)). Scanned all raw byte blobs
-  (B1_79.bin, B2_79.bin, P79, cosmic_plain 1327B) for every 5-byte metadata window across
+  (B1_79B.bin, B2_79B.bin, P79, cosmic_plain 1327B) for every 5-byte metadata window across
   value lengths 16..32 bytes (even): if crc32(metadata||value) == trailing 4 bytes. Result: 0
   CRC-valid SSKR share windows in any blob.
 - C. MINIMUM-LENGTH SEGMENTATION (tools/sskr_minform_check.py): BCR-2020-012 defines a
@@ -8393,7 +8393,7 @@ and the user's chess/memory observations; it covers the literary vocabulary and 
 - RECONCILIATION (context): the "p32_trailing / Short 79B" blob (salt b45a5e3d827593ca)
   recovered from the scribd source == the community B2 ciphertext (issue #22 phase-3.2.1.3
   base64). Its canonical decrypt is pw = WIF(K_C1) = 5K2byJM...z8AT, EVP-MD5, ->
-  79B = K_S1 || K_S2 || E_S (sha256 b40fce72...) = data/B2_79.bin. So B2 is NOT a locked
+  79B = K_S1 || K_S2 || E_S (sha256 b40fce72...) = data/B2_79B.bin. So B2 is NOT a locked
   or missing blob on this side; CD->B1/B2->chain4 chain is fully reproducible. A 3rd
   mirror blob (which would let the 2x2 mirror generalize) does not exist in the recovered
   corpus: the four known Salted__ blobs are small(3ab58534)=B1, dualite(2d3f6fe0),
@@ -9115,7 +9115,7 @@ funded (1.25634510 BTC), dualite 3.75055310 still unspent. Tested exact string
 "BTCSEEDONESIGNKEY" verbatim -> NO MATCH (oracle try raw-X + sha256(X), MD5 +
 SHA-256 EVP derivations). Note: same-route literal hits verified coincidence  - 
 "KEY"/"ONE"/"SIGN" appear 0 times in the raw 570-c plaintext (only SEED 1x inside
-BTCSEED). WITNESS: oracle selftest passed end-to-end on B1_79.bin + phase-2 blob.
+BTCSEED). WITNESS: oracle selftest passed end-to-end on B1_79B.bin + phase-2 blob.
 Date 2026-09-17.
 
 ## late-167  Boxentriq substitution-autosolver steer + 4 user "decode" fragments, NEGATIVE (2026-09-17)
@@ -9445,8 +9445,8 @@ certified in-repo / re-derived material.
 METHOD (tools/xor_triangle_battery.py): re-derived 1327B cosmic plaintext
 (7-token XOR key, MD5-EVP AES-256-CBC; sha256=4f7a1e4e... witnessed), packed as
 103x103 bit matrix (S, row/col sums recomputed), produced sequences =
-cosmic_pt, sha256(pt), row_sums, col_sums, sec103, base38 decode, B1_79.bin,
-B2_79.bin, B1xorB2, row_bitxor, col_bitxor, row+col. For each: adjacent-pair XOR
+cosmic_pt, sha256(pt), row_sums, col_sums, sec103, base38 decode, B1_79B.bin,
+B2_79B.bin, B1xorB2, row_bitxor, col_bitxor, row+col. For each: adjacent-pair XOR
 pyramid to apex, Pascal-mod-2 diagonal readings, reverse order; encodings hex /
 printable-ascii / apex hex. N=2326 candidates.
 
@@ -9774,7 +9774,7 @@ Date 2026-09-17.
 
 The oracle-side sweeps (316/71 strings via oracle.py / oracle_dualite.py --stdin)
 are certified by each oracle's --selftest rc=0 (part 1 certifies the h160 chain
-against on-chain data; part 2d certifies the decrypt pipeline against B1_79.bin).
+against on-chain data; part 2d certifies the decrypt pipeline against B1_79B.bin).
 
 The custom k*G reduction path (red/check: coincurve from_valid_secret -> point ->
 x==gate-1-X, and h160(comp/uncomp pubkey) in {g1,g2}) had NO positive control at
@@ -10191,7 +10191,7 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   ChaCha20 across analysis/*.md = 0 references (only a stats verdict that bcrypt/KDF-name
   tokens are absent from puzzle vocabulary). No linkage to the OpenSSL Salted__ AES-256-CBC
   blobs or any on-page artifact.
-- FRAMING PROBE: B1_79.bin first byte 0x9f (CBOR indefinite-array marker, p~1/256);
+- FRAMING PROBE: B1_79B.bin first byte 0x9f (CBOR indefinite-array marker, p~1/256);
   full CBOR parse from byte 0 FAILS (no break-terminated structure; only trivial
   byte-string substructures at offsets 2/10/11, consuming to 26/20/26 of 79, none
   complete). B1_79 is not CBOR-framed and does not match multi-key's CBOR share
@@ -10499,7 +10499,7 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
     1048x1556 composite, no 14x14 grid artifact on disk).
   - Issue #111 Phase 3.2 inner-blob (salt b45a5e3d827593ca, sha-prefix 291dfd6f...) "unknown password
     hint: raising the stakes without extra chances of winning" - ALREADY SOLVED in our archive: pw =
-    WIF(K_C1), EVP-MD5 -> B2_79.bin (79B, sha256 b40fce72...) reads K_S1/K_S2/E_S. We are ahead here.
+    WIF(K_C1), EVP-MD5 -> B2_79B.bin (79B, sha256 b40fce72...) reads K_S1/K_S2/E_S. We are ahead here.
   - Live: gsmg.io/theseedisplanted STILL SERVES the original static jigsaw page (8 PNGs, hidden form);
     the SPA root is unrelated. Endpoints followthewhiterabbit / TheArchitectChoice
     / hopeisthequintessentialhumandelusion return no route; Wayback API unreachable from this network.
@@ -10563,7 +10563,7 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 - AUDIT: NanoCBOR = tiny CBOR (RFC 7049) encoder/decoder for embedded/constrained devices
   (C, Meson/Ninja, ~600-800B flash). No puzzle content. No battery.
 - PROBE (CBOR reading of our artifacts, since CBOR is a plausible-but-unused encoding):
-  B1_79.bin first byte 0x9f (major-type 4, indefinite array) and B2_79.bin 0xb0 (major 5) are
+  B1_79B.bin first byte 0x9f (major-type 4, indefinite array) and B2_79B.bin 0xb0 (major 5) are
   just the first bytes of K_C1 / K_S1 key material - full-length CBOR parse impossible; the
   0x9f/0xb0 correspondence is coincidental, not a CBOR structure.
 - RESULT: inert; probe negative.
@@ -10573,8 +10573,8 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 - CONTEXT: steer "check https://gist.github.com/twyatt/99f329d7eb923f65f4e3c32e95fad00b" - gist is a
   CBOR (RFC 7049) cheatsheet by twyatt. Follows the NanoCBOR steer (CBOR thread).
 - METHOD: referenced cheatsheet archived to usr/tmp/opencode/cbor_cheatsheet.md. Built a minimal
-  CBOR decoder (major types 0-7 incl. tags, definite-length only) and ran it over B1_79.bin,
-  B2_79.bin, ~/gsmg/cosmic_plain.bin (1327B), and the island-212 (audio offsets 8064..8276):
+  CBOR decoder (major types 0-7 incl. tags, definite-length only) and ran it over B1_79B.bin,
+  B2_79B.bin, ~/gsmg/cosmic_plain.bin (1327B), and the island-212 (audio offsets 8064..8276):
   both a whole-file top-level parse and a sliding-offset scan for coherent self-delimiting items.
 - RESULT: NEGATIVE. No artifact parses as a coherent CBOR document. Sliding scans find only
   chance-rate prefix matches (B1 17 / B2 14 / cosmic 269 / island 39 "items" at expected false-
@@ -10589,7 +10589,7 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
   Encrypt/MAC0/MAC/Sign1/Sign + COSE_Key. Standard library, no puzzle content.
 - PROBE: COSE-CBOR messages are identified by a leading CBOR tag byte (Encrypt0=0xd8 0x10,
   MAC0=0xd8 0x11, Sign1=0xd8 0x12, Sign=0xd8 0x62, Encrypt=0xd9 0x00 0x60, MAC=0xd9 0x00 0x61,
-  COSE_Key=0xc1). Checked B1_79.bin (head 9fa9db..), B2_79.bin (b0 6fa6..), cosmic_plain.bin
+  COSE_Key=0xc1). Checked B1_79B.bin (head 9fa9db..), B2_79B.bin (b0 6fa6..), cosmic_plain.bin
   (44d1..), island212 (4c10..), finalpage-digit-streams.json (7b..): NO artifact starts with any
   COSE tag; first-64-byte scan also clean (island "tag@24" is an incidental prefix, not a COSE item).
 - RESULT: inert; COSE framing hypothesis closed.
@@ -10651,9 +10651,9 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 - AUDIT: Swift library implementing deterministic CBOR (RFC 8949 + dCBOR: definite-length
   containers, canonical key order, minimal int encoding). Swift-only, no puzzle content. README
   fetched (79 lines) - generic codec, no anchors.
-- RULING: dCBOR REQUIRES definite-length arrays. B1_79.bin leading byte is 0x9f (INDEFINITE
+- RULING: dCBOR REQUIRES definite-length arrays. B1_79B.bin leading byte is 0x9f (INDEFINITE
   array) followed by an indefinite tag-chain - B1 cannot be deterministic CBOR under ANY key.
-  B2_79.bin opens map(16)/text(15) then incoherent bytes - already known key-material blob
+  B2_79B.bin opens map(16)/text(15) then incoherent bytes - already known key-material blob
   (late-232 full CBOR decode over B1/B2/cosmic/island was negative). Determinism adds no new
   support.
 - RESULT: inert; DCBOR reading of the blobs closed. Blockchain Commons thread done.
@@ -11329,7 +11329,7 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 - SOURCE: tracker issue #15 (puzzlehunt/gsmgio-5btc-puzzle), opened by Hilltopperjm 2023-07-22; 16 bodyHTML (issue body + 15 comments, timeline 2023-07-22..07-31).
 - METHOD: issue15.html captured (via jsdelivr race to escape 403), all 16 bodyHTML extracted; author attribution by quoted-email fragments (regex earlier misread; not programmatically mapped). Body: "I have the solution. Who do i contact to get the prize?"
 - KEY CONTENT: honest-claim thread; the ONLY recorded community challenge on the dbbib/faed crux — "Oh that's great!! ... how were you able to solve dbbi/faedg string? just out of curiosity!" (kangminnie127); "If you haven't figured out how to take the reward, you haven't finished solving the puzzle..."; "how did you solve phase 3.2 or if you solved SalPhaseIon"; "I think without solving SalPhaseIon it is difficult to get key for cosmic duality"; reward-split DMs offered; eazytest 2023-07-31 posted an "undecrypted" salted blob.
-- BLOB VERIFICATION: base64 of that blob -> header "Salted__", salt b45a5e3d827593ca, 80-byte ciphertext == data/B2_79.bin (chain-2 inner blob, pw=WIF(K_C1) -> K_S1/K_S2/E_S) => NOT new; already certified/solved in our chain. No public solution to dbbib/faed ever posted; claim never substantiated (link dead as of inspection).
+- BLOB VERIFICATION: base64 of that blob -> header "Salted__", salt b45a5e3d827593ca, 80-byte ciphertext == data/B2_79B.bin (chain-2 inner blob, pw=WIF(K_C1) -> K_S1/K_S2/E_S) => NOT new; already certified/solved in our chain. No public solution to dbbib/faed ever posted; claim never substantiated (link dead as of inspection).
 - RESULT: no new password candidates; confirms lead-0 crux was publicly known. Ledger rows += 2 (45 total).
 
 ## late-296  DCL asset steer: WAV identity + diff-channel audio forensics (2026-09-21)
@@ -11606,8 +11606,8 @@ key in the trusted joint VIC pipeline (faed_570/dbbib_91), NEGATIVE both gates
 | R-LEAD0-DROPG-463 | 2026-09-24 | LEAD-0 | drop-g payload decode battery (R-AGG part 2 continuation): the g-stripped 463-token 8-symbol payload ({a,b,c,d,e,f,h,i}, uniform chi2=10.797 p=0.1477 re-confirmed this session on the z-stripped stream) was decoded through the CERTIFIED VIC straddling checkerboard (certified_vic.py build_grid/decode, SELFCERT 3.2.2 PASS) for the first time as the payload itself -- prior batteries always used FULL faed_570. Battery: 15 keyed28 alphabets (bifid_row_full/bifid_key/yellow_blue_primes/yinyang/seed_is_planted/white_rabbit/primes/salphaseion/cosmic_duality/author_combined/btcseed/matrixsumlist/enter/thispassword/lastwordsbeforearchichoice) x maps {CANON,POS} x escapes {(1,4),(1,5),(2,4),(2,5)} = 120 assemblies: ALL gibberish (score 0.000, no English window, no INCASE/BTCSEE signature). ALSO: (a) g-stripped 463 as base-8/octal big-int in {alpha order, DBIFHCEG-restricted} -> 348-hex, printable ratio 0.385/0.408, E_S prefix/full window 0 hits; (b) 3-bit group reads (a=000..h=111) offsets 0/1/2 -> 173B each, printable 0.38-0.42, noise; (c) g run-gap stream (108 values, {0:28,1:16,2:11,3:10,...} sum=463) as a1-z27/decimal-concat/base-28 big-int -> no E_S, no clean hex, noise. NEW structural side-fact: dbbib (both 91 and 69 forms) has NO drop-symbol->uniformette property (best single-drop p=0.0069 drop=b), reinforcing dbbib=KEY / faed=PAYLOAD asymmetry proposed by the drop-g model. VERDICT: the uniform-8-symbol payload is ciphertext-like (uniform, high-entropy), not directly decodable by the certified checkerboard under ANY known key alphabet; drop-g confirms `g` is a pure filler/marker but supplies no interpreter-alphabet. Interpreter-alphabet crux unchanged; both gates open (check 2026-09-24). provenance: analysis/tools/certified_vic.py data/finalpage-digit-streams.json; no oracle battery warranted (no clean candidate). |
 | R-GENESIS-SEED | 2026-09-24 | BATTERY | "research deep Genesis Seed" steer addressed via the puzzle's own genesis anchor: Phase-3 canonically cites Bitcoin main.cpp line 1616 (the genesis-block coinbase script), so the COMPLETE Bitcoin-genesis object family was built from the raw 285-byte genesis block and tested for the first time (ledger had ZERO coverage of the genesis block hash/header/script outputs -- only the coinbase TEXT was swept, section 28c). AUTHORITATIVE objects computed from the raw block bytes this session: genhash 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f (sha256d, display order), internal-swapped 6fe28c0a..., merkle 3ba3edfd... + swap, 80-byte header 01000000...dac2b7c, time 1231006505/0x495fab29, bits 486604799/1d00ffff, nonce 2083236893/7c2bac1d, coinbase scriptSig (77B: 4d04ffff001d0104 + "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"), cbhex, cbtxt. Bases fused with both seed texts (GSMGIO5BTCPUZZLECHALLENGE1GSMG1JC9... and "the seed is planted when opposites attract") in both orders, plus genesis/genesisblock/genesisseed literals and double_sha256(genhash). 67 base objects -> 276 deduped form variants (case/hex-swap/reverse/despaced). E_S prefix-15 preimage (sha256/sha1/md5) in-process: 0 hits; E_S substring-in-digest: 0. BOTH oracles --selftest PASS immediately prior; oracle.py --stdin 276x NO MATCH (verified count), oracle_dualite.py --stdin 276x NO MATCH. Regenerable usr/tmp/genesis_seed_cands.txt. VERDICT: the Bitcoin genesis object family (hash/header/script/merkle/nonce/time/bits) in every canonical hex/case/reverse form and fused with the puzzle seed texts does not open either funded gate nor preimage E_S. Genesis-city/coinbase-text leads remain closed as before; no new surface. Interpreter-alphabet crux unchanged; both gates open. |
 | R-LEAD0-DROPG-CT | 2026-09-24 | LEAD-0 | extension of R-LEAD0-DROPG-463: the puzzle-named tool ciphertools.co.uk (19-cipher menu, section 143) was applied to the NEW g-stripped 463-token uniform-8 payload for the first time (section 143 only swept FULL dbbib/faed). Reused tools/ciphertools_ciphers.py faithful decoders (caesar/affine/vigenere/beaufort/autokey/porta/bifid/playfair/foursquare/columnar/railfence/nihilist/substitution/amsco/cadenus/transposition-simple) over both token readings {ai, dbf}: 11,014 decode forms (37 cipher keywords + caf FS_KEYS + bifid periods 1..120 + full + rail counts 2..8 + amsco/subst/variants), scored for common-English words -> ZERO decodes with >=1 common word; no INCASE/BTCSEE-like tail. VERDICT: the uniform-8-symbol payload is not a plaintext under any ciphertools menu cipher either -- consistent with drop-g ciphertext-like uniform entropy. Interpreter-alphabet crux unchanged; both gates open. (No oracle battery warranted: no clean/semantic candidate produced by any cipher.) |
-| R-YINYANG-AFTEROPEN | 2026-09-24 | BATTERY | yin-yang AFTER AES opening (ordering per RELATORIO_27f0 / ENDGAME sec6, silver_ant export 28/04/2025 #39237: "get material -> open AES -> interpret yinyang"), oracle-verified small+dualite. Prior yinyang scripts interpreted BEFORE opening (negative); this is the ordering the export actually documents. Decrypted the two CERTIFIED opened plaintexts (small B1_79.bin 79B sha256 1449a2178.., RAW_PW matrixsumlistenterlastwordsbeforearchichoicethispasswordmatrixsumlist EVP-MD5; dualite 1327B sha256 4f7a1e4e.. via token-XOR XK MD5) and split each into yin/yang halves (front floor/ceil split + 32B key windows + K_C1/K_C2 + K1^K2 for small), building interpretation forms: half raw hex, base64, sha256(half), md5-half, half reversed, sha256(yin||yang)/(yang||yin), xor halves, sha256(xor), plus humanist tokens yin/yang/halfandbetterhalf/HALF AND BETTER HALF/... = 62 cands (dedup) -> E_S prefix-15 (sha256/sha1/md5, text + hex-input) 0 hits; oracle.py --stdin 62/62 NO MATCH (exit 1); oracle_dualite.py --stdin 62/62 NO MATCH; direct p2pkh addr check of 32B hex cands (raw/sha256/sha256^2) 84 combos 0 == 1GSMG or 17ucy. Both oracles --selftest PASS before AND after. VERDICT: yinyang-after-open reading of the two decoded AES plaintext halves does not reach either gate; the yinyang meta-clue still yields nothing cryptographically from the b64.. . Interpreter-alphabet crux unchanged; both gates open. cands in usr/tmp/opencode/yy_after_open_cands.txt. |
-| R-YINYANG-AFTEROPEN-RERUN | 2026-09-24 | BATTERY (recertification) | fresh re-run of R-YINYANG-AFTEROPEN from a clean environment; escrows re-verified live (small 1GSMG 125,634,510 sat intact / dualite 17ucy 375,055,856 sat funded-unspent via repo check_escrows). Regenerated the 62-cand set from certified inputs (yy_after_open.py -> cert checks re-passed: small_plain==B1_79.bin, sha256 1449a2178ea7c0e; dualite sha256 4f7a1e4efe4bf6c5) -> oracle.py --stdin 62/62 NO MATCH (exit 1); oracle_dualite.py --stdin 62/62 NO MATCH (exit 1); E_S prefix-15 over 62 cands (sha256/sha1/md5 text+hex-input) 372 checks 0 hits; direct p2pkh of 28 in-range 32B hex cands x {raw,sha256,sha256^2} = 84 combos 0 == 1GSMG or 17ucy. Both oracles --selftest PASS before AND after (rc=0). VERDICT: identical to first run, no regression, no new hit; yinyang-branch stays closed, interpreter-alphabet crux unchanged; both gates open. |
+| R-YINYANG-AFTEROPEN | 2026-09-24 | BATTERY | yin-yang AFTER AES opening (ordering per RELATORIO_27f0 / ENDGAME sec6, silver_ant export 28/04/2025 #39237: "get material -> open AES -> interpret yinyang"), oracle-verified small+dualite. Prior yinyang scripts interpreted BEFORE opening (negative); this is the ordering the export actually documents. Decrypted the two CERTIFIED opened plaintexts (small B1_79B.bin 79B sha256 1449a2178.., RAW_PW matrixsumlistenterlastwordsbeforearchichoicethispasswordmatrixsumlist EVP-MD5; dualite 1327B sha256 4f7a1e4e.. via token-XOR XK MD5) and split each into yin/yang halves (front floor/ceil split + 32B key windows + K_C1/K_C2 + K1^K2 for small), building interpretation forms: half raw hex, base64, sha256(half), md5-half, half reversed, sha256(yin||yang)/(yang||yin), xor halves, sha256(xor), plus humanist tokens yin/yang/halfandbetterhalf/HALF AND BETTER HALF/... = 62 cands (dedup) -> E_S prefix-15 (sha256/sha1/md5, text + hex-input) 0 hits; oracle.py --stdin 62/62 NO MATCH (exit 1); oracle_dualite.py --stdin 62/62 NO MATCH; direct p2pkh addr check of 32B hex cands (raw/sha256/sha256^2) 84 combos 0 == 1GSMG or 17ucy. Both oracles --selftest PASS before AND after. VERDICT: yinyang-after-open reading of the two decoded AES plaintext halves does not reach either gate; the yinyang meta-clue still yields nothing cryptographically from the b64.. . Interpreter-alphabet crux unchanged; both gates open. cands in usr/tmp/opencode/yy_after_open_cands.txt. |
+| R-YINYANG-AFTEROPEN-RERUN | 2026-09-24 | BATTERY (recertification) | fresh re-run of R-YINYANG-AFTEROPEN from a clean environment; escrows re-verified live (small 1GSMG 125,634,510 sat intact / dualite 17ucy 375,055,856 sat funded-unspent via repo check_escrows). Regenerated the 62-cand set from certified inputs (yy_after_open.py -> cert checks re-passed: small_plain==B1_79B.bin, sha256 1449a2178ea7c0e; dualite sha256 4f7a1e4efe4bf6c5) -> oracle.py --stdin 62/62 NO MATCH (exit 1); oracle_dualite.py --stdin 62/62 NO MATCH (exit 1); E_S prefix-15 over 62 cands (sha256/sha1/md5 text+hex-input) 372 checks 0 hits; direct p2pkh of 28 in-range 32B hex cands x {raw,sha256,sha256^2} = 84 combos 0 == 1GSMG or 17ucy. Both oracles --selftest PASS before AND after (rc=0). VERDICT: identical to first run, no regression, no new hit; yinyang-branch stays closed, interpreter-alphabet crux unchanged; both gates open. |
 | R-FEFEFE-LOCATE | 2026-09-24 | CORRECTION/COMPLETION | pinned the FEFEFE (254,254,254) '25th mark' cell to a grid coordinate: re-scanned the source tile ~/briefcase/gsmg_era/follow_white_rabbit.png (350x350 RGBA, 14x14 cells of 25px) with exact-color per-cell census -> the ONLY 625-px (one full cell) FEFEFE region sits at GRID (r=7, c=4). Color census: black 54675 px, white 52200, blue(63,72,204) 9375 = 15 cells, yellow(255,242,0) 5625 = 9 cells, FEFEFE 625 = exactly 1 cell => 24 colored + 1 near-white = 25 marks (matches R-EXT-YINYANG fact, which never recorded WHERE). RECONCILED: (7,4) == the already-documented nest cell (tested.md:4316): live-grid pixel N=254, spiral index 163 = URL byte 20 bit 3 of 'n' (0x6e, bit3=0), one luma step below pure-white, sits on an already-0 URL low-bit -> color-plane decode unchanged (URL still unique printable). Grid position (7,4): in the yinyang diagonal split j=4<r=7 => BELOW triangle (in the 9B/3Y set region, but cell itself is neither B nor Y). A1Z26 of (7,4)=GD / rowmajor index 102; nothing else new mechanically. Consistency re-check: theseedisplanted.png has #fefefe class only via anti-aliasing (tested.md:11425) - the full-cell FEFEFE exists ONLY in the tile. VERDICT: FEFEFE cell = the artist's single faint nest marker, coordinates now (7,4), already decode-irrelevant (holds a 0-bit); closes the '25th color' loose end. Interpreter-alphabet crux unchanged; both gates open. |
 | R-VIC-ALPHAMAP-GRID | 2026-09-24 | NEW-CELL (audit) | lead-0 interpreter-map axis through the CERTIFIED checkerboard, previously never swept: prior checkerboard runs used only pos (abcdefghi) and canon (dbifhcega) as a..i->digit maps, and canon == DBIFHCEG == dbbib's first-occurrence order (tested.md:3397/9479), so exactly ONE non-pos map ever hit build_grid/decode. New tools/vic_alphamap_grid.py: for each of 17 alphabets (certified + keyed28 of salphasion/cosmicduality/yellowblue/primes/yinyang/btcseed/whiterabbit/theseedisplanted/matrixsumlist/lastwordsbeforearchichoice/yourlastcommand/zeroedout/shabef/ourfirsthint/infront/halfandbetterhalf) use the 'as typed on page' interpreter = the alphabet's own left-to-right order of its a..i letters, plus faed's first-occurrence map faedgcbhi (never used as checkerboard map; late-187/190 covered only the interp base9 path) fwd+rev, x escapes {(1,4),(2,5)} x trans {none,13,38,7} x {dbbib,faed} x {fwd,rev} = 2128 decode cells, 1216 unique. WITNESS: selfcert PASS (phase-3.2.2 vector) before; oracle.py + oracle_dualite.py selftests PASS after. RESULT: 0 MATCH both gates. Impact: closes the page-typed-interpreter axis for the checkerboard family too; the remaining live lead-0 forms stay the layered/non-mechanical visual reads. Interpreter-alphabet crux unchanged. |
 | R-VIC-ALPHAMAP-GRID-2 | 2026-09-24 | EXTENSION of R-VIC-ALPHAMAP-GRID | closed the two residual checkerboard blind cells. (A) Width dimension for the page-typed map family: trans lengths {3,15,16,19,23} (row-194 widths; 13/38/7 done in 337) x 17 alphabets x ai-suborder maps fwd/rev x esc {(1,4),(2,5)}. (B) Stream-combination decode through build_grid/decode: prior dbbib+faed compositions (row 35) were ONLY submitted verbatim as oracle strings, never checkerboard-decoded; under a straddling checkerboard a seam changes escape-digit interpretation globally. Combined here x pos/canon/ai/faed maps x esc x trans incl seam-propagating lengths. New: dbbib+faed, faed+dbbib, dbbib+rep+faed, interleave(dbbib, faed[:91]). Total 15,504 decode cells / 8208 unique candidates. WITNESS: selfcert 3.2.2 PASS before; oracle.py + oracle_dualite.py selftests PASS after. RESULT: 0 MATCH both gates. Impact: checkerboard family now closed across maps {pos, canon, ai-suborder, faed} x esc {(1,4),(2,5),(0,4),(1,5),(2,4),(1,2)} x widths {none,3,7,13,15,16,19,23,38} x 6 stream forms (single, reversed, concat, interleave); no mechanical seam/composition blind spot remains. Lead-0 crux unchanged; both gates open. |
@@ -12635,7 +12635,7 @@ The interpreter-alphabet decode of `dbbi`(91) / `faed`(570) -> **ANSWER X** is s
 
 ### 3. `R-B2FAIL` - CERTIFIED NEGATIVE: the documented "B2 = decrypt under pw=WIF(K_C1)" rung does NOT reproduce
 - Found a **second, previously-unexamined tree** `~/briefcase/gsmg-private/` (distinct from `~/storage/external/briefcase/gsmg-private/`), containing `author-wallet.txt` (2026-09-22), `author-cluster-onchain.md`, `monitor_author_wallet.sh`, Decentraland estate-955 maps, specgram/specmat renders, `poster_tagline.txt`, and a second `cosmic_decrypted.bin` (1327 B).
-- `author-wallet.txt` claims a **key ladder**: `B2_79.bin (79 B) = decrypt under pw=WIF(K_C1)`, giving `K_S1`, `K_S2`, `E_S=740a25de4b8e946d0a5ae2667a23a2` ("the puzzle's E_S anchor").
+- `author-wallet.txt` claims a **key ladder**: `B2_79B.bin (79 B) = decrypt under pw=WIF(K_C1)`, giving `K_S1`, `K_S2`, `E_S=740a25de4b8e946d0a5ae2667a23a2` ("the puzzle's E_S anchor").
 - **Tested and it fails.** Count **40**: 10 password forms {WIF/WIF-compressed/hex/HEX/raw-bytes of K_C1, same of K_C2} x 2 blobs {small 96 B, PHASE2} x 2 digests {MD5, SHA256}. Result **40/40 PKCS#7 padding failures, zero 79-byte outputs, zero E_S matches.** Witness for the harness itself: the *same* code path with the 5-token password returns the 79-byte B1 with `sha256 1449a217...`, so the failure is in the claim, not the code. Rate: 40/40, 2026-09-27.
 - The file's WIF is internally sound: base58check valid, and its payload **is** exactly `K_C1` (`body[1:33]==K_C1` True; != K_C2). So the file is self-consistent at that point and the B2 claim is specifically what fails. Most likely B2 is not "decrypt a blob with a WIF password" at all - the file's own phrase "B1_79 fields **re-keyed**" suggests a re-keying operation, not a blob decryption. **B2 remains unreproduced; the E_S anchor `740a25de...` is currently an UNANCHORED community claim.**
 - Treat `author-wallet.txt` as MIXED: its B1 block, both funded-gate balances, the DCL estate-955 facts, and the K_C1 address derivations are reproducible/consistent; its B2 ladder is not yet reproduced. Do not cite the file wholesale.
@@ -13964,7 +13964,7 @@ file belonging to someone else, it is not a puzzle artifact, and recovering a th
 wallet is out of scope. Not opened, not parsed, not hashed, no attempt of any kind.
 
 METHOD NOTE (witness discipline - third instance of the same failure mode). Earlier in
-this same session I reported `data/B2_79.bin` as absent from the tree. It is not: it is
+this same session I reported `data/B2_79B.bin` as absent from the tree. It is not: it is
 git-tracked (added in `19820f5`) and has been on disk continuously. The cause was my own
 `find ... | head -20` over a noisy tree - the pnpm store filled all 20 lines and the
 matching line was cut - and I then reported the truncated output as a fact about the
@@ -13981,10 +13981,17 @@ by any of this. The "new author artifact" input named in `STATE_BRIEF.md` is sti
 highest-value thing this puzzle can receive, and nothing in this directory is it.
 
 ## R-YINYANG-B1B2-2026-09-27  are B1/B2 the yin-yang? B1 YES and it is now anchored with a firing control; B2 NO - it is a third 79-byte record with no envelope anywhere in the corpus
+
+> **CORRECTED 2026-09-27 by `R-B2RUNG2-2026-09-27`. The "B2 NO" verdict is WRONG, and every claim that B2 lacks a ciphertext is WITHDRAWN.** B2 has an envelope: the p32 outer, salt `b45a5e3d827593ca`, ct 80 B, and it opens byte-exactly to `b40fce72...` under the **DERIVED** password `WIF(K_C1)`. This row had that very salt in hand - Finding 3 lists it explicitly - and still missed it, because it only tried authorial *string* passwords. That is the third and final instance of the `R-B2FAIL` / `R-B2REKEY-AES` method bug: the winning password is a value COMPUTED OUT OF B1, so no string dictionary can contain it. A fourth attempt should be treated as evidence that the string-dictionary approach itself is exhausted for B2.
+>
+> **What SURVIVES, unchanged:** Finding 1 (B1 is a yin-yang half, control fires); Finding 2 (B2 is *not* the dualite half - length arithmetic, wholly unaffected); Finding 4 (`3ab58494d215415d` is a corrupted transcription, not a third envelope); and the overall answer that **B1 is a yin-yang half and B2 is not one** - B2 belongs to the separate CADEIA ladder, not to the small/dualite pair. So the headline *verdict* on the user's question was RIGHT even though its stated *reason* was wrong. Worth keeping as a standing lesson: a correct conclusion reached by a broken argument is not a verified result, and here the broken argument was simultaneously manufacturing a false lead (below).
+>
+> **What is FALSIFIED:** "B2 has no ciphertext anywhere in the corpus", "distinct real envelopes of 96-byte shape: 1", and - most consequentially - the entire **ACTIONABLE CONSEQUENCE** below. The prediction that B2 is "evidence of a THIRD envelope that nobody has ever captured: a missing 96-byte blob" is **FALSE**; the envelope already existed, sitting in `briefcase/MEMORY.md`. Do not go looking for that phantom blob. Distinct real 96-byte-shape envelopes: **2** (`3ab585348552415d` small, `b45a5e3d827593ca` p32 outer). The "honest limit" offered there - that B2 "may equally be a community fabrication" - is also now resolved: B2 is genuine, certified byte-exact.
+
 0 candidates, 0 oracle calls. Question asked directly by the user, and the ledger had
 answered only the envelope-level version of it (`R-EXT-YINYANG`: "the two AES blobs
 (small 3ab58534->1GSMG 1.2563BTC + dualite 2d3f6fe0->17ucy 3.7505BTC) are the yinyang
-halves"). B1/B2 are the PLAINTEXTS, a different question, and with `B2_79.bin` now
+halves"). B1/B2 are the PLAINTEXTS, a different question, and with `B2_79B.bin` now
 readable (it is git-tracked since `19820f5`) it is answerable by length arithmetic plus a
 forward-encryption test. Both oracles `--selftest` PASS; both gates open.
 
@@ -14021,32 +14028,63 @@ fired, so the password list was simply wrong and the "negative" was meaningless.
 as the `bf-cbc` gap in `R-B2REKEY-AES`: an absent positive control turns a negative into
 noise. Re-run only after the control fired.
 
+> **THE RE-RUN HAPPENED AND IT WAS STILL 0 - for a different reason, so this negative is
+> still noise, not evidence.** The B1 control did fire; the password *class* was wrong.
+> 360 forward encryptions over 60 authorial strings cannot contain `WIF(K_C1)`, a value
+> computed out of B1. So Finding 3's 0 hits neither confirm nor refute anything about B2's
+> envelope status, and its title claim ("B2 IS NOT THE PLAINTEXT OF ANY 96-BYTE ENVELOPE WE
+> HOLD") is **false** - it is the plaintext of the p32 outer. Per this row's own standard
+> stated a paragraph above, a negative without a firing positive control in the same path is
+> noise; here the control was in the right path but the search space was structurally
+> incapable of containing the answer. That is a distinct and more insidious failure than
+> the one it caught itself on, and it is the same class as `R-B2FAIL` and `R-B2REKEY-AES`.
+
 FINDING 4 - FORENSIC, AND IT REMOVES A FALSE LEAD. The third envelope is not a third
 envelope. Salts `3ab585348552415d` and `3ab58494d215415d` carry the **byte-identical
 ciphertext** `75270543bb0b4f97...`; only the salt differs, in one byte
 (`85 34 85 52 41 5d` vs `84 94 d2 15 41 5d`). It is a corrupted transcription of the
 small half inside a community script, not a distinct blob, and it must not be counted as
-a candidate envelope. Distinct real envelopes of 96-byte shape: 1.
+a candidate envelope. Distinct real envelopes of 96-byte shape: ~~1~~ **2** - `3ab585348552415d`
+(small half) and `b45a5e3d827593ca` (p32 outer, yields B2_79). The forensic point of this
+finding - that `3ab58494d215415d` is a garbled transcription and must not be counted - is
+UNAFFECTED and still stands; only the tally changes.
 
-SO THE ANSWER IS: B1 is one yin-yang half. B2 is not either half. And the reason is
-stronger than "`R-B2FAIL` could not reproduce the ladder" - it is that B2 has no
-ciphertext. Every 79-byte record reachable by decrypting a known envelope is B1, because
-the only 96-byte envelope yields exactly B1 and the only other yin-yang envelope yields
-1327 bytes.
+SO THE ANSWER IS: B1 is one yin-yang half. B2 is not either half. **This verdict still
+stands.** ~~And the reason is stronger than "`R-B2FAIL` could not reproduce the ladder" -
+it is that B2 has no ciphertext. Every 79-byte record reachable by decrypting a known
+envelope is B1, because the only 96-byte envelope yields exactly B1 and the only other
+yin-yang envelope yields 1327 bytes.~~ **The stated reason is WITHDRAWN as false**: B2's
+envelope is the p32 outer (salt `b45a5e3d827593ca`, ct 80 B), which yields exactly B2_79
+under the derived password `WIF(K_C1)` - see the correction banner above. The correct
+reason B2 is not a yin-yang half is simply the one in Finding 2, which needs no envelope
+at all: the dualite half's plaintext is length-locked at 1327 B, so B2 cannot be it. A
+right answer for a wrong reason, in a row that simultaneously invented a phantom blob to
+explain the wrongness.
 
-THE ACTIONABLE CONSEQUENCE, and it redirects the B2 work. If `B2_79.bin` is genuine then
-it is evidence of a THIRD envelope that nobody has ever captured: a 96-byte `Salted__`
-blob, 80-byte ct, under a salt that is neither `3ab58534...`, `b45a5e3d...` nor
-`2d3f6fe0...`, whose plaintext is `b40fce72ef5638e4f79b3233e653f8a5dbdb0d4ae2009d2d3da2c98b70f4d004`.
-That is a falsifiable prediction with a hard verifier, and it is a better use of effort
-than more B1->B2 cipher sweeps: any 96-byte base64 blob found anywhere decrypts-or-not in
-one command, and the search target is now "a missing 96-byte blob", not "a missing
-transform". Note the honest limit - B2 may equally be a community fabrication that was
-simply hashed and filed; nothing in the corpus distinguishes those two cases, and the
-prediction is the only way to tell. Also worth recording for the next agent: the
-`/storage/external/briefcase` copies and this session's `/storage/emulated/0/Download/Telegram`
-copy are the only places these base64 envelopes survive outside the repo, and
-`tools/chain_build.py:26` is the only place the 5-token password is written down.
+> **THE ACTIONABLE CONSEQUENCE BELOW IS FALSIFIED — DO NOT ACT ON IT. Read this before using
+> the paragraph that follows.** ~~If `B2_79B.bin` is genuine then it is evidence of a THIRD
+> envelope that nobody has ever captured: a 96-byte `Salted__` blob, 80-byte ct, under a
+> salt that is neither `3ab58534...`, `b45a5e3d...` nor `2d3f6fe0...`~~
+> **FALSE, and falsified in the most instructive way available: the prediction explicitly
+> EXCLUDED `b45a5e3d...` as a candidate salt, and `b45a5e3d...` is precisely the salt that
+> opens B2.** The row held the answer in hand, listed it in Finding 3, and then wrote a
+> search plan whose stated target set excluded it. There was never a missing 96-byte blob
+> to find; the envelope was in `briefcase/MEMORY.md` the whole time. The plan also asserted
+> the search was "a better use of effort than more B1->B2 cipher sweeps" when the sweep
+> that would have worked was not a sweep at all - it was deriving the password from B1.
+> ~~whose plaintext is `b40fce72ef5638e4f79b3233e653f8a5dbdb0d4ae2009d2d3da2c98b70f4d004`.~~
+> (that plaintext is correct, and is what the p32 outer yields byte-exactly)
+> ~~That is a falsifiable prediction with a hard verifier, and it is a better use of effort
+> than more B1->B2 cipher sweeps: any 96-byte base64 blob found anywhere decrypts-or-not in
+> one command, and the search target is now "a missing 96-byte blob", not "a missing
+> transform". Note the honest limit - B2 may equally be a community fabrication that was
+> simply hashed and filed; nothing in the corpus distinguishes those two cases, and the
+> prediction is the only way to tell.~~ **Resolved: B2 is genuine, not a fabrication** -
+> certified byte-exact by `R-B2RUNG2-2026-09-27`. Also worth recording for the next agent:
+> the `/storage/external/briefcase` copies and this session's
+> `/storage/emulated/0/Download/Telegram` copy are the only places these base64 envelopes
+> survive outside the repo, and `tools/chain_build.py:26` is the only place the 5-token
+> password is written down.
 
 ## R-B2RUNG2-2026-09-27: **B2 HAS AN ENVELOPE AND IT OPENS.** CADEIA 2 is a real rung: the p32 outer envelope under WIF(K_C1) gives `b40fce72...` byte-exactly. This CORRECTS `R-B2FAIL` and `R-YINYANG-B1B2` Finding 3, and the correction is a method bug worth generalizing.
 
@@ -14062,11 +14100,11 @@ base64 already transcribed at `tools/mirror79_research.py:56`, 96 B, salt
 the already-published chain-2 password (issue #108 / PR #68), not a new string. KDF =
 EVP_BytesToKey with MD5, AES-256-CBC. Result: 79 B + 1 pad byte, sha256
 `b40fce72ef5638e4f79b3233e653f8a5dbdb0d4ae2009d2d3da2c98b70f4d004` ==
-sha256(`data/B2_79.bin`). Note the length lock that anchored B1 applies here unchanged:
+sha256(`data/B2_79B.bin`). Note the length lock that anchored B1 applies here unchanged:
 80 B of ciphertext is 79 B of plaintext plus exactly one pad byte, so a 79-byte record was
 the only thing this envelope could ever have held. THREE WITNESSES, all firing: (i) the B1
-control re-fires in the same code path (small-half envelope -> `B1_79.bin` byte-exact);
-(ii) FORWARD re-encryption of `B2_79.bin` under the same password/KDF/salt reproduces the
+control re-fires in the same code path (small-half envelope -> `B1_79B.bin` byte-exact);
+(ii) FORWARD re-encryption of `B2_79B.bin` under the same password/KDF/salt reproduces the
 stored ciphertext byte-for-byte - deterministic, so no padding ambiguity is possible;
 (iii) the scalar->address routine carries its own witness, since K_C1's compressed address
 re-derives `14zJ3RHPxiRJAmYHUNTvPoCTxhFB6gACgf`, a value already recorded in this repo.
@@ -14125,7 +14163,7 @@ decryptions. 12 produced valid PKCS7 padding; every one is either B1, B2, or a
 unremarkable), and none yields a WIF-shaped continuation of K_S1, K_S2 or K_C2. Certified
 negative, controls in the same code path (B1 and B2 both re-found).
 
-WHAT THIS CHANGES, AND WHAT IT DOES NOT. `data/B2_79.bin` is no longer an orphan record of
+WHAT THIS CHANGES, AND WHAT IT DOES NOT. `data/B2_79B.bin` is no longer an orphan record of
 unknown provenance: it is the certified plaintext of the p32 outer envelope, one rung below
 B1, and the B1 -> B2 leg of the ladder is now reproducible in one command. The frontier is
 unchanged: re-verified today that no 32-byte window of chain4 or of `cc` hashes to the
@@ -15262,7 +15300,7 @@ Date: 2026-09-27, local.
   *"LABELLED UNCERTIFIED per AGENTS.md rule 6 - there is no witness for this harness, because
   `K_S1`/`K_S2`/`E_S` exist ONLY in the unverified `author-wallet.txt`"*, warning that
   `EVP_BytesToKey`-style derivation and *"fields re-keyed"* left `B2` possibly unreachable, and saying
-  explicitly **"Do not cite as a closed lead."** **That caveat is now obsolete.** `data/B2_79.bin`
+  explicitly **"Do not cite as a closed lead."** **That caveat is now obsolete.** `data/B2_79B.bin`
   (sha256 `b40fce72ef5638e4`) exists in the repo and `tools/verify_ladder.py` re-derives it byte-exactly
   from `WIF(K_C1)` under salt `b45a5e3d827593ca` as part of the 41/41 check committed in `5a9062d`.
   So `K_S1`/`K_S2`/`E_S` are **certified slices of a certified decryption**, not claims from an
@@ -15623,5 +15661,331 @@ deliberately NOT committed, and should be gitignored -- left alone here because 
 carries someone else's uncommitted edit in this monorepo, and this commit stages only its own paths.
 Note for the next session: **the git root is `~/open-crypto-puzzles`, one level above this repo, and
 there are 126 uncommitted files from other projects.** Stage by exact path; never `git add -A`.
+
+Date: 2026-09-27, local.
+
+## R-ANTIYB-2026-09-27: dbbib 7x13 column sums used as zero-based-from-end word indices into the Architect text before the modified SELECT -> `ANTIYBCORETNT`. Reproduces exactly from three independent transcriptions. **Graded: reproducible, not creator-authenticated, and not statistically interesting — p ~ 0.03 (rank 6/217) once scored against a system dictionary instead of a hand-picked one. Joins the closed mechanical family.** 0 oracle calls, nothing opened.
+
+### The claim, as brought to me
+A prior session mapped the DBBI alphabet by first appearance (`D=0,B=1,I=2,F=3,H=4,C=5,E=6,G=7,A=8`), placed the 91-character DBBI string in a 7x13 grid, summed each column to get
+`[19,27,26,34,13,38,11,31,25,37,18,27,33]`, applied those as zero-based "nth word from the end" indices to the Architect text immediately before the modified SELECT section, and took the first letter of each selected word. Output `ANTIYBCORETNT`, prefix `ANTIYBCORE` — reported as matching anti-diagonal geometry, Yellow/Blue, and the 84-cell interior/core structures already seen elsewhere.
+
+### Witness: all four steps reproduce byte-for-byte
+`tools/dbbib_7x13_wordindex.py` asserts each step rather than inheriting it, and exits 0.
+- `dbbib_91` from `data/finalpage-digit-streams.json`; first-appearance order is `dbifhcega`, so the alphabet assertion holds.
+- 7x13 row-major column sums = `[19, 27, 26, 34, 13, 38, 11, 31, 25, 37, 18, 27, 33]`, and they partition the stream exactly (sum 339 = total of the 91 cell values).
+- Words: A / NOW / TO / IT / YOU / BECOME / CARRY / OF / RETURN / EXCEEDINGLY / TEMPORARY / NOW / THE.
+- Initials: `ANTIYBCORETNT`.
+
+### The part that is genuinely new, and the part that is not
+**Not new:** the alphabet. `data/finalpage-digit-streams.json` already carries it as `canonical_value_mapping`, with the note *"proposed by the puzzle's own Bifid square 'DBIFHCEG' row convention; **a lead, not confirmed**"*. So the first-appearance order is not independent evidence that the mapping is right — it is the same mapping, reached by a second route, and the reason the two agree is that the author built the stream from that square in the first place. Circular, not corroborating. The 7x13 shape is likewise already closed: section 193 oracled 125 candidates from 7x13 row/col sums of dbbib, 0 match.
+**New:** the *use* of the sums — as selectors into a word list rather than as a code. No ledger row had done that.
+
+### Three further discounts
+1. **Not 13 independent draws.** The 13 indices span only the 12th-to-39th word from the end — a single 28-word window, *"become exceedingly efficient at it the function of the you is now to return to the source codes allowing a temporary dissemination of the code you hopefully carry"*. Twelve distinct source words, index 27 used twice, dense function words (the/of/to/you/now/return/a). `ANTI` is substantially one sentence's grammar, not thirteen independent hits.
+2. **Two of three correspondences are English.** `anti` and `core` are words; `yb` is not. The Yellow/Blue and 84-cell-core links were assigned *after* seeing the output — the same multiple-comparisons trap that produced the withdrawn R-XOR fragment (see the `SEND`/`THEC` episode: a 3-gram like `THE` appears in 35 random letters with p ~ 2e-3, so across a large sweep such fragments are guaranteed).
+3. **The "take first letters" step is inferred, not instructed.** Already conceded in the original claim; recorded here so the grade is not quietly upgraded later.
+
+### What survives transcription noise
+Three independent transcriptions of the monologue were checked and **all three yield `ANTIYBCORETNT`**: `~/gsmg/bookcipher/beaufort_words_clean.csv`, `gsmg-community-hints-repo/phase3.2.ipynb`, and the decrypted ASCII trailer of the SalPhaseIon AES blob (`CORRECT.BIN`, Tahap 14 - Cosmic Duality, via `~/briefcase/gsmg_issues_all.json`). They genuinely differ — `twentythree` / `twenty-three`, `bruteforcing` / `brute forcing`, `will power` / `willpower`, `wiseman` / `wise man`, `lifetime` / `life time` — and every one of those variants falls **outside** the 28-word window, so the extraction is invariant to them. That is robustness to transcription noise, **not** independent confirmation: all three are the same underlying monologue. (The CORRECT.BIN span is only 73 words, starting mid-sentence at "rest assured", so it is used for the word-agreement check but not for the control sweep.)
+
+### The control was run against the wrong axis, and the right one is much weaker than advertised
+The claim was defended with random-shuffle controls on the stream. That is the wrong axis: the extraction is **fully deterministic** and contains no randomness, so shuffling the stream measures nothing about it. The free choice the extractor actually made is **which word the span ends on**, and that is where the multiplicity lives. Swept over the final page's pre-SELECT span (255 words, 217 valid end-anchors), scoring **every** length-3 and length-4 substring of each output against the system dictionary (`hunspell -d en_US`, affix rules applied, no wordlist stored in this repo):
+- 4-letter: `ANTIYBCORETNT` contains `ANTI`, `CORE` = 2 hits. **Five other anchors also reach 2** — `STETTUFTOEETP` (stet/tuft), `TOMENHAIPBSOF` (omen/tome), `HWHTRITALNAWN` (ital/rita), `TRAMSWIATDIRP` (rams/tram), `ISALIWTHINTST` (hint/thin). p = 6/217 ~ 0.028, **rank 6 of 6 tied**.
+- 3-letter: the target has 4 (`ANT`, `COR`, `ORE`, `TNT`) but the sweep maximum is **6** (`AITOWLMOTITIA`). p = 13/217 ~ 0.060, rank 13/217.
+
+So under an exhaustive dictionary test the chosen anchor is **not the best available**, only mid-pack, and `p ~ 0.03` is unremarkable. It is not a tail.
+
+### Correction: my first scoring was tuned by me, and the swap to a system dictionary changed the verdict
+The numbers above replace an earlier pair I first wrote into this row — p ~ 0.005 / rank 1 of 217, "uniquely best under the 4-letter lexicon". That came from a hand-written ~200-word list of common 3- and 4-letter words embedded in the tool. It was wrong in my favour: I had chosen the lexicon, so I had chosen what counted as a hit, and it contained `anti` and `core` while omitting `stet`, `tuft`, `omen`, `tome`, `ital`, `rita`, `rams`, `tram`, `hint`, `thin`. Replacing it with `hunspell -d en_US` and testing **all** substrings removed that freedom and dropped the significance from p ~ 0.005 to p ~ 0.03. The direction of the error is the point: a hand-curated metric will always find a way to make the thing you already like look unique. Two bugs surfaced on the way and are worth the same warning — hunspell echoes unknown words in the *input's* case, so comparing its output against lowercased candidates silently marks everything as known (first run: "1670 candidates, 1670 in dictionary", which is obviously impossible and should have been caught as a canary before the numbers were read).
+
+### A methodological error of my own, recorded because it is the kind that inflates results
+My first version of the control swept the **entire 55,682-word community walkthrough notebook** as the candidate span and printed `p = 1/55644`. That number is worthless. The extractor never saw that text, so it is not in the search space; widening a domain *after* seeing a favourable result manufactures significance rather than measuring it. The domain has to be fixed by the method, ahead of the outcome. Caught and reverted to the 217-anchor final-page span. Writing this down because the 55k figure is exactly the kind of number that gets quoted onward as "overwhelmingly strong" once it is in a chat log.
+
+### Grade and disposition
+**Reproducible, and no longer interesting.** The arithmetic is exact and survives three transcriptions, which is real. But: the alphabet is borrowed from a lead this repo already flagged as unconfirmed; the 7x13 shape is already an oracled negative; 12 of 13 picks come from one 28-word window with one index used twice; the step that turns words into letters is invented, not instructed; and under an exhaustive system-dictionary control the chosen anchor is rank 6/217 at p ~ 0.03, with five anchors scoring identically. The `ANTI`/`CORE` reading is a product of the specific lexicon I picked. The Yellow/Blue and 84-cell-core correspondences remain post-hoc. This joins the closed mechanical family; it does not open anything.
+The one durable observation is not the output but the fact that **these column sums can be spent on a word list at all** — a use no prior row had tried. If anyone revisits it, the honest first move is a canary assertion (an impossible result must fail loudly) and a control domain fixed before the answer is known, not a hand-picked word list and not a shuffle.
+
+Not submitted. No ledger row is closed by it, and no gate changes. The only thing worth testing next is whether the 13 numbers index something other than this monologue — they are a *position list* in 11..38, and nothing on the page instructs that they address words at all.
+
+Date: 2026-09-27, local.
+
+## R-EBTAIL-2026-09-27: `E_B[:2] = 59cc` is DERIVED, not quoted - exhaustive 2^16 sweep of the chain-4 key tail, 65,536 candidates, exactly 1 hit. Chain-4 is now 32/32 bytes on-puzzle. 0 oracle calls.
+
+### The question
+CADEIA 4's AES-256-CBC key is `E_C(15) || E_S(15) || E_B[:2]`. After `R-B2RUNG2` certified the p32 outer envelope, the first **30** bytes are derived on-puzzle. The last **two** were still the last community-sourced bytes in the chain, and both `tools/chain_rebuild.py` and `tools/rung2_b2.py` say so in their docstrings. Two bytes is 65,536 possibilities, and the acceptance target is **published** - the chain-4 plaintext hash `e4269ed5fbb202a81e5e1aa6b5190fdd1ea126b2c8547ea7cdbdf45387ea135b`, attested by issue #68 / #88 and independently re-derived at tested.md:7733. So this is a self-certifying search: no oracle call, no gate, no private-key operation, and a hit is verifiable by anyone re-running the script.
+
+### Result - POSITIVE
+`tools/eb_tail_sweep.py`:
+- **Witness first, before spending the space:** the quoted `59cc` reproduces the published chain-4 hash (`PASS`, plaintext 1151 B). Without this the sweep would have been meaningless, so it runs first and asserts.
+- **N = 65,536, D = 20,666 cand/s, t = 3.2 s.**
+- 267 candidates survive PKCS#7 unpadding. Expected 65,536/256 = 256, so the padding filter is behaving as a clean 1/256 gate and is not silently passing everything - a useful independent check on the harness.
+- **Hits reproducing the published hash: 1. `59cc`.** The other 266 padding-survivors are decoys.
+
+So `E_B[:2]` is not a value to be trusted or doubted - it is **determined**, uniquely, by the published anchor over the entire 2^16 space. The last community-sourced byte-pair in the chain closes. Every byte of the chain-4 key is now derived on-puzzle.
+
+### What this does and does not upgrade
+It does **not** make the chain creator-authenticated. The acceptance anchor is community-published, so this proves `59cc` is the unique value consistent with that anchor, not that the author chose it. What it does do is remove the standing caveat honestly: a community-quoted byte-pair and an exhaustive independent search now agree, which is a real cross-check rather than a citation. The earlier `EVP_BytesToKey` / derived-IV / non-derived-IV clauses on B2 stay closed as `R-B2REKEY` and `R-B2REKEY-AES` closed them - this row does not reopen them.
+Chain-4's own structure is unchanged and still needs `ca`/`cosmic_A`: 1151 B = a 31-byte header (first two bytes `2b 2d` = `+-`, the marker) followed by **35 x 32-byte blocks**, i.e. the XOR-triangle operand grid. Printable fraction 0.346, so it is not text. `ca` remains referenced only by the 32-bit SHA-256 prefix `cd3fea3d...` (#92) and the creator disavows a "step after Cosmic Duality" (#104), so **the key is no longer the blocker - the missing operand is.**
+
+### Also corrected here: two stale statements in the tree
+- `analysis/STATE_BRIEF.md:715-717` still carries "Standing caution, unchanged: `E_S`/`B2` remain *unanchored community values* per `R-B2FAIL` - the ladder to them does not reproduce." **That is stale.** `R-B2FAIL` swept `{small 96 B, PHASE2}` and never touched the p32 outer envelope (salt `b45a5e3d827593ca`, ct 80 B). `tools/rung2_b2.py --selftest` re-run today: `ALL ANCHORS HOLD`, rc=0, with the re-encryption control (`re-encrypt B2_79 under the same key reproduces the ct: True`) and the distinct-envelope control (`small-half ct == p32-outer ct: False`). `leads.md:59` is the correct position - `R-B2FAIL` is superseded. This is the project's recurring stale-caution failure mode: a caution recorded next to a finding that later superseded it, never re-checked.
+- The docstring lines "E_B[:2] = 59cc is still quoted from the community and occurs in neither B1, B2 nor chain4" in `tools/chain_rebuild.py` and `tools/rung2_b2.py` are now factually wrong and are corrected by this row.
+
+### Why this is the right shape of work
+This is the AGENTS.md s3 "shrink N" move rather than another sweep. The space is 2^16, not 2^256; it is fully determined by an already-published anchor; the acceptance test costs nothing and is checkable by a third party; and the outcome is binary and informative either way - a unique hit derives the byte-pair, while zero hits would have invalidated the community value and the "1151 B chain4" claim resting on it. It is also the first result in this session that *closed* something rather than closing a hypothesis off, and it took 3.2 s.
+
+Not submitted to any gate. No oracle call was made and none is warranted: the acceptance test is a published SHA-256, not an address.
+
+Date: 2026-09-27, local.
+
+## R-CAFULL-2026-09-27: `late-30` reproduced bit-exactly, and `cd3fea3d` is a FALSE anchor - the 10.7M-candidate `ca` sweep was aimed at an unreachable target. `ca` question CLOSED. 0 oracle calls.
+
+### Why this row exists
+`R-EBTAIL-2026-09-27` closed the chain-4 key, leaving `ca`/`cosmic_A` as the only missing operand. Before spending more effort I checked what `ca` work already exists, and found `R-CA-WINDOWXOR` (N=1,497,018) + `R-CA-WINDOWXOR2` (N=9,230,664) had already swept **10.7M** pairwise window-XOR candidates for `ca` against BOTH anchors `cd3fea3d` and `c3b87356` -> 0 hits, and `late-66` had closed the `k_new`/LCP=5 claims as statistical noise with a proper noise model. Maintainer Naddiseo (#104, #55) also disavows any step after Cosmic Duality. So the *sweep* route was dead. But one load-bearing ASSUMPTION underneath all of it was never tested, and it is testable.
+
+### Step 1 - reproduce `late-30` (it had sat unverified in the tree)
+`ANCHORED_SUMMARY.md:23-31` records a 905-byte `ca` reconstruction with the parenthetical "(does NOT match `cd3fea3d` anchor - *that was for full file, not 905B segment*)". That parenthetical is a **reconciliation assumption, not a derivation**, and it is the sole justification for treating `cd3fea3d` as still-live. Nothing had ever re-derived it. Regenerating `yl` (1539 chars, from the solver-group file) and `cc`/`c4` from `~/briefcase/CosmicDuality.txt`, every claim reproduces **bit-exactly**:
+- `c4[246:278] XOR 38d7c0b1..bd25 = "ntheendpleasejusthelpusbuilditin" = yl[633:665]` - TRUE, 32/32
+- `ca[:32] == 38d7c0b1..bd25` - TRUE
+- `ca = c4[246:1151] XOR yl[633:1538]`, len 905, sha256 `5940983cfa61ffab2522236b6da1dd1c9db97b9ca3d3ecb845038c811ca1f00d` - TRUE
+- `ca[280:312] = e4382839...` - TRUE; `k_new = cc[833:865] XOR ca[280:312] = 158cb6a0...` - TRUE
+- re-anchored upstream: `cc` = `4f7a1e4e`, `c4` = `e4269ed5`, `c4[246:1151]` = `9f06936a` (WabiLipa) - all TRUE
+`late-30` is sound. It is the best-anchored `ca` artifact in the project, and it is **provably not `cd3fea3d`**.
+
+### Step 2 - the alignment extends past the swept window length (the actual gap)
+The alignment is `c4[i] <-> yl[i+387]`, pinned semantically at `i=246..277` by the 32-byte English phrase. That mapping extrapolates **backwards to `c4[0]`**, giving `ca_full = c4[0:1151] XOR yl[387:1538]` = 1151 bytes - and `R-CA-WINDOWXOR`'s window length was capped at `L in 312..905`, so **L=1151 was never in range.** It is one candidate, free to test:
+- `ca[246:1151]` (905 B, known) -> `5940983c` (as recorded)
+- `ca_full` (1151 B, never computed) -> `2b2493c1dde738d0` - **not** `cd3fea3d`, not `c3b87356`
+- the head alone, `c4[0:246] XOR yl[387:633]` (246 B, never computed) -> `1d0eb750b6caeae1` - no anchor, no `+-` marker (the 2-byte marker every other artifact in this chain carries at offset 0)
+Result: **no extension of this alignment at any length reaches `cd3fea3d`.**
+
+### Step 3 - honest scoping of what is actually anchored
+I checked for ASCII structure rather than trusting printable fraction, because printable fraction does NOT discriminate here: `ca[0:905]` is 0.378 printable and the head is 0.382. Scanning both for words >=5 chars gives **0 in each** - neither region contains ASCII text beyond the anchored head. So the precise claim is:
+- `ca[0:32]` is **verified**: two independent community artifacts (the published keystream `38d7c0b1..`, and the `yl` string) XOR at the right offsets into a coherent English phrase - 32 bytes of genuine two-source signal.
+- `ca[32:905]` is **propagated, unverified** - it is `c4 XOR yl` continued, with nothing downstream confirming it.
+I am explicitly NOT claiming the head is "dead" and the body "alive"; the evidence does not support that distinction.
+
+### Finding - `cd3fea3d` is fabrication-class, and this retires a 10.7M dead end
+`cd3fea3d` is reachable by **no** natural extension of the one alignment the project has verified, and is provably not the hash of the best-anchored `ca` artifact we hold. Its provenance is also the weakest in the tree: #88 quotes an anonymous second party (GalloClaudio64), and #92 hedges the formula with "APPEARS to be" and explicitly asks whether it rested on unpublished data. That is the same fabrication class the project already catalogues for the 2025-2026 "solved/claimed" posts. **So the 10.7M-candidate sweep was not merely exhausted - it was aimed at a target that does not correspond to any constructible object.** `ca` is not "missing pending a new external input"; the anchor that framed it as missing is false. This is consistent with Naddiseo's mirage verdict and with `late-66`'s noise model.
+
+**Net effect on the frontier: no gate opens, but a standing 10.7M-candidate dead end is now closed with a proof instead of a shrug, and `ANCHORED_SUMMARY.md`'s unfalsified parenthetical is retired.** The blocker for `ca` was never a missing file - it was a fabricated acceptance criterion. Remaining live threads are unchanged and are enumerated in the STATE_BRIEF handoff; the strongest (Lead 0, the interpreter-alphabet crux on dbbib/faed) needs a genuinely new semantic hypothesis, not a sweep, and two rows are explicitly parked on a human visual read.
+
+Not submitted to any gate. No oracle call: every test here is a published SHA-256/anchor comparison, and the negative is the deliverable.
+
+Date: 2026-09-27, local.
+
+## R-LADDER-2026-09-27: what are `K_C2`, `K_S1`, `K_S2` FOR? Two bounded batteries, both NEGATIVE, both with firing controls. The ladder does NOT continue. 0 oracle calls.
+
+### Motivation
+`WIF(K_C1)` is the only key in the corpus with a demonstrated function: it is the password that opens the p32 outer envelope and yields B2_79. That makes the 79-byte records a genuine LADDER unlocked rung-by-rung, not a coincidence - so the three unused keys are the obvious next rungs. Two gaps in coverage, both confirmed by reading the ledger first:
+- `analysis/tested.md` row 94 tested the phrase "sumofaremainderofanunbalancedequation" only as a PASSWORD STRING. It was never applied as a COMBINATION RULE.
+- `tools/xor_halfpair_sweep.py` treats HALF-AND-BETTER-HALF as a hint phrase over the digit streams (312 password strings, `tested.md:3557`). Neither tool ever used a ladder key as an operand.
+
+The combination rule also fits the record layout, which is deliberately unbalanced: each 79 B record is `[32B key1][32B key2][15B E]`. Two 32-byte keys are BALANCED; a 32-byte key against a 15-byte E field is literally "an unbalanced equation".
+
+### Battery 1 - `tools/ladder_combine.py`: the four keys COMBINED. N=116, 0 hits.
+Pre-registered structural set, no tuning after the fact: 6 balanced pairs x 4 ops (XOR, add mod n, sub mod n, add mod 2^256); whole-set XOR / sum of all four and of each 3-subset; and the UNBALANCED readings - 32B key against 15B E under both zero-pad alignments, `key[:15] XOR E` padded both ways, the 17-byte remainder both alignments, E spliced with `key[15:32]` or `key[:17]`, and a literal `key mod E` and its minimum-residue. Targets: the author's **Half** pubkey `0423d911...`, **BetterHalf** `48cc46e6...`, and both gate pubkeys/hash160s.
+**Control fires**: K_C1 -> h160 `a80063af2d5cd84166aca6faa7c501821e5ca286` == the address already recorded for `K_C1*G`.
+D=7,417/s, t=0.02 s. **0 hits.** Scoped honestly: this is a bounded pre-registered set, NOT a proof over all readings of the phrase. Conclusion: the four keys are not the Half/BetterHalf material by pairwise/whole-set arithmetic or by 15-byte-E remainder reads.
+
+### Battery 2 - `tools/ladder_census.py`: the four keys as PASSWORDS. 784 trials, 0 new hits.
+The stronger test, and the one that could have found a new rung. 16 distinct `Salted__` envelopes collected from the repo, `~/briefcase` and `~/storage/external/briefcase`; 4 keys x 7 encodings (WIF compressed, WIF uncompressed, raw 32 B, hex lower, hex upper, base64, reversed); both KDFs (EVP-MD5, EVP-SHA256). Acceptance is a HARD digest match against three known 79-byte records, so no oracle call is needed: B1_79 `1449a217...`, B2_79 `b40fce72...`, and the third record `salphaseion_plain_79.bin` `9c14868c...`.
+- **Control fires**, and the run surfaced a real trap first: my initial control hardcoded the *compressed* WIF and **did not fire**. This project's `wif()` is UNCOMPRESSED (`tools/rung2_b2.py`: `b58check(0x80, key32)`, no `0x01` suffix). I aborted rather than reading the abort as a negative - the same discipline `R-YINYANG-B1B2` Finding 3 applied to itself. Had I not gated on the control, a 784-trial all-zero result would have looked like a clean negative while the harness was simply mis-wired.
+- 2 collected "envelopes" were false positives (ct 41 B and 119 B, not 16-byte multiples); reported explicitly rather than silently dropped.
+- 4 valid-PKCS7 decryptions. Exactly 1 is real - the known B2 rung, i.e. the control itself. The other **3 sit against a 1/256 null expectation of 3.06**, so there is no signal above chance.
+- **The three unused keys `K_C2`, `K_S1`, `K_S2` open nothing.**
+
+### Disposition - and what this settles
+The ladder is exactly two rungs and stops. `K_C1` -> WIF -> B2 is the only key-to-envelope relation in the corpus; `K_C2`, `K_S1`, `K_S2` have **no demonstrated function** under either arithmetic combination or password use. This is consistent with the 79-byte records being ladder rungs (each E field feeds the chain-4 key) whose other key fields are decoys, or serve a purpose not expressible as "unlock the next envelope".
+
+Consequence for `salphaseion_plain_79.bin` (`9c14868c...`): it remains **UNCERTIFIED** and is not reachable from the ladder by any of these encodings. `tested.md:11426`'s refusal to import it stands, now with a positive reason rather than an absence of effort. Note `tested.md:12095`'s warning that of ten `Salted__` blobs only ONE is an authenticated author artifact - so a positive here would have needed a digest witness, not merely valid padding, which is why the acceptance test is built that way.
+
+Not submitted to any gate. No oracle call: every check is a local AES/digest computation, and both negatives are the deliverable. New tools exit 0: `tools/ladder_combine.py`, `tools/ladder_census.py`.
+
+Date: 2026-09-27, local.
+
+## R-RENAME-2026-09-27: 79-byte record filenames now carry their byte length. Housekeeping, not a finding. 0 oracle calls.
+
+`data/B1_79.bin` -> `data/B1_79B.bin`, `data/B2_79.bin` -> `data/B2_79B.bin`. Content untouched; digests unchanged and re-verified after the move: B1 `1449a2178eea7c0e3fabac8c1ad2afa294be4fc1800c594a025a056e88c626bf`, B2 `b40fce72ef5638e4f79b3233e653f8a5dbdb0d4ae2009d2d3da2c98b70f4d004`. Both still 79 B. The point of the rename is that `_79` is ambiguous - it reads as a rung index or a sequence number - while these files are specifically the 79-BYTE records, and several sibling artifacts are also 79 B and NOT these two (`salphaseion_plain_79.bin`, `~/gsmg/P79.bin`). Spelling the unit in the name removes that ambiguity at a glance.
+
+**Renamed rather than copied, on purpose.** In a ledger whose standing failure mode is a stale duplicate blob being mistaken for a certified one, two names for one artifact is a hazard, not a convenience. There was no `B*_79B.bin` convention in `data/` before this, so these are the first.
+
+**All 94 references updated across 23 files** (6 analysis docs, 16 tools), verified with zero stale references repo-wide. The regenerated `data/sibling_index.json` now resolves both certified digests to the new paths and prunes the old ones. Note `tools/sibling_index.py` only rebuilds when the cache is empty or `--rebuild` is passed, and it DOES prune vanished paths on a real walk - so a plain run reports a stale index and quietly answers lookups against it. Worth remembering: after any rename or delete in an indexed tree, use `--rebuild`.
+
+**Witness**: all eight consumers re-run clean after the rename - `oracle.py --selftest`, `rung2_b2.py --selftest`, `verify_ladder.py`, `chain_rebuild.py`, `eb_tail_sweep.py`, `ladder_combine.py`, `ladder_census.py`, `blob_inventory.py`, all rc=0. The `B1_79`/`B2_79` bare strings in `tools/ladder_census.py` are dict KEYS (target digests) and were correctly left alone; only the `.bin` path forms were rewritten.
+
+**Deliberately NOT renamed**: `salphaseion_plain_79.bin` keeps its name. It is uncertified, and renaming it would imply it belongs to the certified set.
+
+Date: 2026-09-27, local.
+
+## R-LEAD0-FORMAT-2026-09-27: attack the submission FORMAT, not the arithmetic. N=30, 0 hits. And a vacuous leg retired. 0 oracle calls.
+
+### Why this cell was open
+The page decodes, with accounting closing exactly, to `matrixsumlist` + `enter` (144 bits, no leftover). Prior work computed the A-matrix row sums and then varied the XOR **decode** step: 21,152 variants, best score -9.97 vs English -8.67, a correct negative — the page never asked for a decode. The standing conclusion in the ledger is that "submission FORMAT is the open question, not the arithmetic", and no row had ever varied the format. Also new: `dbbib_91` and `faed_570` contain **zero contiguous a/b runs of length >= 4** (21 and 87 runs, none long enough), so the `a=0,b=1` binary channel that decodes `matrixsumlist`/`enter` on the page body does **not** apply to these two streams. That channel is not a lead here.
+
+### Witness first
+Row-major fill reproduces the known A-matrix row sums exactly — `[55,62,58,68,76,50,63,56,55,63,67,53,59,59]`, total **844** — matching the recalled values, so the arithmetic under test is the recorded arithmetic and not a re-derivation that could drift.
+
+### The leg I had to retire, honestly
+I had a "col-major traversal of the upper triangle" leg open from a bug in my own harness (I wrote the column-major fill into the lower triangle, which the mirror step then wiped, yielding all-zero sums that looked like a result). Fixed properly and re-run: **col-major sums == row-major sums, identically.** That is not a coincidence to be reported as a positive — the matrix is **symmetric by construction** (`M[i][j]=M[j][i]=V[A[k]]`), so column sums are row sums under *any* traversal, and the leg was **vacuous from the start**. The zeros were the bug; the fix changes nothing. Recording this so the leg is not mistaken later for an untried traversal. Retired, not closed-negative.
+
+### Battery: 30 submission formats, 0 hits
+The only decoder certified anywhere in this project is the interpreter (`a=1..i=9, o=0` -> base10 -> hex -> ASCII, proven on the o-carrying z_segments). The row sums are a run of digits, which is exactly its input shape, and that pairing had never been tried. Formats spanned: the certified interpreter over concatenated sums, 2-digit-padded sums, sum±total, mod-26 and −49 rediscretised; plus decimal concat, comma, and space joins; plus A1Z26 both zero- and one-based (re-deriving the closed `DKGQYYLEDLPBHH` / `CJFPXXKDCKOAGG`).
+
+Result: **0 certified hits.** No `E_S` prefix, no gate hash160, no B1/B2 79-byte digest. Twelve-byte interpreter outputs land at 50% printable, the A1Z26 and decimal-join formats are 100% printable *by construction* and are not findings. Certified acceptance remains digest[:12] == `E_S`, a gate hash160, or an exact 79-byte record digest — none met.
+
+### Disposition
+The sum list does not submit as a digest under any of these 30 renderings. This does not close the format space — it closes 30 named points in it, and the plausible remainder is still open (notably: submitting to a *destination* other than a digest, e.g. an envelope password, is untouched). Lead 0 stays open, but the arithmetic is now doubly confirmed and the "vary the decode" family is definitively the wrong axis.
+
+Date: 2026-09-27, local.
+
+## R-FORKWIRE-2026-09-27: the fork snapshot is wired into the map, and the map was pointing at a tree that no longer exists
+
+Wiring task, not a battery. **0 oracle calls** — no candidate was formed, so no gate
+was touched; both oracles were `--selftest` PASS (rc=0) earlier in the same session,
+which is the only reason a 0-call row needs no fresh certification. Method: hash
+comparison across trees, index rebuild, one network re-fetch. D = 1 tarball
+(15,169,647 B) + 1 extraction + 1 incremental index rebuild of 14 roots, t = 3 min.
+Counts: 6 hand-hashed files (2 plaintexts x 3 trees) -> 2 distinct contents; 87-file
+sha256 set diff -> 87 shared, 0 only-in-deleted-copy, 0 only-in-refetch; index
+2941 entries (88 new, 4 changed, 2762 unchanged); the external-card root went
+385 -> 472 files.
+
+FINDING 1 - `data/community-fork-2026-09-27/` CONTAINS **ZERO NEW BYTES**, and the
+map did not say so. The two quarantined plaintexts are byte-identical to the copies
+family 2 already holds: `phase2.1.txt`
+`e2f9dd65604a3231f8b3301724e8d713a88fffc4b6c7c4aeeb20f58a582b593a` and `phase3.txt`
+`c4ad94559a44a927c1032cc0e024515f9510a0806a2d14458dbf4a360af9865f` both re-hash
+exactly under `../gsmg-community-hints-repo/phase2-assets/`. So it is a third copy,
+not a family, and a session that treated it as new material would be re-deriving
+`R-BLOBINV`. Recorded as family 11 in `analysis/ARTIFACT_FAMILIES.md` with the
+provenance rule "never re-analyse from here; cite family 2". Witness: both
+known-good digests re-found through `sha256sum`, i.e. the same code path that
+produced them.
+
+FINDING 2 - THE 87-BLOB WORKING COPY HAD BEEN DELETED, AND THE INDEX HID IT. The
+full fork (34 hint PNGs, 7 author-solve notebooks, the asset dirs) lived at
+`$PFX/usr/tmp/opencode/quarantine/naddiseo/gsmgio-5btc-puzzle-HEAD/` — a **tool temp
+directory** — and that directory no longer exists. Nothing failed: `sibling_index.py
+--name phase3.2.ipynb` still returned it, `--hash` still resolved fork artifacts
+there, and `--stats` reported 87 files with `errors=0`. A cache answer was reading
+as a readable file, which is the exact failure class this file's own
+`--rebuild` pruning was written to prevent — except pruning only runs for roots
+that are still walked, and a vanished root is never walked. Restored by re-fetch to
+`~/storage/external/briefcase/gsmg-fork-naddiseo/` (87 files, 25 MB) and certified:
+all 87 sha256s equal the deleted copy's, 0 differences either way, so the restore
+is byte-exact rather than plausible. Witness: the comparison is against the
+surviving cache digests, which were written by the original fetch.
+
+FIX - `tools/sibling_index.py --stats` now marks any cached root that is missing
+from disk as `STALE(missing on disk)`, prints the file count it is pretending to
+cover, states that a hit there means *we once held this*, and exits non-zero. The
+stale root is kept on purpose: its 87 digests are the provenance record. The
+incidental "1 root incompletely walked" warning is `~/briefcase skipped_large=7`,
+not an error.
+
+CORRECTION TO `data/community-fork-2026-09-27/PROVENANCE.md` (my own file, same
+day). It recorded "tarball sha256 `30b46159a34946a5a094edc8bb61e111`" — 32 hex
+characters, which cannot be a sha256, and which reproduces under neither md5
+(`5b175c1773a378d2a5a5d26fb3942e54`) nor sha256
+(`b9c095f31a9842d166fdf1b328ba4c2b341b7bb2ea3a2390579354584cb36598`) of the current
+`master` tarball, whose length is 15,169,647 B against the recorded 15,169,507 B.
+The content is unchanged (87/87), so this is tarball non-determinism, not a fork
+update. The provenance note now pins the **87-file sha256 set** and carries the
+re-fetch command. Rule for the ledger generally: a tarball digest is not a content
+identity; a per-file sha256 set is.
+
+### Disposition
+The fork is now fully reachable and fully indexed, and nothing in it is new to the
+corpus. The mining backlog `R-FORK-2026-09-27` left open — the 34 hint images and
+the 7 author-solve notebooks, which are the only unexamined *community-attested*
+material left — is unblocked again, at a path that will survive tool temp cleanup.
+That is a readability fix, not progress toward X: the crux is still Lead 0's keyed
+28-char alphabet, and per `AGENTS.md` no further battery is warranted without an
+alphabet hypothesis, a human visual read, or a new author artifact.
+
+Date: 2026-09-27, local.
+
+## R-TRIAGEEXIT-2026-09-27: the red check was the CRITERION, not the tool. The `--stats` guard was already promised in the tool's own docstring and had never once been shown to fire. Both defects fixed, and the firing case is now pinned. 31/31 checks pass, canary 3/3. No new key, no gate opened.
+
+### What was red, and who was wrong
+`tools/test_triage.py` had exactly one failing check: `index --stats exits 0` (rc=1).
+
+The tool was right. `sibling_index.py` states its contract in its own docstring, line 45:
+**"Exit 0 if every root was walked, 1 if any root was unreadable or missing."** The `gone` branch
+added earlier today (`R-FORKWIRE`) is that sentence being kept, not a new rule — the cached root
+`$PREFIX/usr/tmp/opencode/quarantine` is genuinely absent from disk, and a report that exits 0
+while `--name`/`--hash` answer for 87 files whose bytes are gone is the failure mode that row
+exists to prevent. A tool temp directory being reaped turned a correct non-zero exit into a
+permanently red suite. The assertion was the stale artifact.
+
+I did not simply flip the assertion to `rc == 1`. That is the `R-CAFULL` error with a different
+target: editing a criterion until the observed result passes, when the observed result is one
+machine's temp-directory state. Two distinct things were wrong with that one line.
+
+### Defect 1 - the criterion read ambient state
+`data/sibling_index.json` is machine state. The same command is rc=0 on a machine where every root
+exists and rc=1 on one where a temp dir was reaped, so the check flipped with the box rather than
+with the code. It is now stated as the contract it actually is, derived from the real cache file:
+the exit code must agree with what is on disk, there must be exactly one `STALE(missing on disk)`
+flag per missing root, and every missing root must be named in the report. Today that evaluates to
+rc=1 with one missing root, and prints a NOTE saying so, so a red-looking run is explained in the
+run rather than left for the reader to reconcile. Witness that it is not hard-wired to today's
+state: recreating the reaped directory and re-running gives rc=0, zero STALE flags, and the same
+three checks PASS with nothing missing; removing it again returns rc=1 and they still PASS.
+
+### Defect 2 - the guard had no firing case, which this suite's own header forbids
+The header says a guard never shown to fire is indistinguishable from no guard, and pins the
+negative case of the *re-encoding* gate for that reason. The new missing-root guard had only the
+ambient case, which is rc=1 by accident. So it is now built for real, deterministically: a
+byte-identical **copy** of the tool (sha256-asserted, so the fixture cannot drift into testing a
+variant) sits in its own `tools/` + `data/` layout, because the cache path derives from `__file__`.
+The tool walks two real roots itself — nothing is hand-written into the cache — and the staleness is
+a genuine `rmtree` of one of them. Both directions are asserted: quiet while both roots exist
+(rc=0, no STALE anywhere), and after the deletion rc=1 + the flag + the warning + the vanished path
+named with its cached file count + the surviving root still reported as walked and still unflagged.
+
+### Canary: each half of the guard, re-injected, must turn something red
+A new assertion that has never failed is exactly the thing this project keeps getting caught by, so
+the guard was broken three ways in throwaway copies and the fixture re-run against each:
+1. `report()` ignores vanished roots (the pre-`R-FORKWIRE` return) — caught by `missing rc==1`.
+2. the per-root `STALE` flag removed — caught by `STALE flag` and `one flag only`.
+3. the missing-root warning block removed — caught by `warning fires` and `named + count`.
+Baseline first, or the canary proves nothing: all seven conditions green before injection, 3/3
+injections caught. Total 31 checks, 0 failures, rc=0.
+
+### Also found, and now removed: `TEMP_GLOBS`
+`TEMP_GLOBS` in `sibling_index.py` was dead — defined with a careful Termux comment about the two
+spellings of the temp tree, referenced nowhere, while `DEFAULT_ROOT_GLOBS` hardcodes the same
+`{PREFIX}` form inline. `expand_roots()` tries both spellings itself, so the behaviour was always
+right and only the constant was a trap: a second list of roots to keep in step with the first, and
+the one a reader would edit. **Removed**, and its Termux rationale moved onto the loop in
+`expand_roots()` that actually implements the alternation, so deleting the constant did not delete
+the knowledge with it (`$HOME` is `.../files/home` on Termux but the writable temp tree is under
+`$PREFIX` `.../files/usr`, so `~/usr/tmp/...` matches nothing there).
+
+Deleting it needed a witness, because the constant was documentation as much as code. Six
+direct checks of `expand_roots()`, all passing, with no cache mutation: the `{PREFIX}` form
+resolves to `$PREFIX/usr/tmp/...` when only that tree exists; resolves to `~/usr/tmp/...` when only
+that one exists; is dropped **silently** when neither exists (intentional — the alternates are not a
+fault, so it must not join the `matched nothing` warning); `DEFAULT_ROOT_GLOBS` still carries the
+`{PREFIX}` form; `TEMP_GLOBS` is gone from both the source and the module namespace; and
+`SIBLING_BASE`/`DEFAULT_ROOT_GLOBS` are otherwise untouched. `python3 -c "import ast; ast.parse(...)"`
+clean, and `--stats` byte-for-byte unchanged afterwards: 14 roots, 2,941 files, the same
+`$PREFIX`-spelled root, rc=1 with its `STALE` flag.
+
+One trap I walked into while testing this, recorded because it nearly became a false pass: my first
+attempt to exercise the alternation ran `--root '{PREFIX}/...' --stats`, which prints the **cached**
+roots and never consults `--root` at all, so it proved nothing while looking like a pass. Worse, I
+read `$?` after a pipe and got grep's exit code, not the tool's. A test that cannot have failed is
+not a test — same species as the acceptance-anchor error in `R-CAFULL`, and the reason the six
+checks above call `expand_roots()` in-process instead.
+
+### Disposition
+Procedural. The crux is unchanged: Lead 0's keyed 28-char alphabet is still the only live gate, both
+escrows verified funded today (small 125,634,510 sats partially-spent OK; Dualite 375,055,310 sats
+funded-unspent OK), and no oracle was called. Nothing here moves Lead 0; the row exists so the next
+session does not re-litigate a red suite, and so the missing-root guard is not mistaken for untested.
 
 Date: 2026-09-27, local.

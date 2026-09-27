@@ -54,7 +54,7 @@ reading in the tested toolbook now returns noise.
 2026-09-13 addendum: chain-2 (C2, salt b45a5e3d827593ca) is confirmed ALREADY
 decrypted in the ledger (briefcase/MEMORY.md)  -  not a lock to attack.
 2026-09-27 addendum: that "already decrypted" is now certified rather than reported -
-C2 opens under the DERIVED password WIF(K_C1) and reproduces `B2_79.bin` byte-exactly
+C2 opens under the DERIVED password WIF(K_C1) and reproduces `B2_79B.bin` byte-exactly
 plus its own ciphertext on re-encryption (`R-B2RUNG2`, `tools/rung2_b2.py`). Read the
 earlier "B2 has no envelope" claims (`R-B2FAIL`, `R-YINYANG-B1B2`) as superseded: they
 swept authorial strings, and this password is a value computed out of B1. B2 is therefore
@@ -1868,7 +1868,7 @@ re-derived every node of the funded-gate chain directly from those bytes:
 
 Closed: every byte feeding the gate password and `BLOB_B64` is now date-pinned 2023-06-01
 and verified from an independent decode. oracle.py Part 4 certifies this provenance in the
-self-test. OPEN and unchanged: the funded-gate key reduction from the `B1_79.bin` fields
+self-test. OPEN and unchanged: the funded-gate key reduction from the `B1_79B.bin` fields
 (sha256/first32/last32 family) to `1GSMG1JC9...` (1.2563451 BTC). Date: 2026-09-20.
 
 ### Lead 9 correction, 2026-09-27 (`R-SLUGF971`, `R-CDXFULL`)

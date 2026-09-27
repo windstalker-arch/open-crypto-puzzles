@@ -49,7 +49,7 @@ and P2PKH(h160) address matching. `--selftest` must pass (rc=0) before AND after
 - Page textarea (pinned 2023-06-01): streams `dbbib` (91 tokens, {a..i}) = KEY-ish;
   `faed` (570 + z) = PAYLOAD-ish; a/b runs decode to `matrixsumlist` / `enter`.
 - RAW_PW = `matrixsumlist + enter + lastwordsbeforearchichoice + thispassword + matrixsumlist`
-  -> EVP-MD5 of small blob (salt 3ab585348552415d) -> B1_79.bin (79 B, sha256 1449a217...);
+  -> EVP-MD5 of small blob (salt 3ab585348552415d) -> B1_79B.bin (79 B, sha256 1449a217...);
   fields K_C1=9fa9db91..., K_C2, E_C; B2_79 sha256 b40fce72...; **E_S = B2_79[64:79] =
   740a25de4b8e946d0a5ae2667a23a2**.
 - dualite blob (salt 2d3f6fe0, 1344 B) vía 7-token XOR key XK -> a795de11... -> 1327 B
@@ -712,9 +712,9 @@ implemented properly; **Blowfish-CBC is declared UNCOVERED in the tool's output*
 rather than allowed to read as a negative. `K_S1`/`K_S2` were deliberately not scored
 (they exist only in the unreproduced `author-wallet.txt`).
 
-**Standing caution, unchanged:** `E_S`/`B2` remain *unanchored community values* per
-`R-B2FAIL` - the ladder to them does not reproduce. Row 4 is "this family is done", not
-"B2 is closed". `EVP_BytesToKey`, a KDF over the WIF, and a non-derived IV remain open.
+**Standing caution, CORRECTED 2026-09-27 (`R-EBTAIL-2026-09-27`; supersedes the text previously here):** this caution was **stale and is withdrawn.** `E_S`/`B2` are **not** unanchored community values. `R-B2FAIL` swept `{small 96 B, PHASE2}` and never touched the p32 outer envelope (salt `b45a5e3d827593ca`, ct 80 B); `tools/rung2_b2.py --selftest` re-run today returns `ALL ANCHORS HOLD`, rc=0, with the re-encryption control and the distinct-envelope control both passing. `leads.md:59` was always the correct position. Row 4's `EVP_BytesToKey` / derived-IV / non-derived-IV clauses remain closed as `R-B2REKEY` and `R-B2REKEY-AES` closed them.
+**Additionally, the chain-4 key is now 32/32 on-puzzle.** `E_B[:2] = 59cc` was the last community-sourced byte-pair; `tools/eb_tail_sweep.py` sweeps all 2^16 two-byte tails against the published chain-4 hash `e4269ed5...` and finds **exactly one**, `59cc` (N=65,536, D=20,666/s, t=3.2 s, 267 PKCS#7 survivors vs 256 expected, 1 hash hit, 0 oracle calls). It is *determined*, not quoted. This does not make the chain creator-authenticated — the acceptance anchor is community-published — but the quoted value and an exhaustive independent search now agree.
+**Consequence for the frontier:** the chain-4 key is no longer a blocker. The missing operand is `ca`/`cosmic_A`, referenced only by the 32-bit SHA-256 prefix `cd3fea3d...` (#92), with the creator disavowing a "step after Cosmic Duality" (#104). Chain-4 is a 31-byte header (`+-` marker) plus 35 x 32-byte blocks, printable fraction 0.346 — an XOR-triangle operand grid, not text.
 
 **Also closed by direct inspection:** the 2023-06-01 server-rendered capture of
 `89727c59` (4,556 B) contains the two known textareas and **nothing else** - no hidden

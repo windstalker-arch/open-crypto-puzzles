@@ -47,8 +47,8 @@ import coincurve
 
 FOLDER = Path(__file__).resolve().parent.parent
 DATA = FOLDER / "data"
-B1 = (DATA / "B1_79.bin").read_bytes()
-B2 = (DATA / "B2_79.bin").read_bytes()
+B1 = (DATA / "B1_79B.bin").read_bytes()
+B2 = (DATA / "B2_79B.bin").read_bytes()
 
 # B2 redrived from the issue-#22 base64 (cross-check against on-disk file):
 import base64  # noqa: E402

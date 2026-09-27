@@ -180,8 +180,8 @@ def repair_note(raw, blob1, b1_b64, tok=None, known_b64=()):
 
 
 def main():
-    B1 = (FOLDER / "data/B1_79.bin").read_bytes()
-    B2 = (FOLDER / "data/B2_79.bin").read_bytes()
+    B1 = (FOLDER / "data/B1_79B.bin").read_bytes()
+    B2 = (FOLDER / "data/B2_79B.bin").read_bytes()
     extra = {}
     for nm, p in (("cc_1327", os.path.expanduser("~/gsmg/cosmic_decrypted.bin")),
                   ("dualite_1344", P + "/data/cosmic_duality_blob_2020.bin")):
