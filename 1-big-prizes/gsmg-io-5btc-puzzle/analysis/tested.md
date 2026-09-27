@@ -15276,3 +15276,100 @@ Date: 2026-09-27, local.
   hold: the passwords for `9fbc451d` (4,090 B) and `eefc4c5b` (2,432 B), plus Lead 0.
 
 Date: 2026-09-27, local.
+
+## R-TREE-B-AUDIT-2026-09-27: audited the second `gsmg-private` tree, its three "we found a key" files, and `poster_tagline.txt`. Net new information: **none**. Net corrections: **two, both of them retractions of my own bugs from this same session.** 0 oracle calls, nothing opened.
+
+- **I MANUFACTURED A CONFIDENT FALSE FINDING, TWICE, AND BOTH TIMES I ACCUSED OUR OWN CORRECT LEDGER.**
+  This is the session's fifth instance of its own recurring failure (after `R-IMGSCOPE`, `R-DMGREC`,
+  `R-FUBCD` and `R-JRKHIST`), but the first two produced false *negatives* and these two produced
+  false *positives* - which is strictly more dangerous, because a false positive invites someone to
+  "correct" a correct record. Both bugs were in hand-rolled base58/hashing code, and both were caught
+  only because I insisted on independent validation. **Recording them here so the next session does
+  not rediscover and re-report either one.**
+
+  - **BUG A - double-hash, produced a nonexistent "conflation".** I decoded
+    `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe` and printed its hash160 as
+    `e8f98a063fb9d9cb8a746e48fd14812f0b976de1`, and `17ucy1K9...` as
+    `c85e411caa465b7c036bf54bbd37a7abca7d52c1`, and I began to write up a finding that the funded
+    gates had been conflated with the target pubkey and that the ledger's h160 was wrong. **All of
+    that was my bug**: I computed `ripemd160(hash160)`. An address's hash160 is *read out of* the
+    base58 payload, never re-hashed. The nonsense values are demonstrably the double-hash -
+    `ripemd160(a9553269...)` really is `e8f98a06...`. **RETRACTED. There is no conflation.** The
+    files were right: `1GSMG1JC` -> `a9553269572a317e39f0f518cb87c1a0ee1dbae4`, `17ucy1K9` ->
+    `4bc468447fe1b048ad030a2f9a125478eabc4ed6`, both with valid 4-byte checksums, and the target
+    pubkey `04f4d1bb...` really does hash to `a9553269...` = `1GSMG1JC`. Our `9520f68` row, which used
+    `a9553269...` and called it the funded gate's h160, was **correct and stands**. What caught it:
+    I asserted the two decodes must agree, noticed they contradicted, and refused to write the finding
+    up until I found the bug. Also note my first pass produced a *third* wrong value (an address with
+    the checksum omitted) before the double-hash one - two errors compounding in the same script.
+
+  - **BUG B - omitted base58check, produced a false "this file is fabricated" claim.** I recomputed the
+    addresses for `gsmg-solved.json`'s `half` and `better_half` keys, got
+    `1SBDRcqbKxaF1yQKqbtuKLLds5KL`/`1eT1AXeH8r5XBXF1qJDLQ9ucMPCk` and
+    `12FPY8PhLaCtKMSnjumphEyJqfsfo`/`13FHzfvnnE8iJreajZki17kDxR4zd`, and concluded the file's entire
+    `derives` block was fabricated. **Also my bug**: I base58-encoded the 21-byte
+    `version||hash160` without appending the 4-byte double-SHA256 checksum. Re-encoded correctly,
+    **all four addresses match the file exactly** - `half` -> `1JG648yaB7Wp2dpUfcZoRSD4q35oq47vCu` /
+    `15E3pcDDXSKhvi3CLVhRTHEgd8dbVKvSZg`, `better_half` -> `145ZQ9siLrsXBKf465wjdyQYAP5dRwhRhQ` /
+    `1FhbJnrdq1FmeiXrpTqnpQ8jvYV7naze96` - and the file's own pubkey-x claim for `half`
+    (`b9ebca45...`) reproduces. **RETRACTED; the file is not fabricated.** What caught it: I put a
+    **positive control in the same script** - my ECC correctly reproduced the ledger's certified
+    `ADDR_C2` `135Cf6ASyU2PDHuxA1Edc3mHYtxEsZNPCa` from `K_C2`. A control that passes proves the tool
+    works, so a disagreement elsewhere is evidence; a control that fails proves nothing is. Worth
+    noting that `9520f68` had already exercised this same ECC code correctly, which is independent
+    evidence the implementation is sound.
+
+  - **TRANSFERABLE RULE.** For any hand-rolled base58/secp256k1 work: (1) always round-trip
+    encode->decode, (2) always include the base58check checksum, (3) never hash a hash160, (4) always
+    run a known-good positive control **in the same script** as the claim under test. A null or a
+    "discovery" from untested crypto code is worth nothing.
+
+- **`gsmg-solved.json` IS FULLY CORRECT - AND ITS NAME IS THE ONLY THING WRONG WITH IT.** Both gate
+  h160s, both gate balances, the `half`/`better_half` hex keys, all four derived addresses, and the
+  pubkey-x comparison against the prize key all reproduce exactly. Its `correction` block honestly
+  retracts an earlier false claim (that `half` controlled the prize gates), and it honestly labels both
+  embedded signatures `INVALID/UNVERIFIED`. `keyFOUND.txt` is likewise honest and independently
+  debunks the same older claim ("DERIVED INTERMEDIATE KEYS (NOT the prize keys)", "NOT OUR KEY",
+  "FALSE CLAIMS IN OLD gsmg-solved.json"). Both are **safe to cite**, with the standing caveat that
+  the filename invites the opposite reading - a grep for "solved" lands on a file whose content says
+  `UNSOLVED`. Both intermediate keys are valid in-range secp256k1 scalars that control only their own
+  empty addresses: correctly-labelled dead ends, no action needed.
+
+- **THE "SECOND TREE" SHARED FILES ARE RENAMED DUPLICATES, NOT NEW EVIDENCE.** First diff attempt
+  silently returned empty because I wrote to `/tmp`, which is read-only on Termux - the "only in A/B"
+  lists were empty *for the wrong reason*, which is exactly the class of false negative this session
+  keeps generating. Redone in a writable temp dir: `cosmic_decrypted_verified.bin` is **byte-identical**
+  to `cosmic_decrypted.bin` (both sha `4f7a1e4efe4bf6c5581e`, 1327 B), and `puzzlepiece.mp3` is
+  identical across both trees (sha `ef17a96dce37b4dd7cbf`). Neither is a second artifact. The trees are
+  otherwise disjoint: 21 files in `~/briefcase/gsmg-private` (DCL renders, specgrams, `author-wallet.txt`)
+  vs 37 in `~/storage/external/briefcase/gsmg-private` (the eyeball bundle, `config.db`, `keyFOUND.txt`).
+
+- **`private.pem` IS A 2048-bit RSA KEY AND MUST NEVER BE CONFUSED WITH A GATE KEY.** Confirmed by
+  `openssl pkey`: PKCS#8, 2048-bit, 2 primes. It is structurally irrelevant to a secp256k1 puzzle. It
+  was already recorded present-and-unused (row 12611) with no private-key operation performed, per
+  AGENTS.md, and that handling was correct - re-confirmed here without touching the key material.
+  It remains a live credential sitting on disk, which is a hygiene problem, not a puzzle lead.
+
+- **`human-eyeball-2026-09-20/` AND `salphaseion-streams.json` ARE BOTH ALREADY COVERED** - the eyeball
+  bundle by rows 11167 and 12848 (the eight strips are `img/*.png` of one authorial page), the
+  SalPhaseIon streams by many self-certified rows. No gap.
+
+- **AND A PROCESS FAILURE OF MY OWN ON `poster_tagline.txt`.** I spent a large amount of effort
+  hand-OCR-ing 923x128 of ASCII art - segmenting glyphs, clustering shapes, generating a PNG - before
+  grepping the ledger, and only then discovered it was **already closed twice**: `late-348` (tesseract
+  5.5.3 on the y1118-1246 crop -> "GSMG ID 5 BTC PUZZLE CHALLENGE", psm 6/7/11/12 identical) and
+  `R-POSTER` (certified non-lead; charset is only `#`, space, newline, so it is decorative and not a
+  hidden container). The file is **our own** ASCII render of the poster subtitle. My confident glyph
+  ids - G, U, H, C, and a Z cluster of 3 - are all present in the certified string, so the reads are
+  consistent with it, but they are not independently reliable and the ledger had already warned that
+  glyph-by-glyph ASCII reads of this poster are uncertified. **Lesson, and the direct contrapositive
+  of `R-IMGSCOPE`: content-grep the ledger *before* investing in novel work on a file, not after.
+  Finding a thread is cheap; proving it is new is the part that must come first.** (Side note: the
+  big circular mark at cols 0-360 is the poster's logo, and the render is legible enough that the
+  clustering approach would work for genuinely unknown text - it just had nothing left to find.)
+
+- **STATUS.** Both gates unchanged and both gate h160s now independently re-verified with checksum
+  validation. Nothing opened, no candidate, no new lead. The entire `gsmg-private` corpus on this
+  device is now accounted for: every file in both trees traces to an existing certified row.
+
+Date: 2026-09-27, local.
