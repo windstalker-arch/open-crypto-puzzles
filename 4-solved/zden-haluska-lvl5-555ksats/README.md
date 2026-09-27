@@ -112,6 +112,84 @@ consumed, not as a witnessed negative in this project's strict sense.
 
 Swept on 2026-09-22 (block 968,171, [tx `e2544433`](https://mempool.space/tx/e2544433184d0fe4157ca10a8e1ce753bb52a7b0bbcf833740d7448ed25e8e8e)), 551,745 sats to `bc1qw50q83k7psugw5z5548kwnxqqjxjxvx2pkvz0s`, a plain spend with no message, after almost 8 years unsolved. Reported in [issue #34](https://github.com/floflo777/open-crypto-puzzles/issues/34). The solver did not announce and the reading of the hint's 3 undefined terms is not public; the sweep went to a fresh single-use address, which is consistent with a solver claiming the prize rather than the author reclaiming it, but this is not confirmed. If the solver reads this, a write-up gets full credit here.
 
+## Visual inspection crops
+
+These 20 files are exploratory crops kept from a visual pass over the published image. They sit
+here because they were committed alongside the rest of that pass, not because any test depends on
+them. Three facts, so the captions below are not read as more than they are:
+
+- No test in [analysis/tested.md](analysis/tested.md) refers to any of them, and nothing in the
+  repository references them before this section.
+- None is a byte-exact crop of [clues/crypto5.png](clues/crypto5.png) or
+  [clues/crypto5fix.png](clues/crypto5fix.png); each was compared against both at native scale and
+  none matched, so the source region for each is unverified. Two of them are larger than those
+  images in one dimension, so they cannot be crops of them at all.
+- Every one holds only the values 0 and 255, meaning each is a two-colour black-and-white image
+  rather than a greyscale crop.
+
+Each caption therefore gives the region label from the filename, the pixel size, and the two-value
+finding. None of them asserts what the puzzle image does or does not show.
+
+![Formula-block region, 408x792, two-value black and white](images/formula_block.png)
+*Figure 1. Formula-block region, 408x792, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 40 of the image, first, 160x240, two-value black and white](images/glyph_00_col40.png)
+*Figure 2. Column 40 of the image, first, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 44 of the image, sweep position 01, 160x240, two-value black and white](images/glyph_01_col44.png)
+*Figure 3. Column 44 of the image, sweep position 01, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 48 of the image, sweep position 02, 160x240, two-value black and white](images/glyph_02_col48.png)
+*Figure 4. Column 48 of the image, sweep position 02, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 55 of the image, sweep position 03, 160x240, two-value black and white](images/glyph_03_col55.png)
+*Figure 5. Column 55 of the image, sweep position 03, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 59 of the image, sweep position 04, 160x240, two-value black and white](images/glyph_04_col59.png)
+*Figure 6. Column 59 of the image, sweep position 04, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 63 of the image, sweep position 05, 160x240, two-value black and white](images/glyph_05_col63.png)
+*Figure 7. Column 63 of the image, sweep position 05, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 70 of the image, sweep position 06, 160x240, two-value black and white](images/glyph_06_col70.png)
+*Figure 8. Column 70 of the image, sweep position 06, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 74 of the image, sweep position 07, 160x240, two-value black and white](images/glyph_07_col74.png)
+*Figure 9. Column 74 of the image, sweep position 07, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 78 of the image, sweep position 08, 160x240, two-value black and white](images/glyph_08_col78.png)
+*Figure 10. Column 78 of the image, sweep position 08, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 82 of the image, sweep position 09, 160x240, two-value black and white](images/glyph_09_col82.png)
+*Figure 11. Column 82 of the image, sweep position 09, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 86 of the image, sweep position 10, 160x240, two-value black and white](images/glyph_10_col86.png)
+*Figure 12. Column 86 of the image, sweep position 10, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 90 of the image, sweep position 11, 160x240, two-value black and white](images/glyph_11_col90.png)
+*Figure 13. Column 90 of the image, sweep position 11, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 94 of the image, sweep position 12, 160x240, two-value black and white](images/glyph_12_col94.png)
+*Figure 14. Column 94 of the image, sweep position 12, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![Column 98 of the image, sweep position 13, 160x240, two-value black and white](images/glyph_13_col98.png)
+*Figure 15. Column 98 of the image, sweep position 13, 160x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![four-line region, 344x600, two-value black and white](images/minihint_4lines.png)
+*Figure 16. four-line region, 344x600, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![digit band region, 1168x256, two-value black and white](images/minihint_digitband.png)
+*Figure 17. digit band region, 1168x256, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![full-height region, 576x1176, two-value black and white](images/minihint_full.png)
+*Figure 18. full-height region, 576x1176, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![lower-glyph region, 372x240, two-value black and white](images/minihint_lowerglyph.png)
+*Figure 19. lower-glyph region, 372x240, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
+![upper-glyph region, 372x252, two-value black and white](images/minihint_upperglyph.png)
+*Figure 20. upper-glyph region, 372x252, only the values 0 and 255 present. Retained from the visual pass; source region unverified.*
+
 ## Files in this folder
 
 | Path | What it is |
