@@ -14044,3 +14044,93 @@ prediction is the only way to tell. Also worth recording for the next agent: the
 `/storage/external/briefcase` copies and this session's `/storage/emulated/0/Download/Telegram`
 copy are the only places these base64 envelopes survive outside the repo, and
 `tools/chain_build.py:26` is the only place the 5-token password is written down.
+
+## R-B2RUNG2-2026-09-27: **B2 HAS AN ENVELOPE AND IT OPENS.** CADEIA 2 is a real rung: the p32 outer envelope under WIF(K_C1) gives `b40fce72...` byte-exactly. This CORRECTS `R-B2FAIL` and `R-YINYANG-B1B2` Finding 3, and the correction is a method bug worth generalizing.
+
+1 decryption, 1 forward re-encryption, 1 self-hash, 0 oracle calls. N for the census in
+FINDING 6 = 4,292, D ~ 300 decryptions/s, t ~ 15 s. Both oracles `--selftest` PASS before
+and after. New script `tools/rung2_b2.py` (exit 0, "ALL ANCHORS HOLD").
+
+FINDING 1 - THE p32 OUTER ENVELOPE DECRYPTS TO B2_79, EXACTLY. Envelope = the issue #22
+base64 already transcribed at `tools/mirror79_research.py:56`, 96 B, salt
+`b45a5e3d827593ca`, ct 80 B, envelope sha256
+`291dfd6f3e759ec2e272b35a00c24907da70c3e7a9291b4c13605c7b0b4f3de9`. Password =
+`WIF(K_C1, uncompressed)` = `5K2byJMssxFKuTgnk9YQjpBz5FhkwwF2LaZoAyTus8HjGEpz8AT`, i.e.
+the already-published chain-2 password (issue #108 / PR #68), not a new string. KDF =
+EVP_BytesToKey with MD5, AES-256-CBC. Result: 79 B + 1 pad byte, sha256
+`b40fce72ef5638e4f79b3233e653f8a5dbdb0d4ae2009d2d3da2c98b70f4d004` ==
+sha256(`data/B2_79.bin`). Note the length lock that anchored B1 applies here unchanged:
+80 B of ciphertext is 79 B of plaintext plus exactly one pad byte, so a 79-byte record was
+the only thing this envelope could ever have held. THREE WITNESSES, all firing: (i) the B1
+control re-fires in the same code path (small-half envelope -> `B1_79.bin` byte-exact);
+(ii) FORWARD re-encryption of `B2_79.bin` under the same password/KDF/salt reproduces the
+stored ciphertext byte-for-byte - deterministic, so no padding ambiguity is possible;
+(iii) the scalar->address routine carries its own witness, since K_C1's compressed address
+re-derives `14zJ3RHPxiRJAmYHUNTvPoCTxhFB6gACgf`, a value already recorded in this repo.
+
+FINDING 2 - WHY THE EARLIER ROWS MISSED IT. `R-YINYANG-B1B2` Finding 3 swept this very
+envelope against ~60 *authorial password strings*, got 0 hits, and concluded that B2 "has no
+ciphertext" - a statement about the envelope that was never true. The reason is structural,
+not bad luck: the password is not a string any human wrote, it is a value computed out of
+B1. A dictionary of authored strings cannot contain it, so that sweep could not have
+succeeded at any corpus size. The rung the ladder needed was a new SOURCE of candidate
+strings (derived values: WIFs, addresses, h160s, field concatenations), not a bigger
+dictionary. I am writing this down as the generalisable lesson because the same shape of
+error is what kept `R-B2REKEY-AES` hunting for B2 as an arithmetic re-keying of B1's fields:
+B2 is not related to B1 arithmetically at all, it is a separate AES decryption one rung
+down, which is why 4,604 re-keyings found nothing.
+
+FINDING 3 - THE TWO 96-BYTE ENVELOPES ARE GENUINELY DISTINCT. small-half ct != p32-outer
+ct (byte comparison now in `tools/rung2_b2.py`). So the count of real 96-byte envelopes is
+2, not 1. The corrupted third transcription (salt `3ab58494d215415d`, byte-identical
+ciphertext to the small half, one byte off in the salt) is still correctly identified as a
+bad copy - that part of the earlier row stands. Full real-envelope inventory: `3ab58` ->
+79 B (B1), `b45a5e3d` -> 79 B (B2), `2d3f6fe0` -> 1327 B (cc), plus `06286612` (phase 2)
+and `9fbc451d` (phase 3).
+
+FINDING 4 - DOWNSTREAM ANCHOR GAINED: 30 of the 32 chain-4 AES password bytes are now
+derived on-puzzle. `CHAIN4_PW` = `E_C(15) || E_S(15) || 59cc` with `E_C = B1[64:79]` and
+`E_S = B2[64:79]` (asserted in `tools/rung2_b2.py`). Until today `tools/chain_rebuild.py`
+had to say in its own docstring that E_S/E_B "are not derived here"; that sentence is now
+false and has been corrected. Only `E_B[:2] = 59cc` remains community-quoted, and it occurs
+in neither B1, B2 nor chain4. It does occur twice inside the 1327 B `cc`, at byte offsets
+64 and 524 - recorded as an observation and NOT as a claim about provenance: at 2^-16 per
+position, two appearances in 1326 positions is roughly what noise gives. The full chain
+CADEIA 1 -> 4 re-verifies byte-exactly after the edit (chain4 sha256 `e4269ed5...`).
+
+FINDING 5 - THE FOUR LADDER KEYS ARE ALL DEAD ENDS ON-CHAIN. Derived this session, with
+the witness in (i) of FINDING 1:
+  K_C1 5K2byJMssxFKuTgnk9YQjpBz5FhkwwF2LaZoAyTus8HjGEpz8AT h160(uncomp) a80063af2d5cd84166aca6faa7c501821e5ca286  1GKJzHQkgTBwwEGeXetsTMDoUzvwzs9yb4 / comp 14zJ3RHPxiRJAmYHUNTvPoCTxhFB6gACgf
+  K_C2 5HyaKEytxN9PhhQvPYfsyNwzzK6Hfsx6DxyUBa3CfcHWizdj8LD h160(uncomp) 16bba55c93148e78ce946caad0115bb8248f2f09  135Cf6ASyU2PDHuxA1Edc3mHYtxEsZNPCa / comp 12ZdDsYJBFJY5jCNmvRm5LeQuDmdXMGTon
+  K_S1 5K9zQVotw2zgW4FpnfwyFLSe4Zk3FGrqypC4JFvE4oN62PnTxB6 h160(uncomp) e3522b72223970bdf740620396ac5408c651f350  1MixpoELBvfkFSRUQtDCGXbdG53cjqknZT / comp 1L2jeZuu2zLrW2CLb2HAty3vowJUbYrANo
+  K_S2 5KAHiT77VJYuHRQF7PuApvxnfkyrNVcd5v4BHKTabvuZf7Y9BPv h160(uncomp) 42f24e62c0b95dc580de48598981c69e420755d5  176ysPe7FdevdQjZWaFCK2nnVbzX9Tgydy / comp 1E6XUWFmXYpGGrU2AUPzv9mME2XzpQR8fG
+All four addresses were unfunded when checked earlier today, and none of the four h160s is
+the small gate `a9553269...` or the dualite gate `4bc46844...`. The mempool API was
+unreachable when this row was written, so I am not restating a fresh funding check. Also
+worth pinning down while I had the table: the author's "half and better half" addresses
+(issue #79, `1JG648ya...` / `145ZQ9si...`) are NOT any of these four, and the published
+Half / BetterHalf public keys `0423d911...` / `48cc46e6...` are not K_C1 or K_S1. So the
+author's 79-byte both-sides framing is not a description of these four keys, and the
+"each private key belongs to one of them" reading of the small gate's premise is dead.
+
+FINDING 6 - NEXT RUNG IS EMPTY, and this closes the "what opens B2" question by census
+rather than by guessing. Every base64 `Salted__` token in the whole corpus (this repo,
+`briefcase/`, `~/Download/Telegram/`, `~/gsmg/`) was extracted and tried against the
+candidate password set: 37 distinct 96-byte envelopes x 58 password forms x 2 KDFs = 4,292
+decryptions. 12 produced valid PKCS7 padding; every one is either B1, B2, or a
+1-in-256 padding coincidence (expected ~0.05 per candidate, so a few across 4,292 is
+unremarkable), and none yields a WIF-shaped continuation of K_S1, K_S2 or K_C2. Certified
+negative, controls in the same code path (B1 and B2 both re-found).
+
+WHAT THIS CHANGES, AND WHAT IT DOES NOT. `data/B2_79.bin` is no longer an orphan record of
+unknown provenance: it is the certified plaintext of the p32 outer envelope, one rung below
+B1, and the B1 -> B2 leg of the ladder is now reproducible in one command. The frontier is
+unchanged: re-verified today that no 32-byte window of chain4 or of `cc` hashes to the
+`cd3fea3d` prefix, and 1,373 XOR-triangle candidates over chain4 (header offsets 0..29;
+xor-all, every pairwise-pyramid level, every adjacent pair, tail-mixed - each checked by
+`k*G == ` the funded gate pubkey exactly, both parities) give 0 hits. That is the same
+conclusion as the #132/#133 rows, re-confirmed, and it is why this row stops. Certifying B2
+moves no BTC: the ladder has one more honest rung, and the gate key is still an ECDLP
+solution that has to come from the SalPhaseIon image, which is where Lead 0 still points.
+
+Date: 2026-09-27, local.

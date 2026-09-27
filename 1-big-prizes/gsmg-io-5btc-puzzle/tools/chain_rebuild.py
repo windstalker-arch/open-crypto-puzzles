@@ -9,6 +9,11 @@ Everything here is verified against independently-published SHA256 anchors:
             EVP MD5 AES-256-CBC) -> 80B = K_C1 || K_C2 || E_C(15B)
             WIF(K_C1 uncompressed) 5K2byJMssxFKuTgnk9YQjpBz5FhkwwF2LaZoAyTus8HjGEpz8AT
             (matches issue #108 / PR #68)
+  CADEIA 2  p32 outer envelope (salt b45a5e3d827593ca, pw = WIF(K_C1) from CADEIA 1)
+            -> 79B = K_S1 || K_S2 || E_S(15B)
+            sha256 = b40fce72ef5638e4f79b3233e653f8a5dbdb0d4ae2009d2d3da2c98b70f4d004
+            (tools/rung2_b2.py certifies it: the envelope decrypts byte-exactly to
+            data/B2_79.bin and re-encrypts back to the same ciphertext)
   CADEIA 3  Dualite blob (salt 2d3f6fe06dc950e6) L1 decrypt under XOR-key
             a795de117e472590e572dc193130c763e3fb555ee5db9d34494e156152e50735,
             EVP MD5 AES-256-CBC -> 1327B cosmic_correct `cc`
@@ -21,9 +26,9 @@ Everything here is verified against independently-published SHA256 anchors:
             e4269ed5fbb202a81e5e1aa6b5190fdd1ea126b2c8547ea7cdbdf45387ea135b
             (matches PR #68)
 
-CADEIA 2 (short blob, salt b45a5e3d827593ca, pw = WIF(K_C1)) is NOT in this repo,
-so E_S/E_B are not derived here; the community-published chain4 AES password embeds
-them and is used directly.
+CHAIN4_PW below is E_C(15) || E_S(15) || E_B[:2]. With CADEIA 2 certified, 30 of
+those 32 bytes are derived on-puzzle; E_B[:2] = 59cc is still quoted from the
+community and occurs in neither B1, B2 nor chain4.
 
 The final step (recover private key k with k*G = (f4d1bbd9..., odd y) from the
 chain4 35x32-byte blocks via an "XOR triangle" using operand ca/cosmic_A) is NOT

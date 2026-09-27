@@ -52,7 +52,14 @@ base-9 pair reading, is all negative (`analysis/tested.md` late-58). The two
 streams remain the author-cited never-decoded artifacts; every single-classical
 reading in the tested toolbook now returns noise.
 2026-09-13 addendum: chain-2 (C2, salt b45a5e3d827593ca) is confirmed ALREADY
-decrypted in the ledger (briefcase/MEMORY.md)  -  not a lock to attack. New object
+decrypted in the ledger (briefcase/MEMORY.md)  -  not a lock to attack.
+2026-09-27 addendum: that "already decrypted" is now certified rather than reported -
+C2 opens under the DERIVED password WIF(K_C1) and reproduces `B2_79.bin` byte-exactly
+plus its own ciphertext on re-encryption (`R-B2RUNG2`, `tools/rung2_b2.py`). Read the
+earlier "B2 has no envelope" claims (`R-B2FAIL`, `R-YINYANG-B1B2`) as superseded: they
+swept authorial strings, and this password is a value computed out of B1. B2 is therefore
+a dead end on-chain (all four ladder keys unfunded, none a gate) and the search frontier
+stays on the image, not on the ladder. New object
 this session: Bifid(DBIFHCEG) decode of the AUTHORITATIVE 91-token dbbib =
 `BDFCDCHLBEBQFCFW...` (sha ac4f5a9f..., tested.md late-59); it fails as a
 mutual co-key vs the faed Bifid output, and the four chain keys
