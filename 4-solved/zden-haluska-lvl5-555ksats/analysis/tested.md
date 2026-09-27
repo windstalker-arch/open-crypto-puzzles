@@ -60,7 +60,7 @@ Attempt to transcribe the digit band as a 3x5/5x7 decimal string was inconclusiv
 glyphs are a hand-drawn/rotated font (diagonal strokes in cells 0, 2, 9, 10) that a fixed
 font match decodes inconsistently (naive match `-17?14111--111`). OCR (tesseract 5.5.3,
 psm 6/7/11) recovers the fragment **`11122111`** from the right portion of the band, and
-the combined-psm7 read is `1911122111` / `19 ... 11122111` — i.e. the band is the **`09111819`
+the combined-psm7 read is `1911122111` / `19 ... 11122111` -- i.e. the band is the **`09111819`
 / `11122111` date pair** (2018-11-09 publish, 2021-12-11 fix) already listed under "Ruled
 out as data". OCR therefore corroborates the existing ruling-out of these fragments as key
 material; the band is NOT a new key source. Best-effort full-composite OCR of the formula

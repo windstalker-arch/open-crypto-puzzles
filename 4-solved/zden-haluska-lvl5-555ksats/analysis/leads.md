@@ -24,7 +24,7 @@ The 2021 mini-hint is read at the pixel level from the published image itself; a
 image at higher resolution than what has been published (if one exists) could resolve
 ambiguity in the glyph reading directly, without needing the author's own clarification.
 
-## 2b. The digit band and extra mini-hint glyphs (RESOLVED via OCR — not a lead)
+## 2b. The digit band and extra mini-hint glyphs (RESOLVED via OCR -- not a lead)
 
 Pixel-level re-extraction (`tools/extract_minihint.py`, see tested.md #10) shows the 2021
 mini-hint is a composite of 4 stacked formula lines (rows 806-872), a 14-glyph dot-matrix
