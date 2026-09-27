@@ -58,8 +58,19 @@ and P2PKH(h160) address matching. `--selftest` must pass (rc=0) before AND after
   escapes (1,4) -> plaintext `INCASEYOUMANAGETOCRACKTHIS...FUNDSTOLIVE`
   (reproduced by `tools/certified_vic.py`, SELFCERT).
 
-Gate premise of the crux: E_S is the 64-bit check on a phrase A produced by decoding the
-streams with the author's keyed alphabet -> `sha256(A)[0:15] == 740a25de4b8e946`.
+Gate premise of the crux: E_S is the check on a phrase A produced by decoding the streams with
+the **community-attested** keyed alphabet -> `sha256(A)[0:15] == 740a25de4b8e946`. Two corrections
+to what this line used to say, both from 2026-09-27:
+- **"the author's keyed alphabet" was wrong, and contradicted line 57 of this same brief**, which
+  already labels the VIC vector "community 3.2.2". `R-FUBCD` established there is **no archived
+  author witness** for `FUBCDORA.LETHINGKYMVPS.JQZXW` or the Phase-3.2 seed sentence: the exact
+  board and every seed token return 0 across all 399 archive files. The vector is reproducible and
+  self-consistent, which is not the same as authorial. Keep the two apart.
+- **"64-bit" was simply a miscount.** The check is `sha256(A)[0:15]` = **15 bytes = 120 bits**, and
+  `E_S` is 15 bytes by construction (`B2_79[64:79]`). 64 appears nowhere in this comparison.
+- Also worth stating plainly, because it is implicit everywhere and explicit nowhere: **`E_S` is not
+  a value to be found.** It is a slice of an already-certified decryption. The "E_S anchor" rows are
+  *cross-validation* — looking for those 15 bytes independently — not a search for something unknown.
 
 ## Exhausted map (all oracle-certified 0 MATCH unless noted)
 
@@ -714,3 +725,56 @@ closed by reading, not by inference.
 closed. Direction (a) is now thinner than it looked - the authorial-post route is
 exhausted at the URL layer, so the next (a) target must be a *new source surface*
 (imagery, the creator corpus' sequence, or a new artifact class), not another archive.
+
+## RECONCILIATION 2026-09-27 (R-FUBCD, R-SOLVERGRP-NEW/PW, R-JRKHIST, R-UNUSEDKEYS, R-TREE-B-AUDIT)
+
+This section exists because three items above had gone stale, and because the honest summary of
+the puzzle's position is now narrower and more precise than it was.
+
+### 1. The board has no author witness. Stop calling the VIC vector the author's.
+`R-FUBCD` swept all 399 files in `~/gsmg/gsmg-web-archive` for the exact board, the Phase-3.2 seed
+sentence, and every seed token (`fubcd`, `oracle-queen`, `thingky`, `jqzxw`, `sad board`,
+`as wide as the first`) — raw and whitespace-stripped. **All zero.** Controls passed
+(whitespace-insensitive SalPhaseIon controls in 4–5 witnesses), so the nulls are witnessed, not
+uncertified. Phase-3.2 is not among the only two archived real puzzle pages. The earliest dated
+community witnesses are issues #74/#75/#76, all 2026-02-16, inside a batch the ledger itself flags
+as partly AI-slop — one lineage, not independent corroboration.
+Consequence: even **granting** the community sentence, the exact string is **1 of 84,240**
+(`5!` orderings × 27 × 26 punctuation placements), so `METHOD-I` remains valid only for the one
+string it actually tests. Do not let "we have the alphabet" slide into "we have the sentence."
+
+### 2. The solver-group pack is now fully triaged, and one of its files is a rickroll.
+42 -> 89 files (121 MB); the 52 newest were triaged. `4E.zlib` is a pure 4.2% recompression of bare
+`4E` (sha `d4a224bc…`, zero new information); `4E` is binary 4-byte-expanded sparse pixel data, not
+whitespace-prefixed text. `found.txt` is a failed 1GSMG vanity scan (30 MB, 459,300 lines, 153,100
+key triples) containing neither gate nor target pubkey. `jrk-history.txt` decodes — MSB bytes, byte
+reversal — to a payload prefixed `BASE64` and is a **Rick Astley rickroll**
+(`aHR0cHM6…` -> `https://www.youtube.com/watch?v=dQw4w9WgXcQ`), positively identifying the file as a
+solver shitpost. Do not promote its "13 is default / C is the 2nd hint". A 227-char community
+`phase_3_password` and 28 headline restorations both fail both blocked blobs. 19 candidates drawn
+from all four ladder keys × 6 blobs × 2 KDFs = 228 attempts, 0 decrypts. **Nothing here is a lead.**
+
+### 3. `author-wallet.txt` is OURS, not the author's — filename trap.
+`~/briefcase/gsmg-private/author-wallet.txt` says "Generated 2026-09-22" and its body is our own
+certified chain, our own field layout, our own gate balances and DCL findings. `K_C1`'s hash160
+matches inside it, which is **circular, not evidence**. In a directory named `gsmg-private` that
+also reads as "the author's private material." Never cite it as authorial attestation.
+(`gsmg-solved.json` and `keyFOUND.txt` are, by contrast, fully correct and honestly self-retracting —
+only their filenames mislead.)
+
+### 4. Where this actually leaves the puzzle — read before proposing another battery.
+Every surface reachable from this device is now accounted for. The two blocked envelopes remain
+password-blocked (`9fbc451d`, 4,090 B; `eefc4c5b`, 2,432 B), `ca/cosmic_A` is still missing, the
+Phase-5 ciphertext location is genuinely lost with its Scribd document (the recovered command line
+is truncated at `-pass`), and Lead 0's interpreter *application* is the only live semantic crux.
+The author-quote vocabulary is not a fresh option: `late-310` already swept 325 forms of it.
+
+**Per AGENTS.md §3, the next move must shrink N, not add compute.** No amount of further sweeping
+over material we already hold can open a gate that needs a key we do not have. A productive next step
+requires a **new information class** — a source surface not in `gsmg-web-archive` or either
+`gsmg-private` tree — or a genuinely new *semantic* hypothesis about the 103×103 application, stated
+with its N, measured rate D, and t = N/D. Anything else is a repeat.
+
+### 5. Stale-item bookkeeping (so it stops being carried as pending).
+`analysis/RAW_PW.md` needed no B2 update: lines 27-30 already carry the certified ladder through
+`B2_79` (sha `b40fce72…`) and `E_S = B2_79[64:79]`, completed in `5a9062d`. It is done, not pending.
