@@ -13615,3 +13615,106 @@ recorded as failing PKCS7 padding. This row's contribution is **provenance and
 reproducibility**: the last remaining input that was carried as a *guess* is now a
 *derivation*, and the interpretation of the page no longer rests on community recall.
 0 oracle calls.
+
+## 2026-09-27 - R-HINT2323: the 2023-02-23 hint is mechanically decodable, and it CONFIRMS the recorded reading (plus a self-reference)
+
+`leads.md` has carried this hint's content as a remembered reading - "yellow blue
+primes matrix sumlist last words before archichoice yinyang" - with no decoder
+attached, so it was an interpretation I could not re-derive or check. It is in fact
+fully mechanical.
+
+The hint image is a grid of 8-bit binary numbers, 31 rows of 5. Two reversals, both
+in the spirit of the author's first hint `esrever`:
+
+1. reverse the 8 bits **within** each byte, then
+2. reverse the **whole** resulting string.
+
+Step 1 alone yields reversed syllables; step 2 alone yields noise; together they give
+plain English. 157 OCR'd bytes (the grid is ragged only because the bottom-right of
+the screenshot carries a timestamp instead of binary). Recovered text, byte-exact:
+
+```
+yellowblueprimesmatrixsumlistlastwordsbeforearchichoiceyinyang
+wewontgiveawaythepassworditsinfontofyoureyesbutyourenotseeingit
+verylaststepisatruegiveawaypromised
+```
+
+This matches the recorded reading exactly, including the `youreyesbutyourenot`
+wording, and independently matches the copy in `STATE_BRIEF.md`. Two apparent
+misfits are OCR artifacts, not text: a raw pass renders `primes` as `prices`
+(`m`->`c`), and the grid's last row is cut by the timestamp.
+
+**Correction to something I said in this same session.** Mid-investigation I read
+the opening word as `follow` and wrote that this *corrected* a standing error in
+`leads.md`. That was my own transcription error - I had hand-copied the decoded
+string and dropped the leading `ye`. The word is `yellow`, and `leads.md` was right.
+The tool now prints the decoded string from the OCR rather than from a typed copy,
+which is what let the error surface. Recording it because a wrong correction is
+worse than no correction, and because the ledger should not contain my session's
+false start.
+
+**The structural finding, which is new.** `lastwordsbeforearchichoice` is *literally*
+the text immediately preceding `archichoice` in this very hint. So the published
+page's directive - `lastwordsbeforearchichoice` + `thispassword`, "the last words
+before the Architect Choice are this password" - is **self-referential** when pointed
+at this hint: the words before "arch choice" here *are* "last words before". The last
+*substantive* words before it are `matrix sum list`, which is also the page's own
+first token. This is consistent with `leads.md` section 7, which already read the
+directive as pointing at the Architect Choice stage and recorded the 2023-02-23 hint
+as one of the places that phrase appears.
+
+What this does not do: it does not decide which reading the author meant, and
+`matrixsumlist` is already the page's first token, so that reading is not new
+information. What it does do is make a previously-remembered reading reproducible,
+and it makes the self-reference explicit rather than something a future pass has to
+rediscover. 0 oracle calls. No new spendable material.
+
+## 2026-09-27 - R-HINT4: the four first hints are transcribed, so "firsttint" can finally be checked; the "last command" is still NOT determined
+
+The published page ends with `four first hints is your last command`. Until now this
+folder held no transcription of those four hints at all - only the guess `firsttint`
+in `leads.md`, which is an interpretation of a hint nobody here had read. The four
+earliest hint screenshots in the community mirror are now transcribed, reproducibly,
+in `tools/hint_first_four.py`.
+
+The four, in filename order (the mirror's order is a proxy for the author's
+publication order, not a proof of it - and the directive depends on the order):
+
+1. `2020-01-14-roses-are-red.png` - "Roses are White but often Red. / Yellow has a
+   number and so does Blue. / Go back to the first puzzle piece without further ado.
+   / It might have shown you only one door, beware that the rabbits nest may contain
+   a whole lot more. / Hush hush."
+2. `2020-02-20-decentraland.jpg` - an in-game sign: "Decentraland: Type /help for info
+   about controls / Press E to enter and start".
+3. `2020-04-08.png` - "Humph. Hope, it's the quintessential human delusion,
+   simultaneously the source of your greatest strength, and your greatest weakness."
+   plus two asides, one of which self-corrects a misreading of "Satan".
+4. `2020-05-11.png` - "Let's see what bitcoin is worth the next halving and who knows
+   what you'll find after opening the 2nd door. The price's in half, but what does it
+   mean."
+
+**What this settles.** `firsttint` is checkable now and does not survive contact with
+the text. Hint 1 names four tints (White, Red, Yellow, Blue) and its first is White,
+not Red, and nothing in it is called a "tint" - the word is a guesser's word. The
+hint's own substantive instruction is "Go back to the first puzzle piece", and its
+one distinctive lexical item is the pair Yellow/Blue, which is the same Yellow/Blue
+pair the 2023-02-23 hint opens with and the same pair the 14x14 grid is coloured by.
+So `firsttint` should be treated as unsupported. I am recording that as a
+*correction to a belief*, not as a tested negative: no gate call was made, so per the
+ledger's own rules this is not a negative result.
+
+**What this does NOT settle, stated plainly.** The "last command" is undetermined.
+The only literal commands in the four are in hint 2 - "Type /help" and "Press E" -
+and hint 1's "Go back to the first puzzle piece". Which of `/help`, `E`, or that
+phrase the author means by "your last command" is not decided by the text, and I am
+not going to pick one and call it a derivation. Note also that hint 4's "the 2nd
+door" and hint 1's "only one door" mean "the four first hints" cannot safely be read
+as the first four *stages*.
+
+**Why this still matters despite deciding nothing.** It converts an untranscribed
+source into a cited one, which is the same gap `leads.md` section 7 names as the
+reason its last-N-word sweeps are not exhaustive ("the phase-1 page is an image whose
+own wording is not transcribed anywhere in this folder"). Any future sweep of
+"the last words before the Architect Choice" should be built from these
+transcriptions, not from recalled hint fragments. 0 oracle calls, no new spendable
+material, and the `firsttint` correction above is the substantive output.
