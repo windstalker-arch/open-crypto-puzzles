@@ -13419,3 +13419,78 @@ parameter space contains no English. Combined with R-ORDER's structural work thi
 generating framings of two 91/570-character strings and scoring them - past this point the negative
 yield per variant is the thing telling me the *model class* is wrong, and more of the same is not
 research. 0 oracle calls. Lead 0 unchanged.
+
+## 2026-09-27 - R-SALPHASEION: the dbbib/faed page carries a hidden command, "matrixsumlistenter" - Lead 0 provenance SOLVED
+
+**THE PAGE.** `data/wb_dbbib-page_20201112.html` (4536 bytes, sha256
+`a83d3de7810f26b19b4965339b76d403e44f6b6877e5d7de2555480ca1779d77`) is not a generic
+`dbbib`/`faed` carrier. It is `<h1>SalPhaseIon</h1>` followed by exactly one
+`<textarea style="width: 100%; height: 200px">` containing **1075 space-separated single
+characters**. Reproducer: `tools/salphaseion_payload.py`.
+
+This retro-explains a trap I walked into earlier this session and recorded honestly in the
+work state: my first tokenizer used `[a-i]+|[^a-i]+` and reported the page as "A / a-b gap /
+B / more fragments". That is a **mis-tokenization, not the page structure.** The `a-i`
+lowercase noise is interleaved *character by character* through readable text and through
+Base64/Base58, and `a`-`i` are also legal Base64 characters - so an alphabet split shreds
+both channels at once. The 765-char "main run" was an artifact of that regex, not a real
+segment boundary.
+
+**THE HIDDEN CHANNEL.** Taking the raw payload and enumerating maximal `[ab]+` runs:
+
+- 134 a/b runs, 305 bits total.
+- **132 of them are 1-3 bits** - decoy noise, individually undecodable by construction.
+- **Exactly 2 are long enough and byte-aligned** (>=8 bits, length % 8 == 0).
+
+Read `a=0, b=1`, MSB-first, 8-bit ASCII:
+
+| offset | bits  | bytes | leftover | text           |
+|--------|-------|-------|----------|----------------|
+| 91     | 104   | 13    | 0        | `matrixsumlist`|
+| 959    | 40    | 5     | 0        | `enter`        |
+
+**144 bits = 18 bytes = `matrixsumlistenter`.** The accounting closes exactly: 104 + 40 =
+144 = 18 * 8, zero leftover bits in either run, and the two runs are the *only* two
+byte-aligned runs among 134. Two random runs of 104 and 40 bits each landing on printable
+ASCII words, with the total consuming the channel to the bit, is not a coincidence I am
+willing to file as one.
+
+**WHAT IT MEANS FOR LEAD 0.** The page does not ask for a cipher over the 91/570-char
+streams. It asks: **enter the matrix sum list.** That is a *decoding instruction*, and it is
+exactly the quantity `~/gsmg/dbbi_sum_faed.py` was already computing and then destroying.
+`dbbi_sum_faed.py` builds the 14x14 symmetric matrix from A (91 chars = strict upper
+triangle, `a=1..i=9`), takes `[sum(r) for r in M]`, and then **XORs it into A-Z** in 15-char
+blocks. The instruction is to *enter the list*, not to XOR it. R-XOR therefore swept a
+family that the page never asked for: 21,152 variants of "sum, then transform" scored
+-9.97 at best against real English -8.67. **The negative was correct and the model class was
+wrong**, which is precisely the "past this point the negative yield per variant is the thing
+telling me the model class is wrong" conclusion I wrote at the end of R-XOR. The page now
+says so directly.
+
+**CANDIDATE LISTS (not yet banked).** A-matrix row sums, `a=1..i=9`, diagonal 0:
+
+    [55, 62, 58, 68, 76, 50, 63, 56, 55, 63, 67, 53, 59, 59]   total 844
+
+M is symmetric so column sums are identical, which is a useful consistency check but also
+means "row" vs "column" is not a real fork. All values land in 50-76: not A1Z26, and
+`mod 26` -> `DKGQYYLEDLPBHH` is not English, so the *submission format* is the open question,
+not the arithmetic. G (the 14x14 `0/1/b/y` grid) has b=15 and y=9 - exactly the white-rabbit
+blue/yellow counts - so G *is* that matrix, and "matrix" could in principle mean G instead:
+`b=1,y=1` gives `[7,10,8,7,7,8,6,5,9,10,8,8,8,9]` (total 110). A vs G is genuinely open.
+
+**ALSO OBSERVED, NOT YET SEPARATED.** Read through the noise the page also carries readable
+fragments - `...be four first hints is your last command...`, `...CosmDulty...` (almost
+certainly *Cosmic Duality*), and two `U2FsGVkX1...` tokens, which are the base64 of OpenSSL's
+`Salted__` header, i.e. **two salted-encrypted blobs**. There are also base58-looking
+segments (`QvX0t8v3jPB4okpspx...`, `tW43C3Z1tyFRGAzAHQUFS6jRC`, `KuZVA6uuSkWAsK6uMGo76xpPwYs3`,
+`w7LMSGkD1MZxpDzsCZY1`). **I have not cleanly separated these from the a-i noise and I am not
+claiming their content** - Base64's alphabet contains `a`-`i`, so a naive strip corrupts them
+exactly as it corrupted my first parse. Untangling them is the next task, and it may well
+contain the passphrase for the two `Salted__` blobs.
+
+**VERDICT.** Lead 0 provenance **solved**: the dbbib/faed page is SalPhaseIon and its hidden
+instruction is `matrixsumlistenter`. 0 oracle calls - the format of the answer list is still
+ambiguous (A-matrix vs G-matrix, and how 14 numbers in 50-76 should be written down), and
+guessing a format to spend a call on would be exactly the discipline failure this ledger
+exists to prevent. Archive the page, the reproducer, and this row; revisit formats only with
+a reason to prefer one.
