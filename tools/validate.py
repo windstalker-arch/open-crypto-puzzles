@@ -94,35 +94,67 @@ WORD_CHECK_FULL_EXCEPTIONS = {
 }
 
 # Folder-scoped word allowlists. The GSMG puzzle's analysis journals record tool-build
-# archaeology (the Fable F#-to-JS compiler used to build the puzzle's SPA) and quote
+# archaeology (the Fable F#-to-JS compiler used to build the puzzle's SPA), quote
 # candidate strings (Alice-in-Wonderland lines) that legitimately contain forbidden
-# words. Only the listed words are skipped for the exact files below; every other
-# forbidden word still fails, and the files remain subject to all other checks
-# (including the forbidden-characters scan).
+# words, and name the puzzle's own vocabulary - the token bag those sweeps permute
+# contains the word "unlock", and it is the string under test, not prose. Only the
+# listed words are skipped for the exact files below; every other forbidden word still
+# fails, and the files remain subject to all other checks (including the
+# forbidden-characters scan). This is the escape hatch for a word that is load-bearing
+# in a file; the span-level rule in QUOTED_SPAN_PATTERN is for a word that is load-
+# bearing only inside a quotation, and needs no per-file bookkeeping.
 WORD_SCOPED_EXCEPTIONS = {
     os.path.join(REPO_ROOT, "1-big-prizes", "gsmg-io-5btc-puzzle", "analysis", "leads.md"):
         {"fable"},
     os.path.join(REPO_ROOT, "1-big-prizes", "gsmg-io-5btc-puzzle", "analysis", "tested.md"):
-        {"fable", "wall", "impossible", "sonnet"},
+        {"fable", "wall", "impossible", "sonnet", "unlock"},
     os.path.join(REPO_ROOT, "1-big-prizes", "gsmg-io-5btc-puzzle", "analysis", "ANCHORED_SUMMARY.md"):
+        {"wall"},
+    os.path.join(REPO_ROOT, "1-big-prizes", "gsmg-io-5btc-puzzle", "analysis", "ARTIFACT_FAMILIES.md"):
         {"wall"},
 }
 
 # Span-level counterpart to WORD_SCOPED_EXCEPTIONS. A quoted filename, log line,
 # on-chain metadata string or fenced block is evidence rather than prose: the
 # research ledgers transcribe the puzzle's own artifacts verbatim, and rewriting a
-# forbidden word or an em dash inside one of those would falsify the record. Checks 3
-# and 4 therefore scan the author's own text and skip what is being quoted. Note the
-# consequence, which is the point of the rule: putting text in quotes exempts it, so a
-# genuine violation can still be laundered by wrapping it. Masking preserves length so
-# reported columns keep lining up with the source line.
-QUOTED_SPAN_PATTERN = re.compile(r"``.*?``|`[^`]*`|\"[^\"]*(?:\"|$)|'[^']*(?:'|$)")
+# forbidden word or an em dash inside one of those would falsify the record rather
+# than tidying it: the token bag in tested.md literally reads {can, you, lock,
+# wallet, unlock, ...}, and that string is the thing being tested. Checks 3 and 4
+# therefore scan the author's own text and skip what is being quoted. Masking
+# preserves length so reported columns keep lining up with the source line.
+#
+# The opener must not sit inside a word, or an apostrophe in prose pairs with the
+# next apostrophe hundreds of characters later and masks the run between them as a
+# quote that was never written - a silent false negative, which is worse than the
+# violation being reported. Same guard on the closer, so a quoted span that runs
+# into an adjacent word is not mistaken for one either.
+QUOTED_SPAN_PATTERN = re.compile(
+    r"``.*?``"
+    r"|(?<![A-Za-z0-9])`[^`]*`(?![A-Za-z0-9])"
+    r"|(?<![A-Za-z0-9])\"[^\"]*\"(?![A-Za-z0-9])"
+    r"|(?<![A-Za-z0-9])'[^']*'(?![A-Za-z0-9])"
+)
 FENCE_PATTERN = re.compile(r"^\s*(?:```|~~~)")
 
 
 def mask_verbatim(text):
-    """Blank out quoted spans, keeping the line the same width."""
-    return QUOTED_SPAN_PATTERN.sub(lambda m: " " * len(m.group(0)), text)
+    """Blank out quoted evidence, keeping the line the same width.
+
+    Two passes. The first masks quotations that close on their own line. The
+    second handles a quotation opened here and closed further down: the ledgers
+    quote whole multi-line messages verbatim, so `4. `2020-05-11.png` - "Let's
+    see what bitcoin is worth` continues for several lines and must not be
+    rewritten to satisfy a style check. An odd number of surviving double quotes
+    means exactly that, and the rest of the line is evidence. The cost is the
+    one the span rule already accepts: a stray unmatched double quote in prose
+    also masks to end of line, so a violation after it is missed.
+    """
+    masked = QUOTED_SPAN_PATTERN.sub(lambda m: " " * len(m.group(0)), text)
+    if masked.count('"') % 2 == 1:
+        i = masked.find('"')
+        if i >= 0:
+            masked = masked[:i] + " " * (len(masked) - i)
+    return masked
 
 
 def scannable_lines(lines):
@@ -425,7 +457,7 @@ def check_forbidden_words(scope_root):
     failures = []
     for path in iter_files(scope_root, {".md"}):
         basename = os.path.basename(path)
-        if path in WORD_CHECK_FULL_EXCEPTIONS:
+        if path in WORD_CHECK_FULL_EXCEPTIONS or os.path.abspath(path) in WORD_CHECK_FULL_EXCEPTIONS:
             continue
         try:
             with open(path, encoding="utf-8") as f:
