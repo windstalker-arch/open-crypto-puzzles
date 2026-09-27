@@ -13533,3 +13533,85 @@ regenerating wholesale, so the other 396 verified digests stay as they were. **3
 (`clues/puzzle.png` 75px cells and the 350x350 rabbit PNG 25px cells), both reading
 `b'gsmg.io/theseedisplanted'` at ones=102. `tools/oracle.py --selftest` and
 `tools/oracle_dualite.py --selftest` both PASS. 0 oracle calls.
+
+## 2026-09-27 - R-SALPHASEION-2: the full endgame chain is DERIVABLE from the page, and mutually self-certifying
+
+R-SALPHASEION (earlier today) recovered only the a/b channel -> `matrixsumlist` / `enter`.
+Pushing on the rest of the page closed the whole chain. **`tools/salphaseion_payload.py
+--chain` now derives every value below from the archived page alone, with no external
+input, and cross-checks each one against the certified oracle.**
+
+**TWO CORRECTIONS TO MY OWN EARLIER WORK FIRST, because both were reported to me as fact.**
+
+1. **There is only ONE `Salted__` blob, not two.** My R-SALPHASEION row said the page
+   "carries two `U2FsGVkX1...` tokens ... two salted-encrypted blobs". False. There is
+   exactly one occurrence of `U2Fs` in the 1075-char payload, at offset 895. The second
+   one was manufactured by my own crude `[a-i]` strip, which deletes real base64 and then
+   re-forms a plausible-looking `U2Fs` prefix out of the survivors.
+2. **There is no `CosmDulty` and no "Cosmic Duality" fragment on this page.** Also an
+   artifact of that same strip. The page's only readable text runs are
+   `...four first hints is your last command` and the tail `ans too`. I should not have
+   written either claim into the ledger; both are struck here rather than quietly edited.
+
+The root cause is the one already recorded: **base64's alphabet contains `a`-`i`, so any
+alphabet-based strip corrupts the very channel it is trying to isolate.** The way out is
+structural, not cleverer regex: `Salted__` magic + ciphertext length `% 16 == 0` is a
+validator that a strip cannot fake.
+
+**THE SECOND NOISE CHANNEL (the one I had missed).** The page delimits readable sections
+with `z`, a character *outside* the `a-i` noise alphabet. Splitting the text region on `z`
+gives four segments; segments 1 and 2 are pure noise-plus-`o`. The interpreter is
+`a-i -> 1-9`, **`o -> 0`**, concatenate to one decimal integer, then `hex(int(...))` and
+hex-decode. The `o` characters that my alphabet-splitter had been throwing away as
+"separators" are **zeros**, and losing them is what made this look like prose fragments:
+
+| segment | value |
+|---------|-------|
+| 1 | `lastwordsbeforearchichoice` (26 chars) |
+| 2 | `thispassword` (12 chars) |
+| 3 | `four first hints is your last command` (text, with `habef` = `shabef` = "SHA before") |
+
+**THE CHAIN, END TO END.**
+
+1. a/b bursts, `a=0 b=1` MSB-first 8-bit ASCII -> `matrixsumlist`, `enter`.
+2. z-segments through the digit interpreter -> `lastwordsbeforearchichoice`, `thispassword`.
+3. password = those four tokens **in page order, first token repeated as a bookend** =
+   `matrixsumlist`+`enter`+`lastwordsbeforearchichoice`+`thispassword`+`matrixsumlist` (69 chars).
+4. blob = payload base64 with the `enter` burst **excised**: `body[895:959] + body[999:1063]`
+   = 128 chars = 96 bytes = `Salted__` + salt `3ab585348552415d` + 80B ciphertext.
+5. EVP-BytesToKey **MD5**, AES-256-CBC -> 79 bytes, sha256 `1449a217...`
+   = `chain1_79.bin` = `K_C1(32) || K_C2(32) || E_C(15)`.
+
+**MUTUAL VALIDATION - why this is certification and not a lucky guess.** The two channels
+were found independently (bit-burst analysis and digit-interpreter analysis), and their
+*product* independently reproduces two values that were already pinned by other evidence:
+`blob == tools/oracle.BLOB_B64` byte-exact, and the derived password `== RAW_PW`
+byte-exact. A wrong interpreter, a wrong bit polarity, a wrong `o`-handling, or a wrong
+bookend position would each break the decrypt. `oracle.decrypt_blob(..., "sha256")` returns
+`None`, independently re-confirming this blob is the MD5 one. This upgrades the page from
+"community-guessed 7 intertwined passwords" (how `leads.md` recorded it) to a
+**certified author artifact with a reproducible decoder.**
+
+**HONEST DEGREE OF FREEDOM.** The four tokens are *read* off the page. Where to repeat for
+the bookend is a *choice* - it is the one free parameter in the derivation, and I am not
+claiming it is forced. It is pinned by the blob opening, which is a real test, but a
+different placement would have failed loudly rather than silently.
+
+**A TOOLING TRAP WORTH RECORDING.** My first inline decrypt of the same blob with the same
+password produced 79 bytes of garbage that *passed* PKCS7 padding (pad byte 0x01, ~1/256 by
+chance) and hashed to `6c522534...` instead of `1449a217...`. Cause: I hand-rolled the
+AES-CBC call with the `cryptography` package, whereas the certified `tools/oracle.py` uses
+`pycryptodome`'s `AES.new(...).decrypt()`. Same KDF, same inputs, different result. I
+resolved it by calling the project's certified function rather than by trusting my own, and
+the tool now imports `oracle` for the cross-check instead of re-implementing crypto. Note
+this cuts the other way too: a *lucky* pad byte is indistinguishable from a correct decrypt
+unless you check the output digest against an independent anchor - which is the only reason
+this was caught at all.
+
+**WHAT THIS DOES NOT CHANGE.** No new spendable material, and I am not claiming any. The
+79-byte artifact and the mirror/2x2-matrixsumlist batteries over `{K_C1,K_C2,K_S1,K_S2}` were
+already recorded as certified negative, and the oracle's `sha256(X)` transform was already
+recorded as failing PKCS7 padding. This row's contribution is **provenance and
+reproducibility**: the last remaining input that was carried as a *guess* is now a
+*derivation*, and the interpretation of the page no longer rests on community recall.
+0 oracle calls.
