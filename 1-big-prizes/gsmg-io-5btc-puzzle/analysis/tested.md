@@ -13765,3 +13765,134 @@ certified end to end, so the Architect Choice branch is not where the remaining
 spendable output is. Recommend this lead move from "active" to "closed - revisit only
 if a new Architect-side text is recovered". 0 oracle calls, 0 new candidates, no new
 spendable material; the output is a rank change and a verified primary source.
+
+## 2026-09-27 - R-SLUGF971: `f9719d6d` is NOT an open preimage - it is `sha256(raw bytes of 89727c59)`, and the "authorial hash chain" is a generator artifact
+
+**The coincidence is real and it is verified, but it does not mean what it looks
+like.** `tools/decodekey_vic.py:39` already contained the value
+`KH_F971 = sha256(bytes.fromhex(KH_8972))`. What had never been done is compare it
+against the open-slug list. It matches, exactly:
+
+    89727c598b9cd1cf8873f27cb7057f050645ddb6a7a157a110239ac0152f6a32
+      -> xxd -r -p | sha256sum
+    f9719d6d531e6c3b5129644cd05da57bc6fdd075c9a61267c41d4b9627936096
+
+Witness is `sha256sum`, not Python, and the same one-liner independently reproduces
+`db14474e...` from the ASCII-hex form, so the tool's two key derivations are both
+confirmed. So one of the "still open (2)" preimages at `:12906` is not open at all:
+it is a *derived* quantity, already explained.
+
+**Why the apparent 2^-256 "authorial content-address chain" is NOT promoted.** It is
+the third instance of this project's own recurring failure mode (cf. `R-SOLVERGRP-IMG`'s
+"provenance caveat" and `R-JRK8446`'s two retracted statistical findings): a structure
+manufactured by our own tooling, read as a fact about the author's site. Three
+independent reasons, each sufficient:
+
+1. **The corpus generated the URL.** `tools/decodekey_vic.py:39-42` builds `f9719d6d`
+   as a "decode key" hypothesis and `DECODEKEYS` lists it as a target. Any sweep that
+   then requests `/f9719d6d` puts it in the archive index. The coincidence is a
+   *self-fulfilling* observation, not a discovery about the author.
+2. **A 200 from the 2026 era proves only that a path was requested.** The archived
+   bodies for `f9719d6d`, `673e3b1a` and `c2eef34b` are **byte-identical** once the
+   `csrf-token` meta is masked - all three 36,627 B, masked sha256 `504655235d403b30`.
+   That is the SPA catch-all. Live `/f9719d6d` is now **404**, so the 200 was never
+   evidence of a post. (Control: two invented paths, 64 zeros and `deadbeef`..., have
+   no captures at all, so the index does reflect real requests - but a real request is
+   not a real post.)
+3. **The capture dates cluster.** Every puzzle-slug URL is captured 2026-01-05
+   00:49-00:50 or 2026-03-10 08:32 - single bulk enumeration runs, consistent with a
+   solver walking candidate slugs. By contrast the one slug with real content,
+   `89727c59`, has captures back to **2023-06-01** at 3.7-5.0 KB (server-rendered), not
+   12.2 KB.
+
+**Consequence for the ledger, and a correction.** `:12906`'s "Still open (2)" should
+read "still open (1)". And the stronger point, which applies to `673e3b1a` too: the
+five *recovered* preimages (`0b0f37ec`, `10d6a2c5`, `c2eef34b`, `a2aefdbb`, `aca20ae7`)
+are confirmed by an independent route - a real authorial phrase hashing to the
+recorded slug under a law that self-tests 3/3. `673e3b1a` has no preimage, so its
+**existence as a post is unconfirmed**; it is an unexplained path in an archive index
+and nothing stronger. Do not spend a battery on it without a new text source.
+
+**Also verified this session, and it retires a whole recovery route.** The
+`2023-06-01` capture of `89727c59` is server-rendered with genuine content
+(`GSMG Puzzle` / `SalPhaseIon` / `Cosmic Duality`, both textareas, 4,556 B decoded) -
+i.e. the posts really were static then. Fetched and read in full: it contains the two
+known textareas and **nothing else** - no hidden input, no comment, no second field.
+So "the post body holds more than the textarea" is closed by direct inspection, not by
+inference.
+
+## 2026-09-27 - R-CDXFULL: the entire gsmg.io CDX urlkey surface (620) enumerated; every significant entry is already in the corpus
+
+`R-SLUGPRE` left the remaining preimages "blocked, not merely unsolved" because
+`index.commoncrawl.org`, `archive.ph` and `timetravel.mementoweb.org` were
+network-unreachable. I pulled the **full** Wayback CDX index for the domain instead -
+620 unique urlkeys, all of them - and diffed every path against
+`tested.md` + `leads.md` + `STATE_BRIEF.md` both raw and URL-decoded.
+
+**Result: no new surface.** Every significant path is already recorded, including the
+three that a filename-keyed reading had flagged as unmined
+(`21ef0533...`, `c1780cbb...`, `e24bd2c0...` - all present), the
+`/53616c7465645f5f...` path (hex for `Salted__` + salt `74c974e3f92e64b5`, already at
+`tested.md`), and the 3 extra 32-byte hashes. The remaining unrecorded paths are the
+2026 trading site: `/shared/*` referral ids, `/register?referral=*`, and ~90
+`help.gsmg.io` knowledge-base articles. The `%20`/`%5C`-mangled source-code and
+lodash comment fragments are crawler accidents, not content.
+
+Chain test, run to closure rather than left suggestive: over the 13 known 64-hex
+values, `sha256(rawbytes(h)) in known` yields **exactly one** edge
+(`89727c59 -> f9719d6d`, the generator artifact above), and `673e3b1a` is **not**
+`sha^n(rawbytes)` of any known hash for n <= 400. One edge, self-generated, is not a
+chain. **0 oracle calls, 0 candidates, 0 new spendable material.** What this buys is a
+certified negative on the entire archive-URL route, so it is not re-tried.
+
+## 2026-09-27 - R-B2REKEY-AES: B2 is not a cipher re-keying of B1's fields (4,604 unique, 2 verifiers, 0 hits); the gap `R-B2REKEY` explicitly left open is now closed
+
+**Why this family and not another digest guess.** `R-B2REKEY` searched 20,358
+digest/HMAC/XOR constructions `K_C1,K_C2,E_C -> K_S1,K_S2,E_S`, got 0, and correctly
+wrote down what it was *not* covering: "EVP_BytesToKey-style key derivation, **AES with
+derived IVs**, and the phrase 'fields **re-keyed**'". There is a structural reason AES
+belongs there and digests do not: `K_C1` and `K_C2` are each **exactly 32 bytes** =
+exactly an AES-256 key, and `B1` is `79 = 32 + 32 + 15`, so a cipher re-keying
+preserves every field's length exactly (32->32 under ECB, 15->15 under the stream
+modes). No digest can do that. The 15->15 shape in particular (`E_C` -> `E_S`, both
+15 bytes, both called "E") is what a re-key would look like and what a digest search
+could never have expressed.
+
+**Two independent verifiers, so a hit would be decidable without trusting the ladder:**
+- **V1** a 79-byte candidate with `sha256 == b40fce72ef5638e4f79b3233e653f8a5dbdb0d4ae2009d2d3da2c98b70f4d004` (the recorded `B2_79` digest). A hit reproduces a recorded digest and is decisive regardless of provenance.
+- **V2** a 15-byte candidate `== E_S = 740a25de4b8e946d0a5ae2667a23a2`. Weaker: per `R-B2FAIL` the ladder to B2 does not reproduce, so `E_S`/`B2` are documented community values, and this row inherits that caveat. `K_S1`/`K_S2` were deliberately NOT scored - they exist only in the unreproduced `author-wallet.txt`, so a hit there is not evidence.
+
+**Method.** 10,758 candidates generated, **4,604 unique** after dedup. Keys: `K_C1`,
+`K_C2`, `K_C1^K_C2`, `K_C1||K_C2`, `sha256(B1)`, `E_C` padded, zeros, and both
+reversals. Ciphers x modes: AES-256 ECB/CBC/CTR/CFB/OFB, AES-128-ECB, AES-192-ECB,
+ChaCha20 (3 IVs), 3DES-EDE3-CBC (2 IVs), RC4 (10 keys incl. field concatenations).
+Payloads: `E_C`(15), `head64`, `B1`(79), plus `rekey64||E_C`, field-swap, and
+`K_C2->K_C1` cross-field compositions. **0 hits on V1, 0 on V2.**
+
+**Witnesses (all four, since AGENTS.md rule 4 makes a witnessless negative worthless):**
+1. `B1_79` is re-derived through the **`openssl` binary**, not `oracle.py`, from
+   `BLOB_B64` with the 5-token literal password - a different implementation from the
+   one it cross-checks - giving 79 B, `sha256 1449a217...`, and `K_C1`/`E_C` matching
+   the ledger. `tools/b2_rekey_aes.py --selftest` fails loudly if any of that drifts.
+2. **RC4 against RFC 6229**: key `Key`/plaintext `Plaintext` -> `BBF316E8D940AF0AD3`,
+   and `Wiki`/`pedia` -> `1021BF0420`. Both exact. (Implemented in pure Python
+   *because* `openssl enc -rc4` is absent from this build - see point 4.)
+3. **Positive control**: a forged 15-byte transform output is confirmed *not* equal to
+   the real `E_S`, and the transform is confirmed deterministic on re-invocation - so
+   the comparator fires on a real match and the space is genuinely enumerated.
+4. **Per-cipher coverage, printed by the tool, because the first run of this row was
+   nearly a fake negative.** The initial version reported 4,200 unique and I was about
+   to write "family exhausted"; the coverage table showed **`rc4` and `bf-cbc` at
+   ZERO** - simply absent from this `openssl` build. That is precisely the
+   `R-SWEEPS`/`R-COVERAGE` trap in a new dress, so RC4 was implemented properly
+   (+110 candidates, 4,552 -> 4,604 unique) and **Blowfish-CBC is declared UNCOVERED
+   in the tool's own output** rather than being allowed to read as a negative. Rate
+   10,758 candidates in 105 s (~102/s).
+
+**What this row does and does not establish.** It establishes that `B2` is not a
+ciphertext of `B1`'s fields under the 4,604 enumerated re-keyings - and that the
+"AES with derived IVs" clause of `R-B2REKEY` is now answered rather than open. It does
+**not** establish that B2 is unreachable: `EVP_BytesToKey`, a KDF over the WIF, a
+nonce/IV not derived from these fields, and Blowfish all remain untested, and the
+targets themselves are unanchored. Read it as *this family is done*, not as *B2 is
+closed*. 0 oracle calls - no candidate was produced, so there was nothing to gate.

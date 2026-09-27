@@ -559,7 +559,7 @@ only sound next step requires human/vision access to that image. Date: 2026-08-2
 
 ### Research note 6 (2026-08-27): image OCR identifies the Cosmic Duality blob as the known swept "dualite" blob -- no new lead
 
-The user granted access to `~/briefcase/SalPhaselonCosmicDuality.png`. Image has a
+The user granted access to `~/briefcase/SalPhaselonCosmicDuality.png`. [PROVENANCE 2026-09-26: this file is a COMMUNITY RENDER, not an author artifact - sha256 a3810ba24250c5a0, unattributed, present in no capture of the SalPhaseIon page and sourced from the misnamed `1-big-prizes/gsmg-community-hints-repo/` which is actually Naddiseo's community repo. Findings below describe THIS FILE only and carry no weight about authorial intent. See `analysis/tested.md` R-STRUCT8-13-5-2026-09-26.] Image has a
 SalPhaseIon section (the documented streams) and a Cosmic Duality section (one OpenSSL
 blob). OCR of the blob's header line gives salt `2d3f6fe06dc950e6`, which EXACTLY
 matches the community's already-swept "dualite" blob (part of the 4-blob sweep set:
@@ -630,7 +630,7 @@ community has mechanized. Date: 2026-08-27, local.
 ### Research note 9 (2026-08-27): SECTION 1 dbbib LENGTH CORRECTION -- image says 69, not 91
 
 User flagged that the section-1 stream I showed (91 tokens, from the community README) is
-longer than the image. OCR of `~/briefcase/SalPhaselonCosmicDuality.png` (section 1,
+longer than the image. OCR of `~/briefcase/SalPhaselonCosmicDuality.png` (section 1, [PROVENANCE 2026-09-26: community render, provenance unattributed - see `analysis/tested.md` R-STRUCT8-13-5-2026-09-26. This OCR is of a solver-made file, so it is evidence about that file, NOT about the author's page. The 69-token reading it produced was already reversed by note 32; do not re-derive from this image.]
 SalPhaseIon region, a-i whitelist, multiple PSM passes) reads section 1 as TWO lines:
   line1 `dbbibfbhccbegbihabebeihbeggegebebbgehhebhhfba` (45)
   line2 `ggecbedcibfbffgigbeeeabe`                          (24)
@@ -669,9 +669,9 @@ Net: `1Hxxxxxx`/`1Bxxxxxx` cannot map to any funded target we hold; treat as res
 ### Research note 9 (2026-08-27): SECTION 1 dbbib LENGTH CORRECTION -- image says 69, not 91
 
 User flagged that the section-1 stream I showed (91 tokens, from the community README) is
-longer than the image. OCR of `~/briefcase/SalPhaselonCosmicDuality.png` (section 1,
+longer than the image. OCR of `~/briefcase/SalPhaselonCosmicDuality.png` (section 1, [PROVENANCE 2026-09-26: community render, provenance unattributed - see `analysis/tested.md` R-STRUCT8-13-5-2026-09-26. This OCR is of a solver-made file, so it is evidence about that file, NOT about the author's page. The 69-token reading it produced was already reversed by note 32; do not re-derive from this image.]
 SalPhaseIon region, a-i whitelist, multiple PSM passes) reads section 1 as TWO lines:
-FALSIFIED by the image - dbbib is 69 = 3x23, which does not match any transposition
+FALSIFIED by the image [PROVENANCE 2026-09-26: THIS INFERENCE IS UNSOUND AND MUST NOT BE RELIED ON. The image is a community render, not the author's page, so it cannot falsify the 91-token reading. It is also simply wrong about the data: the middle run is present in both machine-readable primaries, per note 32 and row 16X, and 91 = 7x13 is the reinstated ground truth. See `analysis/tested.md` R-STRUCT8-13-5-2026-09-26. - dbbib is 69 = 3x23, which does not match any transposition
 key-length token. all prior matrix-sum / keyed-alphabet sweeps that used the 91/13x7
 reading baked in the WRONG dbbib stream (with the spurious 22-char middle), so their
 negatives against the funded small blob are inconclusive for dbbib and would need
@@ -741,6 +741,8 @@ the corrected 69-token dbbib (A0/A1/canon col-sums as key, row/col reads + Bifid
 
 ### Research note 15 (2026-08-27): CMYK/channel separation of SalPhaselonCosmicDuality.png -- anaglyph, no hidden channel extractable
 
+[PROVENANCE 2026-09-26: the file analysed here is a COMMUNITY RENDER (sha256 a3810ba24250c5a0, unattributed, referenced by no capture of the SalPhaseIon page; it entered this repo via the misnamed `1-big-prizes/gsmg-community-hints-repo/`, which is Naddiseo's community repository, not the author's). Every pixel-level finding below - including the anaglyph offset and the "yellow blue" match - is a property of that unattributed render and is NOT evidence about the author's intent. It also retires the broader "hidden layer in the PNG" idea: there is no author image in which anything could be hidden. See `analysis/tested.md` R-STRUCT8-13-5-2026-09-26.]
+
 User: "check it with CMYK". Converted 668x619 RGB PNG to C/M/Y/K and analyzed each plane.
 
 Findings:
@@ -801,6 +803,10 @@ colored glow. No new candidate to oracle-test. The visual leap (color-band inter
 still requires human eyes. Date: 2026-08-27, local.
 
 ### Research note 18 (2026-08-27): "yinyang is black and white" -- the yinyang = the even/odd two-stream split, not a color channel
+
+> **SUPERSEDED IN PART by the creator's own definition - read this first.** The central claim below, "That even/odd split IS the yin/yang", is WRONG as a statement about the puzzle and must not be used as the working model. Primary source (`Jrk_Bgrt_Groupchat_History.txt` :1616, 2025-04-28T13:01:36): a solver asked "is yinyang found after decoding an AES ciphertext?" and the creator answered, verbatim, **"It's the next phase, but I await the day someone finally gets there."** So by the author's own account the yinyang is (a) a distinct PHASE lying AFTER the AES ciphertext, and (b) unreached by anyone as of 2025-04-28. The even/odd Bifid split is a structure *inside the current phase* that solvers had already reconstructed - it cannot be the next phase. The "black/white, not a colour channel" sub-claim below survives and is still useful; the identification does not. The correct ordering (`get material -> open AES -> interpret yinyang`) was already actioned and certified negative at `R-YINYANG-AFTEROPEN` + `-RERUN` (2026-09-24), sourced from the same message via silver_ant's export #39237. Kept below for its negative results, which remain valid, and demoted from "this IS the yinyang" to "this is a current-phase structure the community nicknamed yinyang". See `R-YINYANG-DEF-2026-09-26`.
+>
+> **RESOLVED POSITIVE - `R-YINYANG-MARKER-2026-09-26`. Do not run a yinyang battery; the artifact has been found and it is a one-off.** The author's actual yin-yang is a polarity bracket he wrote himself, on the PHASE 2/3 page, immediately around the chess FEN: the same token `aBa` under a predicate and its negation, `/(aBa, connected enf)` ... `/(aBa, connected not enf)`. Enumerating every `/(token, polarity)` marker across 155 author-source files gives D=4 pairs, and `aBa` is the ONLY token carrying both polarities; `aa` and `aaa` are single-polarity terminators for the Phase-3 components, not brackets. So the bracket occurs exactly ONCE in the whole corpus, it is attested in the 2020 Wayback capture (bracket region byte-identical, `83241c25147f`, across all 4 copies), and it is already CONSUMED: the polarity axis is the FEN side-to-move (`w`/`6R1` published, `b`/`2R5` in the working password = after `Rg6-c6+`), byte-verified in `R-CHAIN23-2026-09-26`. There is no second bracket to carry it to, so "apply the yinyang elsewhere" has no referent - this is a positive identification that CLOSES the thread, not a deferral. Separately, taijitu/rotational-antisymmetry is negative at chance level on all four DECRYPTED plaintexts (0.005-0.032 vs 0.5 for a real taijitu), including the tempting 36x36 framing of the 1,296 B cosmic payload, which has 249/256 distinct bytes and is a further cipher layer, not a 2-colour image. Do NOT promote `enf`/`not enf` into a general inversion rule - that is the `R-DOORGlyph` trap and is explicitly not claimed. Note also that `R-YINYANG-DEF`'s "no battery, the yinyang is downstream of the AES boundary" was a VOID gate: we are past four AES boundaries, so the thread was parked, not blocked. Lead 0's missing 28-char alphabet remains open and is unaffected by any of this.
 
 User insight: the yinyang (classical) is black and white. Applied to the image (exact#ffffff
 + exact#000000 established in note 17 as the ONLY two solid colors; all else = anti-alias
@@ -1348,7 +1354,11 @@ crux. No ranking change: this removes route-2's residual gap, it adds no candida
 
 1. Re-auditing row 194 exposed a real mechanical gap: rekey91.py keyworded every alphabet
    through keyed28() (dot-stripping dedupe), so the LITERAL 28-char board
-   `FUBCDORA.LETHINGKYMVPS.JQZXW`  -  the only author-verified keyed alphabet in the puzzle
+   `FUBCDORA.LETHINGKYMVPS.JQZXW`  -  the only keyed alphabet in the puzzle, but call it
+   AUTHOR-SEEDED / COMMUNITY-PERMUTED, not "author-verified": the 26 letters come from the
+   author's own Phase-3.2 sentence ("A fubcd-king & oracle-queen, thingky mvps, ..."), but the
+   letter ORDER, the dot placement and the 8/18 splice are the community's. See
+   `R-BOARD28B-2026-09-26` FINDING 3, which also retires the permutation framing.
    (certified_vic.selfcert round-trips the 149-digit VIC message verbatim under escapes
    (1,4))  -  was never applied to the true 91-token dbbib or faed. Tools/phase322_literal_sweep.py
    fills it: 1824 forms, 2502 clean, 0 MATCH on both gates (tested.md row 196; all witnesses
@@ -1853,3 +1863,29 @@ Closed: every byte feeding the gate password and `BLOB_B64` is now date-pinned 2
 and verified from an independent decode. oracle.py Part 4 certifies this provenance in the
 self-test. OPEN and unchanged: the funded-gate key reduction from the `B1_79.bin` fields
 (sha256/first32/last32 family) to `1GSMG1JC9...` (1.2563451 BTC). Date: 2026-09-20.
+
+### Lead 9 correction, 2026-09-27 (`R-SLUGF971`, `R-CDXFULL`)
+
+**Open slugs: 1, not 7 - and its existence is unconfirmed.** `f9719d6d` is not a
+post preimage at all: it equals `sha256(raw 32 bytes of 89727c59)`, verified with
+`sha256sum`. So the count of unexplained 64-hex slugs is down to `673e3b1a` alone, and
+that one has **no preimage**, so whether a post ever existed at that path is
+unconfirmed - the archived body is the SPA catch-all, byte-identical (modulo the
+csrf-token meta) to two other paths', and live `/f9719d6d` is 404. The five recovered
+preimages are on firmer ground precisely because a real authorial phrase hashing to the
+recorded slug confirms both the law and the post.
+
+**Re-score: terminal, not low-priority.** The premise of this lead was "a new
+transcription of stage wording is also a batch of preimage candidates". That premise is
+now spent - phase-1, phase-2, phase-3 and phase-3.2 wording are all exhausted, and
+`R-CDXFULL` closes the other supply route by showing the **entire** 620-urlkey CDX
+surface is already in the corpus, so no archive can yield an unmined post. Any further
+preimage would have to come from a pixel-only string this folder does not hold, i.e.
+from direction (b), not from more transcription.
+
+**Standing lesson worth carrying to the other leads (it has now fired three times:**
+`R-SOLVERGRP-IMG`, the two retracted `R-JRK8446` findings, and now `f9719d6d`):** before
+promoting an authorial artefact, ask what in *our own tooling* could have produced the
+pattern. In this case `tools/decodekey_vic.py:39` had already computed the exact value
+and listed it as a decode-key target, so any sweep that requested the path put it in the
+index. A 2^-256 coincidence is exactly what a self-fulfilling generator looks like.
