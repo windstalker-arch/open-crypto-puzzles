@@ -14211,3 +14211,99 @@ author-named stage with a published password and a missing file, which is a reco
 rather than a search target.
 
 Date: 2026-09-27, local.
+
+## R-P5FILE-2026-09-27: gsmg.io NEVER HOSTED A PHASE FILE. The phase-5 blob is the author's local disk, not a lost asset - the archive route is CLOSED, not merely unretrieved.
+
+0 oracle calls, 4 CDX queries. N = 4 requests, D = 45 s/query, t = 3 min. Witnessed live.
+
+This closes the "where to look" clause of `R-BLOBINV` FINDING 4, which left phase 5 as a
+Wayback/asset-recovery target. It is not one. Targeted CDX on the exact filename and asset
+extensions:
+  url=gsmg.io, matchType=domain, filter=original:.*[Pp]hase.*  -> 9 urlkeys, ALL of them pages:
+    /phase1 /phase1verification /phase2 /phase3 /phase3_2_2 /phase3_2_2_2 /salphaseion
+  url=gsmg.io/*.txt                                                 -> EMPTY
+  url=gsmg.io/*, filter=(phase5|phase4|\.txt|\.enc|\.bin|\.b64)   -> only .well-known/*.txt,
+    ads.txt, app-ads.txt, robots.txt
+So there is no `/phase5`, no `/phase5.txt`, and no ciphertext asset of any extension anywhere
+in the domain's archive. FINDING 4's conclusion stands and is now sharper: the `openssl
+enc -d -in phase5.txt` line is the author's own console history published as prose, and the
+file it names lived on his machine. This is stronger than a hole - a hole would be worth
+retrying; a URL that was never crawled cannot be. Phase 5 is therefore CLOSED as a supply
+problem and joins phase 3.2 as a cryptographic-only gap (for phase 5: unrecoverable, full stop).
+
+## R-SALCAP-2026-09-27: THE CRUX PAGE'S ARCHIVE SUPPLY IS EXHAUSTED, and two standing claims in this ledger are wrong about it.
+
+0 oracle calls, 11 requests (2 CDX, 2 fetches, 5 archive.ph, 1 app.js, 1 header probe). D = 45 s,
+t = 12 min. Witnessed live, 2026-09-27.
+
+FINDING 1 - WAYBACK HOLDS NO CONTENT FOR /salphaseion, ONLY THE EMPTY SPA SHELL. Two captures
+exist (20260410131115, 20260418154550; CDX lengths 12,486 and 12,212 compressed). The raw
+`id_` body is 10,473 B of high-entropy bytes that are NOT corrupt: the response carries
+`content-encoding: br`, so `brotli.decompress` yields 36,627 B of valid HTML whose entire text
+content is the single word "GSMG" - zero `<img>` tags, zero case-study markup, body text
+"GSMG" only. The content is client-side. I then checked whether any archived surface could
+carry it: the site's 2,387,286 B `/js/app.js` contains **0** occurrences of "salphaseion" or
+"salPhase" (it is the trading platform's bundle), and every archived `/api` capture is a
+trading or subscription endpoint (`/api/v1/subscriptions`, `.../history`,
+`.../market-features`). There is no archived JSON route that ever held the page's content.
+This is a useful mechanical note for anyone re-fetching: **Wayback replays the original
+`content-encoding` on `id_` responses, so gsmg.io captures must be brotli- or
+gzip-decompressed before they can be read or hashed.** Reading one raw is how a 36 KB page
+looks like noise.
+
+FINDING 2 - THE 2025-06-06 "CAPTURE" CITED AT tested.md:11898 IS NOT A SEPARATE OBJECT.
+That row lists "captures exist for the SalPhaseIon page at 2025-06-06 ... falling inside
+Wayback holes". Fetching that timestamp returns **HTTP 200 with 36,627 B - exactly the
+decoded length of the 2026-04-10 shell** - because with no capture at the requested
+timestamp, Wayback silently serves the nearest one. It is a redirect, not a hole. The CDX
+index for `gsmg.io/salphaseion*` contains only the two 2026 rows above; there is no
+2025-06-06 capture to be blocked on.
+
+FINDING 3 - archive.today HAS NO SALPHASEION CAPTURE AT ALL, so the standing egress-IP
+advice is wrong for this page. `tested.md:11904` says "anyone holding a different egress IP
+may still be able to pull these three" and groups the SalPhaseIon page with two others. I
+queried archive.ph for `https://gsmg.io/salphaseion` and four variants - the exact URL, the
+`/salphaseion*` prefix form, capitalised `Salphaseion*`, `http://` rather than `https://`,
+and `www.gsmg.io` - and every one returns a 3.3 KB interstitial whose body says **"No
+results"** with zero timestamp links. That is a definitive "this archive never crawled the
+page", not a 429. So for the crux page a different IP buys nothing; the advice survives only
+for the `/choiceisanillusion...` and `/theseedisplanted` captures.
+
+NET EFFECT ON THE CRUX. Lead 0's keyed 28-char alphabet has no external supply route left.
+The only authoritative rendering remains the on-disk `data/live_salphaseion.html`, already
+re-verified byte-exact at late-223/late-226, and the only remaining reads are the human
+visual ones already itemised in `analysis/lead0-inspection-checklist.md` (the missing `.`
+marker, the lone `/`, the FEFEFE nest cell at grid (7,4)). I am not widening the battery
+against Lead 0 on the strength of "the archive had a hole" - that premise was wrong.
+
+## R-L0DERIVED-2026-09-27: TODAY'S NEW DERIVED VALUES ARE NOT THE LEAD-0 KEYWORD. 2,016 keyed boards x both funded gates, 0 matches.
+
+2,016 candidate decodes x 2 oracles (4,032 checks), 0 matches. N = 2,016, D = 12/s per gate,
+t = 9 min for all 8 keywords. Both oracles `--selftest` PASS before and after.
+
+Today's B2 certification produced values that did not exist as puzzle inputs before
+(`R-B2RUNG2`, `R-BLOBINV`): the four ladder keys, both 15-byte field readings `E_C` and the
+newly anchored `E_S`, the 30-of-32 chain-4 password, and the B2 WIF. Those are derived
+truth, not guesses, so they are legitimate new battery input under the Lead-0 rule (the
+closed rows covered mechanisable word families - 9!, keyed-28 of words, Bifid 91/13/7/1,
+Beaufort, base-N, whole-stream pipelines - not the ladder). I fed all eight through the
+certified 3.2.2 battery via `tools/lead0_try.sh --keyword`, which builds the keyed 28-char
+board and runs the full 24-config grid against BOTH funded gates:
+  E_C 38d4f4c90cb45fdfc8cff50d0ed1c5                            288 candidates, 0 match
+  K_C1 9fa9db91a9dee0e38b93694ec874630b30f32f33671987543b1cf913f4746439  288, 0
+  K_C2 1517389608d55021dc436b66ec513a617c4f14cb0fed4708b535641a6dfe8210  288, 0
+  K_S1 b06fa6f20561756c865dac7190f063480a371e4a13206e529ee7e9078f309c4b  288, 0
+  K_S2 b11d211ca0a17cd68c580308f3e6f21d3f935c8da3c4373b6f73ab5ccfaea597  288, 0
+  CHAIN4_PW 38d4f4c90cb45fdfc8cff50d0ed1c5740a25de4b8e946d0a5ae2667a23a259cc  288, 0
+  B2 WIF 5K2byJMssxFKuTgnk9YQjpBz5FhkwwF2LaZoAyTus8HjGEpz8AT           288, 0
+All 48 (keyword x gate) result lines report "no match". Worth recording WHY this is a real
+test and not a formality: the ladder values are the only author-consistent secrets we have
+derived, and the obvious hope was that `E_S` - the second field half, which the CADEIA ladder
+made checkable for the first time - is the interpreter's keying keyword. It is not. The
+keyed-28 construction needs a *word*; a 15-byte hex reading keys the board only through its
+own characters, which is why these boards are the mechanical dregs of their inputs.
+
+STATUS UNCHANGED: Lead 0 remains the single live gate, and no new supply route for it
+exists in any public archive.
+
+Date: 2026-09-27, local.
