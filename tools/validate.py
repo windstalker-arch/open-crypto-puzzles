@@ -108,6 +108,41 @@ WORD_SCOPED_EXCEPTIONS = {
         {"wall"},
 }
 
+# Span-level counterpart to WORD_SCOPED_EXCEPTIONS. A quoted filename, log line,
+# on-chain metadata string or fenced block is evidence rather than prose: the
+# research ledgers transcribe the puzzle's own artifacts verbatim, and rewriting a
+# forbidden word or an em dash inside one of those would falsify the record. Checks 3
+# and 4 therefore scan the author's own text and skip what is being quoted. Note the
+# consequence, which is the point of the rule: putting text in quotes exempts it, so a
+# genuine violation can still be laundered by wrapping it. Masking preserves length so
+# reported columns keep lining up with the source line.
+QUOTED_SPAN_PATTERN = re.compile(r"``.*?``|`[^`]*`|\"[^\"]*(?:\"|$)|'[^']*(?:'|$)")
+FENCE_PATTERN = re.compile(r"^\s*(?:```|~~~)")
+
+
+def mask_verbatim(text):
+    """Blank out quoted spans, keeping the line the same width."""
+    return QUOTED_SPAN_PATTERN.sub(lambda m: " " * len(m.group(0)), text)
+
+
+def scannable_lines(lines):
+    """Pair each line with the text a style check may judge.
+
+    Yields (lineno, original, scannable) for an iterable of raw lines. Fenced blocks
+    are masked whole; a fence left unclosed masks the rest of the file, which is
+    treated as one more thing to fix rather than a reason to stay silent.
+    """
+    in_fence = False
+    for i, line in enumerate(lines, start=1):
+        if FENCE_PATTERN.match(line):
+            in_fence = not in_fence
+            yield i, line, ""
+        elif in_fence:
+            yield i, line, ""
+        else:
+            yield i, line, mask_verbatim(line)
+
+
 FRENCH_CHARS_PATTERN = re.compile(r"[àâçéèêëîïôûùüÿœ]", re.IGNORECASE)
 FRENCH_WORDS = ["dossier", "piste", "porte", "témoin", "épuisé", "réfuté"]
 
@@ -157,10 +192,56 @@ class Report:
         sys.exit(1 if any_fail else 0)
 
 
-def iter_files(root, exts=None):
+_IGNORED_CACHE = None
+
+
+def ignored_paths():
+    """Repo-relative paths git is ignoring, so the walk can skip local scratch.
+
+    The validator judges the repository, not whatever happens to be lying around in
+    the working tree. An ignored tree is by definition not part of the repository:
+    a private fork export under usr/tmp/, a __pycache__, a downloaded wordlist. It
+    can hold verbatim third-party text that would fail the style checks no matter
+    what we do to it, and failing on it hides the real findings. Note what is NOT
+    skipped: a file that is merely untracked still gets checked, because that is
+    usually a new file being proposed for commit.
+
+    Built once per run from git itself rather than by parsing .gitignore, so nested
+    and negated rules behave exactly as git does. Empty outside a checkout, which
+    leaves the walk covering everything.
+    """
+    global _IGNORED_CACHE
+    if _IGNORED_CACHE is None:
+        try:
+            proc = subprocess.run(
+                ["git", "ls-files", "--others", "--ignored", "--exclude-standard", "--directory"],
+                cwd=REPO_ROOT, capture_output=True, text=True, check=True,
+            )
+            _IGNORED_CACHE = {
+                line.strip().rstrip("/") for line in proc.stdout.splitlines() if line.strip()
+            }
+        except (OSError, subprocess.CalledProcessError):
+            _IGNORED_CACHE = set()
+    return _IGNORED_CACHE
+
+
+def walk_pruned(root):
+    """os.walk that never descends into .git or into anything git is ignoring.
+
+    Every check goes through this so that ignored scratch is invisible to all of
+    them at once, rather than each walk growing its own exclusion list.
+    """
+    ignored = ignored_paths()
     for dirpath, dirnames, filenames in os.walk(root):
         if ".git" in dirpath.split(os.sep):
+            dirnames[:] = []
             continue
+        dirnames[:] = [d for d in dirnames if rel(os.path.join(dirpath, d)) not in ignored]
+        yield dirpath, dirnames, filenames
+
+
+def iter_files(root, exts=None):
+    for dirpath, _dirnames, filenames in walk_pruned(root):
         for fn in filenames:
             if exts is None or os.path.splitext(fn)[1].lower() in exts:
                 yield os.path.join(dirpath, fn)
@@ -328,8 +409,8 @@ def check_forbidden_chars(scope_root):
                 lines = f.readlines()
         except (UnicodeDecodeError, OSError):
             continue
-        for i, line in enumerate(lines, start=1):
-            m = FORBIDDEN_CHARS_PATTERN.search(line)
+        for i, line, scannable in scannable_lines(lines):
+            m = FORBIDDEN_CHARS_PATTERN.search(scannable)
             if m:
                 cp = hex(ord(m.group(0)))
                 failures.append(f"{rel(path)}:{i}: forbidden character {cp} in: {line.strip()[:80]}")
@@ -355,8 +436,8 @@ def check_forbidden_words(scope_root):
         is_ai_name_exception_file = basename in WORD_CHECK_TOOL_NAME_EXCEPTIONS
         is_root_readme = os.path.abspath(path) == os.path.join(REPO_ROOT, "README.md")
 
-        for i, line in enumerate(lines, start=1):
-            lower = line.lower()
+        for i, line, scannable in scannable_lines(lines):
+            lower = scannable.lower()
             for word in FORBIDDEN_WORDS:
                 pattern = re.compile(r"\b" + re.escape(word) + r"\b")
                 if pattern.search(lower):
@@ -507,9 +588,7 @@ def check_cross_references(folders):
 def check_sizes(scope_root):
     failures = []
     total_size = 0
-    for dirpath, dirnames, filenames in os.walk(scope_root):
-        if ".git" in dirpath.split(os.sep):
-            continue
+    for dirpath, _dirnames, filenames in walk_pruned(scope_root):
         for fn in filenames:
             path = os.path.join(dirpath, fn)
             try:
@@ -600,7 +679,7 @@ def check_forbidden_filetypes(scope_root):
             failures.append(f"{rel(path)}:1: .gz exceeds 5 MB")
         if ext == ".zip":
             failures.append(f"{rel(path)}:1: .zip is a forbidden file type")
-    for dirpath, dirnames, filenames in os.walk(scope_root):
+    for dirpath, dirnames, _filenames in walk_pruned(scope_root):
         if "__pycache__" in dirnames:
             failures.append(f"{rel(os.path.join(dirpath, '__pycache__'))}:1: __pycache__ directory present")
     return failures
@@ -777,10 +856,7 @@ def check_index_consistency(scope_root):
 
 def check_emptiness(scope_root):
     failures = []
-    for dirpath, dirnames, filenames in os.walk(scope_root):
-        if ".git" in dirpath.split(os.sep):
-            dirnames[:] = [d for d in dirnames if d != ".git"]
-            continue
+    for dirpath, dirnames, filenames in walk_pruned(scope_root):
         if not dirnames and not filenames:
             failures.append(f"{rel(dirpath)}:1: empty directory")
 
@@ -806,7 +882,7 @@ def cleanup_pycache(scope_root):
     would make check 9 (forbidden file types) fail on the *next* run. Called both before
     check 9 (to clean up anything left by an earlier manual run) and after check 11."""
     import shutil
-    for dirpath, dirnames, filenames in os.walk(scope_root):
+    for dirpath, dirnames, _filenames in walk_pruned(scope_root):
         if "__pycache__" in dirnames:
             shutil.rmtree(os.path.join(dirpath, "__pycache__"), ignore_errors=True)
             dirnames.remove("__pycache__")
