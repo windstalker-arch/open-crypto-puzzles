@@ -21,6 +21,12 @@ prioritization for what to watch.
 ## 3. Passive monitoring
 
 I recommend watching the `spent` flag on the 4 live addresses, to catch a third party
-claiming first, and watching RIPEMD-160/SHA-256 collision announcements. This is not yet
-set up as a running watch; it is a zero-cost thing to check periodically alongside other
-folders.
+claiming first, and watching RIPEMD-160/SHA-256 collision announcements.
+
+STATUS 2026-08-28: a zero-dependency monitor is now shipped at `tools/watch.py` (stdlib
+urllib + json, mempool.space API). Run it periodically; it reports each live address's
+state and returns exit 1 with an ALERT if any live address has become spent (a collision
+pair claimed on-chain). First run 2026-08-28 confirmed all 4 still UNSPENT (sha256
+0.27734251, ripemd160 0.11576888, hash160 0.10026873, hash256 0.10026873 BTC). Also watch
+RIPEMD-160 / SHA-256 collision announcements; this stays a WATCH puzzle until a real
+collision is published.

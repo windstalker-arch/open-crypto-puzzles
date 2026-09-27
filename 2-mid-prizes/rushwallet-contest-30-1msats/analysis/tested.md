@@ -23,10 +23,34 @@ not as a certified-exhaustive sweep of each corpus.
 | OCR text from video frames (original, RuTube, HQ and 720p sources) plus 20 community guesses from the BitcoinTalk thread | about 1,588 OCR lines plus 20 guesses, about 501,600 to 509,399 candidates with variants | 0 match | 2026 (round 3) |
 | Quotes-500K corpus (Goel/Madhok/Garg, ECIR 2018; original Drive link dead, run off the Hugging Face mirror jstet/quotes-500k, sha256 `8fa4c686...b69941` verified before use), quote field taken verbatim | 499,711 streamed (499,708 rows), 493,789 unique after dropping 5,919 in-corpus duplicates | 0 match | yes: the 3 sibling passphrases were planted at stream head/middle/tail and all 3 re-found by the same code path | ~362/s average CPU over 23 min (853/s cold, throttled) | 2026-08-23 |
 | Genesis-block byte-string micro-family from SVN r133 main.cpp: coinbase scriptSig hex upper/lower, the backwards-text scriptSig string and its reverse, genesis pubkey literal, nBits/nonce/timestamp/block-hash literals, composite "486604799 4 <hex>" forms | 21 | 0 match | yes: 3/3 selftest vectors re-derived in the same process | - | 2026-08-23 |
+| Reversal / Rot13 / base64 / whitespace-exact / repetition variants of the Morse transcript ("WHAT IF THE GAME STARTED WAY BEFORE ? ... -3302"), the PGP teaser ("There is more than you can see here ... seek and you shall find."), and the video QR decoy ("you thought this was a clue but its not that easy") | 38 streamed (58 unique families) | 0 match | yes: same code path as selftest (3/3 sibling vectors re-derived in-process); no in-stream positive planted because the oracle is target-address-specific, so sibling controls are negatives by construction | ~822/s cold (python-ecdsa) | 2026-08-29 |
 
 Cumulative: about 95.5 million candidates across the rounds above, `FOUND` list empty every
-time. The Quotes-500K and genesis-family rows above are witnessed negatives in this
-project's strict sense; the pre-2026-08-23 rows carry the caveat below.
+time. The Quotes-500K, genesis-family, and reversal/Rot13/base64 rows above are witnessed
+negatives in this project's strict sense; the pre-2026-08-23 rows carry the caveat below.
+
+## Higher-fidelity-video archive sweep (executed 2026-08-27, negative)
+
+Not a passphrase sweep: this closes lead #1's archive half. Full notes in `leads.md`.
+
+- The archived contest page (`web/20150208172337/https://rushwallet.com/contest`) embeds the
+  promo video from YouTube `https://www.youtube.com/embed/sr8lBrtd9U4` ("Fundraising with
+  Bitcoin | Find The Bitcoins Contest"), confirming `sr8lBrtd9U4` is the clue's video.
+- Full CDX inventory of every unique URL captured under `rushwallet.com` for 2013-2016 (the
+  original-site era): zero video assets (no mp4/webm/flv/ogv/mov); the only media the site
+  ever served were audio `baron.mp3`, `turn.mp3`, `balance.wav`. So no site-hosted >720p copy
+  exists in the full-site WARC.
+- `advancedsearch.php` numFound 0 for `rushwallet`, `kryptokit`, and the video ID
+  `sr8lBrtd9U4`: no archive.org item contains the video.
+- Archived thumbnails at `web/20141121043107/https://i.ytimg.com/vi/sr8lBrtd9U4/`:
+  `maxresdefault.jpg` is 1280x720 (60,303 B; sd/hq/mq are lower). It is a bright
+  mostly-white scene with all detail in the central band. OCR (tesseract 5.5.3) on the raw,
+  2-4x cubic upscale, and central crops returns only noise - whiteboard/paper text not
+  recoverable at 720p. Consistent with the established 720p legibility ceiling.
+- Archived YouTube watch pages (2016 shell, 2025 194 KB consent shell) contain no
+  `googlevideo.com/videoplayback` stream URLs; no `get_video_info` WARC exists; the standard
+  Wayback video index already reported the stream "not archived or indexed." Remaining path
+  to a >720p copy is a living copy held by a person, not archive tooling.
 
 ## Media channels checked, not brute-forced
 

@@ -46,6 +46,31 @@ cost: it needs a new interpretation of the pun, not a longer list of candidates.
 Reddit thread on this hunt (88 comments) contains one reader's guess ("use a different
 title"), explicitly not an author-confirmed answer, and it did not lead anywhere when tried.
 
+## 5. The page URL slugs (locations) are a live, under-read clue channel (NEEDS NEW READING)
+
+Reading the site's own routing table (pageId -> title -> pageUriSEO) turns up three
+facts not previously recorded anywhere, so they qualify as genuinely missing clues:
+
+- The South lock's real location is longer than the author-post quote:
+  `havingfunwiththeurl-ilovedthisshowasakid` is missing a trailing
+  `-sosomuch`; the live slug is `havingfunwiththeurl-ilovedthisshowasakid-sosomuch`.
+  The "sosomuch" doubling reads as the author emphasizing "I loved this show as a kid,
+  so so much", still consistent with an off-canon wordplay answer, but it may itself be
+  a token the author expects a solver to notice.
+- The East lock `c2ozw` is titled `resurface` and its location is `take-a-big-breath`
+  (neither appears in any clue file). The East branch's open-page locations are all
+  cultural-song quotes (`celine-dion`, `weallliveinayellowsubmarine`), confirming the
+  "forced cultural quotation naming a BIP39 word" channel in mechanism.md, of which
+  `take-a-big-breath` is the next (locked) example.
+- The West lock `wt1jy` is titled `a message` and its location is `message`.
+
+Each lock's own slug was tested as a password (with and without dashes / expanded) and
+did not open it, and slug-as-password is refuted generally because the open South page
+`neyhh` opens with `Gilligan`, not its slug `name-1`. The value of this channel is
+therefore not "the slug is the password" but that the locations are author-chosen
+cultural references worth mining (especially the musical ones on the East branch) and
+that the South slug needs re-quoting to include `-sosomuch`.
+
 ## External help
 
 I have not contacted the band or its community about this puzzle. The site's own "get hints"

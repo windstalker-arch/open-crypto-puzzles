@@ -45,6 +45,13 @@ clock fresh security field caution effort gorilla speed plastic common tomato ec
 
 Full quotes with dates and links in [clues/author-posts.md](clues/author-posts.md).
 
+The challenge page also shows a `zpub` and the third-party `oritwe/o` `boha` project lists
+a public key for the target; both were verified this session and neither helps: the `zpub`
+does not derive the target at any tested index, and the `boha` pubkey
+`0385a3a591451ed7ed6c90dae882db918107d6f906d270cf4728d168126e0e89aa` is the genuine
+compressed public key of the escrow address (its hash160 is the target's), which is only
+the public half of the key pair and adds no secret. (`analysis/tested.md`, sections 7-8).
+
 ## What is understood
 
 ### Mechanism
@@ -98,10 +105,11 @@ path. Reproduced 2026-08-16.
 4. The GF(256) arithmetic and Lagrange interpolation behind that measurement were
    checked against an independent reference: 65,536 multiplication products and 32,553
    interpolation evaluations, 0 discrepancies.
-5. 14 archived captures of the challenge page and its regional mirrors, spanning
-   2020-07-04 to 2024-02-25, show only the same 2 shares. The window from funding
-   (2020-06-19) to the earliest capture (2020-07-04), 15 days, is not covered by either
-   archive I checked.
+5. Every archived capture of the challenge page and its regional mirrors (Wayback +
+   Common Crawl, 2020-07-04 to 2024-02-25) shows only the same 2 shares. Common Crawl
+   independently confirms this at the earliest reachable point (2020-07-04, record
+   digest `VL2EUR4KXMBSCLVXAJN3VAYCO7WRVUPB`). Only the brief window from funding
+   (2020-06-19) to that first capture is uncaptured.
 6. Two GitHub issues on `bitaps-com/jsbtc`, filed 2026-07-28 and 2026-07-29, reported
    the same entropy-check defect I measured, 6 days before I found it independently
    (verified via the GitHub API on 2026-08-03). Neither issue number resolves on a
@@ -117,22 +125,30 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | 3rd share published anywhere in the archived challenge page or its mirrors | 14 archived captures, 5 hosts, 2020-07-04 to 2024-02-25 | fetched every capture, extracted every 12-word phrase, compared to the 2 known shares | 0 additional shares found | yes: detector recovers both known-good shares from every capture | 2026-08-03 |
 | coefficient PRNG weakness in the deployed `jsbtc` | source review of the bundled `bip39_mnemonic.js` | read the file for a `Math.random` fallback path | none found; CSPRNG only | uncertified: source review, not an executed test | 2026-08-03 |
 | direct reconstruction from the 2 published shares alone | below the 3-share threshold | GF(256) interpolation with only 2 points | does not derive the escrow address | yes: `tools/oracle.py --selftest` | 2026-08-16 |
+| challenge `zpub` derives the target | 0..20 indices, /0/0../3/0 | derive each with python-bitcoinlib + bech32, compare to escrow | refuted: none match the target | yes: bech32 derivation + address compare | 2026-08-28 |
+| 3rd party `boha` pubkey is target's secret-relevant key | hash160 of `0385a3a5...` | RIPEMD160(SHA256(pubkey)) + bech32 | matches the target address, but is only the public half of the key pair | yes: hash + bech32 round trip | 2026-08-28 |
 
 ## Open leads, ranked
 
-1. **The 15-day archive gap** (hours). The earliest archived capture I found of the
-   challenge page is dated 2020-07-04, 15 days after funding; neither Wayback CDX nor
-   Common Crawl has anything for this window. If a 3rd share was ever posted and later
-   removed, this is the only window it could have gone uncaptured. Confirmed by any
-   dated capture from this window showing a different page state; closed by a search of
-   regional archivers and search-engine caches turning up nothing, matching the rest of
-   the timeline.
-2. **Uncertified channels** (hours). archive.today returned HTTP 429 on its own
-   known-good witness page when I tried it; Memento TimeTravel was unreachable; I found
-   no verified anonymous read route for X replies to `@bitaps_com`; the 13 GitHub forks
-   of `mnemonic-offline-tool` have not been individually reviewed; Telegram's
-   `t.me/s/bitapscom` public preview has not been read. None of these are established as
-   empty, only as not yet checked with a working method.
+Assessment (2026-08-28): on present evidence this challenge is effectively unsolvable. The
+crypto is information-theoretically secure with 2 shares of a 3-of-5 scheme (~125 bits of
+residual entropy), and several independent researchers (matuta99, onvej-sl, Christopher
+Reid, the `boha` project) plus the `jsbtc` bug-bounty issues all reach the same conclusion.
+The only winning path is a 3rd share, which has never surfaced in 4+ years of archives. The
+few remaining leads below are only worth a bounded OSINT effort, not compute.
+
+1. **The short archive window around funding** (hours, low probability). Common Crawl has
+   now confirmed the challenge page content at the earliest reachable point (2020-07-04)
+   is identical to all later captures. Only the days between funding/publication
+   (2020-06-19) and that first capture are uncaptured. A 3rd share could only have been
+   removed within that window; a dated screenshot/forum mirror from those specific days is
+   the only remaining way to surface it.
+2. **Uncertified channels** (hours, low probability). archive.today returned HTTP 429 on
+   its own known-good witness page when I tried it; Memento TimeTravel was unreachable; I
+   found no verified anonymous read route for X replies to `@bitaps_com`; the 23 GitHub
+   forks of `mnemonic-offline-tool` are mostly auto-generated but the early ones show no
+   divergence; Telegram's `t.me/s/bitapscom` public preview has not been read. None of these
+   are established as empty, only as not yet checked with a working method.
 
 Full notes: [analysis/leads.md](analysis/leads.md).
 
@@ -143,6 +159,7 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | `clues/author-posts.md` | the challenge-page quotes and the 2 published shares, verbatim, with dates and links |
 | `data/entropy_measurements.csv` | the 3 residual-entropy measurements behind "about 125 bits," with method and date |
 | `data/related_disclosures.csv` | dated timeline of events on the `jsbtc` repository and the challenge address |
+| `data/shares.md` | the 2 published shares verbatim, with decode indexes |
 | `analysis/tested.md` | full negatives ledger |
 | `analysis/leads.md` | full lead notes |
 | `tools/oracle.py` | reconstruction checker: candidate 3rd share plus the 2 published shares to a derived address |
@@ -154,4 +171,6 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 - `bitaps-com/mnemonic-offline-tool`, commit [`5b6dd995`](https://github.com/bitaps-com/mnemonic-offline-tool/commit/5b6dd995478b49c489b95444fbb0dca4006746a2), 2020-06-19
 - [`bitaps-com/jsbtc`](https://github.com/bitaps-com/jsbtc), repository (code of record)
 - [jsbtc issue #65](https://github.com/bitaps-com/jsbtc/issues/65), coefficient-bias defect, 2026-07-16
+- Common Crawl index, `bitaps.com/mnemonic/challenge`, capture 2020-07-04 (CC-MAIN-2020-29, record digest `VL2EUR4KXMBSCLVXAJN3VAYCO7WRVUPB`)
+- `oritwe/o` `boha` project, challenge listing with target pubkey `0385a3a5...` and hash160 `249dd7ad2...`
 - [mempool.space](https://mempool.space/address/bc1qyjwa0tf0en4x09magpuwmt2smpsrlaxwn85lh6), escrow address, checked 2026-08-16

@@ -16,6 +16,19 @@ personally reproduced that calibration inside this folder.
 | About 50 candidate 11-word sets (essence word, BIP39 word at the token's index, BIP39 word at index minus 1, SLIP-39-to-BIP-39 index swap) across several orderings, 14 derivation paths, and all 128 checksum-valid 12th words | reported | about 22.5 million addresses derived | 0 match |
 | 9 specific 11-word sets, each swept over all 11! = 39,916,800 orderings: the 11 Fibonacci-numbered bitGANs, the first 11 tokens numbered 445 to 512, the 11 roboGAN rows with Type = Glitch, the 11 misspelled "glitch" rows (1 "Gltich" plus 10 "G1itch"), and 11 anomalies from an on-chain "HiddenType" trait | reported | 9 x 39,916,800 orderings | 0 match |
 
+## 2026-08-28: on-chain metadata sweep lead invalidated
+
+While attempting to run the "132 token indices 1-700 -> 404" sweep, I re-derived the real
+on-chain identity of the prize NFT and found the sweep's premise does not hold:
+
+| Check | Result |
+|---|---|
+| Token contract holds the prize | `0x495f947276749ce646f68ac8c248420045cb7b5e` (OpenSea Shared Storefront, ERC-1155), code present |
+| Escrow balance | `balanceOf(0x18f87ec9c527aba1db44f715456bf28b0dae478d, id) = 1` (public RPC) |
+| On-chain token id | composite `0x55372173689c288552885d897d32f5f706f79aa6000000000002940000000001` (collection hash `0x55372173689c288552885d897d32f5f706f79aa6`, template 660, serial 1); "445/512" is a display label |
+| Contract `uri(id)` | returns centralized `https://api.opensea.io/api/v1/metadata/0x495f9.../0x{id}`; collection metadata marked "Centralized" |
+| Implication | no on-chain token index 1-700 exists to 404; ids are huge composite storefront values. The recorded 404-sweep premise (linear indices 1-700) is invalid. Lead closed. |
+
 ## Structural facts, verified directly against the table in this folder
 
 - The Essence column lists standard BIP39 words in alphabetical order across roughly the

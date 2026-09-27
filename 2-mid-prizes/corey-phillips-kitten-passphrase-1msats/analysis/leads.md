@@ -49,7 +49,7 @@ the full notes behind each entry.
   worth trying only after lead 1 has had a chance to return new information.
 - **What would confirm it**: a match among the generated three-word combinations.
 - **What would kill it**: a full sweep with 0 matches.
-- **Status**: open, not yet run.
+- **Status**: executed 2026-08-27, closed. Ran the three-word homogeneous-join combinator: 39 reconstructed thematic words x 6 join styles = 355,914 candidates, 0 matches, witnessed (oracle selftest + sister-address reproduction through the same `check` gate). Caveat: the original 35-word corpus is not committed, so this ran on a rebuilt thematic vocabulary, and only homogeneous (not mixed) joins were tested. Row added to `tested.md`.
 
 ## Ruled out, not re-tested
 

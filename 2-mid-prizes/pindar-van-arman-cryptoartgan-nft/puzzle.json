@@ -45,7 +45,7 @@
   "tested_total": { "candidates": 22500000, "families": 3, "certified": false },
   "leads": [
     { "rank": 1, "title": "frame-by-frame analysis of the artist's Act 1 - Review archive on Arweave", "cost": "hours of work", "status": "open" },
-    { "rank": 2, "title": "finish the on-chain metadata sweep (about 132 token indices return 404)", "cost": "bounded", "status": "open" },
+    { "rank": 2, "title": "finish the on-chain metadata sweep (about 132 token indices return 404)", "cost": "bounded", "status": "closed-invalid" },
     { "rank": 3, "title": "a bounded 11! x 128 sweep once a specific 11-word set is argued for", "cost": "about 59 hours on 24 CPU cores, reported", "status": "open" }
   ],
   "solutions": [],
@@ -57,5 +57,5 @@
     { "title": "\"BIP39 and bitGANs\" journal entry", "url": "https://bitgans.com/journal/page014", "date": "2022-01-01", "archived": null }
   ],
   "third_party_material": "",
-  "last_updated": "2026-08-16"
+  "last_updated": "2026-08-28"
 }

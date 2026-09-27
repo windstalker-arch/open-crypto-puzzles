@@ -47,9 +47,9 @@
   "difficulty_note": "the mechanism is taught explicitly by the author; tokenization is calibrated against both worked examples; the real carrier text and numeric key are, by the article's own design, author-specific and not guessable from the article alone, consistent with a stylometric pass finding no detectable insertion fingerprint",
   "tested_total": { "candidates": 878000, "families": 8, "certified": false },
   "leads": [
-    { "rank": 1, "title": "read the cipher table on the embedded Steganographia photo", "cost": "hours", "status": "open" },
-    { "rank": 2, "title": "rule out an old-Electrum (non-BIP39) wallet", "cost": "hours", "status": "open" },
-    { "rank": 3, "title": "build a certified acceptance test for the derivation code", "cost": "minutes", "status": "open" }
+    { "rank": 1, "title": "read the cipher table on the embedded Steganographia photo", "cost": "hours", "status": "closed-2026-08-31-full-res-OCR-title-page-no-table" },
+    { "rank": 2, "title": "rule out an old-Electrum (non-BIP39) wallet", "cost": "hours", "status": "closed-2026-08-31-electrum-oracle-selftest-OK-example-seeds-0-match" },
+    { "rank": 3, "title": "build a certified acceptance test for the derivation code", "cost": "minutes", "status": "closed-2026-08-31-derive-py-selftest-SELFTEST-OK" }
   ],
   "solutions": [],
   "artifacts": [],

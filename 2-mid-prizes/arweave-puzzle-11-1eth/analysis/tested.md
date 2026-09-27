@@ -48,3 +48,23 @@ same address-comparison harness, with 0 matches and 0 near-misses anywhere. This
 every direct, single-transform reading of the measured geometry and the metadata anomaly that I
 was able to enumerate. It does not rule out a reading that depends on information outside this
 image, such as the promised but never-delivered "$100" hint (see "Open leads, ranked").
+
+## Bit-level windowed scan (Lead 1, run to exhaustion 2026-08-28)
+
+This is the previously-untested, highest-ranked lead: a systematic bit-level scan of the two
+continuous 8-bit channels (grayscale 256 levels, alpha 26 distinct values) with a tool built
+for that exact purpose. Both channels, all 8 bit-planes (0-7), bit widths 1/2/4/8, LSB- and
+MSB-first read orders, and every contiguous 256-bit window of each extracted bitstream, plus
+whole-stream SHA-256 / double-SHA-256 / Keccak-256 / BLAKE2s and raw 32-byte prefixes. Every
+candidate was checked by deriving its ETH address byte-exact against the target.
+
+| Hypothesis | Space | Method | Result | Witness | Date |
+|---|---|---|---|---|---|
+| Raw contiguous 256-bit window of the grayscale and alpha extracted bitstreams (planes 0-7, widths 1/2/4/8, both read orders) | ~1.5 M window positions across both channels (22 configs x ~220k-1.77M windows) | `tools/lsb_window_scan.py`, `tools/plane_window_scan.py`, `tools/alpha_run.py` (parallel, 8 cores) | 0 exact match; only ~20 incidental derived addresses sharing the `0xff21` prefix but diverging at byte 3 (never `0xff2142...`) | uncertified | 2026-08-28 |
+| Whole extracted bitstream and 32-byte-prefix hashed as a private key | 112 candidates (SHA-256, double-SHA-256, Keccak-256, BLAKE2s of each stream, both channels) | `tools/stream_hash_scan.py` | 0 match, 0 near-miss | uncertified | 2026-08-28 |
+
+Result: Lead 1 (the direct pixel-value bit-level reading, the author's "format does not matter")
+is now run to exhaustion with no match. Combined with the prior raw-pixel hashes and geometry
+sweeps, every mechanical on-device reading of the image's pixel values and bit planes is now
+closed. The two surviving leads (community Telegram group, and a published #9 method) both
+depend on external information with no on-device channel.

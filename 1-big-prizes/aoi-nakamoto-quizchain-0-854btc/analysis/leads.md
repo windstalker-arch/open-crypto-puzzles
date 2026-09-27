@@ -99,6 +99,32 @@ stays open as a standing invitation, same as any human-reasoned wordplay block
 in the series.
 Cost: minutes per candidate; no sweep implied.
 
+## Chapter-internal STNM hint passage (2026-08-28)
+
+The "Second" chapter contains a self-referential passage (its paragraphs roughly
+227-244) in which the author explains her own planted mechanism: every paragraph
+starts with one of I/T/A/S/M except four, which start with F, F, W, W; taking the
+last letters of those four F/F/W/W paragraphs (which carry the Hal Finney
+quotation, with one I-starting paragraph between two of them) spells S-T-N-M, and
+the nearby I paragraph combines to "I STNM", a deliberate echo of the "Nm ST"
+signature in the genesis block and of the "I" that begins Satoshi Nakamoto. The
+passage then points at "the first four and last four words of the paragraph
+hinting at the solution" and closes the quote pair with "Today, Satoshi's real
+identity" / "I recognize the signs" -> "Today, I" / "today I come out as
+Satoshi".
+
+This is a real, verifiable embedded pattern (the F/F/W/W last letters do spell
+STNM), but it is the author's in-chapter *explanation* of the decoration layer,
+not a new search space on its own: every selection it points to (the F/W/H
+starters, the Finney-quote paragraphs, subsets of those candidate paragraphs) is
+already covered by the 2^17 subset sweep and the F/W selector rows in
+`analysis/tested.md`. A quick re-test of the Finney-quote paragraph set alone,
+with and without the case-flip rule, plus the STNM/I paragraphs, joined with
+`\n\n` (5 base texts), gave 0 matches. Recorded so the passage is not mistaken
+for a fresh lead; it chiefly re-confirms lead 1 (the exact rendered byte
+sequence, incl. blank-line separators, is what matters, not the paragraph
+selection).
+
 ## Stage One reproduction: the MD5 and two reimplementation gotchas (issue #1)
 
 stakeados (issue #1) wrote down the exact Stage One value, which this folder reproduced during

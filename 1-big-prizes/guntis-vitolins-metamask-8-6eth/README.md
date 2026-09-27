@@ -162,13 +162,21 @@ notes are in `analysis/tested.md`.
 
 ## Open leads, ranked
 
+**Next execution (toolready, priced, not yet run): the G2 metadata-word sweep.**
+Lead 3's re-read (2026-08-23) produced 11 new words that have not been swept. The sweep
+(`analysis/gpu-sweep-g2.md`) has a finished reference executor (`tools/sweep_g2.py`,
+witness protocol included, verified on-device 2026-08-28): pools = post 22 / video 16,
+subsets = 969,969, enumerated = 351,982,350,720, derivations(proj) = 21,998,896,920,
+about 7.7 h on the rented GPU. Run before leads 1-2, since it tests the words the author
+most plausibly hid.
+
 1. **Extend the word pool with connecting words** (hours on one rented GPU).
    Every sweep so far draws non-anchor words from full content words in the 5
    sentences and confirmed metadata; short connecting words from the same
    sentences ("there", "will", "also", "only", "because", "like", and
-   similar) have not been included. Confirmed by a match in the extended
-   pool; killed by exhausting it with none, under the same witness protocol
-   as every prior sweep.
+   similar) have not been included. This is built into `tools/sweep_g2.py`
+   as the `--liaisons` (G2b) mode. Confirmed by a match; killed by exhausting
+   it with none, under the same witness protocol as every prior sweep.
 2. **Extend to substrings of longer words** (about a day on one rented GPU).
    The author, asked directly, said a list word could in principle hide
    inside a longer written word (his own example: "possible" inside its own
@@ -196,6 +204,9 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | `analysis/leads.md` | full notes behind the 3 ranked leads |
 | `images/01-seed-slot-grid.svg` | the 12-word seed grid, confirmed vs unknown |
 | `tools/oracle.py` | candidate checker, certified against the canonical BIP-0039 vector |
+| `tools/sweep_g2.py` | reference executor for the G2 metadata-word sweep (pools, witness protocol, full sieve) |
+| `analysis/gpu-sweep-g2.md` | runnable spec for the G2 sweep (protocol + cost formula) |
+| `analysis/g2-runbook.md` | how to execute the G2 sweep on rented hardware |
 | `tools/fig_slots.py` | generates images/01-seed-slot-grid.svg from data/seed-slots.json |
 
 ## Sources

@@ -24,6 +24,17 @@ The 2021 mini-hint is read at the pixel level from the published image itself; a
 image at higher resolution than what has been published (if one exists) could resolve
 ambiguity in the glyph reading directly, without needing the author's own clarification.
 
+## 2b. The digit band and extra mini-hint glyphs (RESOLVED via OCR — not a lead)
+
+Pixel-level re-extraction (`tools/extract_minihint.py`, see tested.md #10) shows the 2021
+mini-hint is a composite of 4 stacked formula lines (rows 806-872), a 14-glyph dot-matrix
+digit band (rows 926-931), and two further glyphs (rows 913-923, 932-942). The digit band
+was never documented before. However, best-effort fixed-font OCR AND tesseract both resolve
+it as the **`09111819` / `11122111` date pair** (publish/fix dates), which tested.md already
+ruled out as key data. So this is corroboration, not a new key source; it is NOT a live
+lead. The remaining blocker stays the meaning of the 3 formula terms (lead #1) and any
+higher-fidelity source for the formula glyphs (lead #2).
+
 ## 3. A wider author-error tolerance sweep
 
 A 3-byte wildcard tolerance sweep on 1 or 2 of the candidate bases already tried (roughly

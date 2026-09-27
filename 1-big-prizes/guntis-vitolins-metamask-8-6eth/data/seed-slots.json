@@ -5,7 +5,7 @@
     {"pos": 2, "state": "unknown", "label": "?"},
     {"pos": 3, "state": "unknown", "label": "?"},
     {"pos": 4, "state": "unknown", "label": "?"},
-    {"pos": 5, "state": "confirmed", "label": "fog | cloud"},
+    {"pos": 5, "state": "confirmed", "label": "fog"},
     {"pos": 6, "state": "unknown", "label": "?"},
     {"pos": 7, "state": "unknown", "label": "?"},
     {"pos": 8, "state": "unknown", "label": "?"},

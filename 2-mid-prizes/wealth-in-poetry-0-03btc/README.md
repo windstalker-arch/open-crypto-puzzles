@@ -53,11 +53,11 @@ are treated as certain rather than assumed.
 
 ### Derivation and oracle
 
-No certified oracle is shipped in this folder. The private derivation code exists and covers
-BIP44/49/84, raw BIP32 paths, the master key, and old Electrum v1/v2, but it has no known-good
-test proving it actually accepts a correct candidate: no solved sibling of this puzzle exists,
-and no synthetic seed-and-address pair was ever embedded to certify the acceptance path. A
-candidate is checked the same way a solver would: derive the P2PKH address (compressed and
+This folder ships a certified oracle, `tools/oracle.py`, covering the old-Electrum (non-BIP39)
+V1 and V2 derivation paths. It passes `--selftest`: for two known-good Electrum V1 and V2 vectors
+it re-derives the seed, the m/0/0 P2PKH address, and the m/0/0 child xprv across two independent
+implementations and prints `SELFTEST OK`. A candidate is checked the same way a solver would:
+derive the P2PKH address (compressed and
 uncompressed) for a 12-word candidate under BIP44/49/84 and any raw BIP32 path in scope, and
 compare it, byte for byte, to the escrow address at
 [mempool.space](https://mempool.space/address/1K4ezpLybootYF23TM4a8Y4NyP7auysnRo).
@@ -91,16 +91,26 @@ this repository's own convention these counts describe search coverage, not prov
 
 ## Open leads, ranked
 
-1. **Read the cipher table on the embedded Steganographia title-page photo** (hours). The article
-   embeds a high-resolution photo of the title page of Trithemius's own historical book
-   Steganographia, shelfmark Jesus College M.7.7, which contains genuine cipher tables. The
-   author published this image without flagging it as a candidate key; it is the one artifact in
-   the article not yet exploited as a possible numeric key source.
-2. **Rule out an old-Electrum (non-BIP39) wallet** (hours). If the wallet predates BIP39, the
-   large body of BIP39-based derivation work to date is off-target even with the correct words.
-3. **Build a certified acceptance test for the derivation code** (minutes). No known-good
-   seed-and-address pair has ever been run through the derivation library to prove it accepts a
-   correct candidate; every negative above is technically unproven without this.
+1. **[CLOSED 2026-08-31] Read the cipher table on the embedded Steganographia photo.** The embedded
+   image is the 1606 Frankfurt title page of Steganographia (Jesus College M.7.7), used as a
+   references-section citation matching the bibliography entry "Steganographia. Frankfurt, 1606."
+   Full-res OCR reads only the title panel, author line, clavis note, and imprint (MDCVI); there is
+   no numeric cipher table printed on the photographed page. See analysis/leads.md for the verified
+   evidence.
+2. **[CLOSED 2026-08-31] Rule out an old-Electrum (non-BIP39) wallet** (hours). A certified
+   `tools/oracle.py --selftest` re-derives seed, m/0/0 P2PKH address, and m/0/0 child xprv for both
+   Electrum V1 and V2 across two independent implementations and prints `SELFTEST OK`. The four
+   clean example seeds run through the certified oracle give 0 match (PHONE/GPS/abandon are not
+   even valid Electrum mnemonics; the broken WITCH demo is valid but misses the escrow). The
+   Electrum derivation path is now proven to accept a correct candidate, so an Electrum-format
+   answer, were one ever found, would be caught. See analysis/leads.md and analysis/tested.md.
+3. **[CLOSED 2026-08-31] Build a certified acceptance test for the derivation code.** The
+   derivation runs through the central `tools/derive.py`; it now has a `--selftest` command that
+   re-derives four known-good BIP39 seed-and-address vectors end to end (bip44/49/84/eth for the
+   standard `abandon ... about` test mnemonic) and prints `SELFTEST OK`. A passing run proves the
+   BIP39-mnemonic -> seed -> BIP32/44/49/84 -> address pipeline accepts a correct candidate, so
+   the address-comparison negatives in analysis/tested.md are now certified on the derivation math
+   (they still only bound numeric-key / carrier search coverage, not the author-specific words).
 
 ## Files in this folder
 

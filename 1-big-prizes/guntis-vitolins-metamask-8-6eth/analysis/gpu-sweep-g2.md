@@ -69,6 +69,20 @@ With R1-era baseline pool sizes backed out of R1b's own subset count (|P| about 
 The runner MUST print its own exact `subsets`, `enumerated`, `derivations` (projected) and
 measured rate before and during the run; these estimates are planning numbers only.
 
+**2026-08-28 exact numbers from `tools/sweep_g2.py --pool-report`** (these supersede the
+planning numbers above; the tool's pools exclude liaisons for G2a per the definitions below,
+and include the four video title/hook words top finish winter update, re-sourced per issue
+#10):
+
+    G2a: post_full = 22 (19 choose-3), video_full = 16 (14 choose-4)
+         subsets = C(19,3) x C(14,4) = 969 x 1001 = 969,969
+         enumerated = 351,982,350,720 ; derivations(proj) = 21,998,896,920
+         ~7.7 h @ 792k/s
+    G2b (add --liaisons): re-derive with the tool (larger, roughly 4x).
+
+The reference executor `tools/sweep_g2.py` builds the pools, runs the witness protocol,
+and (on a capable machine) runs the whole sieve; see `analysis/g2-runbook.md`.
+
 ## Witness protocol (mandatory, same standard as tested.md)
 
 Before the real enumeration, plant candidates known in advance to be in the swept set, one

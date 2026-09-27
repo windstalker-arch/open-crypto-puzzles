@@ -107,7 +107,12 @@ consumed without planted witnesses, as noted on the full ledger.
 
 1. **A higher-fidelity copy of the original video** (needs new information). The whiteboard
    and whitepaper page held on camera are only legible above 720p, and no source above 720p
-   is currently reachable. Full details in [analysis/leads.md](analysis/leads.md).
+   is currently reachable. The archive half of this lead is now closed-negative
+   (2026-08-27): a sweep of the Wayback WARC and the archive.org item store found no video
+   file hosted on rushwallet.com and no archive.org item deposit, and the archived highest
+   frame is only 1280x720 whose central whiteboard text is not legible to OCR. Full details
+   in [analysis/leads.md](analysis/leads.md). What remains is a *living* copy (author or a
+   re-uploader), i.e. outreach rather than archive tooling.
 2. **The remaining tail of the lyrics corpus** (larger, lower signal). About 4.7 million
    further songs beyond the slice already tested. The Quotes-500K lead was executed and
    closed on 2026-08-23: 493,789 unique quotes verbatim, 0 matches, witnessed.

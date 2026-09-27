@@ -94,6 +94,9 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
    [analysis/leads.md](analysis/leads.md).
 2. **Finish the on-chain metadata sweep** (bounded). About 132 token indices between 1 and
    700 return 404 under an assumption that may not hold for every piece in the series.
+   **UPDATE 2026-08-28: invalidated** - see [analysis/leads.md](analysis/leads.md). The real
+   on-chain ids are OpenSea Shared Storefront composite values, not linear indices 1-700, and
+   the metadata is centralized (no on-chain 404 endpoint). Lead closed.
 3. **A bounded 11! x 128 sweep once a specific 11-word set is argued for** (about 59 hours on
    24 CPU cores, reported). A proposal for a specific candidate, not a blind search.
 

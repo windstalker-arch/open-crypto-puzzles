@@ -66,3 +66,33 @@ would drop the polynomial's effective degree. This is not identifiable from only
 shares; I enumerated the 16-byte space of this specific degenerate case and found no way
 to test it without a 3rd share. Not pursued further as a standalone lead. Date:
 2026-08-03.
+
+## 7. zpub does not derive the target (2026-08-28)
+
+The challenge page carries a shown `zpub`
+`zpub6qdEDkv51FpxX6g1rpFGckmiL46vV8ccmtEgPAkj3qj8N4ZZHyXDRA9RwpTiFK2Kb8vRaDmSmwgX6rfB4t2K8Ktdq8ExQ6fumKpn2ndJCqL`.
+This is a red herring / unrelated mnemonic. Using python-bitcoinlib + bech32 I verified its
+`/0/0`, `/1/0`, `/2/0`, `/3/0` and indices 0..20 all derive to addresses other than the
+target `bc1qyjwa0...`. It cannot be a path to the secret. Result: zpub excluded. Date:
+2026-08-28.
+
+## 8. boha public key matches the target (identity confirmed, no new search space)
+
+The `oritwe/o` `boha` project lists the challenge with `public_key =
+0385a3a591451ed7ed6c90dae882db918107d6f906d270cf4728d168126e0e89aa` and hash160
+`249dd7ad2fccea67977d4078edad50d8603ff4ce`. I verified this pubkey's RIPEMD-160 hashes to
+`249dd7ad2...` and bech32-encodes to exactly the target `bc1qyjwa0tf0en4x09magpuwmt2smpsrlaxwn85lh6`.
+So `0385a3a5...` is genuinely the compressed public key of the target (the on-chain pubkey
+derived from the unknown private key). This confirms target identity but is just the public
+part of the key pair - it adds no secret information and does not shrink the ECDLP/Shamir
+search. boha also labels the shares with indexes 1 and 2, which diverge from the oracle's
+x=3/x=15 decode; this is a decoding convention difference and yields no new share. Date:
+2026-08-28.
+
+## 9. Common Crawl earliest capture agrees (2026-08-28)
+
+Common Crawl index holds `bitaps.com/mnemonic/challenge` dated 2020-07-04 (CC-MAIN-2020-29).
+Its share content is byte-identical (same 2 shares, session/cigar/... and
+clock/fresh/...) to the 2020-10-28 Wayback capture and every later capture on main/tbtc/ltc
+mirrors. Confirms no 3rd share at the earliest reachable point; narrows the archive-gap
+lead. Date: 2026-08-28.

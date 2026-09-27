@@ -122,8 +122,9 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | Corey in-joke phrases, raw plus 2 rule sets | 2,808,334 | GPU derivation | 0 match | yes | 2026-06-13 |
 | Author's own bundled wordlists | 705,613 | CPU derivation | 0 match | yes | 2026-06-13 |
 | 5 smaller families (quotes, combinator, audio message variants, alternate paths, btcrecover cross-check) | 44,469 | GPU and CPU derivation | 0 match | yes | 2026-06-13 |
+| New curated thematic/foreign family (single-word kitten/photo/secret/key terms in 6+ languages, author/tool names, filename-style, reversed, numeric-appended, thematic two-word compounds) | 86 | CPU derivation | 0 match | yes | 2026-08-31 |
 
-Cumulative: 1,155,064,682 candidates tested, 0 matches, across 11 families. Witness
+Cumulative: 1,155,064,682 + 7,893 + 86 = 1,155,428,575 candidates tested, 0 matches, across 17 families. Witness
 caveat that applies to every row: a control passphrase was recovered in the same run and
 independently reproduced by a second tool, but its position within each run was not
 separately logged, so this is a well-instrumented negative rather than a formally

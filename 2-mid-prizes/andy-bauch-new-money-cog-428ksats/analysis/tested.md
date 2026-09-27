@@ -16,6 +16,8 @@ on its own.
 | Row-to-row displacement (whole-row granularity only; segment-level displacement not tested) | 1,421,160 combinations | 0 valid WIF checksum | yes: an estimator for this channel is validated at 85.8% correct rows on a known injection | 2026 |
 | Mask decoded as base58/ASCII text, 2 axes x 12 widths x 2 polarities | all 3 panels | 0 valid WIF checksum | no known-good calibration example for this specific test; reported as tried, not certified | 2026 |
 | Brainwallet phrases built from the artist's own vocabulary | 902 phrases | 0 hits | no; a weak test by the researcher's own account | 2026 |
+| Region-search at a 5-color local palette: base-5, 3 cells/char, minikey (30/34 char, SHA-256 -> key) decoded, full 120-permutation color->digit assignment set, S-prefix + alphabet minikey gate, 3 window shapes x 8 reading orders, sliding all 3 panels | 57,106 structurally-valid S-minikey candidates derived (every S-gated survivor; construction vectorized) | 0 hits | yes: a known minikey planted as a base-5 color block on a synthetic grid is recovered through the same reader/derive path (witness passes for K=5, cw=3) | 2026-08-31 |
+| Region-search at a 6-color local palette, same wider model (720 permutations) | did not complete; terminated after >2 h of construction (exceeds AGENTS.md rule 5 budget) | — | NO: sweep abandoned mid-panel-1; a negative here would be uncertified. K=6 is also low-probability (COG's gray ramp is read as ~5 real levels per the 4/5-color precedent) | 2026-08-31 |
 
 ## What is confirmed, to prevent re-testing a false negative
 
@@ -29,3 +31,15 @@ on its own.
   (SWAGBUCKS) needed color count 5 to find its real payload at the same character width. The
   same gap has not yet been closed on COG: this is a real hole in the coverage above, not a
   new hypothesis.
+- **2026-08-31 update (corrected):** `tools/region_sweep.py` (committed now; the original 4-color
+  region tool was never committed and was reconstructed here from the summary rows). An
+  off-by-one in the gray-level quantization meant the first run produced k+1 distinct levels
+  instead of exactly k, so its rows are SUPERSEDED by the corrected run below. With the
+  quantization fixed and the color->digit assignment set expanded to the full K! permutations
+  (plus an S-prefix minikey gate so full-`_assignments` stays bounded), the 5-color pass over
+  all 3 panels derives every structurally-valid S-minikey candidate (57,106) with 0 hits and
+  is a CERTIFIED negative (witness passes). The 6-color pass (720 permutations) did not
+  complete within the 2 h phone budget and is UNCERTIFIED. Lead 2 is therefore substantially
+  closed for the 5-color hypothesis under this reconstructed model, but remains open for
+  6 colors and for any detail my reconstruction diverges from the original method (region
+  shape set, char-width pairs, panel-overlap, repetition).

@@ -36,12 +36,12 @@
     "certified_against": "the sister address bc1q57euh23y3qs2f9d5mtwpax5lqecfvrdkqce82a for an empty passphrase, and sha256(base64(kitten.jpeg)) matching the author's own published value"
   },
   "difficulty_left": "external-info",
-  "difficulty_note": "the mnemonic and derivation are fully certified; about 1.16 billion passphrase candidates have been tested across curated, rule-mangled, and raw wordlist regions with 0 matches; the author states the puzzle is not meant to be solved, so the passphrase is a freely chosen secret with no confirmed public provenance",
-  "tested_total": { "candidates": 1155064682, "families": 11, "certified": true },
+  "difficulty_note": "the mnemonic and derivation are fully certified; about 1.155 billion passphrase candidates have been tested across curated, rule-mangled, raw wordlist, and thematic-combinator regions with 0 matches; the author states the puzzle is not meant to be solved, so the passphrase is a freely chosen secret with no confirmed public provenance",
+  "tested_total": { "candidates": 1155420596, "families": 13, "certified": true },
   "leads": [
     { "rank": 1, "title": "ask the author directly", "cost": "needs-a-person", "status": "open" },
-    { "rank": 2, "title": "safety-net derivation on BIP44 and BIP49", "cost": "minutes", "status": "open" },
-    { "rank": 3, "title": "three-word thematic combinator", "cost": "hours", "status": "open" }
+    { "rank": 2, "title": "safety-net derivation on BIP44 and BIP49", "cost": "minutes", "status": "closed" },
+    { "rank": 3, "title": "three-word thematic combinator", "cost": "hours", "status": "closed" }
   ],
   "solutions": [],
   "artifacts": [
@@ -54,5 +54,5 @@
     { "title": "bitimage (author's tool)", "url": "https://github.com/coreyphillips/bitimage", "date": "2026-08-16", "archived": null }
   ],
   "third_party_material": "clues/kitten.jpeg is the author-published puzzle image, byte-identical to the original, sha256 recorded in artifacts[]; no wordlists or third-party bulk data included, only my own derived candidate counts",
-  "last_updated": "2026-08-16"
+  "last_updated": "2026-08-27"
 }

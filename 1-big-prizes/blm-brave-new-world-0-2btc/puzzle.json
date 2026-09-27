@@ -31,7 +31,7 @@
       "label": "main",
       "explorer": "https://mempool.space/address/1KfZGvwZxsvSmemoCmEV75uqcNzYBHjkHZ",
       "expected": "20107284 sats",
-      "verified_on": "2026-08-16",
+      "verified_on": "2026-08-28",
       "verified_state": "funded-unspent"
     }
   ],
@@ -62,5 +62,5 @@
     { "title": "BitcoinTalk topic 5404767", "url": "https://bitcointalk.org/index.php?topic=5404767.0", "date": "2026-08-16", "archived": null }
   ],
   "third_party_material": "the collage image in clues/ is the author's own published puzzle material, posted once on Reddit; no other author material exists; community forum discussion is cited by URL and date only, never reproduced",
-  "last_updated": "2026-08-16"
+  "last_updated": "2026-08-28"
 }

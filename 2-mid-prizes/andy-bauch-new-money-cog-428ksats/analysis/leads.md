@@ -32,6 +32,18 @@ the same character width; COG has not yet been swept at 5 or 6 colors, nor with 
 rectangular (as opposed to square) search window. This is a bounded, inexpensive re-run
 once the tooling is in place, not a new hypothesis.
 
+**2026-08-31 status:** the original region-sweep tool was never committed, so `tools/region_sweep.py`
+was reconstructed from the tested.md summary and committed (an early off-by-one in the
+gray-level quantization produced spurious rows; those are superseded by the corrected run).
+With the fix and the color->digit assignment set expanded to the full K! permutations plus an
+S-prefix minikey gate, the 5-color (base-5, 3 cells/char, 30/34-char minikey, 3 window shapes,
+8 reading orders) pass over all 3 panels derived every structurally-valid S-minikey candidate
+(57,106) with 0 hits and is a CERTIFIED negative. The 6-color pass (720 permutations) exceeded
+the 2 h phone budget and is UNCERTIFIED/incomplete. So lead 2 is now substantially closed for
+the 5-color hypothesis under this model, but remains open for 6 colors and for model details
+my reconstruction may diverge on (region shape set, char-width pairs, panel overlap,
+repetition).
+
 ## 3. Brick-shape and macro analysis of pieces with no public photo yet
 
 Several 2017 pieces in the same series have no known public image at all; OSINT and image

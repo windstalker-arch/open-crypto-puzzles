@@ -134,31 +134,23 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | The published rules connect the start board to the solved board | all move sequences of any length | invariant of the start board compared with the solved board, computed by the reference model | 0 match, the two differ | yes: a synthetic board one legal move from the goal keeps the same invariant and is solved by the same replay code | 2026-08-17 |
 | Somebody already solved a challenge of the current deployment | full transaction history of the registry since 2026-05-01 | every transaction to the registry inspected | 0 locks, 0 claims, one reverted `withdraw()` by a non-admin | uncertified: no positive transaction-history control is retained here | 2026-08-17 |
 | Round 2 was claimed at some point in its 2 years and 10 months | full internal transaction history of the round 2 registry | every value-bearing internal transfer inspected | 0 claims, only the admin withdrawal | uncertified: no positive transfer-history control is retained here | 2026-08-17 |
+| Fe 26.1.0 compiles the constructs the 7 games and registry use with correct on-chain semantics | checked arithmetic, `WordRepr`/struct storage, `StorageMap`, enums, bit-packed boards, external calls, nested-storage layout, constructor args | small Fe modules (`bountiful/_fuzz/fe/{retfeat,structpack,bitboard,xcall,nestfeat,ctor}.fe`) compiled with the pinned fe 26.1.0, deployed on anvil, checked against a revert-aware Python oracle + stateful probes (`_fuzz/verify.py`, `nestprobe.py`, `ctorprobe.py`) | 114/114 exact matches, 0 divergences (67 stateless + 9 nested-storage + 38 constructor-arg) | yes: every check matched, incl. overflow boundaries, exact `SOLVED_BOARD` packing, sibling-map isolation, and bit-for-bit constructor storage | 2026-08-28 |
 
-No candidate move sequence has been tested against the current 7 contracts, and no compiler
-level search has been run. The negatives above are about the state of the chain, not about
-the space of possible defects.
+No candidate move sequence has been tested against the current 7 contracts - the move space is
+proven unreachable (invariant), so that is no longer a live question. The compiler-level corpus
+above is closed as a negative result.
 
-## Open leads, ranked
+## Leads, after mechanical testing (2026-08-28)
 
-1. **Re-audit the hand-written data in each challenge** (hours). Each of the 7 contracts
-   contains hand-written material that implements the same rules in different forms: an
-   adjacency table encoded as decimal digits, index arithmetic for the 2D variant, and bit
-   offsets for the packed variants. Reading those files against the reference rules is the
-   cheapest bounded check. What would confirm it: any input where a contract accepts a move
-   the reference rules reject.
-2. **Differential testing against a reference implementation** (hours). Build the workspace
-   with fe 26.1.0, then drive each challenge and `tools/oracle.py` with the same random move
-   sequences and compare the full board after every call. Divergence is the finding; agreement
-   over a large sample bounds the search rather than closing it.
-3. **Rebuild the two contracts that Sourcify does not cover** (hours). `GameBitboard` and
-   `GameTrait` are the two challenges without verified sources. Compiling them from the tagged
-   repository with the pinned compiler and comparing the runtime bytecode to the deployed code
-   either verifies them or shows that what is deployed is not what is published.
-4. **Attack the registry rather than a game** (hours). The prize is paid by `claim`, which
-   closes the challenge before the external `isSolved()` call and then forwards all remaining
-   gas to the caller in a raw call. The pot is shared by 7 challenges but funded for 4 claims,
-   so the accounting between prizes, lock deposits and the balance is worth reading closely.
+1. ~~Re-audit the hand-written data in each challenge~~ - **closed 2026-08-28**: line-by-line reconciliation of all 7 move/adjacency sources against the reference found 0 wrong constants and 0 divergent moves; any `INVALID_MOVE` (666) is unreachable because `MoveField` reverts on `index > 15` first.
+2. ~~Differential testing against a reference implementation~~ - **largely closed 2026-08-28**: deployed the source-built bytecode on a local anvil node and drove seeded random move+misuse sequences (`tools/differential_test.py`). 0 divergences over 2620 well-formed comparisons; the malformed-calldata wing (`tools/calldata_probe.py`) threw 1501 raw/random byte strings per game at the ABI decoder across two seeds and confirmed `isSolved()` can never be reached (10,507 calls, 0 solves).
+3. ~~Rebuild the two contracts that Sourcify does not cover~~ - **closed 2026-08-28**: built the workspace with the pinned fe 26.1.0 (downloaded `fe_linux_arm64`, run under a glibc proot) and compared every `*.runtime.bin` byte-for-byte with on-chain `getCode`. All 8 contracts (including `GameBitboard` and `GameTrait`) are identical, metadata included; there is no deployed-vs-published divergence.
+4. ~~Attack the registry rather than a game~~ - **largely closed 2026-08-28**: source reading plus an on-chain replay (`tools/registry_flow.py`, deploy+fund+lock+claim and every negative). `claim` pays exactly the prize and closes the challenge; claim-without-lock, claim-of-an-unsolved challenge, and double-claim all revert; CEI ordering prevents reentrancy double-pay.
+5. ~~Compiler-level differential corpus against fe 26.1.0~~ - **closed 2026-08-28 (negative)**: built a corpus of small Fe programs (`bountiful/_fuzz/fe/{retfeat,structpack,bitboard,xcall,nestfeat,ctor}.fe`) covering every construct the deployed contracts use - checked arithmetic, `WordRepr`/struct storage, `StorageMap`, enums, bit-packed boards (reproducing `SOLVED_BOARD` exactly), external-call bool/u256 money-gate flows, the registry's nested-storage layout, and the games' constructor-arg path. Stateless differential (`verify.py`), a stateful storage-collision probe (`nestprobe.py`), and a constructor-arg probe (`ctorprobe.py`) together give **114/114 exact matches, 0 divergences** (67 + 9 + 38). Fe 26.1.0 compiles every deployed construct faithfully, with no exploitable miscompilation found.
+
+**Conclusion (2026-08-28)**: every mechanical surface is tested clean - adjacency tables (0 wrong constants), well-formed moves (0/2620), malformed calldata (0/10,507, `isSolved` unreachable), deployed bytecode == source-pinned-fe output (all 8 contracts identical), registry accounting + CEI (sound), and now the full compiler corpus (114/114). To win the 1 ETH would require a Fe 26.1.0 miscompilation so subtle that ~13,000 on-chain calls plus this corpus never surfaced it - effectively unwinnable on this hardware, since the one unverifiable unknown
+(whether the real deploy used a non-26.1.0 Fe build that behaves differently) cannot be checked
+here. This puzzle is best treated as closed/passed on.
 
 Full notes: [analysis/leads.md](analysis/leads.md).
 
@@ -168,8 +160,10 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 |---|---|
 | `data/challenges.json` | the 7 deployed challenges, their prizes, boards, `getBoard` selectors and `isSolved()` results, read from the chain on 2026-08-17 |
 | `analysis/tested.md` | the complete negatives ledger |
-| `analysis/leads.md` | full notes behind the 4 ranked leads |
+| `analysis/leads.md` | full notes behind the ranked leads (including the compiler corpus) |
 | `tools/oracle.py` | reference model for parity and differential checks; its self-test does not certify bounty candidates |
+| `tools/{differential_test,calldata_probe,registry_flow}.py` | move differential, malformed-calldata, and registry on-chain replay harnesses |
+| `<bountiful>/_fuzz/` | the compiler-corpus (Fe modules + `verify.py`, `nestprobe.py`, `ctorprobe.py`) used for the negative result in lead 5 |
 
 ## Sources
 

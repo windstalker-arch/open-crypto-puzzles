@@ -134,9 +134,9 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
    prioritization). Their generic bound, 2^80, is the smallest of the 4, and RIPEMD-160
    has the more active reduced-round literature. If any of the 4 falls first, this is
    the likely candidate.
-3. **Passive monitoring** (minutes, periodic). Watching the `spent` flag on the 4 live
-   addresses, to catch a third party claiming first, and watching collision-research
-   announcements. Not yet set up as a running watch.
+3. **Passive monitoring** (minutes, periodic): `tools/watch.py`. Watching the `spent` flag on
+   the 4 live addresses, to catch a third party claiming first, and watching collision-research
+   announcements. Set up 2026-08-28; first run confirmed all 4 still unspent.
 
 Full notes: [analysis/leads.md](analysis/leads.md).
 
@@ -150,6 +150,7 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | `analysis/tested.md` | full negatives ledger |
 | `analysis/leads.md` | full lead notes |
 | `tools/oracle.py` | predicate checker: candidate pair to match/no match per hash function |
+| `tools/watch.py` | passive escrow monitor: flags a spend (third-party claim) on the 4 live addresses |
 
 ## Sources
 

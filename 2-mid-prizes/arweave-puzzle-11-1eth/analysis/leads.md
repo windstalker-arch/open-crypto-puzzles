@@ -1,6 +1,6 @@
 # Open leads, ranked
 
-## 1. A systematic LSB scan of the continuous grayscale and alpha channels (hours)
+## 1. ~~A systematic LSB scan of the continuous grayscale and alpha channels~~ (KILLED 2026-08-28)
 
 Every candidate tried so far reads the geometry (building heights, widths, roof lines) or the
 container metadata as a whole value, hashed as a block. What has not been run is a bit-level
@@ -11,6 +11,11 @@ the author's own hint that "format does not matter," which argues for a payload 
 values themselves rather than in any container structure. Confirms: an extracted 64-hex string
 derives the target address exactly. Kills: an exhaustive bit-order and bit-width sweep of both
 channels with no address match, which has not yet been run to exhaustion.
+
+STATUS 2026-08-28: KILLED. Ran the exhaustive sweep to completion: both channels, all 8 bit
+planes, bit widths 1/2/4/8, both read orders, every contiguous 256-bit window (~1.5 M positions),
+plus whole-stream SHA-256/double-SHA-256/Keccak-256/BLAKE2s and 32-byte prefixes. 0 exact matches,
+0 `ff21`-byte-2 near-misses. Every mechanical on-device pixel-value reading is now closed.
 
 ## 2. Join the community Telegram group and search first-hand for the "$100" hint (needs a
 person)
