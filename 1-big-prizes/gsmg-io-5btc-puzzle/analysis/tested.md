@@ -14401,4 +14401,100 @@ WHAT WE NOW HOLD THAT WE DID NOT. 34 `hints/*.png` author hint images dated 2020
 one of those images has ever been in this repo's analysis. The next real move is to mine them,
 not to widen any cipher battery.
 
+> **SUPERSEDED IN PART BY `R-IMGSCOPE-2026-09-27` (same day).** Four of this row's novelty
+> claims are retracted there: the hint images and the `phase*-assets` tree were ALREADY read and
+> inventoried (`R-XREF-READ`, `R-P32BLOB`), and the 28-char board was ALREADY in this ledger under
+> `FUBCDORA.LETHINGKYMVPS.JQZXW` with both escape pairs already swept. The one durable new fact in
+> this row is the B2 notebook attestation. Kept unedited as the historical record, per `R-CLEANCLAIM`.
+
+Date: 2026-09-27, local.
+
+## R-IMGSCOPE-2026-09-27: THE IMAGE-MINING SESSION THAT SHOULD HAVE BEEN A CONTENT-GREP FIRST. Net new puzzle information from the entire Naddiseo fork = ONE item (the B2 notebook attestation). FOUR of my own `R-FORK` novelty claims are retracted, and the "next moves" I proposed after it were both already completed weeks ago. 0 oracle calls, because there was nothing left to test.
+
+- VERDICT FIRST, because this is the fourth time a "new source surface" has resolved to nothing and the
+  pattern is now the finding: `R-SOLVERGRP-NEW` returned "Net new puzzle information: zero."
+  `R-XREF-READ` returned "There is currently NO unmined artifact identified anywhere in this
+  project." `R-P32BLOB` inventoried this very asset tree. And now the fork that looked like 77
+  unseen blobs yields one new fact. Source surfaces in this project are not the bottleneck.
+
+- **THE ERROR, STATED PRECISELY SO IT CAN BE RECOGNISED NEXT TIME.** I ran a blob-SHA census, got
+  "87 blobs, 77 with SHAs we have never seen", and wrote that up as discovery - WITHOUT
+  content-grepping `tested.md` for what those blobs CONTAIN. That is `R-P32BLOB`'s own lesson
+  ("Filename coverage is a worthless proxy; always content-grep before spending a session") committed
+  one level up: novelty is a property of INFORMATION, not of bytes. 33 of the 34 fork hint images
+  have transcripts we already hold in `~/briefcase/gsmg-community/hints-consolidated/`, and
+  `R-XREF-READ-2026-09-26` had already read or structurally characterised the whole 27-image hint
+  library. The 24 asset images are byte-new to us and were ALREADY inventoried by
+  `R-P32BLOB-2026-09-26` (same `phase1/2/2.1/3/3.2-assets` tree, 28 files), whose coverage check
+  found `fubcd` 62x and `thingky` 44x already in corpus. My "not one of those images has ever been
+  in this repo's analysis" was false, and `R-XREF`'s warning that those transcripts are
+  "hypothesis-generating AT BEST" (one is a demonstrated OCR fabrication - the `S R A S` line) means
+  I was not even reading new text, I was re-OCRing text we already had and had already rated.
+
+- **RETRACTION 1 - THE ALPHABET IS NOT A DISCOVERY, AND MY "CRUX RELOCATED" CLAIM IS WITHDRAWN.**
+  `FUBCDORA.LETHINGKYMVPS.JQZXW` was already in this ledger before today (60 occurrences). The
+  fork's board is the same 28 characters with the two punctuation marks transposed; the
+  "proof" decode of the 149-digit block to `IN CASE YOU MANAGE TO CRACK THIS...` is already
+  recorded here, and prior rows had already swept that board under BOTH escape pairs (1,4) and
+  (2,5), plus (1,4)/(4,1). So my 288-decode grid was a RE-RUN of an existing battery, not evidence,
+  and "the crux was never the alphabet" overrode `R-BOARD28B-2026-09-26` - which had already
+  concluded the 28-char requirement is VIC ARITHMETIC (8+10+10) and that no image in this corpus
+  can supply an authorial board - on the strength of a re-derivation. The one real content of
+  today's work here is a punctuation-order fix to a usage example, which is what I claimed it was
+  in the summary and then inflated in the row.
+
+- **RETRACTION 2 - "77 FILES WE NEVER HAD" IS A BYTE COUNT, NOT A FINDING.** See above. The
+  defensible version of Finding 1 survives in a weaker form: the fork's `phase2.1.txt` is
+  byte-identical (sha256 `e2f9dd65...593a`) to the phase-2 plaintext we derived, which is a real
+  INDEPENDENT CONFIRMATION of our derivation from a second party - corroboration, not discovery,
+  and `R-P32BLOB` had already content-matched that file.
+
+- **RETRACTION 3 - THE `sebasa` "NEXT MOVE" WAS DONE ON 2026-09-03.** I proposed downloading
+  `sebasa/gsmgio-puzzle` for `salphaseion.png` / `spectogram.png` as the next action. The ledger
+  records that repo already cloned to scratch, `spectogram.png` (876x490) already analysed with
+  band-scanning + tesseract, and its 98-entry wordlist already swept through the certified oracle
+  as 121 candidates: NO MATCH both gates, with `secret2.txt` already found byte-identical to ours.
+  Five ledger mentions. Nothing to do.
+
+- **WHAT SURVIVES, AND IT IS WORTH HAVING: B2 IS NOW INDEPENDENTLY ATTESTED.** `R-B2RUNG2`
+  certified that the 96-byte `Salted__` envelope (salt `b45a5e3d827593ca`, ct 80 B, sha256
+  `291dfd6f3e759ec2e272b35a00c24907da70c3e7a9291b4c13605c7b0b4f3de9`) opens under
+  `WIF(K_C1)` to `B2_79`, and flagged the honest weakness: its only provenance is issue #22,
+  community material, so a critic could call it an arithmetic curiosity of a community artifact.
+  `phase3.2.ipynb` quotes that envelope verbatim - 96 B, same salt, same ct, same certified
+  hash - from a second unrelated source, filed under *phase 3.2* rather than as a loose record.
+  Four ledger hits for the hash, ZERO of which cite the notebook, so this is new. It does not make
+  B2 authorial; nothing can, while #111 holds. It does mean B2 is not an artifact of our own
+  making, which was the only live objection to the ladder.
+
+- **FINDING 4 STANDS, AND `R-P32BLOB` CORROBORATES IT.** The notebook's 1,539-character architect
+  monologue is our `RAW_PW` stream, not the 227-character phase-3 password. Independently,
+  `R-P32BLOB` tested the 1,539-BYTE `phase3.2.txt` blob against `yl` and refuted it: K[i]==K[i+15]
+  match rate 0.108 where periodicity requires 1.0, and both readings share only their length. Two
+  different 1539s, no relationship - the coincidence warning in `R-P32BLOB` is correct and now has
+  a second instance behind it.
+
+- **A CAUTION ABOUT MY OWN METHOD, RECORDED BEFORE IT HURTS SOMEONE.** Re-OCRing
+  `2023-02-23.png` today recovered 125 eight-bit groups. The ledger already holds 149 groups for
+  that file, with the structural note that 100% end in `110` and it decodes cleanly under
+  reverse-order + bit-reverse. My pass was strictly WORSE - tesseract was inserting spaces inside
+  groups and my whitelist variant returned 1 group. I nearly wrote a `2023-02-23` bitmap
+  "reconstruction" from those 125 values into the ledger. That would have DOWNGRADED a good prior
+  reading with a bad one. `R-XREF`'s standard is the right one: never let a weaker method overwrite
+  a stronger recorded one, and log the weaker result as a non-result rather than a finding.
+
+- FRONTIER, UNCHANGED. `ca/cosmic_A` (sha256 prefix `cd3fea3d`) still missing; phase 3.2 still
+  blocked on salt `eefc4c5befc1656a`; the phase-3 password for `9fbc451d` still unrecovered even
+  with the plaintext in hand. The only substantive computational lead this project currently has
+  is `R-P32BLOB`'s period-15 polyalphabetic signature on the 1,539-byte blob, where the tested and
+  rejected models are: monoalphabetic (community, null), Vigenere/Beaufort 15-col, the
+  cipher-symmetry single-column anchor, and Quagmire x16. Untested survivors named there: the
+  plaintext may not be English, or there is a further layer beneath the polyalphabetic one.
+
+- PRE-FLIGHT FOR THE NEXT SOURCE SURFACE, so this is not repeated. (1) Content-grep `tested.md`
+  for 3-4 distinctive strings FROM the new material before believing any novelty claim. (2)
+  Grep the ledger for the surface's own name - the asset tree, the repo, the author - because
+  "never inventoried" was false for both prior surfaces this month. (3) Only after (1) and (2)
+  may a row claim novelty, and it must state the count of items that survived both checks.
+
 Date: 2026-09-27, local.
