@@ -12552,6 +12552,7 @@ DISPOSITION: **0 candidates, 0 oracle calls, no lead promoted.** Banked: `#8446`
 - SCOPE. `unverified/` does not exist in the community repo. Inventoried for the first time: phase1-assets (3), phase2-assets (9), phase2.1-assets (9), phase3-assets (6), phase3.2-assets (7). 28 files, ~4.1 MB.
 - **COPY FINDING (closes part of `R-SOLVERGRP-NEW`).** `p3.b64.txt` is byte-identical to `phase2-assets/phase2_aes.txt` (both sha256 `5e583d5b...a94d`). `p32b.b64.txt` is the VERBATIM last two lines of `phase3-assets/phase3.2.txt`. So 2 of the 4 "new" solver b64 blobs are copies of already-catalogued community artifacts, not independent data. This further weakens any claim that the solver group contributed new material. (`sa.b64.txt` and `cd.b64.txt` remain unmatched by name.)
 - COVERAGE: MOST OF THIS TREE WAS ALREADY COVERED BY CONTENT DESPITE ZERO FILENAME HITS. Filename grep said `phase2.1.txt`, `phase2_aes.txt`, `fubcd`-material etc. were unseen, but content grep found `keymakers` 17x, `fubcd` 62x, `thingky` 44x, `X 2 S H 4 Y 0 Q B 15` 2x, `swordless` 1x, `80605001911` 1x. **Filename coverage is a worthless proxy; always content-grep before spending a session.** Only TWO items in 28 files had genuinely zero coverage: (i) phase2.1.txt's closing line `Ok kid, on the highway, let put it in the worst gear.` (0 hits); (ii) the 149-digit string and the 1539-byte blob in phase3.2.txt (151659 = 0 hits).
+  **SUPERSEDED IN PART by `R-VERIFY`:** item (i) is NOT an unexploited lead. That line's sha256 `e2f9dd65...` is blob `06286612d43ed7ed`, which is already **OPENED** (648 B, `sha256(causality)_hex`/evp-sha256) - so the line is prose sitting inside plaintext we already hold. Zero *filename* coverage was again mistaken for zero *content* coverage, one row after this row's own lesson about exactly that. Item (ii) is fair and stays open (the 1539-byte blob), though see the "ACTUALLY LEFT" bullet below.
 - **THE 1539-BYTE BLOB, AND WHY IT MATTERS.** phase3.2.txt line 4 (between `four for one.` and the digit string; the notebook's own `blob_start`/`blob_end` code isolates the same bytes): 1539 bytes, **exactly 26 distinct byte values**, 565/1539 printable. Full index-of-coincidence curve, periods 1..40: off-period values sit at **0.0393-0.0487, mean 0.0427**, and a 26-symbol alphabet's random IC is 1/26 = **0.0385** - so off-period is indistinguishable from random. Period **15 = 0.0645**, period **30 = 0.0654**; mean over multiples of 15 = **0.0650**, mean elsewhere = **0.0427**. A 1.52x localised spike at exactly 15/30, reaching English level (~0.066) while every other period sits at the random baseline. **This is a clean period-15 polyalphabetic signature and it is not noise.**
 - **IT CONTRADICTS THE COMMUNITY ATTACK.** The only prior analysis of this blob is `phase3.2.ipynb` cells 3/5/6/10: `Counter(blob).most_common()` ranked, then (a) mapped onto `english_letter_frequency='eariotnslcudpmhgbfywkvxzjq'`, (b) mapped onto `'abcdefghijklmnopqrstuvwxyz'`, (c) `cp1141`/EBCDIC. All three are **monoalphabetic** models. The IC curve rules that out: a monoalphabetic substitution preserves IC at EVERY period (a flat curve), and this curve is emphatically not flat. The community attacked the right bytes with the wrong cipher class. This is the single most substantive new fact found this session.
 - **REFUTED EN ROUTE (logged so it is not retried).** `ANCHORED_SUMMARY.md:19,40` records a 1539-char stream `yl` ("yourlifeisthesumofaremainderofanunbalanc..."), and this blob is also 1539 bytes - a tempting coincidence. **Tested and refuted**: if the blob were Beaufort/Vigenere of `yl`, then K = P+C (or P-C) would be periodic. Measured K[i]==K[i+15] match rate = **0.108** (and 0.096 at 30) across three byte->letter maps. Periodicity would require 1.0. **The shared length 1539 is coincidence; `yl` is not this blob's plaintext.**
@@ -12578,6 +12579,7 @@ DISPOSITION: **0 candidates, 0 oracle calls, no lead promoted.** Banked: `#8446`
 - **THE 149-DIGIT STRING - ~30 decodings, no English.** Tried and rejected: fixed-width groups of 2/3/4 digits x forward/reversed x digit-order-swapped x mod-26 (0- and 1-based) x mod-27; split-on-'1' (the digit is 37.6% of the string, so a separator reading is the natural one) as pairs/last-digit; T9 multi-tap first-letter and last-letter per digit with '1'/'0' as space; single-digit mod-26; and coordinate-style readings (pair-tens alone, pair-ones alone). **Best result across all variants: 2 trigram hits and 0 real words, against 5-10 trigrams and 20-40 words expected for English in 149 chars.** No candidate. Do not re-run these; if the digit string matters it will need a structural idea (a key source, or a transform keyed by something outside the string itself), not another grouping/modulus sweep.
 - **STATUS: the phase-3.2 line-4 blob and the 149-digit string are both now CLOSED as leads.** Nothing in this asset tree yields a candidate. `X` remains unsolved; 0 candidates, 0 funded-oracle calls, self-tests pass.
 - **WHAT IS ACTUALLY LEFT, and it is all expensive or speculative** (none of it cheap, listed so a future session does not re-tread): (i) the 26 blob byte-values may not be a letter substitution at all - try base-N / bit-packed / non-alphabetic interpretation; (ii) the phase-3.2 "One for one, four for one" instruction and the `fubcd-king & oracle-queen ... as wide as the first one seen` board language, which are the only untouched *authorial* text in the file; (iii) `phase2.1.txt`'s closing `Ok kid, on the highway, let put it in the worst gear.` (still zero-coverage). Items (ii) and (iii) are prose interpretation, not mechanical sweeps, and the ledger already shows prose interpretation has a poor hit rate here.
+  **SUPERSEDED IN PART by `R-VERIFY`:** (ii) is NOT untouched - the "One for one, four for one" reading is closed by `R-EBCDIC1141` (escapes digit1=1, digit2=4) and the `fubcd-king ... as wide as the first one seen` board language is worked through to a dead end (FINDING 3, FINDING 5, and the certified `FUBCDORA.LETHINGKYMVPS.JQZXW` board at 8|13|5). (iii) is closed as dead - see the COVERAGE bullet above. So this "what is actually left" list is shorter than it looks: only (i) survives, and (i) is expensive and speculative.
 
 ## R-ERA-2026-09-26: `~/briefcase/gsmg_era` (25 files) SURVEYED - **STRUCTURALLY EMPTY, no authorial payload. DO NOT RE-MINE.** Key methodological fact: gsmg.io is a Vue SPA, so every HTML/Wayback capture of it is an empty shell.
 - WHAT THE 25 FILES ACTUALLY ARE. (a) `puzzle_20201109.html` (16,778 B) and `choice_20201112.html` (10,960 B) have **4 characters of visible text** - the single word `GSMG`. All puzzle content is client-rendered. (b) The four ~38.1 KB files `puzzle_2025.css` / `final_stage_2025.html` / `digitallogic_2025.html` / `feed_2025.xml` are four distinct hashes but all the same captured SPA shell, `<title>GSMG</title>` - the xml and css extensions are misnomers. (c) `sitemap_live.xml` is 9 bytes containing `Hello :-)`. (d) `atom_2024.xml` is not a feed at all - it is a 4,589 B **Wayback Machine UI page**. (e) `all_stickers_final.txt` and `all_stickers_grid.txt` are **byte-identical** (sha256 `a127acf0...`), i.e. one file saved twice; the sticker payload itself is already solved (see the "8 sticker tiles -> crypto wallet warning digit logic" entry).
@@ -14874,5 +14876,84 @@ Date: 2026-09-27, local.
 - **STATUS.** Nothing opened, nothing moved at any gate. One lead closed properly with citations
   instead of left dangling, and one provenance error of mine fixed - which is the better outcome,
   because a community-graded author artifact is the kind of thing that quietly stops being worked on.
+
+Date: 2026-09-27, local.
+
+## R-VERIFY-2026-09-27: CONSOLIDATION PASS. New `tools/verify_ladder.py` re-derives the ENTIRE certified ladder from two inputs and runs 41 checks: **41/41 PASS, exit 0**. All five opened envelopes confirmed by exact re-encryption round-trip. **The artifacts are sound; the one real defect found was in a derived summary, not in the data.** 0 oracle calls, 0 new candidates.
+
+- **WHY THIS IS NOT A REDUNDANT RE-RUN.** A ladder recorded across many sessions is only worth its weakest
+  link, and a long chain of copied values can drift from the artifacts it claims to describe. So
+  `tools/verify_ladder.py` re-derives the whole chain from **canonical BLOB1 + RAW_PW** and nothing
+  else - it never reads a recorded value to produce a later one - then checks the results against
+  the on-disk plaintexts, the recorded hashes, and both funded gates. The internal EVP_BytesToKey and
+  AES path is a **separate implementation** from `blob_inventory.py`'s, and the two are asserted equal,
+  so a bug shared between the ledger and its original tool cannot hide. secp256k1 point multiplication
+  and base58check are implemented locally for the same reason.
+
+- **THE CHAIN, RE-DERIVED AND CONFIRMED.** `BLOB1 --RAW_PW/evp-md5--> B1_79` (79 B, sha `1449a217...`);
+  `K_C1=B1_79[:32]`, `K_C2=B1_79[32:64]`, `E_C=B1_79[64:79]`; **`WIF(K_C1)` uncompressed is the BLOB2
+  password** (`5K2byJ...`), so BLOB2 opens with a key derived from BLOB1 - the loop closes on itself,
+  which is a much stronger structure than two independent decryptions;
+  `BLOB2 --WIF(K_C1)/evp-md5--> B2_79` (79 B, sha `b40fce72...`) giving `K_S1`/`K_S2`/`E_S`; then
+  `CHAIN4_PW = E_C || E_S || 59cc` = `38d4f4c90cb45fdfc8cff50d0ed1c5740a25de4b8e946d0a5ae2667a23a259cc`,
+  which reproduces the CADEIA-4 password exactly. Also re-confirmed: `cc_1327` (1327 B, sha
+  `4f7a1e4efe4bf6c5`, == `~/gsmg/cosmic_decrypted.bin`) and `causality` (648 B, sha `e2f9dd65604a3231`).
+  All four P2PKH addresses re-derive, and **all four differ from both funded gates**, as does
+  `GATE1`'s own recorded hash160 `a9553269572a317e39f0f518cb87c1a0ee1dbae4`. **No key recovered, no
+  gate open - and now that is a verified statement rather than an assumption.**
+
+- **THE ONE REAL DEFECT: A CORRUPTED ADDRESS THAT WAS IN MY SUMMARY, NOT IN THE LEDGER.** My running
+  summary carried `ADDR_C2` as the 33-character `135Cf6ASy2PDHuxA1Edc3mHYtxEsZNPCa` - a dropped
+  character, `U` read as nothing. Independent secp256k1 gives the **34-character**
+  `135Cf6ASyU2PDHuxA1Edc3mHYtxEsZNPCa`, and its `hash160(uncompressed)` =
+  `16bba55c93148e78ce946caad0115bb8248f2f09` matches the ledger's own line 14104 exactly. **The
+  artifacts and the ledger were right; the summary of them was wrong.** That is a distinct and
+  nastier failure mode than a data error, because a corrupted value in a *summary* propagates into
+  the next session's beliefs while looking perfectly well-formed, and no amount of grepping the
+  ledger will surface it. It was caught only by re-deriving the value from the key. **Standing rule,
+  generalising `R-DIG149`: any identifier that will be reused must be re-derived from its artifact
+  at least once, not carried forward because it looks right.**
+
+- **TRAP WORTH KEEPING: "LONGEST BASE64 MATCH, THEN TRIM" SILENTLY PRODUCES WRONG BYTES.** My first
+  envelope selector took the longest `Salted__` match per salt and trimmed it to the canonical
+  ciphertext length. For salt `2d3f6fe0` that picked a **1367-byte, non-16-aligned** run from
+  `gsmg_issues_all.json` - a text-level artefact where the base64 begins mid-blob - and trimming its
+  prefix to 1328 gave bytes *offset* from the real ciphertext. The result looked entirely plausible
+  and simply would not decrypt, which is how I briefly concluded `cc_1327` was unopenable when the
+  inventory has had it open all along. The corpus holds aligned **and** misaligned candidates for the
+  same salt (1328 aligned in 17 files, plus 1349 and 1367 misaligned). Fix now in the tool: **require
+  the ciphertext length to be exactly canonical and 16-aligned; no trimming, no guessing.** A
+  decrypt-or-fail check would have caught this, so this is the argument for always round-tripping
+  rather than only decrypting.
+
+- **TWO MORE OF MY OWN BOOKKEEPING ERRORS, both metric/assertion, neither touching the data.**
+  (1) I asserted `len(CHAIN4_PW) == 35`; it is **32 B** (15+15+2, 64 hex chars) and the hex check
+  passed, so my expectation was the thing that was wrong. (2) I scored the `causality` plaintext with
+  a strict `32 <= b < 127` test, got 98%, and flagged the ledger's "100% printable" as wrong. It is
+  not: the 12 non-`32..126` bytes are **six CRLF pairs** (offsets 369/395/470/510/567/593), so the
+  text is 100% printable-*or-whitespace*. **Never record a printability claim without naming the
+  metric** - "printable" and "printable or whitespace" differ by exactly this much.
+
+- **A FALSE ALARM I CAUSED AND AM RECORDING SO NOBODY RE-CHASES IT.** I briefly reported that two
+  inventory source paths were missing. They were not: `~/briefcase/gsmg-community/README.md`,
+  `~/briefcase/gsmg_issues_all.json` and `~/gsmg/SalphaseionHush.py` all exist. My `[ -e "$p" ]` test
+  was mis-quoted and never expanded `~`. The lesson is the same shape as the `R-P32BLOB` filename
+  lesson and as the trimming trap above: **a check that reports absence has to be validated by
+  deliberately testing it against something known-present before its negative is believed.**
+
+- **STALE ROWS CORRECTED IN PLACE.** `R-P32BLOB` listed the phase-3.2 prose as "untried" and the
+  `phase2.1` closing line as "zero-coverage"; both claims are superseded above, because the prose is
+  already closed by `R-EBCDIC1141` and the FINDING 3/5 rows, and the `phase2.1` line lives inside
+  already-decrypted `causality` plaintext. `R-P32BLOB` is therefore left with exactly one surviving
+  open direction, the expensive non-alphabetic one. This is the second time in this row's history
+  that a *filename/content* confusion has been the whole content of a "new lead", so the
+  grep-before-novelty rule keeps paying.
+
+- **NET.** No key, no gate, no new candidate - and that is now a **verified** null rather than an
+  accumulated assumption. What this pass actually bought: one corrupted identifier caught before it
+  could propagate, one reusable trap documented (never trim a greedy base64 match), one metric
+  definition pinned down, one false alarm retracted, and a re-runnable tool (`python3
+  tools/verify_ladder.py`, exit 0) so the next session can confirm the ladder is intact in seconds
+  instead of trusting it. Both oracle self-tests pass.
 
 Date: 2026-09-27, local.
