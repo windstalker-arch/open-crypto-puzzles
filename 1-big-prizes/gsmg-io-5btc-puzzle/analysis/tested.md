@@ -13896,3 +13896,151 @@ ciphertext of `B1`'s fields under the 4,604 enumerated re-keyings - and that the
 nonce/IV not derived from these fields, and Blowfish all remain untested, and the
 targets themselves are unanchored. Read it as *this family is done*, not as *B2 is
 closed*. 0 oracle calls - no candidate was produced, so there was nothing to gate.
+
+## R-TGDIR-2026-09-27  the raw Telegram download directory is fully mined: 30 files, 28 already ledgered, the 2 unmentioned ones are scratch, and `salphaseion_plain_79.bin` is now closed as a key
+0 candidates, 0 oracle calls. Pure provenance work - no candidate was produced, so
+there was nothing to gate. SOURCE (user-directed): `/storage/emulated/0/Download/Telegram/`,
+30 files, mtimes 2026-09-26 20:53 .. 2026-09-27 12:04, sitting on INTERNAL shared
+storage (not the removable volume that `late-308` assessed). Both oracles `--selftest`
+PASS before and after; both gates open and unchanged.
+
+FINDING 1 - `salphaseion_plain_79.bin` WAS ALREADY ASSESSED TWICE, and I add the two
+negatives that were missing. The file is 79 B, sha256
+`9c14868c1364755048463305d8bc9e287abe8ab73a397a5e063f6a5e68663c8c`, and its digest is
+already in this ledger at `:11426` (`late-308`) and `:12003`, both times as "a third 79B
+record with no provenance ... do not import as certified". So it is not a new artifact
+and I am not promoting it. What neither row did is test it as a *key*, and that is
+cheap and decisive, so I did: `X[0:32]` -> `14RMXzBbfZFNiLCYTapN82j8yCwwbtc4jc` and
+`X[32:64]` -> `13ucM8CjJ9es4WNi4apbJtDHgSHNvqvojT` (secp256k1, coincurve), neither is
+either funded gate (`1GSMG1JC9...`, `17ucy1K9...`). It cannot spend. I also tested it as
+a *re-encoding* of certified B1_79, which `:11426` left as a guess: 79 of 79 bytes
+differ, the XOR carries 69 distinct values (not constant), and the B1->X byte map is
+neither forward-consistent nor injective, i.e. NOT monoalphabetic. So it is genuinely
+an independent decrypt attempt, not a transform of anything we hold - which is exactly
+what `late-308` suspected, now with the mechanism excluded. Verdict stays unresolved,
+but it is now closed as a key and is not worth another pass.
+
+FINDING 2 - `d0d.js` (4,685 B, sha256 `7f5140fc4da13d159a94abaeceaf88ba4991ca29f008c08211af6d702e6ef59c`)
+had ZERO mentions in this ledger. First read: it is a Node script holding the SalPhaseIon
+a-i letter string, a long `Cosmic_Duality` base64 run, one `Salted__` blob, and a
+`doubleSHA256` helper. The blob is the only thing that could have been new, and it is
+not: salt `2d3f6fe06dc950e6` (a known author salt, already in `tools/oracle_dualite.py`
+and `tools/chain_rebuild.py`) with a 32 B ciphertext `d359b83e2c8685776b1b9477c27c6b270608032861f8592b425e7074c3a5315e`
+that is byte-identical to the head of the already-held `data/cosmic_duality_blob_2020.bin`.
+Same salt, same bytes, no new ciphertext. Secondary observation, recorded because it
+would otherwise waste an hour: the script calls
+`Buffer.from(SalPhaseIon, 'base64')`, but its `SalPhaseIon` variable holds a
+space-separated a-i LETTER string (1073 data characters after stripping spaces, which is
+1 mod 4 - it cannot be base64 at all). As written the script cannot be reproducing a
+certified value, so do not treat its output as a check on anything. Scratch, not a source.
+
+FINDING 3 - `recover_prefix_self_contained.py` (8,076 B, sha256
+`d498d115fefaf9e7d5112346abd1e6e5682d5dc8a52653625ef5b77ed505364a`) also had ZERO
+mentions. It is a self-contained Beaufort hill-climb (tetragram model, 12 restarts x
+6000 swaps) and its only key is `KEY = "THEMATRIXHASYOU"` - which this ledger already
+certified as the Beaufort key that produces `lastwordsbeforearchichoice`/`thispassword`
+(`:6947`) and already swept as a Bifid keyword (`:3371`, `tools/ciphertools_bifid_sweep.py:123`,
+`tools/leap_alphabet_sweep.py:133`). Its `DEFAULT_BLOB = blob.bin` is not supplied. Since
+the 15-character key length also equals the E_C/E_S field width I ran the Lead-0 prefilter
+on the phrase and 8 case/spacing/reversal forms: `sha256(A)[0:15]` is `b8de97f4752f353`
+for the bare phrase, no E_S (`740a25de4b8e946d0a5ae2667a23a2`) or E_C match, 0 oracle calls
+because Lead 0's prefilter is pure sha256. No new key material in either file.
+
+FINDING 4 - DIRECTORY CENSUS. All 30 filenames were checked against this ledger by name.
+28 are already recorded (`GSMG_JRK.md` 9 mentions, `1752411872456.h` 4, `puzzle.bin` 5,
+`found.txt` 2, `cd.b64.txt`/`sa.b64.txt`/`p3.b64.txt`/`p32b.b64.txt`/`canihaveallhint.txt`
+3 each, the rest 1-2). The only two with 0 mentions are Findings 2 and 3, both now closed.
+So the raw Telegram directory - which the 2026-09-26 storage row could only assess
+indirectly, since it was reading the `briefcase/` copy - is now mined directly and
+completely. That row's live worry was that unbacked files on removable storage might be
+hiding new material. For THIS directory that worry is closed.
+
+DELIBERATELY NOT TOUCHED. `/storage/emulated/0/Download/wallet.dat` (1,089,536 B, mtime
+2026-09-26 15:14) sits one level up from the Telegram directory. It is a Monero wallet
+file belonging to someone else, it is not a puzzle artifact, and recovering a third party's
+wallet is out of scope. Not opened, not parsed, not hashed, no attempt of any kind.
+
+METHOD NOTE (witness discipline - third instance of the same failure mode). Earlier in
+this same session I reported `data/B2_79.bin` as absent from the tree. It is not: it is
+git-tracked (added in `19820f5`) and has been on disk continuously. The cause was my own
+`find ... | head -20` over a noisy tree - the pnpm store filled all 20 lines and the
+matching line was cut - and I then reported the truncated output as a fact about the
+corpus. This is the R-SLUGF971 pattern again (our own tool's output mistaken for a fact
+about the puzzle) and the same defence caught it: `git ls-files` plus `sha256sum`, never
+the find's silence. Note the ledger itself never made this error - `B2_79` has 28 mentions
+and `:11615` describes it as held. The error was in my session summary only. Logged
+because the next agent will read that summary.
+
+IMPACT: 0 new key material from 30 files. `late-308`'s LOW assessment of the solver-group
+pack is confirmed against the raw directory rather than the `briefcase/` proxy. The
+interpreter-alphabet crux and Lead 0 are unchanged; both gates remain open and unfunded
+by any of this. The "new author artifact" input named in `STATE_BRIEF.md` is still the
+highest-value thing this puzzle can receive, and nothing in this directory is it.
+
+## R-YINYANG-B1B2-2026-09-27  are B1/B2 the yin-yang? B1 YES and it is now anchored with a firing control; B2 NO - it is a third 79-byte record with no envelope anywhere in the corpus
+0 candidates, 0 oracle calls. Question asked directly by the user, and the ledger had
+answered only the envelope-level version of it (`R-EXT-YINYANG`: "the two AES blobs
+(small 3ab58534->1GSMG 1.2563BTC + dualite 2d3f6fe0->17ucy 3.7505BTC) are the yinyang
+halves"). B1/B2 are the PLAINTEXTS, a different question, and with `B2_79.bin` now
+readable (it is git-tracked since `19820f5`) it is answerable by length arithmetic plus a
+forward-encryption test. Both oracles `--selftest` PASS; both gates open.
+
+FINDING 1 - B1 IS a yin-yang half, and I proved it with a control that fires. The small
+half is a 96-byte `Salted__` envelope: salt `3ab585348552415d`, ct 80 B, so its plaintext
+is 79 B + 1 pad byte - length-locked to the B1 record. Forward encryption confirms it
+rather than assuming it: password `matrixsumlistenterlastwordsbeforearchichoicethispasswordmatrixsumlist`
+(`tools/chain_build.py:26`), EVP-MD5, gives
+`75270543bb0b4f97e0a5169d6902be8652c5b443...` == the published ct exactly. **CONTROL
+FIRES.** B1_79 is the small half's content, anchored, with the password certified in the
+process. (EVP-SHA256 on the same input does not match, which independently re-confirms
+`oracle.py`'s documented convention that the small gate uses MD5.)
+
+FINDING 2 - B2 CANNOT BE THE OTHER HALF, ON LENGTH ALONE. The dualite half is a 1344-byte
+envelope (salt `2d3f6fe06dc950e6`, ct 1328 B) whose plaintext is 1327 B - the certified
+`4f7a1e4efe4bf6c...` body. B2_79 is 79 bytes. It is not the dualite half's content, and
+could not be under any password, because the format does not permit it. I also checked
+the weaker versions in case B2 were embedded in the dualite body: `B2_79 in D` is False,
+it is not `D[:79]`, not `D[-79:]`, and 0 of the 1249 possible 79-byte windows match.
+None of `K_C1`, `K_C2`, `E_C`, `K_S1`, `K_S2`, `E_S` occurs anywhere in the 1327 B.
+
+FINDING 3 - B2 IS NOT THE PLAINTEXT OF ANY 96-BYTE ENVELOPE WE HOLD, under the verified
+password. There are three 80-byte-ct envelopes in reach, not one: salt
+`3ab585348552415d` (the small half, `briefcase/MEMORY.md`, `tools/chain_build.py`), salt
+`b45a5e3d827593ca` (the p32-outer salt, also in `MEMORY.md`), and salt
+`3ab58494d215415d` (`gsmg/SalphaseionHush.py`). Because I hold B2_79, this is testable as
+a FORWARD encryption - no padding ambiguity, fully deterministic - which is the positive
+anchoring test `R-B2FAIL` never had, since it only ever tried to *produce* B2. With the
+control from Finding 1 live, encrypting B2_79 under the 5-token password reproduces
+neither ct (md5 -> `734e2b423ee1894c...`, sha256 -> `31506fa012233ad4...`). A wider sweep
+of 60 authorial password forms x 3 envelopes x 2 KDFs = 360 forward encryptions: 0 hits.
+My first pass at this reported 0 hits too, but I discarded it - the B1 control had not
+fired, so the password list was simply wrong and the "negative" was meaningless. Same trap
+as the `bf-cbc` gap in `R-B2REKEY-AES`: an absent positive control turns a negative into
+noise. Re-run only after the control fired.
+
+FINDING 4 - FORENSIC, AND IT REMOVES A FALSE LEAD. The third envelope is not a third
+envelope. Salts `3ab585348552415d` and `3ab58494d215415d` carry the **byte-identical
+ciphertext** `75270543bb0b4f97...`; only the salt differs, in one byte
+(`85 34 85 52 41 5d` vs `84 94 d2 15 41 5d`). It is a corrupted transcription of the
+small half inside a community script, not a distinct blob, and it must not be counted as
+a candidate envelope. Distinct real envelopes of 96-byte shape: 1.
+
+SO THE ANSWER IS: B1 is one yin-yang half. B2 is not either half. And the reason is
+stronger than "`R-B2FAIL` could not reproduce the ladder" - it is that B2 has no
+ciphertext. Every 79-byte record reachable by decrypting a known envelope is B1, because
+the only 96-byte envelope yields exactly B1 and the only other yin-yang envelope yields
+1327 bytes.
+
+THE ACTIONABLE CONSEQUENCE, and it redirects the B2 work. If `B2_79.bin` is genuine then
+it is evidence of a THIRD envelope that nobody has ever captured: a 96-byte `Salted__`
+blob, 80-byte ct, under a salt that is neither `3ab58534...`, `b45a5e3d...` nor
+`2d3f6fe0...`, whose plaintext is `b40fce72ef5638e4f79b3233e653f8a5dbdb0d4ae2009d2d3da2c98b70f4d004`.
+That is a falsifiable prediction with a hard verifier, and it is a better use of effort
+than more B1->B2 cipher sweeps: any 96-byte base64 blob found anywhere decrypts-or-not in
+one command, and the search target is now "a missing 96-byte blob", not "a missing
+transform". Note the honest limit - B2 may equally be a community fabrication that was
+simply hashed and filed; nothing in the corpus distinguishes those two cases, and the
+prediction is the only way to tell. Also worth recording for the next agent: the
+`/storage/external/briefcase` copies and this session's `/storage/emulated/0/Download/Telegram`
+copy are the only places these base64 envelopes survive outside the repo, and
+`tools/chain_build.py:26` is the only place the 5-token password is written down.
