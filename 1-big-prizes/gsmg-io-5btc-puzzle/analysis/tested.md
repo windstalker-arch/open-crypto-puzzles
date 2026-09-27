@@ -15022,3 +15022,100 @@ Date: 2026-09-27, local.
   exhausted for new puzzle text, no re-fetch can change this - the answer is no, permanently.
 
 Date: 2026-09-27, local.
+
+## R-SOLVERGRP-NEW-2026-09-27: the solver-group pack GREW 42 entries / 86 MB -> 89 files / 121 MB; 52 files new. Triaged all 52. **One new artifact (`jrk-history.txt`, a 5,368-bit stream carrying a question found nowhere else in any corpus we hold), one new salt, and three clean negatives - including a file named `4E.zlib` that looks like progress and is a pure recompression of a file we already had.** Gates unchanged, nothing opened, 0 oracle calls.
+
+- **INVENTORY.** Prior pass `R-SOLVERGRP-IMG` inventoried this directory at 42 entries / 86 MB. It is now
+  **89 files / 121 MB**, and **52 files are newer than the 2026-09-26 21:55 cutoff** (mtime histogram:
+  23 files @ 09-22, 53 @ 09-26, 13 @ 09-27). Grouped: 29 `4E_*.png` renders, 4 `.b64.txt` slices,
+  4 solver scripts (`CosmicHush.py`, `SalphaseionHush.py`, `Salphaseion_Decoder.py`, `SalPhaseIon
+  mapping .py`), 2 new tools (`Gsmg Salt Checker.zip`, `sc.jar`), CUDA/GPU scratch, and the two
+  `.zlib` files. `~/gsmg-preserved/gsmg-solver-group/` still holds only the 2 essentials, as designed.
+
+- **NEGATIVE 1, AND IT IS THE ONE THAT MATTERS MOST DISCIPLINARILY: `4E.zlib` IS A RECOMPRESSION OF
+  `4E`, NOT A DECODING OF IT.** The name reads like someone identified `4E`'s container. They did not.
+  `zlib.decompress(open('4E.zlib','rb').read())` is **byte-identical** to bare `4E` - both 21,910 B,
+  both sha256 `d4a224bc22eb65b1d107efe9...`, 918 B vs 21,910 B = 4.2% ratio. It carries **exactly zero
+  new information**, and the ledger's standing disposition for `4E` ("format unidentified, cannot be
+  advanced without an unblocker") is **UNCHANGED**. A future reader who sees a `.zlib` next to a
+  mystery blob will assume the format was solved; it was not. This is the same shape as the
+  `R-DMGREC` whitespace-join false blob - a file whose existence implies a result that does not exist.
+
+- **AND A LEDGER CORRECTION FALLS OUT OF IT: `4E` IS BINARY, NOT "whitespace-prefixed text".** The
+  prior description is simply wrong. `4E` opens `01 00 00 00 ff 00 00 00 00 00 ...` - it is a
+  little-endian int32 array (5,477 full words + 2 trailing bytes) in which the payload lives in
+  **byte 0 of each 4-byte group** (values 0-255, only 24 distinct, 4,802 zeros / 535 x `255`), with
+  the other three bytes zero. Read that way it is a sparse pixel/bitmap array, 4x byte-expanded, and
+  `len % 4 == 2`, i.e. the expansion is **2 bytes out of phase**. Correct the description; the
+  identification is still open, but it is open on a *bitmap*, not on a text file.
+
+- **NEGATIVE 2: NO NEW CIPHERTEXT.** I extended the `R-BLOBINV` discipline to this pack, which that
+  row never covered (its scope was repo + `~/briefcase` + `~/gsmg` + the Telegram capture, and this
+  directory sits on removable storage). Decoding **every** `Salted__` token in all 52 new files,
+  including inside both archives, yields **6 distinct salts, 5 of them already known**. The four
+  `.b64.txt` files are 32-byte **prefix slices** of known blobs (`cd`->2d3f6fe0, `p3`->062866,
+  `p32b`->b45a5e3d, `sa`->3ab58534) - testing scaffolding, not material. The 3,364 B `ph` file inside
+  `Gsmg Salt Checker.zip` is a 32-byte slice of the known **eef** blob. The **one** new salt is
+  `3ab58494d215415d` in `SalphaseionHush.py`, which differs from B1_79's `3ab585348552415d` in the
+  four middle bytes (`8534 8552` -> `8494 d215`) while keeping `3ab5` and `415d` - a deliberate
+  random-salt substitution for a brute-force run, which **confirms the standing "do not repair
+  SalphaseionHush.py" instruction**: it is corruption-for-search, not a typo, and repairing it would
+  destroy the experiment. Worth noting the search is **futile by construction** - a wrong salt
+  derives a wrong key, so no password can ever produce valid OpenSSL padding on that copy.
+
+- **NEGATIVE 3: THE COMMUNITY'S OWN WORDLIST OPENS NEITHER BLOCKED BLOB.** `SalphaseionHush.py` is a
+  hand-rolled brute-forcer with 37 candidate keys. I reimplemented its decoders faithfully, then ran
+  all 37 against **both** still-blocked blobs (`eefc4c5b` 2,432 B and `9fbc451d` 4,090 B) x
+  {EVP-MD5, EVP-SHA256} = 148 attempts. **0 decrypts.** Its derived components are `lastwordsbefore-
+  archichoice` and `thispassword` (both already closed by us) plus `k1`/`k2` = `'mb\xeb\x8c\xc3\xc7t\xd6\xc6v'`
+  and `'e\xb9\xd6\\'` - **binary garbage**, because the script decodes the a/b streams as ASCII
+  bytes when they are the 5x8 residue grid. Same misread class as `R-DIGRUN`, in the other direction.
+
+- **NEGATIVE 4, AND IT IS A 30 MB ONE: `found.txt` IS A `1GSMG` VANITY SCAN, AND IT FAILED.** 30 MB,
+  459,300 lines, 153,100 `PubAddress`/`Priv (WIF)`/`Priv (HEX)` triples, every address starting
+  `1GSMG`. Content-grepped for both funded gates: `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe` **0**,
+  `17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa` **0**, and the target hash160 `a9553269572a317...` **0**.
+  The scan is also **provably futile, not merely unlucky**: hitting a full address is 1 in 2^160,
+  whereas a prefix scan enumerates only the ~2^25 keys whose address *starts* `1GSMG`. No amount of
+  further scanning can reach the gate. It is preserved here as evidence of what the group believes,
+  and as a warning: 153,100 real private keys sitting in a plaintext file on removable storage is a
+  credential-hygiene problem independent of the puzzle.
+
+- **THE ACTUAL NEW MATERIAL: `jrk-history.txt`, 5,368 B, ZERO prior coverage.** 5,368 characters of
+  pure `0`/`1`, one line. It is **not** in the preserved 71,976 B `Jrk_Bgrt_Groupchat_History.txt`
+  (`nb[:400] in pb` is False; the file is 1 line against the transcript's 1,621). **Bit-order matters
+  and I checked it rather than assuming: MSB-first 8-bit ASCII is the only coherent reading - 100%
+  printable with 18 word-markers - against 6% for LSB-first-per-byte, 6% for whole-stream-reversed,
+  and 54% for 7-bit.** So the decode is settled, not guessed. It yields 671 bytes in 5 segments:
+  reversed text, a 1-char binary spacer, a **528-bit literal block**, a letter filler, and a reversed
+  tail. The 528-bit block decodes standalone to **66 high-entropy bytes** -
+  `bcbc8aaa56168c5a1a365e260cc61aaad68c5626f4e64c9a0c624c266e0c4c4656acca5a966a12268c9ceaa6aec6cc26cc9c9e326cb212c60c4a12862c6ca2ca8242` -
+  which is a key/hash-shaped object, not a message.
+
+- **AND WHAT THE 671 BYTES SAY IS THE HEADLINE. REVERSED, IT READS:**
+  `HOW_DID_CAESAR_SEND_HIS_MESSAGES?AND_WHAT_IF_13_IS_DEFAULT_AND_THE_NUMBER_C_IS_THE_2ND_HINT?`
+  **That question appears in ZERO files** across `~/briefcase`, `~/gsmg`, `~/gsmg-preserved` and this
+  ledger's `analysis/` - probed case-insensitively for both the underscored and spaced forms. Caesar
+  and ROT13 are long-known threads here (49 `caesar` hits in this ledger), but **this specific
+  question is new to every corpus we hold.** Its substantive claim is testable and worth recording
+  as a lead: *ROT13 is the default shift, and the letter **C** is the 2nd hint.* Two things stop it
+  from being a result. First, the letter filler does **not** Caesar out: all 25 shifts x
+  forward/reversed were scored and none produces English, so whatever the filler encodes, it is not a
+  finished ROT13 message - the artifact is a **question**, not a decryption. Second, **provenance is
+  unestablished**: a file in a solver directory whose text is phrased as a question ("AND WHAT IF...")
+  is at least as consistent with a solver's own speculation as with an author statement, exactly the
+  limit `R-SOLVERGRP-IMG` F6 drew for the firmware JPEG. Not promoted to authorial.
+
+- **I TESTED IT AS A PASSWORD ANYWAY, BECAUSE THAT IS THE CHEAP DIRECTION.** 16 derived candidates -
+  the question (plain/lower/sha256), the stream forward and reversed, the 66-byte block as
+  hex/HEX-upper/base64/raw, every non-binary segment forward and reversed, and the raw bitstring -
+  against both blocked blobs x {MD5, SHA256} = 64 attempts. **0 decrypts.** The 66-byte block stays an
+  unexplained object; it is not a key to anything we hold.
+
+- **STATUS.** Both gates unchanged, nothing opened, no candidate. What moved: the pack is now
+  triaged to its current edge, `4E` is correctly described for the first time (binary bitmap, not
+  text) while remaining undecoded, the salt-mutation note is confirmed rather than assumed, a futile
+  30 MB search is bounded and closed, and one genuinely new authorial-adjacent artifact is on the
+  board with a stated decode, a stated bit-order justification, and an explicit non-promotion.
+
+Date: 2026-09-27, local.
