@@ -754,6 +754,20 @@ def check_text_volume(folders):
 # Check 11: oracles, script compilation, absolute paths
 # ---------------------------------------------------------------------------
 
+# An absolute home path pins a tool to one machine. Which literal to look for
+# depends on the machine doing the checking: on an ordinary Linux box $HOME sits
+# under /home/, but on Termux it is /data/data/com.termux/files/home and there is
+# no /home/ directory at all. A check that only greps for "/home/" therefore
+# passes on Termux no matter what the tools hardcode, which is how five sweep
+# tools kept OGDIR = "/data/data/com.termux/files/home" after 1d908f3 cleaned the
+# same defect out of three others. Both spellings are checked here.
+#
+# The literal is only reported in code. A comment may still explain the path, and
+# sibling_index.py does so at some length to explain why it tries both $HOME/usr/tmp
+# and $PREFIX/usr/tmp; that reasoning is worth keeping.
+HOME_PATH_PREFIXES = ("/home/", os.path.expanduser("~").rstrip("/"))
+
+
 def check_oracles_and_scripts(folders, scope_root):
     failures = []
 
@@ -776,8 +790,13 @@ def check_oracles_and_scripts(folders, scope_root):
         except (UnicodeDecodeError, OSError):
             lines = []
         for i, line in enumerate(lines, start=1):
-            if "/home/" in line:
-                failures.append(f"{rel(path)}:{i}: absolute /home/ path in source")
+            if not line.lstrip().startswith("#"):
+                for prefix in HOME_PATH_PREFIXES:
+                    if prefix in line:
+                        failures.append(
+                            f"{rel(path)}:{i}: absolute home path in source ({prefix}...)"
+                        )
+                        break
             if "sys.path" in line and "enigme" in line:
                 failures.append(f"{rel(path)}:{i}: sys.path hack referencing the private repo")
 

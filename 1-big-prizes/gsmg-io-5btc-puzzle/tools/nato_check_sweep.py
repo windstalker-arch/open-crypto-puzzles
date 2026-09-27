@@ -29,7 +29,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 from certified_vic import build_grid, decode, CANON, POS, ALPHA  # noqa
 
-OGDIR = "/data/data/com.termux/files/home"
+OGDIR = os.path.expanduser("~")
 DATA = os.path.join(ROOT, "data", "finalpage-digit-streams.json")
 d = json.loads(Path(DATA).read_text())
 FAED = d["faed_570"].rstrip("z")

@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 
-OGDIR = "/data/data/com.termux/files/home"
+OGDIR = os.path.expanduser("~")
 ORACLE_SMALL = os.path.join(ROOT, "tools", "oracle.py")
 ORACLE_DUAL = os.path.join(ROOT, "tools", "oracle_dualite.py")
 OUT = os.path.join(OGDIR, "tmp", "sticker_kw_freeinterp_cands.txt")
