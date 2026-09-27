@@ -13494,3 +13494,42 @@ ambiguous (A-matrix vs G-matrix, and how 14 numbers in 50-76 should be written d
 guessing a format to spend a call on would be exactly the discipline failure this ledger
 exists to prevent. Archive the page, the reproducer, and this row; revisit formats only with
 a reason to prefer one.
+
+## 2026-09-27 - R-SALPHASEION follow-up: archive grid stale cell was row 7, not row 11 (reconciled)
+
+My own work state carried a correction note saying the derived archive grid
+`img/follow_the_white_rabbit_grid_14x14.json` had a stale BLACK cell at **row 11, col 7**.
+That row index was wrong. Chasing it down properly:
+
+- The archive rows mapped cell-for-cell onto `data/phase1-matrix-14x14-full.json` and onto
+  `tools/white_rabbit_grid.py`'s live re-extraction for **13 of 14 rows**. Row 11 was always
+  correct (`....WW.WBW..WW` = `KKKKWWKWBWKKWW`); the stale cell was **row 7, col 6**.
+- Archive row 7 read `B..WWWWWWW.WYW`, i.e. WHITE at (7,6). Machine cell-centre extraction
+  from `follow_the_white_rabbit_20201115.png` gives BLACK there: `B..WWW.WWW.WYW`.
+
+**WHY THIS MATTERED.** The stale cell was not cosmetic - it changed the certified counts.
+
+| source | black/K | white/W | blue/B | yellow/Y | ones |
+|--------|---------|---------|--------|----------|------|
+| stale archive JSON | 86 | 86 | 15 | 9 | 101 |
+| certified (PNG + `clues/puzzle.png`) | **87** | **85** | 15 | 9 | **102** |
+
+`ones=101` would have broken the spiral. `ones=102` is what makes the CCW
+down-left-first `B/K=1, W/Y=0` MSB-first spiral read `b'gsmg.io/theseedisplanted'`. So the
+archive was internally self-inconsistent: it carried `_counts` matching the *broken* grid
+while claiming the grid was "MACHINE-VERIFIED" and "byte-identical across all 4 Wayback
+captures". The claim was about the PNG, and the PNG was fine; the derived JSON had drifted
+from it. A machine-extracted artifact that nobody re-diffed against its source is exactly how
+this happens, and it is the same failure mode as my `[a-i]` mis-tokenization earlier today -
+trusting a derived label over a re-derivation.
+
+**FIXED.** Row 7 corrected, `_counts` updated to black 87 / white 85, and a
+`_correction_2026_09_27` field added to the JSON naming the cell, the before/after row, and
+the reason. The source PNG is untouched; only the derived JSON changed. `SHA256SUMS.txt` had
+exactly one stale digest (the file I edited) out of 397 - updated in place rather than
+regenerating wholesale, so the other 396 verified digests stay as they were. **397/397 PASS.**
+
+**RE-VERIFIED.** `tools/white_rabbit_grid.py` WITNESS PASS on **both** sources
+(`clues/puzzle.png` 75px cells and the 350x350 rabbit PNG 25px cells), both reading
+`b'gsmg.io/theseedisplanted'` at ones=102. `tools/oracle.py --selftest` and
+`tools/oracle_dualite.py --selftest` both PASS. 0 oracle calls.
