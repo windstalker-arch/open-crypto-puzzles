@@ -1,4 +1,26 @@
-# GSMG 5-BTC Puzzle - Solve-State Brief (2026-09-24, addendum 2026-09-26)
+# GSMG 5-BTC Puzzle - Solve-State Brief (2026-09-24, addendum 2026-09-27)
+
+> **VERIFIED STATUS (2026-09-27, `R-VERIFY`).** The certified chain below is no longer a set of
+> recorded claims - it has been **re-derived from first principles and re-verified**: run
+> `python3 tools/verify_ladder.py` (41 checks, exits 0). The whole ladder follows from **canonical
+> BLOB1 + RAW_PW** alone, including `WIF(K_C1)` being the BLOB2 password, so the chain closes on
+> itself. All five opened envelopes confirm by **exact re-encryption round-trip**. All four ladder
+> addresses re-derive and **all four differ from both funded gates**. No key recovered; both gates
+> open; that null is now verified rather than assumed.
+>
+> **One identifier was corrupted in a session summary and is corrected here:** `ADDR_C2` =
+> `135Cf6ASyU2PDHuxA1Edc3mHYtxEsZNPCa` (34 chars, h160 uncompressed
+> `16bba55c93148e78ce946caad0115bb8248f2f09`). A 33-char `...ASy2PD...` form has circulated in
+> summaries; it is a dropped `U` and appears nowhere in the artifacts. If you reuse any identifier
+> from a summary rather than the ledger, re-derive it once.
+>
+> **Cheap leads are exhausted.** The `abbaabab...` residue is a certified author-page artifact
+> (`R-DIGRUN`), the 1539-byte period-15 blob has failed three independent parameterisations under
+> proper held-out testing and a corpus-wide sweep found no second ciphertext, and the phase-3.2 prose
+> is closed by `R-EBCDIC1141` plus the FINDING 3/5 rows. Exactly **one** direction survives from
+> `R-P32BLOB`: treat the 26 byte-values as non-alphabetic data (base-N / bit-packed). It is
+> expensive, speculative, and unguided. The remaining gap looks **interpretive, not mechanical**.
+
 
 One-page onboarding for any solver/agent/contributor. Companion to `AUDIT-2026-09-20.md`
 (invariant + certified-boundary audit) and `analysis/leads.md` (ranked, dated leads).
