@@ -13,6 +13,5 @@ does not move a puzzle between tiers, only a change in its actual state does.
 | Puzzle | Prize | USD | Chain | Type | What remains | Escrow checked | Status |
 |---|---|---|---|---|---|---|---|
 | [Crypto Puzzles 2018: Puzzle #2](crypto-puzzles-2018-puzzle-2-0-05eth/) | 0.05 ETH | 94 | ethereum | raw-private-key, image-stego, video-series | external-info | 2026-08-16 | open |
-| [Bitcoin Movie Enigma](bitcoin-movie-enigma-100ksats/) | 100,000 sats | 63 | bitcoin | bip39-seed, text-cipher, word-selection | insight | 2026-08-16 | open |
 | [Exitonly Bitcoin Challenge 14](exitonly-challenge-14-30ksats/) | 30,000 sats | 18.90 | bitcoin | bip39-seed, word-selection | uneconomic | 2026-08-16 | open |
 <!-- generated:end -->

@@ -41,6 +41,7 @@ COLOR_BG = "#FFFFFF"
 
 COLOR_BY_CONFIDENCE = {
     "confirmed": COLOR_CONFIRMED,
+    "confirmed-community": COLOR_CONFIRMED,
     "probable": COLOR_UNCERTAIN,
     "uncertain": COLOR_UNCERTAIN,
     "disputed": COLOR_UNCERTAIN,

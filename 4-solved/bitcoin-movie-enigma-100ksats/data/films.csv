@@ -1,0 +1,54 @@
+# Film identification state for the 34 panels of the Bitcoin Movie Enigma.
+# Canonical list as of 2026-09-03. The 2026-08-04 still-only pass was replaced on the
+# nine previously unreconciled panels by the issue #9 community list
+# (data/films_community_issue9.csv; deviceio121, SmallCakekoo, couldes, timothy-barus)
+# and by AppleLamps's 2026-08-27 frame-level checks against the published stills.
+# Panel 14 was the last one I held open (I had read it as Eyes Wide Shut): on
+# 2026-08-29 deviceio121 linked MGM's official "The Man in the Iron Mask" clip
+# (youtube 3PcEZNC7IPw, 2:18) and the frame there is the panel's own masked-ball
+# shot, so panel 14 is The Man in the Iron Mask, confirmed 2026-09-03.
+# Panels 9, 13 and 24 stay confirmed-community because they rest on the issue #9
+# sources rather than on a still matched independently. confidence:
+# confirmed | confirmed-community | probable | uncertain | unidentified | disputed.
+# mpaa: the US certificate shown on the film's IMDb page.
+# candidate_bip39_words: English BIP39 words found as a literal substring of the
+# title, or (AppleLamps, 2026-08-27) as the unique 4-letter BIP39 prefix inside the
+# title with spaces removed (so "raiders of the" yields "soft", "shining" yields
+# "shine", "professional" yields "profit", "sharknado" yields "share"). "none" means
+# neither reading produces a word. Panel 8 (The Goonies) is the only remaining
+# title with no BIP39 reading of either kind.
+panel,title,mpaa,confidence,candidate_bip39_words
+1,Die Hard,R,confirmed,hard
+2,Paths of Glory,APPROVED,confirmed,glory;path
+3,Aliens,R,confirmed,alien
+4,Mad Max,R,confirmed,mad
+5,Alien,R,confirmed,alien
+6,Apocalypse Now,R,confirmed,now
+7,Escape from Alcatraz,PG,confirmed,escape;cat
+8,The Goonies,PG,confirmed,none
+9,Spartacus,PG-13,confirmed-community,art;spare;party
+10,Mission: Impossible,PG-13,confirmed,miss;possible
+11,Godzilla,PG-13,confirmed-community,ill
+12,Life of Pi,PG,confirmed,life
+13,Leon: The Professional,R,confirmed-community,profit
+14,The Man in the Iron Mask,PG-13,confirmed,iron;mask;man;ask
+15,The Crimson Rivers,R,confirmed,river;crime
+16,The Visitors,R,confirmed-community,visit
+17,A Clockwork Orange,R,confirmed,clock;orange;range;work;lock
+18,Star Wars: A New Hope,PG,confirmed,hope;start
+19,Gravity,PG-13,confirmed,gravity
+20,First Man,PG-13,confirmed,first;man
+21,Solaris,PG-13,confirmed,solar
+22,Blade Runner 2049,R,confirmed,blade;run
+23,Guardians of the Galaxy,PG-13,confirmed,galaxy;guard
+24,Close Encounters of the Third Kind,PG,confirmed-community,close;kind
+25,Barry Lyndon,PG,confirmed,bar;barrel
+26,Sharknado,TV-14,confirmed,share
+27,Terminator 2: Judgment Day,R,confirmed,day;term;judge
+28,Scream 2,R,confirmed,cream;screen
+29,The Matrix Reloaded,R,confirmed,matrix;load
+30,Toy Story 2,G,confirmed-community,story;toy
+31,Ghostbusters II,PG,confirmed,ghost;host;bus
+32,Raiders of the Lost Ark,PG,confirmed,soft
+33,The Shining,R,confirmed,shine
+34,The Human Centipede (First Sequence),R,confirmed-community,human;first;man;tip

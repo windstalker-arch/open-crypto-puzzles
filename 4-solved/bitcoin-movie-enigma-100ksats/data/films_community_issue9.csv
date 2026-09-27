@@ -1,0 +1,47 @@
+# Community identification list for the 34 panels, contributed in issue #9 by
+# deviceio121, with two corrections cross-checked against IMDb by other readers:
+# panel 4 was Going Places, corrected to Mad Max (SmallCakekoo, tt0079501); panel
+# 30 was Toy Story, corrected to Toy Story 2 (couldes, tt0120363). timothy-barus
+# then re-derived the title-to-word reading and ran three exhaustive metadata-rule
+# sweeps against the escrow, all empty. This file records that list verbatim as an
+# alternative to data/films.csv; it is NOT merged over the canonical identifications,
+# because the two lists diverge on about nine panels (3, 5, 9, 13, 14, 16, 23, 24,
+# 27) that have not been reconciled frame by frame. See analysis/leads.md.
+# candidate_bip39_words uses the community's permissive reading (substring, prefix,
+# stem, or cross-token join), so Spartacus->art, Barry Lyndon->bar, Raiders->soft
+# count as words here where data/films.csv reads them as "none".
+panel,title,imdb_id,candidate_bip39_words
+1,Die Hard,tt0095016,hard
+2,Paths of Glory,tt0050825,glory;path
+3,Aliens,tt0090605,alien
+4,Mad Max,tt0079501,mad
+5,Alien,tt0078748,alien
+6,Apocalypse Now,tt0078788,now
+7,Escape from Alcatraz,tt0079116,escape
+8,The Goonies,tt0089218,none
+9,Spartacus,tt0054331,art
+10,Mission: Impossible,tt0117060,miss;possible
+11,Godzilla,tt0120685,ill
+12,Life of Pi,tt0454876,life
+13,Léon: The Professional,tt0110413,none
+14,The Man in the Iron Mask,tt0120744,iron;mask;man;ask
+15,The Crimson Rivers,tt0228786,river
+16,The Visitors,tt0108500,visit
+17,A Clockwork Orange,tt0066921,clock;orange;range;work
+18,Star Wars: A New Hope,tt0076759,hope
+19,Gravity,tt1454468,gravity
+20,First Man,tt1213641,first;man
+21,Solaris,tt0307479,solar
+22,Blade Runner 2049,tt1856101,blade
+23,Guardians of the Galaxy,tt2015381,galaxy;guard
+24,Close Encounters of the Third Kind,tt0075860,close;kind
+25,Barry Lyndon,tt0072684,bar
+26,Sharknado,tt2724064,none
+27,Terminator 2: Judgment Day,tt0103064,day;term
+28,Scream 2,tt0120082,cream
+29,The Matrix Reloaded,tt0234215,matrix
+30,Toy Story 2,tt0120363,story;toy
+31,Ghostbusters II,tt0097428,ghost
+32,Raiders of the Lost Ark,tt0082971,soft
+33,The Shining,tt0081505,shine
+34,The Human Centipede (First Sequence),tt1467304,human;first
