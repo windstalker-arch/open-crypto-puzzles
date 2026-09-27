@@ -892,6 +892,7 @@ def check_emptiness(scope_root):
         if not dirnames and not filenames:
             failures.append(f"{rel(dirpath)}:1: empty directory")
 
+    ignored = ignored_paths()
     for tier_dir in TIER_DIR_TO_KEY:
         tier_path = os.path.join(scope_root, tier_dir) if scope_root == REPO_ROOT else None
         if not tier_path or not os.path.isdir(tier_path):
@@ -899,6 +900,12 @@ def check_emptiness(scope_root):
         for entry in sorted(os.listdir(tier_path)):
             folder = os.path.join(tier_path, entry)
             if not os.path.isdir(folder):
+                continue
+            # Same rule as walk_pruned: a folder git is ignoring is scratch, not a
+            # half-written puzzle. The empty-dir scan above already inherits this, and
+            # a local clone of a third-party repo or a stray scratch dir sitting in a
+            # tier directory is not a QA finding.
+            if rel(folder) in ignored:
                 continue
             has_readme = os.path.isfile(os.path.join(folder, "README.md"))
             has_manifest = os.path.isfile(os.path.join(folder, "puzzle.json"))

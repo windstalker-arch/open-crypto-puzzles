@@ -140,7 +140,10 @@ No candidate move sequence has been tested against the current 7 contracts - the
 proven unreachable (invariant), so that is no longer a live question. The compiler-level corpus
 above is closed as a negative result.
 
-## Leads, after mechanical testing (2026-08-28)
+## Open leads, ranked
+
+Ranked after mechanical testing, 2026-08-28. All five are now closed; none is a live
+candidate, which is what the conclusion below records.
 
 1. ~~Re-audit the hand-written data in each challenge~~ - **closed 2026-08-28**: line-by-line reconciliation of all 7 move/adjacency sources against the reference found 0 wrong constants and 0 divergent moves; any `INVALID_MOVE` (666) is unreachable because `MoveField` reverts on `index > 15` first.
 2. ~~Differential testing against a reference implementation~~ - **largely closed 2026-08-28**: deployed the source-built bytecode on a local anvil node and drove seeded random move+misuse sequences (`tools/differential_test.py`). 0 divergences over 2620 well-formed comparisons; the malformed-calldata wing (`tools/calldata_probe.py`) threw 1501 raw/random byte strings per game at the ABI decoder across two seeds and confirmed `isSolved()` can never be reached (10,507 calls, 0 solves).
