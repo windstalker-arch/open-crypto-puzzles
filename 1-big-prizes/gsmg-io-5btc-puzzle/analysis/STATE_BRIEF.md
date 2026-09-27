@@ -70,7 +70,7 @@ to what this line used to say, both from 2026-09-27:
   `E_S` is 15 bytes by construction (`B2_79[64:79]`). 64 appears nowhere in this comparison.
 - Also worth stating plainly, because it is implicit everywhere and explicit nowhere: **`E_S` is not
   a value to be found.** It is a slice of an already-certified decryption. The "E_S anchor" rows are
-  *cross-validation* — looking for those 15 bytes independently — not a search for something unknown.
+  *cross-validation* -- looking for those 15 bytes independently -- not a search for something unknown.
 
 ## Exhausted map (all oracle-certified 0 MATCH unless noted)
 
@@ -225,6 +225,20 @@ The obvious derivation was already tried and is the *correct* one
 (`jacquefresco` + `giveitjustonesecond` + `heisenbergsuncertaintyprinciple` maps onto all
 three riddles) and it returned nothing, so the password is not recoverable from the visible
 clues - consistent with the 2026 capture being re-encrypted. No battery warranted per AGENTS.md.
+
+**Now witnessed rather than asserted (R-P32BYTES).** The `s.43` note that the envelope was
+"NOT in our local captures" was wrong: it was held all along in the briefcase and had simply
+never been promoted into `data/`, so the blocker was recorded from a directory listing instead
+of a search. The bytes are now certified (`data/phase3.2-envelope-2026.b64`, blob sha256
+`9d172dc0...`, ct sha256 `48a77592...`, 2,432 B = 152 blocks), with provenance proved by the
+fact that the same source's 1,792-char cosmic blob is **byte-identical** to ours
+(`b1895055...`) and its truncated 32-byte fork copy is an exact **prefix** of the ciphertext -
+one era only, no second version. Against that, the 2020 password under **13** key/IV
+derivations (raw `sha256(pw)` at three IVs, `sha256(sha256(pw))`, the phase-3 key, and
+`EVP_BytesToKey` md5/sha1/sha256/sha512 with and without the salt) gives **0 valid pads** and
+printable 0.36-0.40. Since the 2020 copy opens under exactly that password, the envelope in
+hand is the 2026 re-encryption. The blocker stands, reclassified from *missing artifact* to
+*password unrecovered* - same outcome, no longer resting on a retrieval excuse.
 
 ## Yin-yang: RESOLVED POSITIVE 2026-09-26 (R-YINYANG-MARKER)
 
@@ -572,6 +586,63 @@ labelled dictionary (that band's text is corpus `#5717`).
   unknown 26-symbol substitution is near-infeasible to attack statistically, but trivial given known plaintext.
 - Still open: the 149-digit string (not an A1Z26 concatenation; recovered key does not apply).
 
+## ADDENDUM 2026-09-27 (2) - `R-FAEDBASE`: the DECODED faed plaintext is MEASURED RANDOM. Stop reading it as text.
+- The only lever that survived `R-P32BLOB2`'s retraction is the **IC curve**, because IC is permutation-invariant. Applied to the
+  full 570-character Bifid **plaintext** - never before done, since every prior base-N read hit the RAW streams or the post-split
+  objects (s.60) - it settles the question with a measurement instead of a failed sweep:
+  - `even285` (285 symbols, 4 letters): **IC 0.2554** vs random 0.25. `odd285` (285 symbols, 25 letters): **IC 0.0503** vs
+    random 0.04. Both **flat across p = 1..15** (no Vigenere period), in explicit contrast to the 1539-byte blob's clean
+    1.52x period-15 signal. `full570` IC(1) = 0.0941 is itself just the mod-2 signature.
+  - **CORRECTION (see ADDENDUM 2026-09-27 (h) / `R-FAEDCOORD`): the "seed material, not an encrypted text" clause above is
+    WITHDRAWN as an over-claim.** What the measurement actually supports is the narrow statement that no *frequency-invariant*
+    read of the streams recovers natural language. IC is invariant under relabelling and therefore blind to positional structure,
+    and there IS a hard positional structure here. The even/odd 4-vs-25 alphabet split below is fully explained and is NOT a
+    discovery. Retained table is still valid; the inference drawn from it was too strong.
+- The base-N read is separately dead: 16 reads over 4 objects x 2 alphabet orders x 2 directions x 2 offsets, **0 beat their own
+  refit-on-shuffled null** (printable 0.387 real vs 0.386 null; 0 trigrams both sides). The author's own digits->integer->**hex
+  text**->bytes convention is the code path, and the certified z-segment witness is what forced the two details I had wrong.
+- **Cross-check (new):** 25 byte-forms (utf8 / lowercased / 5-bit packed over the cipher's own 25-letter square / idx0 / idx1) of
+  `full570`/`odd285`/`even285`/`object256`/`dbbib91` x 4 digests = 100 hashes against 119 documented hash tokens: **4 matches, all
+  already the `salphaseion` set.** No derived form links faed to any other artifact. The 5-bit packings are new and unreferenced
+  - `full570` -> **356 B**, sha256 `8d2f2f83...`; `odd285` -> 178 B `672d0f92...`; `object256` -> `fb347d36...`;
+  `dbbib91` -> `56e74a8d...`. Role undetermined, and the only genuinely new byte-objects this session produced.
+
+## ADDENDUM 2026-09-27 (3) - `R-P32BYTES`: Phase-3.2's bytes were never missing. Blocker reclassified, still stands.
+- The `s.43` blocker note ("salt `eefc4c5befc1656a` is NOT in our local captures") was **wrong** - the envelope was in the briefcase
+  the whole time and had simply never been promoted into `data/`, so a directory listing was mistaken for a search result. Now
+  certified at `data/phase3.2-envelope-2026.b64` (blob `9d172dc0...`, ct `48a77592...`, 2,432 B = 152 blocks), with provenance
+  proved rather than assumed: the same source's 1,792-char cosmic blob is **byte-identical** to ours (`b1895055...`) and its
+  truncated 32-byte fork copy is an exact **prefix** of the ciphertext. **One era only - there is no second version to diff.**
+- The 2020 password fails under **13** key/IV derivations with **0 valid PKCS#7 pads** (printable 0.36-0.40). Since the 2020
+  copy opens under exactly that password, the envelope in hand is the 2026 re-encryption. Practical outcome unchanged, but the
+  blocker no longer rests on a retrieval excuse. Do not re-run the retrieval; it already succeeded.
+
+## ADDENDUM 2026-09-27 (4) - correction to the source re-check.
+- Naddiseo issue **#15** (`Claude/neo continuous puzzle oc0qvx`, 2026-09-25) is a **different** puzzle; #13/#14 are the DBBI/FAED
+  threads already covered. `halbgott29a/gsmgio-5btc-puzzle` is **not** a new source (already audited at `late-321`, 7.1 MB, 51,177
+  msgs).
+- **The live-fetch route is CLOSED (`R-LIVEFETCH`), and it was never the open item I treated it as.** `gsmg.io/robots.txt` is
+  `User-agent: *` / `Disallow: /` - already recorded at line 3024 - and the routes are 404 regardless: `/salphaseion`,
+  `/phase1verification`, `/door`, `/choice`, `/ca` all 404; only `/puzzle` (29,931 B, sha256 `38125bbf...`, **not** our stored
+  `live_salphaseion.html` at 4,536 B) and `robots.txt` return 200, and `/puzzle` carries **none** of
+  `dbbib`/`faed`/`salphaseion`/`cosmic`/`matrixsumlist`/`lastwordsbeforearchichoice`/`thispassword`/the two salts. Per line 3720
+  the SalPhaseIon page was reached once and consumed. **The 404 is NOT a site-state delta** and must not be written up as one.
+  I issued six GETs before re-reading line 3024; nothing was promoted into `data/` and no finding rests on them, but that
+  fetch should not have happened.
+
+## ADDENDUM 2026-09-27 (5) - where the frontier stands after this session.
+- Unchanged and not moved by anything above: both gates funded, no key recovered, Lead 0's keyed 28-char alphabet still the only
+  live semantic crux, and the surviving mechanical direction still `R-P32BLOB`. What changed is that **one whole family is now
+  closed by measurement** (faed is not text) and the last "blocked because missing" object is **certified present and confirmed
+  re-encrypted**.
+- **Both cheap next moves from this session are now spent or closed.** The live re-fetch is closed by robots + known 404s. The
+  only untried item left is genuinely small: the **five new 5-bit-packed byte-objects** (`full570` -> 356 B `8d2f2f83...`,
+  `odd285` -> 178 B `672d0f92...`, `object256` -> `fb347d36...`, `dbbib91` -> `56e74a8d...`, plus the faed substreams) have
+  never been tried as *inputs* to the 103x103 application, only as candidate plaintexts.
+- Per AGENTS.md §3 the next move must **shrink N**, and after `R-LIVEFETCH` the sanctioned routes to a new information class are
+  exactly two: the Wayback/`gsmg-archive` captures already in hand, or a primary authorial artifact. If neither yields a new
+  surface, the correct answer is to **stop searching and say so** - not to keep sweeping material we already hold.
+
 ## ADDENDUM 2026-09-27 - `R-SOLVE`: 149-digit string DECODED; gsmg-private progress snapshot found; small-gate harness REFUTED.
 - **149-digit string SOLVED** (`R-VIC149`): straddling-checkerboard, board **`FUBCDORA.LETHINGKYMVPS.JQZXW`** (the author's own line-8 acrostic,
   punct `.` at 0-based 8 and 22 - issue #76's `/` is a mis-transcription), escapes **1,4** (line 2 "One for one, four for one").
@@ -713,8 +784,8 @@ rather than allowed to read as a negative. `K_S1`/`K_S2` were deliberately not s
 (they exist only in the unreproduced `author-wallet.txt`).
 
 **Standing caution, CORRECTED 2026-09-27 (`R-EBTAIL-2026-09-27`; supersedes the text previously here):** this caution was **stale and is withdrawn.** `E_S`/`B2` are **not** unanchored community values. `R-B2FAIL` swept `{small 96 B, PHASE2}` and never touched the p32 outer envelope (salt `b45a5e3d827593ca`, ct 80 B); `tools/rung2_b2.py --selftest` re-run today returns `ALL ANCHORS HOLD`, rc=0, with the re-encryption control and the distinct-envelope control both passing. `leads.md:59` was always the correct position. Row 4's `EVP_BytesToKey` / derived-IV / non-derived-IV clauses remain closed as `R-B2REKEY` and `R-B2REKEY-AES` closed them.
-**Additionally, the chain-4 key is now 32/32 on-puzzle.** `E_B[:2] = 59cc` was the last community-sourced byte-pair; `tools/eb_tail_sweep.py` sweeps all 2^16 two-byte tails against the published chain-4 hash `e4269ed5...` and finds **exactly one**, `59cc` (N=65,536, D=20,666/s, t=3.2 s, 267 PKCS#7 survivors vs 256 expected, 1 hash hit, 0 oracle calls). It is *determined*, not quoted. This does not make the chain creator-authenticated — the acceptance anchor is community-published — but the quoted value and an exhaustive independent search now agree.
-**Consequence for the frontier:** the chain-4 key is no longer a blocker. The missing operand is `ca`/`cosmic_A`, referenced only by the 32-bit SHA-256 prefix `cd3fea3d...` (#92), with the creator disavowing a "step after Cosmic Duality" (#104). Chain-4 is a 31-byte header (`+-` marker) plus 35 x 32-byte blocks, printable fraction 0.346 — an XOR-triangle operand grid, not text.
+**Additionally, the chain-4 key is now 32/32 on-puzzle.** `E_B[:2] = 59cc` was the last community-sourced byte-pair; `tools/eb_tail_sweep.py` sweeps all 2^16 two-byte tails against the published chain-4 hash `e4269ed5...` and finds **exactly one**, `59cc` (N=65,536, D=20,666/s, t=3.2 s, 267 PKCS#7 survivors vs 256 expected, 1 hash hit, 0 oracle calls). It is *determined*, not quoted. This does not make the chain creator-authenticated -- the acceptance anchor is community-published -- but the quoted value and an exhaustive independent search now agree.
+**Consequence for the frontier:** the chain-4 key is no longer a blocker. The missing operand is `ca`/`cosmic_A`, referenced only by the 32-bit SHA-256 prefix `cd3fea3d...` (#92), with the creator disavowing a "step after Cosmic Duality" (#104). Chain-4 is a 31-byte header (`+-` marker) plus 35 x 32-byte blocks, printable fraction 0.346 -- an XOR-triangle operand grid, not text.
 
 **Also closed by direct inspection:** the 2023-06-01 server-rendered capture of
 `89727c59` (4,556 B) contains the two known textareas and **nothing else** - no hidden
@@ -734,11 +805,11 @@ the puzzle's position is now narrower and more precise than it was.
 ### 1. The board has no author witness. Stop calling the VIC vector the author's.
 `R-FUBCD` swept all 399 files in `~/gsmg/gsmg-web-archive` for the exact board, the Phase-3.2 seed
 sentence, and every seed token (`fubcd`, `oracle-queen`, `thingky`, `jqzxw`, `sad board`,
-`as wide as the first`) — raw and whitespace-stripped. **All zero.** Controls passed
-(whitespace-insensitive SalPhaseIon controls in 4–5 witnesses), so the nulls are witnessed, not
+`as wide as the first`) -- raw and whitespace-stripped. **All zero.** Controls passed
+(whitespace-insensitive SalPhaseIon controls in 4--5 witnesses), so the nulls are witnessed, not
 uncertified. Phase-3.2 is not among the only two archived real puzzle pages. The earliest dated
 community witnesses are issues #74/#75/#76, all 2026-02-16, inside a batch the ledger itself flags
-as partly AI-slop — one lineage, not independent corroboration.
+as partly AI-slop -- one lineage, not independent corroboration.
 Consequence: even **granting** the community sentence, the exact string is **1 of 84,240**
 (`5!` orderings × 27 × 26 punctuation placements), so `METHOD-I` remains valid only for the one
 string it actually tests. Do not let "we have the alphabet" slide into "we have the sentence."
@@ -747,22 +818,22 @@ string it actually tests. Do not let "we have the alphabet" slide into "we have 
 42 -> 89 files (121 MB); the 52 newest were triaged. `4E.zlib` is a pure 4.2% recompression of bare
 `4E` (sha `d4a224bc…`, zero new information); `4E` is binary 4-byte-expanded sparse pixel data, not
 whitespace-prefixed text. `found.txt` is a failed 1GSMG vanity scan (30 MB, 459,300 lines, 153,100
-key triples) containing neither gate nor target pubkey. `jrk-history.txt` decodes — MSB bytes, byte
-reversal — to a payload prefixed `BASE64` and is a **Rick Astley rickroll**
+key triples) containing neither gate nor target pubkey. `jrk-history.txt` decodes -- MSB bytes, byte
+reversal -- to a payload prefixed `BASE64` and is a **Rick Astley rickroll**
 (`aHR0cHM6…` -> `https://www.youtube.com/watch?v=dQw4w9WgXcQ`), positively identifying the file as a
 solver shitpost. Do not promote its "13 is default / C is the 2nd hint". A 227-char community
 `phase_3_password` and 28 headline restorations both fail both blocked blobs. 19 candidates drawn
 from all four ladder keys × 6 blobs × 2 KDFs = 228 attempts, 0 decrypts. **Nothing here is a lead.**
 
-### 3. `author-wallet.txt` is OURS, not the author's — filename trap.
+### 3. `author-wallet.txt` is OURS, not the author's -- filename trap.
 `~/briefcase/gsmg-private/author-wallet.txt` says "Generated 2026-09-22" and its body is our own
 certified chain, our own field layout, our own gate balances and DCL findings. `K_C1`'s hash160
 matches inside it, which is **circular, not evidence**. In a directory named `gsmg-private` that
 also reads as "the author's private material." Never cite it as authorial attestation.
-(`gsmg-solved.json` and `keyFOUND.txt` are, by contrast, fully correct and honestly self-retracting —
+(`gsmg-solved.json` and `keyFOUND.txt` are, by contrast, fully correct and honestly self-retracting --
 only their filenames mislead.)
 
-### 4. Where this actually leaves the puzzle — read before proposing another battery.
+### 4. Where this actually leaves the puzzle -- read before proposing another battery.
 Every surface reachable from this device is now accounted for. The two blocked envelopes remain
 password-blocked (`9fbc451d`, 4,090 B; `eefc4c5b`, 2,432 B), `ca/cosmic_A` is still missing, the
 Phase-5 ciphertext location is genuinely lost with its Scribd document (the recovered command line
@@ -771,10 +842,66 @@ The author-quote vocabulary is not a fresh option: `late-310` already swept 325 
 
 **Per AGENTS.md §3, the next move must shrink N, not add compute.** No amount of further sweeping
 over material we already hold can open a gate that needs a key we do not have. A productive next step
-requires a **new information class** — a source surface not in `gsmg-web-archive` or either
-`gsmg-private` tree — or a genuinely new *semantic* hypothesis about the 103×103 application, stated
+requires a **new information class** -- a source surface not in `gsmg-web-archive` or either
+`gsmg-private` tree -- or a genuinely new *semantic* hypothesis about the 103×103 application, stated
 with its N, measured rate D, and t = N/D. Anything else is a repeat.
 
 ### 5. Stale-item bookkeeping (so it stops being carried as pending).
 `analysis/RAW_PW.md` needed no B2 update: lines 27-30 already carry the certified ladder through
 `B2_79` (sha `b40fce72…`) and `E_S = B2_79[64:79]`, completed in `5a9062d`. It is done, not pending.
+
+## ADDENDUM 2026-09-27 (h) - `R-FAEDCOORD`: the 4-vs-25 even/odd split is a TAUTOLOGY of the keyed square. One over-claim withdrawn.
+
+This is a genuine false positive, killed before it entered the frontier. It is recorded because the
+surface looks extremely promising and would otherwise be re-derived by the next session.
+
+**The observation.** `even285` has a 4-letter alphabet, `odd285` has 25. The 4 letters are exactly
+`BCDE` = square indices `{0,1,5,6}` = cells `(0,0),(0,1),(1,0),(1,1)` -- the **top-left 2x2
+sub-square**. Under a uniform-random plaintext, every even position landing in one 2x2 cell block
+has probability `(4/25)^285 ~ 1e-152`. That reads as a hard authorial constraint, and as the first
+new structural find in this puzzle.
+
+**The certified mechanism (`tools/faed_coord_decomp.py`, `SELFTEST PASS`).** From
+`tools/bifid_repro.py:39-52`: `combined = [r0,c0,...]`, `h = len(block)//2`, `rs = block[:h]`,
+`cs = block[h:]`; with `period == len(input)` and `len` even, `h = 285`, so
+`plain[k] = grid[r[k//2]][r[285+k//2]]` for even `k` and `grid[c[(k-1)//2]][c[285+(k-1)//2]]` for odd
+`k` - a **row-row** product at even positions, **col-col** at odd. Reproduced bit-exact.
+
+The faed raw alphabet is `{a..i}` -> `{A..I}`, and in the keyed square `A..I` occupy **9 of the 10
+cells of rows 0-1** (`K=(1,4)` unused). So input rows are confined to `{0,1}`:
+- even positions = product of two row indices -> at most `2x2 = 4` cells = `{D,B,C,E}`
+- odd positions = product of two column indices -> up to `5x5 = 25` cells
+
+The split is **forced**, and `{A..I}` is exactly `ALPHABET[0:9] == "DBIFHCEGA"` - the first nine
+characters of the square's own key string.
+
+**Killed false positive.** `P(9 random cells occupy exactly 2 of 5 rows) = C(5,2)*C(10,9)/C(25,9)
+= 100/2042975 = 4.9e-5` (1 in 20,430) looks like a 1-in-20,000 endorsement of the community square.
+It is **vacuous**: the square was built from the key string `DBIFHCEGA...` and the faed alphabet is
+that string's first nine letters, so the property is true by construction. **A square search must not
+score candidates on "places the faed letters in exactly 2 rows" - that scores an artifact.**
+
+**Over-claim withdrawn.** ADDENDUM (2)'s "seed material, not an encrypted text" is **retracted**.
+IC is invariant under relabelling, hence invariant to positional/coordinate structure, hence blind
+to the 2x2 confinement. IC(1) = 0.0503 on `odd285` is fully compatible with hard positional
+structure. IC supports only: *no frequency-invariant read recovers natural language.* This is now a
+standing correction on how IC evidence may be used anywhere in this puzzle.
+
+**Cheap closure of a newly opened surface.** The decomposition exposes two bit channels never
+extracted before: `even285` as a **2-bit (base-4)** channel, 285 symbols = 570 bits; and the raw
+faed **row channel** at exactly **1 bit/symbol** = 570 bits. 6 packings (base-4 MSB/LSB; row-channel
+MSB/LSB at 71 B and 72 B) vs **1,974** documented 64-hex tokens from `analysis/tested.md`,
+`analysis/STATE_BRIEF.md`, `data/*.json`: **0 hits.** N = 6, t negligible. The 570-bit channels are
+new unreferenced objects; `even_base4_msb` 71 B `2604de566aa7d78b359c6063...`,
+`rowbits_msb_71B` 71 B `2133ae9cc5e35678ca4cd0b5...`.
+
+**Reusable byproduct.** The whole downstream object family (`full570`, `even_stream`,
+`odd_pre_reduction`, `object_256`, `dropped_29`) is a **deterministic function of
+(raw faed, period, square)**. A candidate square is rejected by a single `plaintext_head`
+comparison - **O(1) per candidate**, not O(570) plus a full reduction. Any future square search
+should exploit this and must not re-run the reduction per candidate.
+
+**Net frontier effect: none.** No gate input, no oracle call. Two gates verified funded earlier this
+session. The surviving mechanical frontier is still `R-P32BLOB`; the only live semantic crux is
+still Lead 0's keyed 28-char alphabet application. This row adds a retracted over-claim, a killed
+false positive, a standing methodological correction, and a square-search screening rule.
