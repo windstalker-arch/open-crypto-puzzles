@@ -15156,3 +15156,64 @@ Date: 2026-09-27, local.
   material or a restoration of a string already shown wrong.
 
 Date: 2026-09-27, local.
+
+## R-JRKHIST-2026-09-27: `jrk-history.txt` FULLY DECODED - it is a RICKROLL, and this row CORRECTS `R-SOLVERGRP-NEW`'s central claim about it. I was wrong: the 528-bit block is not "high-entropy, a key/hash-shaped object, not a message". **It is a message, and it is a joke.** 0 oracle calls.
+
+- **THE CORRECTION, FIRST, BECAUSE IT INVALIDATES A CONCLUSION I ALREADY COMMITTED.**
+  `R-SOLVERGRP-NEW` states: *"MSB-first 8-bit ASCII is the only coherent reading - 100% printable with 18
+  word-markers - against 6% for LSB-first-per-byte, 6% for whole-stream-reversed, and 54% for 7-bit"*
+  and that the 528-bit block yields *"66 high-entropy bytes ... which is a key/hash-shaped object, not
+  a message."* **Both claims are wrong.** My error is precise and worth naming: I tested **bit**-reversal
+  of the stream, and the transform that actually works is **byte**-reversal. Those are different
+  operations, and I treated the failure of the first as evidence against the second. Byte-reversing the
+  decoded stream gives **five clean segments and 100% coherent text**, with the 528-bit block resolving
+  to a labelled payload. A "6% printable" reading that I filed as a null was me measuring the wrong
+  transform. This is the **fourth** member of the family now recorded in this ledger
+  (`R-IMGSCOPE`, `R-DMGREC`, `R-FUBCD`'s whitespace blindness, and now bit-vs-byte reversal): **a
+  confident negative produced by a method that was never capable of seeing the thing.**
+
+- **THE CORRECT DECODE, IN FULL.** 5,368 chars of `0`/`1` -> 8-bit MSB bytes -> **reverse the byte
+  order** -> 670 bytes, 5 segments, no residue:
+  ```
+  [0] 6 B    hyhuvh
+  [1] 528 bit -> 66 B -> BASE64aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1kUXc0dzlXZ1hjUQ==
+  [2] 89 B   hjdwvwahqhkwrwghhfrusrwwqlkwfhuurfhkwhyrphu|HOW_DID_CAESAR_SEND_HIS_MESSAGES?AND_WHAT_IF_
+  [3] 1 B    1
+  [4] 46 B   3_IS_DEFAULT_AND_THE_NUMBER_C_IS_THE_2ND_HINT?
+  ```
+  so the whole message reads `hyhuvh` + [payload] + [43 letters]`|` + the question. Segments [2][3][4]
+  concatenate to exactly `HOW_DID_CAESAR_SEND_HIS_MESSAGES?AND_WHAT_IF_13_IS_DEFAULT_AND_THE_NUMBER_C_IS_THE_2ND_HINT?`,
+  which confirms the segmentation is real and not a coincidence of my regex.
+
+- **THE PAYLOAD IS A RICKROLL.** The 66 bytes are literally prefixed **`BASE64`**, and the remainder
+  decodes to **`https://www.youtube.com/watch?v=dQw4w9WgXcQ`** - Rick Astley, "Never Gonna Give You Up".
+  I checked the decode rather than asserting it: `aHR0cHM6...` is standard base64 of that URL, and the
+  `BASE64` label is the **solver group's own** framing convention, matching the `To_Base(16)` /
+  `From_Hex` style in their decoder scripts.
+
+- **AND THAT SETTLES THE PROVENANCE QUESTION THAT `R-SOLVERGRP-NEW` LEFT OPEN - AGAINST AUTHORSHIP.**
+  That row said the question's provenance was "unestablished", possibly a solver's speculation. It is
+  now established, and it is a **solver's shitpost**: a rickroll wedged between a junk 6-char lead
+  (`hyhuvh`) and a piece of speculation, inside a hand-rolled bitstream, in a directory of solver
+  scratch, with a `BASE64` label in the pack's own idiom. No author buries a Rick Astley URL in a
+  puzzle. **The whole file is a joke note.** So: the question is genuinely absent from every corpus we
+  hold (that finding stands), but it carries **no authorial weight whatsoever**, and the
+  "13 is default / the number C is the 2nd hint" claim must not be promoted to a lead. `R-SOLVERGRP-NEW`'s
+  decision not to promote it was right; its stated reason ("provenance unestablished") is now
+  superseded by a positive identification of the artifact as non-authorial.
+
+- **NEGATIVES THAT SURVIVE, AND ONE THAT DOES NOT.** The "66 bytes is not a digest" negative is
+  **retained on its own evidence but for a different reason**: I hashed 4,824,880 corpus strings under
+  SHA-512 / SHA-384 / SHA-3-512 / BLAKE2b-512 against `blk[2:66]` and got 0 matches - correct, and now
+  explained, because those bytes are *plaintext*, not a digest. Also tested and negative: the 43-letter
+  run `hjdwvwahqhkwrwghhfrusrwwqlkwfhuurfhkwhyrphu` is **not** a monoalphabetic substitution of
+  `3_IS_DEFAULT_AND_THE_NUMBER_C_IS_THE_2ND_HINT?` (inconsistent in both directions, only 4-5 distinct
+  symbols), **not** any of 26 Caesar shifts (best English score 0), **not** atbash, and **not** an
+  anagram (letter multisets differ). `hyhuvh` is likewise not ROT13 (`uluhiu`) or atbash. The 43-letter
+  run remains **unexplained**, and I am not going to manufacture a reading for it.
+
+- **STATUS.** Artifact fully decoded and identified as non-authorial; one committed claim corrected;
+  the lead retracted before it cost anything. Both gates unchanged, nothing opened. The residual
+  43-letter run is the only unexplained residue and, sitting inside a joke, is not worth a battery.
+
+Date: 2026-09-27, local.
