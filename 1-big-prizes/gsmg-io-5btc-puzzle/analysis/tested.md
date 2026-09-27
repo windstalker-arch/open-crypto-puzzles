@@ -14669,3 +14669,65 @@ Date: 2026-09-27, local.
   the next real step is still external key material, now with one fewer place to look.
 
 Date: 2026-09-27, local.
+
+## R-DMGREC-2026-09-27: THE THREE DAMAGED FILES AND THE FOUR TRUNCATED ONES - ONE IS FULLY REPAIRABLE, THE REST ARE NOT, AND THE WHOLE SET IS WORTH ZERO NEW INFORMATION. It also kills a belief of mine that those runs were hiding page text. 0 oracle calls, 0 candidates.
+
+- THE QUESTION. `R-BLOBINV` closed the corpus at 37 candidates with a tail of 3 DAMAGED and 4 PREFIX
+  runs, and I had been carrying the note "extra characters swallowed into the run" without ever asking
+  whether that text was actually recoverable. Worth one pass, because a note that implies "there is
+  text in here" will otherwise keep pulling attention.
+
+- METHOD, WITH A WITNESS. I do not have a canonical on-disk copy of BLOB1's base64, only the decrypted
+  `B1_79`, so I reconstructed BLOB1 by re-encrypting: PKCS#7-pad `B1_79` to 80 B, encrypt under
+  AES-256-CBC with `EVP_BytesToKey`/MD5 of RAW_PW at salt `3ab585348552415d`, prefix `Salted__` and the
+  salt. Two independent confirmations that this is the real thing: the round-trip decrypts back to
+  `B1_79` exactly, and the resulting 96-byte blob is byte-identical to the canonical constant already
+  recorded in my inventory. 96 B = 8 B `Salted__` + 8 B salt + 80 B ciphertext, i.e. 128 base64 chars.
+  I then measured, per damaged copy, the **byte-level longest common prefix** against that canonical
+  blob, which is the only question that matters for repairability.
+
+- **RESULT 1 - `~/gsmg/SalphaseionHush.py` IS FULLY REPAIRABLE.** It reads the salt as
+  `3ab58494d215415d`; that is 4 wrong bytes and **all 4 sit inside the 8-byte salt** (offsets 10-13).
+  Every ciphertext byte, 16..95, is identical to canonical. Restoring the 4 salt bytes reproduces
+  canonical BLOB1 exactly, and the repaired blob still decrypts to `B1_79` - witness re-run and passed.
+  So: 100% recoverable.
+
+- **RESULT 2 - THE SCRIBD COPY IS NOT REPAIRABLE, AND ONLY 48 OF ITS 96 BYTES ARE GOOD.** The
+  inventory's "first 64 base64 chars differ in 0 places" is exactly right, and 64 base64 chars is 48
+  bytes: `Salted__` + salt + the **first 32 bytes of ciphertext**, all byte-exact. Byte 48 onward it is
+  wrong, and everything after canonical's own 96 bytes is extra. I first assumed the run was BLOB1 with
+  48 more bytes appended and tried to decrypt those; it does not decrypt, the padding is invalid, and
+  the plaintext is noise. That hypothesis is dead.
+
+- **RESULT 3 - THE `gsmg-document.txt` COPY IS THE WORST OF THE THREE.** Just **11 of 96 bytes**
+  byte-exact; it diverges at byte 11, which is inside the salt, so its header is damaged too (54 bytes
+  differ overall). Nothing to salvage.
+
+- **AND THE "SWALLOWED CHARACTERS" ARE NOT TEXT - THAT WAS MY ERROR.** I had recorded that these two
+  runs carry "~67 chars of adjacent page text" plus the `abbaabab...` clue and `enter`. I went looking
+  for it and it is not there. The bytes from offset 48 on are a **repetitive OCR pattern**:
+  `69 b6 da 69 b6 9b 69 b6 da 6d b6 da 69 b6 db 69 b6 9b ...`, i.e. an eye locking onto a repeating
+  texture. Evidence it is damage and not text: no exact period exists for any 2..16; the two most
+  common bytes cover only 19% of it; the only printable run anywhere in it is the 7 characters
+  `MA2^G#`; and `abba` and `enter` **both fail to occur anywhere in the tail**. There is no document
+  text in there. If the real page did carry more prose at that spot, the transcriber lost it outright
+  and it is unrecoverable from this source. I have corrected the inventory's wording, which said
+  "extra characters swallowed into the run" and so invited exactly the search I just wasted effort on;
+  it now reports the intact byte prefix and whether the copy is repairable. Classification logic and the
+  tally are untouched: still 3 DAMAGED, 4 PREFIX, 6 real blobs.
+
+- **THE FOUR PREFIX RUNS ARE INFORMATION-FREE BY CONSTRUCTION.** All four are 48 bytes =
+  `Salted__` + salt + 32 ciphertext bytes, and their four salts - `3ab585348552415d`, `2d3f6fe06dc950e6`,
+  `06286612d43ed7ed`, `b45a5e3d827593ca` - are all among the six real blobs I already hold whole. A
+  32-byte ciphertext head is worth nothing on its own: CBC will not decrypt it, and the complete blob
+  is already in hand regardless. Nothing to recover, and nothing was ever there.
+
+- **NET: A CONFIRMATION, NOT A DISCOVERY.** Every one of the seven runs is a partial copy of a blob I
+  already hold in canonical, decrypted form. The single genuinely useful outcome is negative and
+  double-edged: the damaged files are now *provably* redundant rather than merely labelled as such, so
+  they are safe to stop thinking about, and the corpus inventory's tail is fully explained. What I did
+  NOT establish: whether the author ever published a longer BLOB1 - these copies are damaged in the
+  ciphertext, so they cannot testify either way about the object's true intended length, and I have no
+  evidence the real document said more.
+
+Date: 2026-09-27, local.

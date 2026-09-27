@@ -119,6 +119,34 @@ def b64_ndiff(a, b):
     return sum(1 for x, y in zip(a, b) if x != y)
 
 
+def lcp(a, b):
+    n = 0
+    while n < min(len(a), len(b)) and a[n] == b[n]:
+        n += 1
+    return n
+
+
+def repair_note(raw, blob1, b1_b64):
+    """How much of a damaged BLOB1 copy is byte-exact, and can it be repaired.
+
+    Reports the intact byte prefix and whether every ciphertext byte survived.
+    The trailing bytes past that prefix are transcription damage, not page text.
+    """
+    n = lcp(raw, blob1)
+    ct_intact = raw[16:len(blob1)] == blob1[16:]
+    bits = ("%d of %d B byte-exact" % (n, len(blob1)))
+    if ct_intact:
+        bits += "; every ciphertext byte intact, so the salt can be repaired " \
+                "from the canonical copy and the blob recovered in full"
+    else:
+        bits += "; ciphertext damaged from byte %d on, so the copy is NOT " \
+                "repairable" % max(n, 16)
+    if len(raw) > len(blob1):
+        bits += "; %d trailing B are transcription damage, not page text" % (
+            len(raw) - len(blob1))
+    return bits
+
+
 def main():
     B1 = (FOLDER / "data/B1_79.bin").read_bytes()
     B2 = (FOLDER / "data/B2_79.bin").read_bytes()
@@ -221,14 +249,15 @@ def main():
         nd_head = b64_ndiff(tok[:64], BLOB1[:64])
         if nd_head <= 8 and (nd == 0 or nd > 12):
             rows.append((raw[8:16].hex(), ct, "DAMAGED",
-                         "BLOB1 copy: first 64 base64 chars differ in %d places, "
-                         "extra characters swallowed into the run" % nd_head, where))
+                         "BLOB1 copy: first 64 base64 chars differ in %d places; "
+                         % nd_head + repair_note(raw, blob1, BLOB1), where))
             continue
         if 0 < nd <= 12:
             note2 = ("base64 differs from BLOB1 in %d of %d chars"
                      % (nd, min(len(tok), len(BLOB1))))
             if raw[16:] == blob1[16:]:
                 note2 += "; ciphertext identical, the SALT alone is damaged"
+            note2 += "; " + repair_note(raw, blob1, BLOB1)
             rows.append((raw[8:16].hex(), ct, "DAMAGED", note2, where))
             continue
         pool = [(c, o) for lst in known_ct.values() for (c, o) in lst]
