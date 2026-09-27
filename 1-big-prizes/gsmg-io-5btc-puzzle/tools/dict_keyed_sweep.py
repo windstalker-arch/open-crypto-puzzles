@@ -1,11 +1,11 @@
-import json, sys, time, re
+import json, os, sys, time, re
 from pathlib import Path
 sys.path.insert(0, "tools")
 from certified_vic import build_grid, decode, keyed28, CANON, POS
 from oracle import attempt as att_small
 from oracle_dualite import attempt as att_dual, load_dualite_b64
 
-WORDS = Path("/data/data/com.termux/files/home/briefcase/english-words/words_alpha.txt")
+WORDS = Path(os.environ.get("GSMG_WORDLIST", "~/briefcase/english-words/words_alpha.txt")).expanduser()
 D = json.loads(Path("data/finalpage-digit-streams.json").read_text())
 streams = {"dbbib": D["dbbib_91"].rstrip("z"), "faed": D["faed_570"].rstrip("z")}
 limit = int(sys.argv[1]) if len(sys.argv) > 1 else 0
@@ -15,7 +15,7 @@ words = list(dict.fromkeys(words))[:limit] if limit else list(dict.fromkeys(word
 
 blob = load_dualite_b64()
 seen_keyed = set(); n = clean = tries = 0; t0 = time.time()
-fname = "/data/data/com.termux/files/usr/tmp/opencode/dict_sweep.txt"
+fname = os.environ.get("GSMG_SWEEP_OUT", "/tmp/dict_sweep.txt")
 with open(fname, "w") as f:
     for kw in words:
         k26 = keyed28(kw, (".", "/"))

@@ -7,7 +7,8 @@ D = json.loads(Path("data/finalpage-digit-streams.json").read_text())
 dbbib = D["dbbib_91"].rstrip("z")
 faed = D["faed_570"].rstrip("z")
 
-WORDS = set(Path("/data/data/com.termux/files/home/open-crypto-puzzles/1-big-prizes/gsmg-io-5btc-puzzle/tools/english_top.txt").read_text().split()) if Path("/data/data/com.termux/files/home/open-crypto-puzzles/1-big-prizes/gsmg-io-5btc-puzzle/tools/english_top.txt").exists() else None
+_TOP = Path("tools/english_top.txt")
+WORDS = set(_TOP.read_text().split()) if _TOP.exists() else None
 
 G1 = ["WHITERABBIT", "THESEEDISPLANTED", "ALICE", "NOSTALGIC", "CHILDHOOD",
       "THEARCHITECTCHOICE", "COSMICDUALITY", "YINYANG", "YELLOWBLUE", "PRIMES",

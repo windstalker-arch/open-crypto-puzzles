@@ -87,6 +87,34 @@ def render(grid):
     return "\n".join(out)
 
 
+def _candidate_roots():
+    """Where to hunt for the follow_the_white_rabbit renderings, in order.
+
+    Override with GSMG_SEARCH_ROOTS (os.pathsep separated). The default is every
+    ancestor of this puzzle folder up to $HOME, plus a gsmg/ and briefcase/
+    sibling at each level, which is what the three hardcoded home-directory paths
+    used to name without pinning the script to one machine. The walk stops at
+    $HOME so it never recurses over the whole filesystem.
+    """
+    env = os.environ.get("GSMG_SEARCH_ROOTS")
+    if env:
+        return [p for p in env.split(os.pathsep) if p]
+    home = os.path.expanduser("~")
+    roots = []
+    here = REPO
+    while True:
+        roots.append(here)
+        roots.append(os.path.join(here, "gsmg"))
+        roots.append(os.path.join(here, "briefcase"))
+        if here == home:
+            break
+        parent = os.path.dirname(here)
+        if parent == here:
+            break
+        here = parent
+    return roots
+
+
 def main():
     srcs = [
         ("clues/puzzle.png", 75, os.path.join(REPO, "clues", "puzzle.png")),
@@ -95,9 +123,7 @@ def main():
     for name, cell, fixed in srcs:
         if fixed is None:
             hits = []
-            for root in ("/data/data/com.termux/files/home/gsmg",
-                         "/data/data/com.termux/files/home/open-crypto-puzzles",
-                         "/data/data/com.termux/files/home/briefcase"):
+            for root in _candidate_roots():
                 for dp, _dn, fn in os.walk(root):
                     for f in fn:
                         if "follow_the_white_rabbit" in f and f.lower().endswith(".png"):
