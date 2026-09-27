@@ -126,7 +126,31 @@ def lcp(a, b):
     return n
 
 
-def repair_note(raw, blob1, b1_b64):
+def split_presentation(tok, known_b64):
+    """Is this run a known blob SPLIT across document lines rather than damaged?
+
+    The run regex spans whitespace, so a blob printed as two base64 halves with
+    prose between them comes back as one concatenated string. If some subset of
+    the whitespace-separated pieces, kept in order, reproduces a known blob
+    exactly, then the dropped pieces are document text and nothing was corrupted.
+    Returns (label, dropped_pieces) or None.
+    """
+    pieces = [p for p in re.split(r"\s+", tok) if p]
+    if not 2 <= len(pieces) <= 12:
+        return None
+    n = len(pieces)
+    for mask in range(1, 1 << n):
+        if bin(mask).count("1") < 2:
+            continue
+        cand = "".join(pieces[i] for i in range(n) if mask >> i & 1)
+        for label, kb in known_b64:
+            if cand == kb:
+                dropped = [pieces[i] for i in range(n) if not (mask >> i & 1)]
+                return label, dropped
+    return None
+
+
+def repair_note(raw, blob1, b1_b64, tok=None, known_b64=()):
     """How much of a damaged BLOB1 copy is byte-exact, and can it be repaired.
 
     Reports the intact byte prefix and whether every ciphertext byte survived.
@@ -144,6 +168,14 @@ def repair_note(raw, blob1, b1_b64):
     if len(raw) > len(blob1):
         bits += "; %d trailing B are transcription damage, not page text" % (
             len(raw) - len(blob1))
+    if tok and known_b64:
+        sp = split_presentation(tok, known_b64)
+        if sp:
+            label, dropped = sp
+            bits += ("; NOT damage either: the base64 is printed as separate "
+                     "document lines and whitespace-joining merged them - pieces "
+                     "re-concatenate to %s exactly, and the line(s) between are "
+                     "document text: %s" % (label, " | ".join(dropped)))
     return bits
 
 
@@ -177,15 +209,20 @@ def main():
                 except Exception:
                     continue
                 for m in B64RE.finditer(b):
-                    tok = b"".join(m.group(0).split())
-                    tok = tok.replace(b"\\", b"").replace(b'"', b"").replace(b"'", b"")
+                    # keep the laid-out token too: decoding needs whitespace
+                    # gone, but a blob printed as separate document lines can
+                    # only be recognised as a split presentation while the
+                    # line breaks are still visible
+                    laid = m.group(0).replace(b"\\", b"").replace(b'"', b"").replace(b"'", b"")
+                    tok = b"".join(laid.split())
                     try:
                         raw = base64.b64decode(tok[:len(tok) // 4 * 4] + b"=" * ((-len(tok)) % 4))
                     except Exception:
                         continue
                     if raw[:8] == b"Salted__" and len(raw) >= 24:
                         env.setdefault(raw, set()).add(
-                            (p, tok.decode("ascii", "replace")))
+                            (p, tok.decode("ascii", "replace"),
+                             laid.decode("ascii", "replace")))
     print("distinct Salted__ blobs: %d   passwords tried per blob: %d x 3 KDFs"
           % (len(env), len(PW)))
 
@@ -212,8 +249,8 @@ def main():
     rows = []
     for raw, srcs in env.items():
         ct = len(raw) - 16
-        where = sorted({p.replace(os.path.expanduser("~"), "~") for p, _ in srcs})
-        tok = sorted(srcs)[0][1]
+        where = sorted({p.replace(os.path.expanduser("~"), "~") for p, _t, _l in srcs})
+        tok, laid = sorted(srcs)[0][1], sorted(srcs)[0][2]
         if ct % 16:
             rows.append((raw[8:16].hex(), ct, "FRAGMENT", "ct not 16-aligned", where))
             continue
@@ -243,6 +280,14 @@ def main():
                          "(truncated transcript)" % pref[0], where))
             continue
         dmg = None
+        # labelled base64 of every known blob, for split-presentation detection
+        known_b64 = []
+        for _salt, _lst in known_ct.items():
+            for _c, _o in _lst:
+                _lab = KNOWN.get(sha256b(_c).hex())
+                if _lab:
+                    known_b64.append((_lab, base64.b64encode(_c).decode()))
+        known_b64.append(("canonical BLOB1", BLOB1))
         # a copy of BLOB1 with characters broken and/or junk swallowed into the
         # base64 run: judged at the character level, since the damage is textual
         nd = b64_ndiff(tok[:len(BLOB1)], BLOB1)
@@ -250,14 +295,14 @@ def main():
         if nd_head <= 8 and (nd == 0 or nd > 12):
             rows.append((raw[8:16].hex(), ct, "DAMAGED",
                          "BLOB1 copy: first 64 base64 chars differ in %d places; "
-                         % nd_head + repair_note(raw, blob1, BLOB1), where))
+                         % nd_head + repair_note(raw, blob1, BLOB1, laid, known_b64), where))
             continue
         if 0 < nd <= 12:
             note2 = ("base64 differs from BLOB1 in %d of %d chars"
                      % (nd, min(len(tok), len(BLOB1))))
             if raw[16:] == blob1[16:]:
                 note2 += "; ciphertext identical, the SALT alone is damaged"
-            note2 += "; " + repair_note(raw, blob1, BLOB1)
+            note2 += "; " + repair_note(raw, blob1, BLOB1, laid, known_b64)
             rows.append((raw[8:16].hex(), ct, "DAMAGED", note2, where))
             continue
         pool = [(c, o) for lst in known_ct.values() for (c, o) in lst]

@@ -14731,3 +14731,94 @@ Date: 2026-09-27, local.
   evidence the real document said more.
 
 Date: 2026-09-27, local.
+
+## R-DMGSRC-2026-09-27: I RE-FETCHED BOTH DAMAGED TRANSCRIPTIONS FROM THE PRIMARY SOURCE AND MY OWN REFUTATION WAS WRONG. The `abbaabab...` and `enter` I declared OCR garbage are genuine document lines - the blob is simply printed as two halves with prose between them. Phase-5 filename now independently attested. 0 oracle calls, 0 candidates.
+
+- **I OWE `R-DMGREC` A RETRACTION, AND IT IS THE OPPOSITE OF WHAT I WROTE THERE.** Last row I
+  tested the damaged local copies byte by byte, found the bytes after offset 48 to be a repetitive
+  `69 b6 da 69 b6 9b ...` pattern, and concluded the "swallowed extra characters" were transcription
+  damage and **not text** - explicitly recording that `abba` and `enter` were absent and therefore
+  that the `abbaabab...`/`enter` material I had attributed to these files was something I had
+  mis-remembered. That reasoning was sound about the *files* and wrong about the *world*: the local
+  copies were already mangled, so of course the real text was missing from them. Going to the source
+  settles it.
+
+- **SOURCE, AND HOW I GOT IT.** Provenance recovered from my own notes: the file was a transcription
+  of Scribd document 754741483 "Salphaseion - Copy" (uploader Х. С. Төгөлдөр), taken from Wayback.
+  The URL was not recorded, so I recovered it from the availability API:
+  `www.scribd.com/document/754741483/Salphaseion-Copy`, which yields snapshot `20260213095036`. Two
+  captures fetched as raw bytes with the `id_` modifier, gzip handled, and de-chromed by removing
+  `<script>`/`<style>`/`<noscript>` before pulling the text layer - without that last step the
+  "document" is 700 kB of page furniture around 6 kB of text, which is very likely why the original
+  extraction was so lossy in the first place. Raw capture SHA-256: `20250811154253` =
+  `d080fcc15609d37bdc3d3090037c307f6e48c67c0c20e6695eba346166766f83`, `20260213095036` =
+  `5b0841d97d847d720199188bcf361dcc6bad9773f75197add4bcfab019fc6b00`. Clean text SHA-256:
+  `6af7860b5b561d5bd463b5d3b391a519765b29577e64f5d38c900f28b2048e3b` and
+  `47058bf7c4f4f7f1c8d04e9f3a3384ec06958de6ca116985b11ff03d96775b3f`. Both captures agree on the
+  document body, so this is not one bad snapshot.
+
+- **THE TRUTH IS SIMPLER AND NICER THAN EITHER OF MY EARLIER STORIES.** The document prints BLOB1's
+  base64 as **two 64-character lines with real prose between them**:
+
+      U2FsdGVkX186tYU0hVJBXXUnBUO7C0+X4KUWnWkCvoZSxbRD3wNsGWVHefvdrd9z
+      abbaabababbabbbaabbbabaaabbaabababbbaaba
+      enter
+      QvX0t8v3jPB4okpspxebRi6sE1BMl5HI8Rku+KejUqTvdWOX6nQjSpepXwGuN/jJ
+
+  Line 1 + line 4 is exactly canonical BLOB1, which is what my re-encryption already proved. Lines 2
+  and 3 are separate document lines. So `abbaabababbabbbaabbbabaaabbaabababbbaaba` (40 chars) and
+  `enter` are **real content**, they were simply never part of the blob. `R-DMGREC`'s byte-level
+  measurements all stand - it described the files correctly - but its inference that no text was
+  hiding there was wrong, and the note "extra characters swallowed into the run" was wrong twice
+  over: nothing was swallowed, and the trailing bytes were damage only in the local copy.
+
+- **AND THE "DAMAGE" WAS LARGELY MY OWN TOOL'S FAULT.** The run regex spans whitespace, so a blob
+  printed across document lines comes back as one concatenated string, and `abba...`/`enter` -
+  being inside the base64 alphabet - get glued onto the end. That is the entire origin of the
+  "128 B blob" that `R-DMGREC` spent a page failing to decrypt: it never existed as an object. The
+  inventory now detects the case directly - if some subset of a run's whitespace-separated pieces
+  re-concatenates to a known blob, it is reported as a **split presentation, not damage**, with the
+  intervening lines named. Re-run on the repaired file it says so in as many words. Classification
+  thresholds and the tally are untouched: 6 real blobs, `OPENED 5 / BLOCKED 1`, with DAMAGED down
+  from 3 to 2 because the two superseded copies are gone.
+
+- **PHASE-5 FILENAME IS NOW ATTESTED TWICE, AND I CAN DATE THE DISCREPANCY.** The two captures
+  differ on exactly this line. Older `20250811154253`: `openssl enc -aes-256-cbc -d -a -in
+  phase5.txt -pass`. Newer `20260213095036`: the same line with `-in [Link]`. So `phase5.txt` is
+  the author's/uploader's filename, `[Link]` is a Scribd-side artifact of a later document state, and
+  `R-P5FILE`'s note "No link/URL; filename plain text" is superseded - the filename is explicit.
+  I also went looking for the link target and there is none to recover: the page contains zero
+  anchors in the text layer, no `text_layer` JSON, and no non-Scribd file URL of any kind. The only
+  external URLs on the page are the App Store link, an Osano consent script, Stripe, Tag Manager and
+  SlideShare. **Phase-5's ciphertext location is genuinely lost with this document**, which closes
+  that avenue rather than leaving it open.
+
+- **`~/gsmg/SalphaseionHush.py` IS NOT DAMAGED, AND I DID NOT TOUCH IT.** Its salt is
+  `3ab58494d215415d` against BLOB1's `3ab585348552415d`, with the ciphertext byte-identical. That is
+  the signature of someone who copied BLOB1 and edited the salt, which is exactly what my earlier
+  salt-forensics row concluded independently (4 of 8 salt positions shared, position 2 off by one
+  nibble: P ~ 1.6e-8 for chance). A deliberate hand-edit is not OCR damage, and "repairing" it to the
+  canonical salt would destroy the evidence that these SalPhaseIon-family blobs are solver test
+  vectors carrying no authorial information. Left byte-for-byte as found.
+
+- **HOUSEKEEPING, DONE ONLY AFTER VERIFYING SUPERSESSION.** Both damaged transcriptions were replaced
+  with the clean source text. Before deleting anything I checked that nothing unique was lost: the
+  damaged scribd copy is a strict whitespace-stripped **substring** of its replacement; the damaged
+  `gsmg-document.txt` matches for its first 765 of 2,123 flattened characters and diverges only into
+  *lossy* OCR, its four unique tokens being mangled base64 of the same BLOB1 (`QVX0t8` for `QvX0t8`,
+  `BM15HI8` for `BMl5HI8`, `W0X6` for `WOX6` - the usual l/1/O/0 confusions); and the Hush.py copy was
+  byte-identical to the live file. Only then were the three superseded copies deleted. I did not
+  commit the document text: it is a third-party upload and the repository does not carry transcripts,
+  so the source URLs and capture hashes above are the record.
+
+- **WHAT THIS DOES AND DOES NOT MOVE.** Provenance first: this is an uploader's walkthrough, so
+  `abbaabababbabbbaabbbabaaabbaabababbbaaba` is **community-document content, not an author artifact**,
+  and it gets the same grade as the rest of that document. It is a real 40-character string I had
+  written off as noise, sitting immediately between the two halves of the small blob, next to `enter`
+  - and `enter` is one of the five RAW_PW components. That is worth a look, and it is a lead, not a
+  result. It does not change any gate, key or blob finding, and no new plaintext has appeared. The
+  honest summary of these three files is: one was a lossy transcription now replaced from source, one
+  turned out never to have been damaged, and the "damaged blob" that anchored my last row was an
+  artifact of my own whitespace-joining.
+
+Date: 2026-09-27, local.
