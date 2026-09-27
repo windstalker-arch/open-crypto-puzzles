@@ -15119,3 +15119,40 @@ Date: 2026-09-27, local.
   board with a stated decode, a stated bit-order justification, and an explicit non-promotion.
 
 Date: 2026-09-27, local.
+
+## R-SOLVERGRP-PW-2026-09-27 (addendum to `R-SOLVERGRP-NEW`): the solver pack DOES contain a hardcoded 227-char `phase_3_password` that our ledger recorded as "not stored in the repo" - it is a garbled news headline, and every restoration of it fails both blocked blobs. 0 oracle calls, nothing opened.
+
+- **THE 227-CHARACTER PASSWORD EXISTS AFTER ALL, AND IT IS THE COMMUNITY'S GUESS, NOT A SOLUTION.** `R-BLOBINV` records the phase-3 blob `9fbc451d13d071f4` (4,090 B) as "open by reference; its 227-char password is not stored in the repo", and `analysis/STATE_BRIEF.md` repeats that it is unresolved. That statement was true **of the repos** and wrong about the wider corpus: `aesdecodemultiprocessing v5.py:94` (solver-group pack) hardcodes
+  `phase_3_password = "causalitySafenetLunaHSM111100x736B6E6162...546854B5KR/1r5B/2R5/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 b - - 0 1"`.
+  So the string is recoverable. It is also **useless**: 9 variants (as-is, hex-core, both reversed,
+  upper, whitespace-stripped, first-sentence, per-word reversed and forward) x {EVP-MD5, EVP-SHA256}
+  against **both** blocked blobs = 36 attempts, **all `rc=1`**. The script is a failed attempt, and its
+  presence must not be mistaken for a recovered key. Correct the provenance claim, keep the blocker.
+
+- **WHAT THE PASSWORD ACTUALLY IS, AND IT IS A GOOD STORY: A HALF-REMEMBERED "CAUSALITY" HEADLINE.**
+  The 70-byte hex core decodes to `sknab rof tuoliab dnoces fo knirb no rollecnahC 9002/naJ/30 semiT ehT` -
+  every token reversed **and** the token order reversed, i.e. the author of that script reversed the
+  string and never put it back. Restored (reverse token order, then reverse each token) it reads
+  **"The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"** - the real UK bailout
+  item of that date. That is a *causality* pun aimed squarely at the puzzle's `causality` chain
+  (`cc_1327` opens on the literal password `causality`; the 648 B blob on `sha256("causality").hexdigest()`).
+  The reasoning is legible even though the conclusion is wrong. **28 restorations** of the headline
+  (the four reversal/separator variants, with and without the stray micro-sign, lower/upper, and the
+  two leading tokens dropped) x 2 blobs x 2 KDFs = 112 attempts: **0 decrypts**. Recorded so the next
+  pass does not re-derive the same 28 candidates from scratch.
+
+- **AND ONE GENUINE LOOSE END, WHICH I COULD NOT CLOSE: `5B.zlib` HAS NO KNOWN PROVENANCE.** It
+  decompresses to 490,350 B of the same int32-expanded sparse bitmap shape as `4E` (payload in byte 0
+  of each 4-byte group; 17 distinct values; 122,296 of 122,587 sampled bytes are `0`). There is **no
+  bare `5B` file in the pack**, and grepping the whole corpus for `5B` returns only coincidental
+  substrings inside base64 blobs. So unlike `4E`, we cannot even establish what `5B` names - it is
+  not one of the puzzle's labelled parts as far as any corpus we hold records. 490 KB of solver
+  bitmap data with an unattributable name is worth one identification attempt by whoever built it, but
+  it is **not** a lead I can advance: there is no ciphertext, no gate, and no hypothesis attached.
+
+- **STATUS.** Both gates unchanged. Two corrections (the 227-char password is *recoverable* but fails;
+  `5B` is unattributed) and one bounded negative (112 headline restorations, 36 full-password variants).
+  No new candidate, no oracle call warranted - every string tested here is either already-certified
+  material or a restoration of a string already shown wrong.
+
+Date: 2026-09-27, local.
