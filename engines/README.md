@@ -12,7 +12,7 @@ fingerprint. Nothing here is aimed at a third party's wallet, a leaked key,
 or an address that was not deliberately published as a challenge by its own
 owner.
 
-Five kernels cover the derivation schemes that show up repeatedly across
+Six kernels cover the derivation schemes that show up repeatedly across
 these puzzles. All were built and self-tested against a consumer RTX-class
 GPU (RTX 5080, 16 GB, Blackwell / sm_120) as part of validating this
 directory; the throughput figures below are measured on that card and are
@@ -26,7 +26,7 @@ compressions) before it even touches the elliptic curve. Size a search
 using the throughput of the specific engine you are running, not the
 biggest number in this table.
 
-## The five engines
+## The six engines
 
 | # | Engine | Transform | Output | Measured throughput |
 |---|---|---|---|---|
@@ -35,6 +35,7 @@ biggest number in this table.
 | 3 | `electrum_v1_engine.cu` | 16-byte entropy -> SHA256 stretch (100000 rounds) -> master key -> per-(change,index) child -> hash160 -> compare | standalone binary | 58.8 k candidates/s (11.75 GH/s of the underlying SHA-256 stretch, about 88% of hashcat `-m 1400 -O`'s SOTA) |
 | 4 | `pzl3_arweave_engine.cu` | fixed 32-byte passphrase (8 x 4-char tokens) -> SHA-512 chained 11513x -> EvpKDF(MD5, 10000 rounds) -> Rijndael(Nk=32, Nr=38) CBC decrypt -> test JWK prefix | `libpzl3.so` | about 251 k attempts/s |
 | 5 | `arweave_var_engine.cu` | variable-length passphrase (<= 111 bytes) through the identical SHA-512/EvpKDF/Rijndael chain as #4 | `libarv.so` | same pipeline as #4, same order of throughput |
+| 6 | `p2wsh_2of2_pairs.cu` | N public keys -> every ordered pair (i, j) -> witness script `OP_2 <Ki> <Kj> OP_2 OP_CHECKMULTISIG` -> SHA-256 -> compare with up to 8 P2WSH witness programs | standalone binary | 1.95e9 ordered pairs/s (447,922 keys, 2.0e11 pairs in 103 s) |
 
 ### 1. Brainwallet: `secp256k1_hash160_engine.cu`
 
@@ -270,3 +271,26 @@ imported either as `from lib import btc_p2pkh` or by adding `lib/` to
   the puzzle's own published material, not part of the engine; pass them
   in with the appropriate flag (`--page`, `--wordlists`, `--target*`) when
   you point one of these drivers at a specific puzzle.
+
+### 6. P2WSH 2-of-2 pair enumerator: `p2wsh_2of2_pairs.cu`
+
+For puzzles whose escrow is a native P2WSH output holding a 2-of-2 multisig, the unknown is a
+pair of keys and their order in the script. This engine takes a file of N candidate public keys
+(66-byte records: one length byte, then the SEC key zero-padded to 65 bytes), forms every
+ordered pair, rebuilds the witness script, hashes it once with SHA-256 and compares the 32
+bytes with up to 8 target programs. Ordered pairs mean both key orders are covered, so a
+BIP-67 sorted script needs no special case. Key derivation is not done here: the host
+generates and labels the candidates on the CPU (see
+`3-small-prizes/genesis-block-wallet-puzzle-142ksats/tools/candidates.py` for a complete
+example with head, middle and tail witnesses), the GPU only pairs and hashes.
+
+```
+p2wsh_2of2_pairs --bench 20000                                   # 4e8 pairs, prints the rate
+p2wsh_2of2_pairs --keys keys.bin --targets targets.hex --out hits.txt
+```
+
+Output lines are `HIT i j t` (key indexes and target index) and a final `DONE ... exhausted=yes`
+line. Every hit is re-derived on the CPU by the host before it counts; the witness pair placed
+at the head, middle and tail of the key file must produce its 9 ordered hits, otherwise the
+run is not a negative. Measured on the RTX 5080: 1.95e9 ordered pairs/s, so N = 1e6 keys
+(1e12 pairs) takes about 9 minutes.

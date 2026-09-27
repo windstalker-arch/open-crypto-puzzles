@@ -8,3 +8,6 @@
 2026-07-16,GitHub issue #65 filed on bitaps-com/jsbtc describing a related coefficient-bias defect (still open as of 2026-08-16),github.com/bitaps-com/jsbtc/issues/65
 2026-07-28,"reported: 2 issues describing the same igamc/igam defect I measured independently, filed 6 days before I found it (verified via the GitHub API on 2026-08-03; neither issue number resolves on a recheck on 2026-08-16, cause not determined)",GitHub API, checked 2026-08-03 and 2026-08-16
 2026-08-03,I found and measured the igamc/igam defect independently (see data/entropy_measurements.csv),this research
+2026-08-28,same-day Reddit Telegram and X copies of the announcement carry only the 2 published shares; archive.today snapshot 8bNRM (2021-06-20) and live pages match,this research
+2026-08-28,published zpub is a BIP84 account key (depth 3, child 0'); 0/0 derives the escrow,challenge.warc + this research
+2026-08-28,Common Crawl 2020-07-04 WARC payloads of the challenge page and mnemonic tools carry only the 2 published shares,challenge.warc tool-en.warc tool-ru.warc offline.warc

@@ -51,6 +51,7 @@ sibling_index.json
 # tool scratch. `**/` rather than `*/` because a pattern containing a slash is
 # anchored to this file's directory, so `*/usr/tmp/` would NOT have matched
 # 1-big-prizes/<puzzle>/usr/tmp/ -- checked, not assumed.
+.firecrawl/
 **/usr/tmp/
 **/analysis/tmp/
 **/tools/build/

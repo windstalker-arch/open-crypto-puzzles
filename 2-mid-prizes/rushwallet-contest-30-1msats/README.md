@@ -98,10 +98,19 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | OCR and community guesses | about 509,399 | 0 match | 2026 |
 | Quotes-500K corpus, verbatim (HF mirror, sha256-verified) | 493,789 unique | 0 match | 2026 |
 | Genesis-block byte-string micro-family | 21 | 0 match | 2026 |
-
-About 95.5 million candidates in total, 0 matches. The last two rows are witnessed runs
-(known-good passphrases planted into the stream and re-found); earlier rows are candidates
-consumed without planted witnesses, as noted on the full ledger.
+| Quotes-500K corpus (`jstet/quotes-500k`), case variants plus surface normalizations | 3,376,547 | 0 match | 2026-08-22 |
+| Full genius-song-lyrics corpus tail plus re-test of the top slice (`Dr3dre/Genius-song-lyrics-cleaned`, English-language songs, per-song line dedupe), GPU brainwallet engine | 456,693,751 | 0 match | 2026-08-23 |
+About 552 million candidates in total, 0 matches. Rounds 1 through 3 are reported as
+candidates consumed without planted witnesses. Rounds 4 and 5 are witnessed: in round 4
+the 3 public sibling passphrases were planted at head/middle/tail of the stream and all
+recovered through the same code path; in round 5 the checker kernel passed its built-in
+certification vectors plus an end-to-end positive control immediately before the run, and
+its consumed-candidate counter matched the fed count exactly.
+The two passes listed above the 2026-08-22/23 rounds are earlier runs and are not added
+into that 552M figure: the verbatim 493,789-quote pass and the 21-candidate genesis
+micro-family. The verbatim pass is probably inside the 3,376,547-candidate
+case-and-normalisation-variants pass over the same corpus, but that has not been
+checked here, so the rows stay separate rather than summed.
 
 ## Open leads, ranked
 
@@ -113,9 +122,11 @@ consumed without planted witnesses, as noted on the full ledger.
    frame is only 1280x720 whose central whiteboard text is not legible to OCR. Full details
    in [analysis/leads.md](analysis/leads.md). What remains is a *living* copy (author or a
    re-uploader), i.e. outreach rather than archive tooling.
-2. **The remaining tail of the lyrics corpus** (larger, lower signal). About 4.7 million
-   further songs beyond the slice already tested. The Quotes-500K lead was executed and
-   closed on 2026-08-23: 493,789 unique quotes verbatim, 0 matches, witnessed.
+2. **KILLED 2026-08-22: the Quotes-500K corpus.** Executed as round 4 with planted
+   witnesses; see [analysis/tested.md](analysis/tested.md). This lead is closed.
+3. **KILLED 2026-08-23: the remaining tail of the lyrics corpus.** Executed as round 5 on
+   a rented GPU with an end-to-end positive control; about 456.7 million candidates across
+   the full ~5.1 million-song corpus (English-language songs). This lead is closed.
 
 ## Files in this folder
 

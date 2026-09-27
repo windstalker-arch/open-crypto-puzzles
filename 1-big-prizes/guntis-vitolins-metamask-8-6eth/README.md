@@ -59,9 +59,15 @@ The blog post carries 3 more, mid-paragraph, also unrelated to its subject:
 
 That these 5 sentences are deliberately inserted, not incidental, is
 confirmed statistically: their language departs from the author's other posts
-at z = 3.71 against a control corpus of his 4 other blog entries. The text of
-both the video description and the blog post is confirmed unchanged since
-2020, checked against a 2020-05-28 web archive capture, byte for byte.
+at z = 3.71 against a control corpus of his 4 other blog entries. The 5 planted
+sentences, the video title and the post's tags are confirmed unchanged since
+2020, checked against a 2020-05-28 web archive capture. That claim is
+deliberately narrower than "both pages are unchanged byte for byte", which is
+not true: the video description's contact address was later edited from an
+"info@" form to a "guntis@" form, and its rules block accreted more text as
+each new hint was published. Those edits sit outside the planted sentences, but
+anyone diffing the live page against the archive should expect to see them and
+should not read them as tampering with the payload.
 
 Across roughly 40 of his later video descriptions, the author published 5
 hints, the last 2 of which are spoken rather than written: the final word is a
@@ -117,10 +123,17 @@ English wordlist is exactly 1 in 16, as the format requires. Reproduced
    the source texts.
 2. The last position is `parrot`: of 14 BIP39 dictionary words naming birds,
    only `parrot` is tropical, matching hint 1.
-3. Position 5 is `fog` or `cloud`: of 20 BIP39 dictionary words related to
-   water, only `fog` and `lake` appear in the source texts, and a lake is not
-   made of condensed droplets; which of the 2 remaining candidates is correct
-   is not settled.
+3. Position 5 is `fog`. Narrowing hint 3 from "related to water" to its actual
+   wording, condensed water droplets, leaves exactly 3 BIP39 dictionary words:
+   `fog`, `cloud` and `vapor`. `vapor` is the gas phase, not condensed
+   droplets, which leaves `fog` and `cloud`, and of those 2 only `fog` appears
+   in any recovered 2020 written surface, at index 25 of the video description.
+   `lake` appears there too but a lake is not made of condensed droplets. The
+   author's own reply in a comment thread, that a hint may gloss a word while
+   the challenge text carries the exact one, points the same way. Treat this as
+   settled with 1 reservation: `cloud` becomes live again if it turns out to be
+   legible in the video image, which nobody has read yet. See "Open leads,
+   ranked", lead 1.
 4. `fiber` and `fork` are confirmed list members with unconfirmed positions,
    from hints 4 and 5, each verified against both YouTube's official captions
    and an independent local transcription.
@@ -154,11 +167,25 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | Extended pool plus natural grammatical inflections | 10,752,000,393 derivations | same | 0 match | yes: 6/6 | 2026-08-15 |
 | Text reading order, contiguous halves, interleavings, full internal orderings | approximately 5.5 million candidates | same | 0 match | not individually recorded per row | before 2026-08-15 |
 | Likelihood-ratio closure of the 6-plus-6 word budget | 91,865 candidates | same | 0 match | not recorded | before 2026-08-15 |
+| Complete reading-order model over the full recovered 2020 text and metadata, 3 anchors fixed, `fork` free | 10,484,919 derivations (of 167,688,000 arrangements, matching a closed form) | closed-form count, then checksum, then address compare | 0 match | yes: 1,062 planted and recovered, 0 disagreements between 2 engines | 2026-08-20 |
+| The same reading-order model extended to substrings of longer words | 582,725 derivations (of 9,334,500 arrangements) | same | 0 match | yes | 2026-08-20 |
+| Pool extended with short connecting words from the planted texts, fog-only, `fiber`+`fork` required | 18,657,475,200 derivations (of 298.5 billion enumerated) | checksum-aware CUDA engine (`engines/`) on a rented L40S, per-chunk witness protocol | 0 match | yes: 2 planted candidates recovered in every one of 412 chunks | 2026-08-23 |
 
-Cumulative: approximately 16.75 billion candidate derivations tested across
-the 6 metadata-era sweeps, all negative and individually witnessed, plus
-roughly 5.6 million candidates from earlier, smaller sweeps. Full method
-notes are in `analysis/tested.md`.
+Cumulative: approximately 35.4 billion candidate derivations tested across
+the metadata-era sweeps, all negative and individually witnessed, plus
+roughly 5.6 million candidates from earlier, smaller sweeps, plus the 11.07
+million derivations of the 2 reading-order sweeps above. Full method notes are
+in `analysis/tested.md`.
+
+The reading-order sweep matters out of proportion to its size. It is the first
+sweep here whose space is stated as a closed form and then enumerated to that
+exact count, so its coverage claim is checkable. Reading order was also the
+assumption that made this challenge searchable at all: dropping it, over the
+same pool and the same 3 anchors, gives `C(38,4) * C(82,3) * 9!` =
+2.3722x10^15 arrangements and 1.4826x10^14 derivations, which is 5.9 years on 1
+GPU at 792,000 derivations/second. That assumption is now closed and negative
+over 100 percent of its space, which moves the binding constraint from search to
+word identification and re-orders the leads below.
 
 ## Open leads, ranked
 
@@ -170,27 +197,44 @@ subsets = 969,969, enumerated = 351,982,350,720, derivations(proj) = 21,998,896,
 about 7.7 h on the rented GPU. Run before leads 1-2, since it tests the words the author
 most plausibly hid.
 
-1. **Extend the word pool with connecting words** (hours on one rented GPU).
-   Every sweep so far draws non-anchor words from full content words in the 5
-   sentences and confirmed metadata; short connecting words from the same
-   sentences ("there", "will", "also", "only", "because", "like", and
-   similar) have not been included. This is built into `tools/sweep_g2.py`
-   as the `--liaisons` (G2b) mode. Confirmed by a match; killed by exhausting
-   it with none, under the same witness protocol as every prior sweep.
-2. **Extend to substrings of longer words** (about a day on one rented GPU).
-   The author, asked directly, said a list word could in principle hide
-   inside a longer written word (his own example: "possible" inside its own
-   negation, formed with the prefix "im-"), though this may describe the
-   existing paraphrase-hint
-   mechanism rather than a literal substring rule; it has not been tested at
-   scale under the metadata-extended pool. Confirmed by a match; killed by
-   exhaustion.
-3. **Re-read the video and post metadata once more** (about an hour, no
-   sweep). The blog post's tags were missed for years until a 2026-08-15
-   re-read found `fork` there; the video's own metadata and any remaining
-   unread HTML attributes on the post have not had the same close pass since.
-   Confirmed by a new word found and matched; has no natural exhaustion
-   point beyond a careful, complete re-read.
+1. **Read the text shown on screen in the challenge video** (about an hour, no
+   compute). The author names on-screen text as a channel in his own spoken
+   rules, at 5:22 to 5:38 of the challenge video: the words "could be you know
+   written in the video on the screen so read carefully". Every sweep in
+   `analysis/tested.md` draws its pool from the description, title, tags and
+   post body; not 1 frame of the video image has been read. The video shows a
+   portfolio table, and 10 coin names visible or audible in that segment are
+   BIP39 dictionary words (`atom`, `link`, `dash`, `cash`, `icon`, `wave`,
+   `gas`, `ocean`, `fetch`, `ripple`), none of which appears in any recovered
+   written surface. Confirmed by a legible dictionary word absent from the known
+   pool; killed by a complete frame read yielding nothing new, which unlike a
+   prose re-read is a real exhaustion point.
+2. **KILLED 2026-08-23: extend the word pool with connecting words.** Every
+   sweep before this drew non-anchor words from full content words; short
+   connecting words from the same sentences ("there", "will", "also", "only",
+   "because", "like", and similar) were not included. Executed as sweep C1
+   (`analysis/tested.md`): 18,657,475,200 checksum-valid derivations, fog-only,
+   per-chunk witness protocol, 0 match. This lead is closed.
+3. **Re-check the already-enumerated survivors on other derivation paths**
+   (about 4 hours on 2 CPU cores, seconds on a GPU). Every sweep here derives
+   only `m/44'/60'/0'/0/0`. If the escrow is the second account of the same
+   wallet, every negative in this folder is a negative about the wrong address.
+   Re-checking `m/44'/60'/0'/0/1`, `m/44'/60'/0'/0/2`, `m/44'/60'/1'/0/0` and
+   `m/44'/60'/2'/0/0` costs about 28 percent of the original derivation work,
+   because the seed stretch is already done and only the child derivation
+   repeats. Killed by 0 match across all 4, which upgrades every existing
+   negative here from "negative at the default path" to "negative across the
+   plausible path family". Best value experiment currently available.
+4. **Substrings of longer words** (about a day on 1 rented GPU). Demoted, with
+   a correction. This lead used to credit the author with an example of a list
+   word nested inside its own negation. Reading the thread directly shows that
+   example came from the reader asking the question; the author's own example is
+   "usa" for "united states", he offers it about hints, and he adds that the
+   challenge text "wikk have corect word". So the mechanism is a reader's
+   hypothesis the author did not contradict, not an author-stated rule. All 5
+   confirmed list words are whole tokens, which is weak further evidence
+   against it. About 2.78x10^11 derivations; the reading-order corner is
+   already swept.
 
 Full notes: [analysis/leads.md](analysis/leads.md).
 
@@ -198,22 +242,27 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 
 | Path | What it is |
 |---|---|
-| `clues/author-posts.md` | the 5 planted sentences, the 5 hints, and paraphrased author statements, with dates and links |
+| `clues/author-posts.md` | the 5 planted sentences, the 5 hints, the author's comment replies quoted verbatim, and his spoken statement of the channels, with dates and links |
 | `data/seed-slots.json` | the 12-position grid state, for the seed slot figure |
+| `data/reading-order-pool.json` | the derived reading-order index the sweep script consumes: which dictionary words appear in which source range, in written order |
 | `analysis/tested.md` | the complete negatives ledger |
-| `analysis/leads.md` | full notes behind the 3 ranked leads |
+| `analysis/leads.md` | full notes behind the 4 ranked leads |
 | `images/01-seed-slot-grid.svg` | the 12-word seed grid, confirmed vs unknown |
 | `tools/oracle.py` | candidate checker, certified against the canonical BIP-0039 vector |
 | `tools/sweep_g2.py` | reference executor for the G2 metadata-word sweep (pools, witness protocol, full sieve) |
 | `analysis/gpu-sweep-g2.md` | runnable spec for the G2 sweep (protocol + cost formula) |
 | `analysis/g2-runbook.md` | how to execute the G2 sweep on rented hardware |
 | `tools/fig_slots.py` | generates images/01-seed-slot-grid.svg from data/seed-slots.json |
+| `tools/sweep_reading_order.py` | the reading-order sweep of `analysis/tested.md`; `--size` prints the closed form, `--selftest` plants and recovers a witness, `--run` is resumable |
 
 ## Sources
 
 - Challenge video, YouTube, 2020-02-12: https://www.youtube.com/watch?v=w4mpiuBP_aY
 - Challenge blog post, mineshop.eu, 2020-02-12: https://mineshop.eu/2020/02/12/crypto-pumping-hardcore-research-portfolio-update-how-are-we-doing/
 - Blog post, archived (tags visible in footer), Wayback Machine, 2020-05-28: https://web.archive.org/web/20200528000000*/mineshop.eu/2020/02/12/crypto-pumping-hardcore-research-portfolio-update-how-are-we-doing/
+- Challenge video, spoken statement of the channels including on-screen text, at 5:22 to 5:38: https://www.youtube.com/watch?v=w4mpiuBP_aY
 - Hint 4 video: https://www.youtube.com/watch?v=03wXiMczCXk
 - Hint 5 video: https://www.youtube.com/watch?v=ZjBJKooVmuE
 - #GuntisVitolins, YouTube channel: https://www.youtube.com/channel/UCkYCnjVcFJDN6Cp_uP0pv_A
+
+Credits: @cjmcdaniel (issue #18): on-screen and spoken word channels of the challenge video read, 219 new dictionary words.

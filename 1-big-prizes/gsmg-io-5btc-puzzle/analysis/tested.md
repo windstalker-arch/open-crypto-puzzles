@@ -762,9 +762,163 @@ and the 256-symbol object is a waypoint. The unknown answer X is therefore to be
 in untranscribed puzzle wording, not in this object. This is an analytic reasoning
 result (counts and structure above), not a submission sweep. Date: 2026-08-27.
 
+## 14b. The "decrypted Cosmic Duality" is a padding accident
+
+Not a candidate sweep, and a correction to sections 11 to 13. The community key (the
+XOR of seven SHA-256 digests, two of the seven tokens invented) reproduces the
+1327-byte reference file only under a convention the puzzle never uses: the 32 raw key
+bytes passed as the password to EVP_BytesToKey with MD5. The creator's own convention,
+written on the archived Phase 2 and Phase 3 page, is the hex SHA-256 of the answer as
+the password with a SHA-256 key derivation, and every blob whose password is known
+opens under that and no other (section 10).
+
+Method: decrypt the large blob with 20,000 random 32-byte keys under the community's
+convention and count the plaintexts with valid PKCS7 padding; measure the byte
+distribution of the reference plaintext.
+
+Result: 93 of 20,000 random keys give a valid padding (78 expected at 1 in 256), 92 of
+them with exactly one byte of padding, which is the precise signature of the reference
+file (1328 minus 1 = 1327 bytes). The reference plaintext's bytes are uniform. So the
+community decrypt is one of the roughly 1 in 256 keys that pass padding by chance, and
+its "plaintext" is noise; the 103 x 103 matrix, the row and column sums in the 80 to
+117 range (which is what sums of about 51 random bits plus 51 random bits give), the
+base-38 decode and the four trailing bytes of sections 12 and 13 are readings of that
+noise. The two derived keys pay nothing and the phase 2 variables they "complete" had
+no published values to check against. Witness: the theoretical padding rate is the
+witness. Date: 2026-09-01.
+
+Consequence: the large blob is closed, with an unknown key, as section 6 first said.
+Section 11's statement that the puzzle mixes digests is withdrawn: the only digest the
+creator documents is SHA-256, and `tools/oracle.py` trying both is harmless but not
+evidence of a second one.
+
+## 15b. Word sequences of every text as the password of both locks
+
+Hypothesis: "lastwordsbeforearchichoice" and "thispassword" name a run of words from a
+text the solver holds, used as the OpenSSL password of the small blob; and the same
+password may open the phase 3.2.2 blob, which has the same shape.
+
+Method: every contiguous window of 1 to 20 words, every suffix and every prefix of the
+Architect's monologue, the 91-letter phrase, the phase 3.2 introduction, the
+checkerboard riddle, the January 2020 poem, the 2023 meta-hint, the page footer and
+the complete Architect scene of the film, in 3 forms (lowercase joined, lowercase
+spaced, uppercase joined) and 7 password forms, under both key derivations, against
+both locks; then every window of 1 to 15 words of the transcripts of the three Matrix
+films, of the Architect scene, of the page, the poem and the riddle, as password and
+as text answer.
+
+Result: 84,043 plus 321,244 candidates, 2,353,204 plus 22,487,080 decryptions,
+88,675 valid paddings, 0 match. Witness: 3 synthetic blobs encrypted under the SHA
+form of the first, median and last candidate, recovered by the normal path. Date:
+2026-09-01. This closes the literal reading of the two directives on every text this
+folder holds, including the film scene.
+
+## 16b. Stage answers, digests, matrices and visible strings
+
+Hypothesis: the password of a lock is an earlier answer, a digest, or the literal
+`matrixsumlist` applied to a matrix nobody had summed.
+
+Method: the answers and digests of every solved stage, single (3 cases), in ordered
+pairs concatenated and interleaved, answer plus digest, the 5,040 permutations of the
+7 parts, round-robin interleavings and digest chains; the 14 x 14 image under 9 colour
+valuations (rows, columns, diagonals, transposed), `seg3` and `seg1` as digits (a=1,
+a=0, primality, prime and non-prime values) on every rectangular grid, and the page's
+visible strings in exact case with spaces. 7 password forms, 2 derivations, both
+locks.
+
+Result: 15,134 plus 4,096 candidates, 423,752 plus 344,064 decryptions, 0 match.
+Witness: synthetic head, middle and tail blobs recovered. Date: 2026-09-01.
+
+## 17b. Interleavings, iterated hashes, digit strings, the poem, nested layers
+
+Hypothesis, in four parts: (a) the password is the six planted preimages, or the
+stage passwords, interleaved character by character or concatenated in some order, or
+a hash iterated up to 64 times; (b) the creator plants raw digit strings (the 149
+digits are a planted preimage), so the page's digit strings in every convention might
+be a password or a preimage; (c) the phases are named after the song "The Warning",
+whose third phase asks "which flower would you be? The red rose or the black?", and
+the creator's poem answers it; (d) "sixteen encryptions" means nested OpenSSL layers
+inside the large blob.
+
+Method: (a) permutations of 3 to 6 of the stage passwords and of 2 to 6 of the six
+planted preimages, concatenated and interleaved, raw and hashed, and SHA-256 iterated
+1 to 64 times over 20 bases; (b) the digit strings of `seg1`, `seg3`, both z-sections
+and the whole stream, a=1 and a=0, both directions, as integers to bytes; (c) 60 short
+answers to the flower question and the Whiterose lines, 3 cases; the exact forms of
+the poem and of every authenticated hint; (d) 9,252 passwords against the large blob,
+every valid plaintext checked for a `Salted__` or `U2FsdGVk` prefix. All to both locks
+under 7 forms and 2 derivations, and to the planted addresses.
+
+Result: 227,852 plus 205 plus 94 plus 9,252 candidates, 357,679 decryptions, 506
+valid paddings on the large blob, none starting with a container, 0 match. Witness:
+synthetic blobs at head, middle and tail in every family. Dates: 2026-09-01 and
+2026-09-02.
+
+## 18b. Every substring of every object against the planted addresses
+
+Hypothesis: the third door's preimage, or another stage's, is a substring of an
+object the solver already holds.
+
+Method: every contiguous substring of length 2 or more of `seg1`, `seg3`, both
+`abba` runs, the 256-symbol object, the even stream, the 1075 and 765 token streams,
+the 91-letter phrase, the large blob, the monologue, the 570-letter Bifid output, the
+odd and even 285 streams, the two small blobs in base64 and the Vigenere key, in 6
+forms (raw, lowercase, uppercase, each reversed), hashed with SHA-256 into a key,
+compressed and uncompressed addresses compared to the planted list and the prize;
+then substrings of 2 to 300 characters of the phase 3.2 plaintext, its Beaufort
+block, the phase 2 and 3 plaintexts, the 149 digits, the two checkerboards, the two
+FEN strings, the coordinates and the song's lyrics; then substrings of 1 to 32
+characters of the digit objects under the raw and bit-reversed constructions.
+
+Result: 25,091,219 plus 8,397,734 plus 2,992,383 candidates, 0 match on the prize or
+the third door. The second pass found that the whole 149-digit string is the
+preimage of "GSMG.io: part of the cipher", an attribution, not a prize hit; the third
+found nothing. Witness: 4 known preimages (phase 3.2, causality, the hashed prize
+address, the flower sentence) injected into the normal stream and recovered. Rate:
+about 176,000 keys/s per core. Dates: 2026-09-01 and 2026-09-02.
+
+## 19b. The third door under six key constructions
+
+Hypothesis: the unmessaged address of 2020-04-07 has a short preimage under one of
+the creator's constructions: raw bytes padded on the left or on the right, bits
+reversed, bytes reversed, SHA-256, SHA-256 of the reversed bits.
+
+Method: the puzzle's vocabulary (texts, the creator's corpus, page tokens), the
+system dictionary, every window of 2 to 6 words of at most 32 bytes from the puzzle
+texts and the three films, pairs, and `gsmg.io/` paths built from all of these
+(2,766,049 candidates, 16,596,294 keys); permutations of 1 to 5 of the words on the
+image with 6 separators and 4 cases, and the image's numbers (the 24 yellow and blue
+bits in both polarities, spiral ranks, the 15 and 9 counts, the index of the
+off-white cell) (1,736,097); 12 colour masks of the 14 x 14 grid in 5 reading orders
+as 196 or 192 bits, reversed, as raw key, SHA-256 and SHA-256 of the bit string,
+plus the yellow and blue cells' indices, sums and counts and the characters at prime
+ranks (1,300); the 8 image texts in every permutation, 6 transcriptions, 6 joins and 3
+cases, the colour values in hex, decimal and RGB with pairs and arithmetic, and "hash
+the text" of every page (1,408,731 candidates, 2,870,000 keys); the phase 2.1 riddle's
+substitutions and the coordinates near the named company in 13 notations (50,501
+candidates, 189,860 keys); and the prime-rank and non-prime-rank characters of every
+digit object, with the prime ranks zeroed out, all substrings of at most 32 bytes
+(19,542,003).
+
+Result: 25,504,681 candidates, 0 match. Witness: the "black plus blue" mask of the
+image and its reversal reproduce the two "Good job, Neo!" addresses by the normal
+path, and the door-1 URL injected into the prime-rank run is recovered under both
+constructions. Rate: single core, 488 s for the largest family. Dates: 2026-09-01 and
+2026-09-02.
+
+What this closes: the third door is not a word of the puzzle, a dictionary word, a
+short run of words from its texts or films, a `gsmg.io/` path made of those, a reading
+of the image's colours or numbers, or any page's text hashed, under any of the six
+constructions.
+
+## Cumulative
+
 Across the 7 completed hypothesis families above (rows 1 to 7), 335,724,615
 candidate submissions were made against the real address-comparison logic used in
-the private research, all negative. Row 8's 116,043 submissions are reported
+the private research, all negative. Sections 15 to 19 add 62,647,937 candidates on
+2026-09-01 and 2026-09-02 against both locks and the planted addresses, all negative
+with witnesses; a `rockyou.txt` pass on both locks and the third door was still
+running when that session closed and is not counted. Row 8's 116,043 submissions are reported
 separately because that replay is explicitly partial. Section 9's 1,358,577 submissions
 are reported separately again, because they sweep a different half of the final gate (the
 small blob) and because they postdate the key-derivation correction in section 10. Rows 1 to 5 test the

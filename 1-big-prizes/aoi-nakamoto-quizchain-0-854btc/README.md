@@ -23,12 +23,12 @@ Block.
 | Prize | 0.777 BTC open (Real Big Block); Block 76's 0.077 BTC was solved and swept by a reader 2026-08-17 (about $48,951 at BTC = $63,000, 2026-08-16) |
 | Chain | bitcoin |
 | Escrow | `14zMkTgaVXJcxdh4JdWi29MLRR44iUSG9W` (Real Big Block, [explorer](https://mempool.space/address/14zMkTgaVXJcxdh4JdWi29MLRR44iUSG9W)) and `13Cv6SXUnzGDT8JHqzzJ8xMPtsSdhJA4wd` (Block 76, solved and swept 2026-08-17, [explorer](https://mempool.space/address/13Cv6SXUnzGDT8JHqzzJ8xMPtsSdhJA4wd)) |
-| Last on-chain check | 2026-08-21: Real Big Block funded and unspent (0.777 BTC); Block 76 swept 2026-08-17 (0.077 BTC claimed by a reader) |
+| Last on-chain check | 2026-08-27: Real Big Block funded and unspent (0.777 BTC); Block 76 swept 2026-08-17 (0.077 BTC claimed by a reader) |
 | Status | OPEN |
 | Puzzle type | bip39-seed, word-selection |
 | Target format | source text (candidate answer), MD5 to 128-bit entropy, BIP39 mnemonic, BIP44 `m/44'/0'/0'/0/i` for i = 0 to 5, P2PKH address |
 | Certified oracle | yes: `tools/oracle.py --selftest` (certified against the author's own published entropy-to-WIF vector; see "Certified against" for what is and is not covered) |
-| What remains | Real Big Block: the exact source text the author hashed on 2019-07-30 (the transform and rule are confirmed). Block 76 was solved and swept by a reader on 2026-08-17, so it is no longer open |
+| What remains | Real Big Block: the exact source text the author hashed on 2019-07-30 (the transform and rule are confirmed); she removed one "twist" that day and kept at least one, and later wrote that she lost the solution herself. Block 76 was solved and swept by a reader on 2026-08-17, so it is no longer open |
 | Series | this folder covers Real Big Block, the last open lot of the approximately 90-block Quizchain series; the rest, including Block 76 (August 2026), were solved by other readers |
 
 ## The puzzle as published
@@ -98,8 +98,9 @@ either the current or the superseded Real Big Block address. The Wattpad API
 confirms the chapter's `modifyDate` as 2019-07-23T23:12:04Z, 7 days before the
 current escrow was funded, so the text available today predates the funding and
 is very likely the version that was hashed; what is not settled is which exact
-byte sequence the author's own tool read from it, since Wattpad's storage
-normalizes away the blank lines she describes typing (see "Open leads").
+byte sequence the author's own tool read from it. This chapter's stored form
+has no blank paragraphs; other Wattpad chapters from the same week still do
+(see "Open leads").
 
 For Block 76, a community player found, in 2019, that `solution = "format"`,
 `tomi = "before TOMI"` satisfies both published MD5-prefix hints (`1d` and
@@ -152,14 +153,15 @@ Reproduced 2026-08-16.
 
 ### Established facts
 
-1. Both escrows are funded and unspent as of 2026-08-16: `14zMkTgaVXJcxdh4JdWi29MLRR44iUSG9W`
-   holds 0.777 BTC (funded 2019-07-30, block 587833) and
-   `13Cv6SXUnzGDT8JHqzzJ8xMPtsSdhJA4wd` holds 0.077 BTC (funded 2019-07-22,
-   block 586468), checked via [mempool.space](https://mempool.space).
-2. Across the approximately 90 blocks of the series, these are the only 2 still
-   funded: an exhaustive sweep of all 159 funding transactions cited in the
-   author's 202 Reddit posts found 0 unreadable transactions and exactly these
-   2 unspent above 100,000 sats.
+1. Real Big Block is funded and unspent as of 2026-08-27:
+   `14zMkTgaVXJcxdh4JdWi29MLRR44iUSG9W` holds 0.777 BTC (funded 2019-07-30,
+   block 587833), checked via [mempool.space](https://mempool.space). Block 76's
+   escrow `13Cv6SXUnzGDT8JHqzzJ8xMPtsSdhJA4wd` was funded 2019-07-22 (block
+   586468) and was swept by a reader on 2026-08-17.
+2. Across the approximately 90 blocks of the series, these were the only 2 still
+   funded after 2019: an exhaustive sweep of all 159 funding transactions cited
+   in the author's 202 Reddit posts found 0 unreadable transactions and exactly
+   these 2 unspent above 100,000 sats. Only Real Big Block remains funded.
 3. The MD5-to-BIP39-to-BIP44 transform is confirmed exactly against the
    author's own published calibration vector (above).
 4. The case-flip rule is confirmed exactly against the solved sibling lot Block
@@ -176,6 +178,25 @@ Reproduced 2026-08-16.
    starts with `f8e`, matching both prefixes the author published for Block 76;
    neither of 2 other independently solved calibration blocks (73 and 74) shows
    any sign this chain is the author's real answer.
+8. July 2019 Wattpad story pages in Common Crawl (CC-MAIN-2019-30) SSR-render
+   inside a classless `<pre>` with a newline plus 26 spaces between `<p>` tags,
+   and some of those chapters still store empty paragraphs as
+   `<p data-p-id="d41d8cd98f00b204e9800998ecf8427e"><br></p>`. The homepage
+   that week linked
+   `a.wattpad.com/css/desktop-web/desktop-web.min.css?v=eb03e30` (2019-07-15),
+   later `v=28f4664` (2019-07-21). Those CSS bytes are not archived; a
+   2019-08-15 userstyle copies Wattpad's generic `pre { white-space: pre-wrap }`   rule. The "Second" chapter is still absent from that crawl.
+9. The author removed "one of the twists" when she rehashed on 2019-07-30 ("The
+   block is now slightly easier", `clues/author-posts.md`), so the current escrow's
+   text still carries at least one twist beyond the case-flip rule; and in a later
+   Wattpad part she wrote that she "lost any information on the solution of that
+   one". Nobody, including the author, holds the exact hashed string today.
+10. No MD5 prefix was ever published for Real Big Block (checked across her 202
+    posts and comments), unlike Block 76's `1d` and `f8e`. There is no free filter:
+    every candidate has to go through the full derivation.
+11. Block 76's solver (2026-08-17) swept it from an active wallet whose only puzzle
+    input is that block; no other Aoi escrow was touched. That person holds the
+    exact serialization convention of a final Aoi block, which nobody else does.
 
 ## What has been tested
 
@@ -187,50 +208,58 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | RBB: every subset of 17 candidate paragraphs, 18 serializations | 2,360,000 | same | 0 match | yes | 2026-08-15 |
 | RBB: every single-character edit across 40 base texts | 266,038,400 | same | 0 match | yes: 3 planted witnesses per base plus the real Stage One text, all recovered | 2026-08-15 |
 | RBB: name/word paragraph selectors, browser-copy simulation, invisible characters, alternate encodings | approximately 1,830,000 | same | 0 match | yes | 2026-08-15 |
+| RBB: 2019 Wattpad reader-page copy families (12 pages and prefixes, title/byline, SSR indent, empty-paragraph NBSP/space lines, `<br>` splits, CRLF joins, Stage One flip) | 12,848 unique texts | same | 0 match | yes: 3 planted two-paragraph witnesses recovered at head, middle and tail | 2026-08-27 |
+| RBB: 2019 Common Crawl indent (newline plus 26 spaces) and stored empty `<p><br></p>` editor-buffer copies (every gap or after headings only; plaintext, 26-space SSR, or `13 10 13 10`; Stage One flip) | 3,030 unique texts | same | 0 match | yes: 3 planted two-paragraph witnesses recovered at head, middle and tail | 2026-08-27 |
+| RBB: every contiguous span of 2+ paragraphs (first-character and first-letter Stage One keep-tests, no flip, four line-break joins, NBSP/edge-space variants when present) | 1,469,908 unique texts | same | 0 match | yes: 3 planted two-paragraph witnesses recovered at head, middle and tail | 2026-08-27 |
+| RBB: bounded 2-edit on the full chapter (every NBSP subset; every pair of joins swapped `\n\n` vs `\r\n\r\n`; three keep-tests) | 221,520 unique texts | same | 0 match | yes: 3 planted two-paragraph witnesses recovered at head, middle and tail | 2026-08-27 |
+| RBB: Finney-pattern group permutations and first/last N-paragraph chunks | 17,921 unique texts | same | 0 match | yes: synthetic witness recovered at head of the run | 2026-08-27 |
+| RBB: the rule the chapter itself dictates (paragraph 227: flip every paragraph whose first letter is not I, T, A, S or M, skipping opening quotes; 118 paragraphs, 3 modes, both joins, with and without trailing newline, indices 0 to 5); 3 planted groups under a SHA-256 24-word derivation; `<br>` as a paragraph boundary (283 paragraphs); each section alone (Second Life, Grycoin, Identity, Satoshi Code) with and without the groups; the chapter's 2 abnormal capitals (`VIrgin`, `BItcoin`) as selector or as correction | about 1,200 texts | same | 0 match | yes: Stage One reproduced by the same code | 2026-08-21 |
+| RBB: hash used directly as the private key (brainwallet: SHA-256, MD5, double SHA-256, compressed and uncompressed) | 96 variants | direct key | 0 match | uncertified: no known-good vector for this reading; the certified mechanism is BIP39 | 2026-08-21 |
+| RBB: every pair of boundary edits on 16 certified bases (8 keep-sets of the 3 groups with and without the Finney quote, times joins, trailing newline and NBSP): insertion of one invisible character (NBSP, ZWSP, BOM, TAB, CR, LF, SP) at any two paragraph joins, or one insertion plus one case toggle of a boundary letter | 48,379,696 (24,189,848 per keep-set) | same, MD5 on CPU and BIP39 to hash160 on GPU, 223,000 candidates/s | 0 match | yes: 4 planted witnesses per base (3 insertion pairs at head, middle and tail, 1 mixed insertion plus case) and the real Stage One text, all recovered on all 16 bases | 2026-08-23 |
 | Block 76: standard BIP44/49/84 derivations, paths, passphrases on the one chain found by search | standard space plus 24,564 off-by-one variants | MD5 to BIP39 to address compare | 0 match | yes: calibrated on blocks 73 and 74 | 2026-08-15 |
 | Block 76: word-transform "salves" on "change to" / "from change to" | approximately 53,000 candidate solutions | MD5-prefix filter, then derivation on survivors | 0 match | yes | 2026-08-15 |
 | Block 76: scripted dictionary-times-corpus sweep | approximately 3.2x10^11 MD5, approximately 78,000,000 derivations | MD5-prefix filter, then derivation on survivors | 0 match | yes: calibrated on blocks 73 and 74 | 2026-08-15 |
 
 Cumulative: approximately 272 million candidates tested against Real Big Block
-and approximately 78 million derivations plus approximately 78,000 smaller
-candidates tested against Block 76, all negative. Full scope notes, including
-which rows are complete sweeps versus targeted tests, are in
-`analysis/tested.md`.
+through 2026-08-15, about 1,300 chapter-rule and section variants on 2026-08-21,
+48,379,696 boundary 2-edits on 2026-08-23, plus 12,848 unique 2019-copy
+serializations, 3,030 unique 2019-indent/empty-`<p><br></p>` serializations,
+1,469,908 unique contiguous spans, and 221,520 unique bounded 2-edits on
+2026-08-27 (AppleLamps), plus 17,921 unique Finney-group and first/last
+N-paragraph serializations, and approximately 78 million derivations plus
+approximately 78,000 smaller candidates tested against Block 76, all negative. Full scope notes, including which rows are complete
+sweeps versus targeted tests, are in `analysis/tested.md`.
 
 ## Open leads, ranked
 
-1. **Reconstruct the 2019 browser-copy rendering of the Wattpad chapter**
-   (hours). The chapter's API storage today has no blank paragraphs, but the
-   author describes typing 2 line breaks between paragraphs; Wattpad likely
-   normalized this away, and what she hashed was probably what her browser
-   rendered and she copied in 2019, not today's raw storage. Confirmed by
-   re-testing the already-tried paragraph selections against a faithfully
-   reconstructed 2019 rendering; killed if that still does not match.
-2. **Read the 27 posts and comments between the rehash and the shutdown**
-   (about an hour). The author posted 2019-07-30 to 2019-08-04 before going
-   silent; these have been read once for an explicit hint but not re-read
-   systematically against the now-narrower list of untested paragraph
-   combinations. Confirmed by a new detail that, applied and tested, matches;
-   killed by a full re-read producing nothing new.
-3. **A bounded 2-character-edit sweep on the strongest base texts** (about an
-   hour on a rented GPU). The 1-character sweep is exhaustive; a 2-character
-   sweep restricted to the small set of NBSP and line-ending pairs, rather than
-   every position, is a bounded extension. Confirmed by a match in that bounded
-   space; killed by exhausting it with none.
-4. **Identify what "76" indexes for Block 76** (minutes per candidate corpus).
-   A method confirmed on 3 sibling blocks uses the block number as a position
-   index into a specific numbered corpus; every corpus tried so far does not
-   contain "change" at position 76. Confirmed by a match in an untried corpus
-   (candidates include a fuller archive of Hal Finney's tweets, Satoshi's
-   SourceForge posts, or the author's own r/Grycoin posts read as their own
-   sequence); killed by exhausting the remaining candidate corpora.
-5. **A short, human-reasoned answer to "change to" / "from change to"**
-   (minutes per candidate). The author's confirmed style elsewhere in the
-   series favors short, punchy wordplay answers over long dictionary phrases; a
-   free filter (`tools/oracle.py --block76-filter`) checks any candidate in
-   under a second before a full derivation. This lead has no exhaustion
-   condition; it is a standing invitation, same as any human-reasoned wordplay
-   block in the series.
+1. **Ask the Block 76 solver for the convention of a final Aoi block** (needs a
+   person, no compute). The reader who swept Block 76 on 2026-08-17 knows the exact
+   serialization, derivation index and whether a "twist" sat on top of the stated
+   rule for a block written by the same author in the same week with the same
+   tooling. That calibrates Real Big Block directly. Confirmed by a convention that,
+   applied to the chapter, matches; killed by a convention that adds nothing to
+   what is already swept.
+2. **A bounded 2-character-edit sweep on the strongest base texts** (about an
+   hour on a rented GPU). Every contiguous copy-paste span of the chapter is a
+   negative, and two slices of this lead are too: every NBSP subset and every pair
+   of joins swapped between `\n\n` and `\r\n\r\n` on the full chapter
+   (221,520 texts, AppleLamps), and every pair of boundary edits, invisible
+   characters at two joins or one insertion plus one boundary case toggle, on 16
+   certified bases (48,379,696 texts, 4 witnesses per base). If the remaining twist
+   is a copy artefact it is 3 or more edits, or inside a paragraph, or the source
+   differs from today's Wattpad storage. Confirmed by a match in a narrower
+   2-edit family; killed by exhausting it with none.
+3. **A non-uniform editor buffer, or a non-contiguous selection** (needs a
+   narrower reason). Uniform empty `<p><br></p>` and SSR indent contradict her
+   `13 10 13 10` ASCII note and are already negatives. Sparse gaps or a subset
+   other than the 17 already swept is what remains. Confirmed by such a buffer
+   matching; killed if a reason appears that she copy-pasted a contiguous
+   range (already tested).
+4. **All 2-character edits on the 8 certified bases, on a rented GPU** (4 to 5 GPU-hours, low
+   expected value). All 2-character edits at all positions of the 8 certified
+   bases is about 2e9 candidates per base; it tests "the twist is within 2
+   characters of the base" without the boundary restriction. Not proposed before
+   lead 1, since a twist an author chose need not be 2 characters.
 
 Full notes: [analysis/leads.md](analysis/leads.md).
 
@@ -242,7 +271,7 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | `data/pipeline-stages.json` | the 6-stage label list for the derivation pipeline figure |
 | `data/blocks-structure.json` | the series structure and the 2 open gates, for the structure figure |
 | `analysis/tested.md` | the complete negatives ledger for both open lots |
-| `analysis/leads.md` | full notes behind the 5 ranked leads |
+| `analysis/leads.md` | full notes behind the ranked leads |
 | `images/01-pipeline-derivation.svg` | the MD5-to-address derivation pipeline diagram |
 | `images/02-structure-blocks.svg` | the Quizchain series structure, colored by claim status |
 | `tools/oracle.py` | candidate checker, certified against the author's own vector; includes the Block 76 prefix filter and the Stage One case-flip helper |
@@ -255,6 +284,8 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 - Quizchain2 Block 76, Reddit, 2019-07-22: https://www.reddit.com/r/Grycoin/comments/cgcv9i/77_mbtc_quizchain2_block_76/
 - Real Big Block Discussion, Reddit, 2019-07-25 to 2019-07-31: https://www.reddit.com/r/Grycoin/comments/chn8un/real_big_block_discussion/
 - "Second", Wattpad chapter by AoiNakamoto: https://www.wattpad.com/720888559-second
+- Wattpad Nightmode userstyle, 2019-08-15, copies the generic `pre { white-space: pre-wrap }` rule: https://github.com/uso-archive/data/blob/master/data/usercss/170148.user.css
+- Common Crawl CC-MAIN-2019-30, Wattpad homepage 2019-07-15 (CSS URL `desktop-web.min.css?v=eb03e30`): https://index.commoncrawl.org/CC-MAIN-2019-30-index?url=www.wattpad.com/&output=json
 - Real Big Block escrow funding transaction, mempool.space, 2019-07-30: https://mempool.space/tx/a1916e7ed9eac3fcc56a55056328cb09d06925e2694f2e6720de12b228514d1f
 - Block 76 escrow funding transaction, mempool.space, 2019-07-22: https://mempool.space/tx/979670f3d1d4134e7989ed6f4a4370362e15c101711c93675790cf0751c8dbd4
 - Block 77 Stage One escrow (certification reference, solved and swept 2019-08-03), mempool.space: https://mempool.space/address/19TbyN5KCg1Lg7qHwezifsLVcdSa2Rj5KN

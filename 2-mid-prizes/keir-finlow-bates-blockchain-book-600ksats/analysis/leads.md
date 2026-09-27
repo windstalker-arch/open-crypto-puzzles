@@ -3,26 +3,36 @@
 The "Open leads, ranked" section of `README.md` shows the ranked list; this file carries
 the full notes behind each entry.
 
-## 1. Buy the physical 2020 to 2021 printed EN and IT books
+## 1. Buy the physical books: KDP paperback, Lulu hardcover, Italian paperback
 
-- **Cost**: needs a person and about $40 (two used books).
+- **Cost**: needs a person and about $60 (three books).
 - **What it is**: every digitally accessible surface of both editions (ebook text, page
-  scans, figure images) has been checked against every mechanism I could construct
-  (see `tested.md`), with 0 matches on the 3 open lots. The author writes, of his own
-  book copies: "you hold the source of each and every key in your hands... as long as
-  you have a physical copy, that is" (print-only front matter, not present in any ebook
-  capture I have). Separately, the IT_veryhard lot's likely clue pages (47 and 70, per
-  the footnote cross-references) are absent from every digital capture I hold of the IT
-  edition. A used copy from the original print run is preferable to a fresh
-  print-on-demand reprint: on the IT side, a planted flaw is known to have moved between
-  printings, so a POD copy printed today is not guaranteed to carry the same text as the
-  puzzle-era edition.
-- **Why it ranks here**: it is the only lead grounded directly in the author's own words
-  about how the puzzles work, and it is the one lead not yet executed.
-- **What would confirm it**: a distinctive detail on a physical page (pages 47 and 70 for
-  IT_veryhard, or an equivalent gap for the two EN lots) that has no ebook counterpart.
-- **What would kill it**: the physical text matches the ebook capture exactly on the
-  relevant pages, with no new detail.
+  captures, figure images) has been checked against every mechanism I could construct
+  (see `tested.md`), with 0 match on the 3 open lots. On 2026-09-01 I recovered the
+  EN_easy_2 answer: it is the paperback ISBN-13, "9781688289970", a string that exists
+  only on the physical book (the ebook has an ASIN and no ISBN). That makes the author's
+  line in the hunt announcement, "you hold the source of each and every key in your
+  hands... as long as you have a physical copy, that is", an instruction rather than a
+  joke. Two physical English editions exist: the KDP paperback (ISBN 9781688289970, 321
+  pages, 5.5 x 8.5 inches, published 2020-12-02) and the Lulu hardcover (ISBN
+  9781716479724, 322 pages on Amazon), plus a 2023 KDP hardcover (ISBN 9798394360602,
+  321 pages) and a 2025 "Limited Indexed Edition" (ISBN 9798265632500, 330 pages). The
+  Kindle edition reports 339 pages, which matches none of them, so the Kindle page
+  numbers are an Amazon estimate. Through Amazon's public sample reader I have read the
+  paperback's pages 1 to 8 (the copyright page prints the ISBN, the table of contents
+  gives the full print pagination), its About the Author page and back cover, the same
+  pages of the 2023 hardcover, pages 1 to 20 and the index of the 2025 edition, and pages
+  1 to 10 of the Italian paperback; every string on them is null, as are all page numbers
+  and page pairs. The unseen part of the physical object is the interior, pages 9 to 320.
+  A used copy from the original print run is preferable to a fresh print-on-demand
+  reprint: on the IT side, a planted flaw is known to have moved between printings.
+- **Why it ranks here**: it is the only lead grounded in a confirmed answer of the same
+  series, and it is the one lead not yet executed.
+- **What would confirm it**: a string or detail on the physical object (copyright page,
+  spine, back cover, last page, the figure pages at pages 47, 70 and 91 of each
+  pagination) that derives to an open lot through the certified oracle.
+- **What would kill it**: every surface of both physical English editions and of the
+  Italian paperback matches the ebook captures exactly, with no new string or detail.
 - **Status**: open, not yet executed (a purchase decision, not a compute task).
 
 ## 2. Crack IT_easy using its exposed public key as a free calibration oracle

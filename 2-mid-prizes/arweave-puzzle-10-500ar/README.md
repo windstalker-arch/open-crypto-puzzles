@@ -117,12 +117,19 @@ Cumulative: on the order of 8,010,190 candidates tested to completion, 0 matches
 candidate sets (about 2,450,000 combined) were generated but not run to exhaustion and are
 not counted here as negatives.
 
+A bounded follow-up on 2026-09-04 UTC by @BorisLoveDev (PR #19) checked 448
+full-passage strings and 80 numeric-extraction strings from Genesis 28, all with
+complete witnesses: 0 exact matches; I replayed the second family locally with the
+same counts and witness positions. The oracle was also corrected to reject a valid
+wallet with a different address. Counts, scope and commands are in [analysis/tested.md](analysis/tested.md);
+updated next steps are in [analysis/leads.md](analysis/leads.md).
+
 ## Open leads, ranked
 
 1. **The exact wording of Bible Genesis chapter 28** (hours), the Jacob's Ladder / Bethel
    passage, transcribed as a long word-series the way solved sibling #7's 57-character
-   answer is built. This is the one corner of the genesis-as-scripture reading that has
-   not been enumerated yet. Confirmed by a candidate matching the escrow exactly; killed
+   answer is built. Two bounded KJV/WEB families (528 strings) are now negative; further
+   enumeration needs evidence fixing the source and operator order. Confirmed by a candidate matching the escrow exactly; killed
    by exhausting every reasonable transcription of the passage.
 2. **Non-public channels** (needs a person): the author's Telegram group, a later Discord,
    or a direct reply, none of which have produced a #10-specific hint in the public
@@ -144,3 +151,5 @@ not counted here as negatives.
 - @_LeFevre_ reply in the #10 announcement thread, 2020-04-22, reproduced by the community research repository: https://github.com/HomelessPhD/AR_Puzzles/tree/main/PZL10
 - HomelessPhD/AR_Puzzles community repository, PZL10 entry: https://github.com/HomelessPhD/AR_Puzzles/tree/main/PZL10
 - Escrow wallet, viewblock.io: https://viewblock.io/arweave/address/bkjJGw3NLxs8OAyRxgTL-QFpiB3lBJqZ76kDhWdB-Rs
+
+Credits: @BorisLoveDev (PR #19): exact-address oracle check, regression tests, and the two witnessed Genesis 28 families.

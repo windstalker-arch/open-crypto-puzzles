@@ -68,6 +68,55 @@ Lead 0 rank unchanged.
 
 ## 1. Replay the dynamically-constructed candidates that a filter bug never reached
 
+## 1. The third door: the preimage of the unmessaged planted address
+
+The creator funded, from the vanity wallet `3GSMG24TujqfMJG1kQoBX18DzJHQLeJYMK`, one
+address per stage answer with the SHA-256 of the answer as its private key, and two
+"Good job, Neo!" addresses whose keys are the raw and bit-reversed bytes of the image
+URL (README, "Planted addresses"; `data/planted-addresses.csv`). The one address funded
+without a message, on 2020-04-07, `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9`, has no known
+preimage. It was planted four days after the two door markers, between the January
+2020 poem and the April 2020 audio hint, and the creator named it in December 2020 as
+a verification address and a year later said that door was "still a thing"
+(Telegram, reported). It is an exact, free, offline oracle: a candidate is hashed (or
+padded, or bit-reversed) into a key and its compressed and uncompressed P2PKH
+addresses compared to the list, at about 176,000 keys/s per core.
+
+Everything textual is negative under the six constructions (`analysis/tested.md`
+sections 18 and 19): the puzzle's vocabulary, the system dictionary, short word
+windows of every text and of the three films, `gsmg.io/` paths, the image's text and
+numbers and colour masks, the 8 image texts, every page hashed, the phase 2.1 riddle,
+prime-rank derivatives of the digit objects.
+
+What would confirm it: an address match.
+What would kill it, family by family: the creator's rules from that window, "Yellow
+has a number and so does Blue", "primes", "zeroed out", read on a non-textual object
+and exhausted; then, when noise is acceptable, a GPU brainwallet pass (SHA-256
+construction) over large dictionaries and a CPU pass for the raw construction, which
+is at most 32 bytes and therefore a short phrase.
+Cost: seconds per family on a CPU; the GPU pass is minutes.
+
+## 2. Both 80-byte locks, with extended readings
+
+The phase 3.2.2 blob (2019, inside the phase 3.2 plaintext) and the SalPhaseIon small
+blob (2021) have the same shape: `Salted__`, 80 bytes of ciphertext, 64 to 80 bytes of
+plaintext. "The private keys belong to half and better half" precedes the first,
+"yinyang" is announced as the phase after the second, and the creator's 2021-07-18
+"neighbors, half and double" transaction pays the uncompressed addresses of 2P and P/2
+of the prize key. A working hypothesis is that the two plaintexts are the two halves,
+two keys or a key and its double or half. Every password is therefore tested against
+both locks, and every plaintext with valid padding is read 40 ways (as is, reversed,
+bit-reversed, doubled, halved, plus or minus one modulo n) before the oracle. The
+11,473 valid-padding plaintexts from sections 15 to 17 have been re-read that way, 0
+match.
+
+What would confirm it: either lock opening.
+What would kill it: nothing bounded; it is a discipline applied to every password
+family, not a space of its own.
+Cost: none beyond the families themselves.
+
+## 3. Replay the dynamically-constructed candidates that a filter bug never reached
+
 The 2026-07-28 review (see `analysis/tested.md`) found that an appearance-based
 acceptance filter had been silently rejecting the correct answer shape in 98 of 213
 historical scripts. A first replay already resubmitted 116,043 literal strings
@@ -108,6 +157,8 @@ folder does not hold.
 
 ## 2. Determine whether the 256-symbol object is the right object at all
 
+## 7. Determine whether the 256-symbol object is the right object at all
+
 Every hypothesis in `analysis/tested.md` rows 1 to 5 assumes the final key comes
 directly from the 256-symbol, 23-letter object produced by the puzzle's Bifid
 decoding step. That assumption has one point in its favor: of the 7 possible
@@ -138,6 +189,8 @@ wording rather than in this object. Re-score this lead as effectively closed as 
 "correct-target" question; it redirects to finding X in wording.
 
 ## 3. Identify the tool the author says was used at every phase
+
+## 4. Identify the tool the author says was used at every phase
 
 An authenticated statement from the puzzle's author says the same software was used
 to build every phase of the puzzle. Comparing the cipher conventions confirmed on
@@ -189,11 +242,14 @@ The WordPress hypothesis is not supported by the puzzle's named tool.
 
 ## 4. Follow "esrever" the first published hint
 
+## 5. Follow "esrever" on the remaining objects
+
 The earliest hint attributed to the author reads "esrever" ("reverse" spelled
-backwards) applied to a specific decoded object early in the puzzle. This hint
-predates most of the puzzle's later stages and has not been exploited on the
-current final-gate objects (the 256-symbol object, the small blob, or the
-"Dualite" blob), only on the object it was originally paired with.
+backwards). On the object it was paired with, the image's binary code, it is now
+explained: the 192 bits of `gsmg.io/theseedisplanted` reversed are the private key
+of the second "Good job, Neo!" address (`data/planted-addresses.csv`). It has not
+been exhausted on the current final-gate objects (the 256-symbol object, the two
+locks' plaintexts beyond the extended readings of lead 2, or the "Dualite" blob).
 
 What would confirm it: applying a reversal (of reading order, of case, or of the
 described object itself) to one of the current final-gate objects and getting a
@@ -203,7 +259,7 @@ What would kill it: exhausting the small set of reasonable "reverse" readings
 objects with no match.
 Cost: minutes to hours; this is a small, well-defined space, not a sweep.
 
-## 5. Read the 29 symbols dropped during the object-256 reduction
+## 6. Read the 29 symbols dropped during the object-256 reduction
 
 Reducing the 285-letter pre-reduction stream to the 256-symbol object drops exactly
 29 letters (the I's and O's removed to reach the Base58-safe alphabet). Every
@@ -229,13 +285,15 @@ channel obiect is oracle-negative on both funded gates. See tested.md 178/183.
 ## Where the "Dualite" blob and the second address fit
 
 The "Dualite" blob (see the README's mechanism section) is confirmed to be
-well-formed AES-CBC ciphertext, not noise, and has never been successfully
-decrypted under any tested password (`analysis/tested.md` row 6). No lead above
-targets it directly with a password sweep, because no password-generation
-hypothesis for it currently has more support than any other; leads 2 to 4 are the
-routes most likely to produce one.
+well-formed AES-CBC ciphertext, not noise, and has never been decrypted: the
+community's "decrypt" is a padding accident (`analysis/tested.md` section 14), and
+9,252 passwords tested for a nested layer inside it found none (section 17b). The
+second address is the halving split-off, not a payout (README, "The puzzle as
+published"), and nothing published links the blob to it. No lead above targets the
+blob with a password sweep of its own; leads 3 and 4 are the routes most likely to
+produce a password hypothesis for it.
 
-## 6. Re-run anything that was tested through the shipped oracle
+## 8. Re-run anything that was tested through the shipped oracle
 
 Not a hypothesis about the puzzle, but the precondition for trusting any result from this
 folder's own tool. Until 2026-08-19 `tools/oracle.py` derived the AES key with
@@ -251,7 +309,7 @@ swept this pipeline independently before this date should assume the same.
 Cost: the pipeline runs at about 76,800 candidates per second per core, so re-running a
 past sweep costs roughly what the original cost.
 
-## 7. The small blob is on the SalPhaseIon page, not the final page
+## 9. The small blob is on the SalPhaseIon page, not the final page (the literal reading is closed)
 
 The README described the small blob as published on the final page reached after the
 Architect Choice. It is published on the SalPhaseIon page,
@@ -1896,3 +1954,11 @@ promoting an authorial artefact, ask what in *our own tooling* could have produc
 pattern. In this case `tools/decodekey_vic.py:39` had already computed the exact value
 and listed it as a decode-key target, so any sweep that requested the path put it in the
 index. A 2^-256 coincidence is exactly what a self-fulfilling generator looks like.
+
+Status 2026-09-02: the literal reading is closed. Every window of up to 20 words,
+every suffix and prefix, of every text the solver holds, including the Architect scene
+of the film and the transcripts of the three films up to 15 words, is negative as the
+password of both locks under 7 forms and 2 key derivations (`analysis/tested.md`
+section 15b). The phase 1 image's text is transcribed and tested too (section 19b). What
+survives is a non-literal reading of the two directives.
+Cost: an insight, not a sweep.

@@ -1,13 +1,17 @@
-# GSMG.io Puzzle (5.0068982 BTC across 2 addresses, [OPEN])
+# GSMG.io Puzzle (1.2563451 BTC, [OPEN])
 
 GSMG.io, a Netherlands-based crypto-trading platform introduced publicly in
 January 2019, funded a multi-stage web puzzle with 5 BTC on 2019-04-13 and
-challenged the public to solve it and keep the coins. The puzzle chains cryptograms,
-an image, and several classical ciphers across a dozen web pages; every stage since
-2019 has been passed by the community. What remains is the final gate, which on
-2020-05-11 split into two independent, still-locked pieces held at two separate
-addresses: a small encrypted blob and a much larger one nicknamed "Dualite" in the
-page's own markup. Both are OpenSSL-format AES ciphertext with an unknown password.
+challenged the public to solve it and keep the coins. The creator announced in
+April 2019 that the reward would halve at every Bitcoin halving, and it did: 2.5 BTC
+left the prize address in the first block after the 2020 halving and 1.25 BTC four
+days after the 2024 one, so the live prize is the 1.2563451 BTC still held at the
+original address. The 3.75 BTC moved out sits at a second address that has never
+spent and has no published payout path. The puzzle chains cryptograms, an image, and
+several classical ciphers across a dozen web pages; every stage since 2019 has been
+passed by the community. What remains is the final gate: two still-locked
+OpenSSL-format AES blobs with unknown passwords, a small one and a much larger one
+nicknamed "Dualite" in the page's own markup.
 The mechanical chain from the published page down to each blob is fully mapped and
 reproducible; what is missing is the password (or, on the older readings, a direct
 32-byte reduction) that opens either one.
@@ -18,15 +22,15 @@ reproducible; what is missing is the password (or, on the older readings, a dire
 |---|---|
 | Author | pseudonymous, Telegram handle `@SoWut`, name shown as "Jrk Bgrt"; real identity not publicly resolved |
 | Published | 2019-04-13, escrow funding transaction ([mempool.space](https://mempool.space/tx/73e48ff571a7e9a4387574a50cf2fcb7b21b6ea5702c777a035664df57cbce02)) |
-| Prize | 1.2563451 BTC + 3.7505531 BTC = 5.0068982 BTC across 2 addresses (about $315,435 at BTC = $63,000, 2026-08-16) |
+| Prize | 1.2563451 BTC at the prize address (about $79,150 at BTC = $63,000, 2026-08-16). A further 3.7505531 BTC, moved out at the two halvings, sits at the second address below with no published payout path and is not counted |
 | Chain | bitcoin |
 | Escrow | `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe` ([explorer](https://mempool.space/address/1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe)) and `17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa` ([explorer](https://mempool.space/address/17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa)) |
-| Last on-chain check | 2026-08-16: both funded and unspent (1.2563451 BTC and 3.7505531 BTC) |
+| Last on-chain check | 2026-09-03: 1.25635374 BTC at the prize address and 3.75055856 BTC at the split-off address, both unspent since 2024-04-24; the excess over the 2026-08-16 snapshot is third-party dust |
 | Status | OPEN |
 | Puzzle type | text-cipher, pixel-code, web-tree, raw-private-key |
 | Target format | a candidate answer string X; password = sha256(X) hex; decrypts an OpenSSL "Salted__" AES-256-CBC blob printed on the final page; plaintext reduces to a 32-byte private key; uncompressed secp256k1 public key; P2PKH address |
 | Certified oracle | yes, in two independent parts: `tools/oracle.py --selftest` (address-derivation half certified against the escrow's own on-chain public key; AES-decrypt half certified against a self-made round-trip vector; see "Certified against") |
-| What remains | a password, or a direct reduction, that turns an already fully-decoded object into a 32-byte private key matching one of the two addresses |
+| What remains | the password of either 80-byte lock (SalPhaseIon's small blob, or the phase 3.2.2 blob of 2019), or the preimage of the creator's unmessaged planted address of 2020-04-07, the third door; all three are exact offline oracles |
 | Series | none |
 
 ## The puzzle as published
@@ -58,16 +62,30 @@ titled "Dualite" in the page's own markup.
 ![The published stage chain, solved end to end, forking into the two final gates that remain locked](images/01-structure-stages.svg)
 *Figure 1. The stage chain and the fork into the two final gates (source: data/stage-chain.json, script tools/fig_stages.py), 2026-08-16.*
 
-On 2020-05-11, 2.5 BTC moved from `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe` to a new
-address, `17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa`
-([txid `2aa9a4a9...`](https://mempool.space/tx/2aa9a4a90be819d5122d70c993280785a0508f163521e7b38cebb4db0b071b13)),
-and again on 2024-04-24, a further 1.25 BTC moved the same way
-([txid `88cdb3cd...`](https://mempool.space/tx/88cdb3cdca12b471551b1b26188508a14ca5fd8a415223ffb7c190381c9b9df3)).
-Both transactions consumed only `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe`'s own funds as
-inputs and sent part of the total to `17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa`, with the
-remainder returned to `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe` itself as change; neither
-transaction paid out to any third party. `17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa` has
-received 44 incoming transactions in total and has never sent a single satoshi.
+The two outgoing transactions from `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe` are the
+creator's own halvings of the prize, not payouts. In April 2019 the creator announced
+in the puzzle's Telegram group that the reward would be halved at Bitcoin block
+630,000 and again every 210,000 blocks; Y0lan collected the message ids in
+[issue #15](https://github.com/floflo777/open-crypto-puzzles/issues/15) (taken as
+given here, the group has no stable public URL), and the community repository's
+README states the same rule. On chain, which I re-checked on 2026-09-03: in block
+630,001, the first block after the 2020 halving, 2.5 BTC moved from
+`1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe` to a new address,
+`17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa`
+([txid `2aa9a4a9...`](https://mempool.space/tx/2aa9a4a90be819d5122d70c993280785a0508f163521e7b38cebb4db0b071b13),
+locktime 629,998). The same block carries an `OP_RETURN` reading `Halving`, sent from
+the creator's vanity address `3GSMG24TujqfMJG1kQoBX18DzJHQLeJYMK` with a 700-satoshi
+output to the prize address
+([txid `a798905f...`](https://mempool.space/tx/a798905f53fdcadcbd2e2a1e61d23ba69a07e26130a78c76da4bf4d7a170f383)),
+and the split spends that output as its third input. On 2024-04-24, four days after
+the 2024 halving, 1.25 BTC moved the same way
+([txid `88cdb3cd...`](https://mempool.space/tx/88cdb3cdca12b471551b1b26188508a14ca5fd8a415223ffb7c190381c9b9df3),
+locktime 840,003). These are the only two spends in the prize address's history; the
+remainder came back to it as change, and the small excess over 5 and 2.5 BTC on the
+inputs is third-party dust. `17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa` has never spent. No
+published statement says it pays out to a solver, and Y0lan reports that when a
+member asked directly in 2023 whether it does, the creator did not answer. I count
+the live prize as the `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe` balance.
 
 ## What is understood
 
@@ -84,6 +102,30 @@ I and O removed, reduces to exactly 256 symbols drawn from a 23-letter alphabet.
 Every attempt so far to turn that 256-symbol object directly into a 32-byte private
 key has failed (see "What has been tested").
 
+The archived Phase 2 and Phase 3 page (Wayback capture of 2020-11-12 of
+[`gsmg.io/choiceisanillusion...`](https://web.archive.org/web/20201112015439/https://gsmg.io/choiceisanillusioncreatedbetweenthosewithpowerandthosewithoutaveryspecialdessertiwroteitmyself)) states the puzzle's own
+convention in the creator's words: "Ciphered with aes-256-cbc /w base64
+sha-256(password)" and, for the seven-part phase 3 answer, "parts 1..7 -> sha-256 ->
+dgst is the password". The OpenSSL password is the lowercase hex SHA-256 of the
+answer, with a one-round EVP key derivation on SHA-256, and the whole solved chain
+replays from archived material: the phase 2 answer opens a plaintext of 7 numbered
+riddles; the 7 parts concatenated (227 characters) open the phase 3 plaintext; the
+phase 3.2 answer opens a plaintext that carries the Architect's monologue as a
+Beaufort block (key `thematrixhasyou`, after an EBCDIC transcoding), a 149-digit
+string, a checkerboard riddle, and a further OpenSSL blob, "phase 3.2.2", never
+opened. The 149 digits decode through a straddling checkerboard with escapes 1 and 4
+("One for one, four for one" in the same plaintext) to the 91-letter phrase.
+
+Two corrections to this folder follow from that replay. The Architect's monologue is
+the phase 3.2 plaintext, not the text of the final page: the final page holds two
+titles, the 1075 tokens and the large blob, nothing else, and six captures from
+2023-06 to 2026-04 differ only in whitespace, the case of one tag and a script tag.
+And there are two locks of the same shape, not one: the phase 3.2.2 blob of 2019,
+preceded in its plaintext by "the private keys belong to half and better half", and
+the SalPhaseIon small blob of 2021 are both `Salted__` containers with 80 bytes of
+ciphertext (64 to 80 bytes of plaintext). Every password candidate is now tested
+against both.
+
 The SalPhaseIon page,
 `gsmg.io/89727c598b9cd1cf8873f27cb7057f050645ddb6a7a157a110239ac0152f6a32`, reached by
 hashing the text of the first puzzle page rather than through the Architect Choice,
@@ -95,11 +137,10 @@ ships an oracle for exactly this half of the final gate (below). The page's seco
 much larger blob, titled "Dualite", is confirmed by direct measurement (byte
 histogram and autocorrelation) to be well-formed AES-CBC ciphertext rather than
 noise or a decorative filler value, but no password has ever been found for it.
-Given the 2020-05-11 and 2024-04-24 transfers described above, I believe, without
-having confirmed it, that the small blob gates
-`1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe` and the "Dualite" blob gates
-`17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa`; nothing published states this explicitly, and
-confirming or killing it would need decrypting one of the two blobs.
+Whether the "Dualite" blob gates `17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa` at all is
+unconfirmed: the coins there were moved out under the halving rule, the creator has
+never said they pay out, and nothing published links that blob to that address (see
+"The puzzle as published"). I no longer count them as prize.
 
 ![Candidate answer to P2PKH address, six stages linked by sha256, AES-256-CBC decryption, secp256k1 and HASH160](images/02-pipeline-derivation.svg)
 *Figure 2. The final-gate derivation pipeline `tools/oracle.py` implements for the small blob (source: data/pipeline-stages.json, script tools/fig_pipeline.py), 2026-08-16.*
@@ -156,18 +197,53 @@ stages do provide real blobs with known passwords for the decryption half:
 
 Reproduced 2026-08-16.
 
+### Planted addresses: an exact offline oracle for every stage
+
+The creator's vanity wallet `3GSMG24TujqfMJG1kQoBX18DzJHQLeJYMK`
+([explorer](https://mempool.space/address/3GSMG24TujqfMJG1kQoBX18DzJHQLeJYMK))
+funded, on 2020-03-24, 2020-04-03 and 2020-04-07, a series of P2PKH addresses, most
+with an `OP_RETURN` message. For six of them the private key is the SHA-256 of a
+stage answer, address in compressed form: `causality` ("GSMG.io: Right, this is
+causality"), the phase 1.2 flower sentence ("GSMG.io: are you sure?"), the
+227-character concatenation of parts 1 to 7 ("GSMG.io: You are here because 227
+chars were correct"), the phase 3.2 answer ("GSMG.io: phase3.2 pass OK"), the
+149-digit string itself ("GSMG.io: part of the cipher"), and the prize address as a
+string ("GSMG.io: do you beleive me you need it?"). Two more, both messaged "Good
+job, Neo!" on 2020-04-03, use the raw 24 bytes of `gsmg.io/theseedisplanted`,
+zero-padded on the left, and the same 192 bits reversed, which is the early hint
+"esrever" applied to the image's binary code. One address, funded on 2020-04-07 with
+no message, `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9`
+([explorer](https://mempool.space/address/1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9)), has
+no known preimage; the creator named it in December 2020 as one of the two addresses
+to check findings against instead of hitting the server, and a year later called the
+door it stands for "still a thing" (Telegram, reported). I read it as the third door.
+
+`data/planted-addresses.csv` lists the addresses, messages and preimages; I
+re-derived every listed preimage on 2026-09-03. The consequence is an oracle the
+community had the list for since 2020 and never used as one: any candidate answer for
+any stage is testable offline, exactly, by hashing it (or padding its raw bytes, or
+reversing its bits) into a key and comparing the compressed and uncompressed P2PKH
+addresses to the list. The prize address itself is the uncompressed form of its key,
+and the creator's transaction of 2021-07-18, `OP_RETURN` "GSMG.io neighbors, half
+and double", pays exactly the uncompressed addresses of 2P, P/2, P+G and P-G, P being
+the prize public key; the community had read those neighbours since 2021, the exact
+check is mine. The second address is none of those neighbours, in either form.
+
 ### Established facts
 
 1. `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe` was first funded with exactly 5 BTC on
-   2019-04-13 and is funded and partially spent as of 2026-08-16, holding
-   1.2563451 BTC (checked via [mempool.space](https://mempool.space)).
-2. `17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa` was first funded on 2020-05-11, entirely
-   from `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe`'s own outputs, and is funded and
-   unspent as of 2026-08-16, holding 3.7505531 BTC.
-3. Both of `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe`'s 2 outgoing transactions
-   (2020-05-11 and 2024-04-24) spent only that address's own funds and paid part of
-   the total to `17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa`, with the rest returned to
-   `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe` as change; neither is a third-party sweep.
+   2019-04-13 and holds 1.25635374 BTC as of 2026-09-03 (checked via
+   [mempool.space](https://mempool.space)); it has 126 transactions, of which 2 are
+   spends, both by the creator.
+2. Those 2 spends are the halvings of the prize: 2.5 BTC in block 630,001
+   (2020-05-11, locktime 629,998) and 1.25 BTC on 2024-04-24 (locktime 840,003), each
+   to `17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa`, with the rest returned as change. The 2020
+   split spends, as its third input, a 700-satoshi output of an `OP_RETURN` reading
+   `Halving` sent from the creator's vanity address in the same block.
+3. `17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa` holds 3.75055856 BTC as of 2026-09-03 and has
+   never spent; its balance is the two halvings plus third-party dust. The halving
+   rule was announced by the creator in April 2019 (issue #15, Y0lan; community
+   repository README). No published mechanism pays this balance to a solver.
 4. The final page's body is 1075 single-character tokens (confirmed by direct
    extraction and byte count from an archived capture of the page).
 5. The Bifid decoding of the 570-character segment (keyed square `DBIFHCEG`,
@@ -180,17 +256,64 @@ Reproduced 2026-08-16.
    exactly, with no residual bits.
 8. The final page's HTML markup carries no additional hidden channel beyond the
    1075 tokens, the image, and the two text blocks (checked directly).
-9. The Bifid output's even-position stream is an authored four-letter channel: 285
+9. The creator's own convention is written on the archived Phase 2 and Phase 3
+   page: AES-256-CBC, base64, password = SHA-256 of the answer; parts 1 to 7 hashed
+   with SHA-256 give the next password. The chain from the image to the 91-letter
+   phrase replays from archived material with that convention.
+10. The Architect's monologue belongs to the phase 3.2 plaintext, not to the final
+    page, which has not changed in substance between 2023-06 and 2026-04 (six
+    captures). The base64 of its blob is wrapped at 64 columns, which is why the
+    page encodes a line break ("enter") between the two halves.
+11. Eight planted addresses have a verified preimage (six SHA-256 of a stage
+    answer, one raw URL, one bit-reversed URL); the ninth, funded 2020-04-07 without
+    a message, has none (`data/planted-addresses.csv`).
+12. The prize address is the uncompressed form of its public key P, and the
+    creator's 2021-07-18 "neighbors, half and double" transaction pays the
+    uncompressed addresses of 2P, P/2, P+G and P-G exactly; the second address is
+    none of 2P, P/2, P+G, P-G, 3P, 4P, P/4 in either form.
+13. The community's "decrypted Cosmic Duality" is a padding accident, not a
+    decryption: see `analysis/tested.md` section 14b. The large blob remains closed.
+10. The Architect's monologue belongs to the phase 3.2 plaintext, not to the final
+    page, which has not changed in substance between 2023-06 and 2026-04 (six
+    captures). The base64 of its blob is wrapped at 64 columns, which is why the
+    page encodes a line break ("enter") between the two halves.
+11. Eight planted addresses have a verified preimage (six SHA-256 of a stage
+    answer, one raw URL, one bit-reversed URL); the ninth, funded 2020-04-07 without
+    a message, has none (`data/planted-addresses.csv`).
+12. The prize address is the uncompressed form of its public key P, and the
+    creator's 2021-07-18 "neighbors, half and double" transaction pays the
+    uncompressed addresses of 2P, P/2, P+G and P-G exactly; the second address is
+    none of 2P, P/2, P+G, P-G, 3P, 4P, P/4 in either form.
+13. The community's "decrypted Cosmic Duality" is a padding accident, not a
+    decryption: see `analysis/tested.md` section 14b. The large blob remains closed.
+14. The Bifid output's even-position stream is an authored four-letter channel: 285
    symbols drawn only from B, C, D and E (counts 54, 90, 72, 69), with no public or
    private account of its encoding. The odd-position stream is the 256-symbol object;
    the 29 letters dropped from it are all I and O, in the order
    `OOIIOOOIIOOIOIIOIOOOOIOIIOIOI` (reproduced on the archived capture,
    2026-08-23; see `analysis/tested.md` section 14).
-10. Ten 32-hex-character gsmg.io slugs exist beyond SalPhaseIon. Three have sha256
+15. Ten 32-hex-character gsmg.io slugs exist beyond SalPhaseIon. Three have sha256
     preimages recovered from the puzzle's own vocabulary:
     `ourfirsthintisyourlastcommand`, `hopeisthequintessentialhumandelusion`, and
     `anstoo` (the token stream's final phrase). Seven are open, listed in
     `analysis/tested.md` section 15.
+11. Eight planted addresses have a verified preimage (six SHA-256 of a stage
+    answer, one raw URL, one bit-reversed URL); the ninth, funded 2020-04-07 without
+    a message, has none (`data/planted-addresses.csv`).
+12. The prize address is the uncompressed form of its public key P, and the
+    creator's 2021-07-18 "neighbors, half and double" transaction pays the
+    uncompressed addresses of 2P, P/2, P+G and P-G exactly; the second address is
+    none of 2P, P/2, P+G, P-G, 3P, 4P, P/4 in either form.
+13. The community's "decrypted Cosmic Duality" is a padding accident, not a
+    decryption: see `analysis/tested.md` section 14b. The large blob remains closed.
+12. The prize address is the uncompressed form of its public key P, and the
+    creator's 2021-07-18 "neighbors, half and double" transaction pays the
+    uncompressed addresses of 2P, P/2, P+G and P-G exactly; the second address is
+    none of 2P, P/2, P+G, P-G, 3P, 4P, P/4 in either form.
+13. The community's "decrypted Cosmic Duality" is a padding accident, not a
+    decryption: see `analysis/tested.md` section 14b. The large blob remains closed.
+13. The community's "decrypted Cosmic Duality" is a padding accident, not a
+    decryption: see `analysis/tested.md` section 14b. The large blob remains closed.
 
 ## What has been tested
 
@@ -208,69 +331,88 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | Small-blob pipeline swept for the first time: puzzle vocabulary, stage texts and their word windows, "last words" readings, live-page prose, the system word list, and the confirmed stage passwords | 1,358,577 candidates | corrected oracle, AES decrypt then address comparison | 0 match | yes | 2026-08-19 |
 | Key derivation: the shipped oracle used EVP_BytesToKey/MD5, which fails on both puzzle blobs whose passwords are known | not a sweep | decrypt phase-2 and phase-3 blobs under both digests | MD5 refuted, SHA-256 confirmed | yes | 2026-08-19 |
 | New instruction vocabulary through the corrected oracle: the `anstoo` family, the recovered hash-slug phrases, the four instruction tokens, and one author-hint assembly | 16 candidates | corrected oracle, AES decrypt then address comparison | 16 NO MATCH | yes | 2026-08-23 |
+| The "decrypted Cosmic Duality": 20,000 random keys against the large blob | measurement | count valid PKCS7 paddings; check the reference plaintext's byte distribution | 93 valid paddings, 92 of one byte, the reference file's exact signature; plaintext uniform; the community key works only under a convention foreign to the puzzle | yes: expected 1 in 256 | 2026-09-01 |
+| Word sequences of up to 20 words from every puzzle text (monologue, 91-letter phrase, phase 3.2 intro, checkerboard riddle, 2020 poem, 2023 meta-hint, page footer, the Architect scene) and up to 15 words from the three Matrix films, as the password of both 80-byte locks (7 password forms, 2 key derivations) and as the text answer | 405,287 candidates, 24,840,284 decryptions | AES decrypt, every valid padding to the oracle | 0 match | yes: 3 synthetic blobs at head, middle and tail | 2026-09-01 |
+| Stage answers and their digests as passwords of both locks: singletons, ordered and interleaved pairs, all 5,040 orders of the 7 parts, digest chains; `matrixsumlist` on the matrices never summed (14x14 image, `seg1`, `seg3` in every rectangular grid) and the page's visible strings in exact case | 19,230 candidates, 767,816 decryptions | same | 0 match | yes | 2026-09-01 |
+| Interleaved planted preimages, SHA-256 iterated 1 to 64 times, the page's digit strings in every digit convention, 60 answers to the song's "which flower" question, the exact forms of the 2020 poem and of every authenticated hint, and 9,252 passwords tested for a nested OpenSSL layer inside the large blob | 237,403 candidates, 357,679 decryptions | same | 0 match | yes | 2026-09-02 |
+| Every substring (2 to 300 characters) of every decoded object, in 6 forms, hashed with SHA-256 into a key, and every substring of 1 to 32 characters under the raw and bit-reversed constructions, against the planted addresses and the prize (compressed and uncompressed) | 36,481,336 candidates | direct address comparison | 0 match on the prize or the third door; the two known attributions re-found | yes: 4 known preimages injected and recovered | 2026-09-01 |
+| The third door under 6 key constructions: puzzle vocabulary, the system dictionary, 2-to-6-word windows of the texts and films, `gsmg.io/` paths, permutations of the image's text and its colour numbers, 12 colour masks of the 14x14 grid in 5 reading orders, the 8 image texts in every order, "hash the text" of every page, the phase 2.1 riddle substitutions and coordinates, and prime-rank derivatives of every digit object | 25,504,681 candidates | direct address comparison | 0 match; the two "Good job, Neo!" preimages re-found by the normal path | yes | 2026-09-02 |
 
 Cumulative: approximately 335.7 million candidates tested as direct reductions of
 the 256-symbol object or the large blob, all negative; a further 116,043-candidate
-partial replay of historical literal password guesses, also negative. Full scope
-and method notes for each row, including why the literal-string replay is
-explicitly partial, are in `analysis/tested.md`.
+partial replay of historical literal password guesses, also negative; 1,358,577
+small-blob passwords on 2026-08-19; and 62,647,937 candidates on 2026-09-01 and
+2026-09-02 across the two locks and the planted addresses, all negative with
+witnesses. A `rockyou.txt` pass (14,344,391 words) on both locks and the third door
+was still running when that session closed and is not reported. Full scope and
+method notes for each row are in `analysis/tested.md`.
 
 ## Open leads, ranked
 
-1. **Decode the two raw digit streams on the final page** (insight, not a sweep;
-   naive reads already negative). The final page's token stream carries two digit
-   strings over {a..i} - a `dbbib`-headed 69-token run (image-verified 2026-08-27;
-   the earlier 91-token README value included a 22-char middle run not in the image)
-   and a `faed`-headed 570-token
-   run with one trailing `z` - which are the objects the decoded instruction token
-   `matrixsumlist` ("sum the matrix") addresses. They were not in this folder until
-   2026-08-27 and are now recorded verbatim in
-   [data/finalpage-digit-streams.json](data/finalpage-digit-streams.json). An
-   independent multi-session community analysis (puzzlehunt/gsmgio-5btc-puzzle
-   issues #93 and #106) reached the same conclusion and could not crack them
-   either (#93: `dbbib`=key, `faed`=payload in a VIC/straddling-checkerboard style
-   whose keyed alphabet is unreconstructed). Confirmed by a decode yielding a
-   legible instruction or an X whose sha256 decrypts the small blob to
-   `1GSMG1JC9`; killed by showing the streams are padding or exhausting the
-   keyed-checkerboard constructions.
-2. **Replay the dynamically-constructed candidates a filter bug never reached**
+1. **The third door: the preimage of the unmessaged planted address of 2020-04-07**
+   (an insight, then seconds). `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9` is an exact,
+   free, offline oracle at about 176,000 keys/s on one core, and everything textual
+   is negative under all six key constructions: the puzzle's vocabulary, the system
+   dictionary, short word windows of every text and of the three films, the image's
+   text and numbers, the 8 image texts, every page hashed, the phase 2.1 riddle. What
+   would open it is a rule the creator gave between the January 2020 poem and the
+   April 2020 audio hint ("Yellow has a number and so does Blue", "primes", "zeroed
+   out"), read on a non-textual object; or, when noise is acceptable, a GPU
+   brainwallet pass over large dictionaries (SHA-256 construction) and a CPU pass for
+   the raw construction (at most 32 bytes). Confirmed by an address match; killed
+   family by family.
+2. **Every password against both 80-byte locks, with extended readings** (seconds
+   per family). The phase 3.2.2 blob (2019) and the SalPhaseIon blob (2021) have the
+   same shape; "the private keys belong to half and better half" precedes the first,
+   "yinyang" is announced after the second, and the creator manipulates 2P and P/2
+   on the prize key. Every plaintext with valid padding is now read 40 ways (as is,
+   reversed, bit-reversed, doubled, halved, plus or minus one modulo n) before the
+   oracle. Confirmed by either lock opening; the families tested so far are in the
+   table above.
+3. **Replay the dynamically-constructed candidates a filter bug never reached**
+3. **Replay the dynamically-constructed candidates a filter bug never reached**
+   not reach. Now to be replayed against both locks and the third door.
+
+ Confirmed by re-running a script's own generation logic and finding a
+   match; killed, stage by stage, by exhausting that logic with none.
    (hours to days). A 2026-07-28 review found that an appearance-based acceptance
    filter had silently rejected the correct answer shape in 98 of 213 historical
    scripts. A first replay resubmitted 116,043 literal strings from those scripts
    directly (0 match), but the same scripts also built candidates dynamically
    (concatenations, permutations, chained transforms) that this first replay does
-   not reach. Confirmed by re-running a script's own generation logic and finding a
-   match; killed, stage by stage, by exhausting that logic with none.
-3. **Decode the even-position stream of the Bifid output** (hours of reasoning).
+4. **Decode the even-position stream of the Bifid output** (hours of reasoning).
    The reconstruction on the archived capture exposes 285 symbols drawn from only
    four letters (B, C, D, E) carrying every even slot of the output: an authored
    channel with no public account, either a second message, a key or mask for the
    256-symbol object, or the author's unfound "second way". Confirmed by any
    encoding that yields a legible string or an address match; killed by exhausting
    four-symbol encodings at length 285 (which factors 3 x 5 x 19).
-4. **Determine whether the 256-symbol object is the right target at all** (an
+5. **Determine whether the 256-symbol object is the right target at all** (an
    afternoon of reasoning, not a sweep). Every negative in row 1 to row 5 of the
    tested table assumes the key comes directly from this object; the AES-blob route
    this folder's oracle implements is a different, untested-at-scale hypothesis.
    Confirmed by a reduction, other than the ones tried, that matches an address;
    redirected by establishing the AES-blob or "Dualite" route is the real one.
-5. **Identify the single tool reportedly used to build every phase** (hours). An
+6. **Identify the single tool reportedly used to build every phase** (hours). An
    authenticated author statement says one tool built every phase; comparing
    confirmed cipher conventions against one specific public tool's source code
    matches on non-obvious details (no period parameter on its Bifid cipher, a short
    menu of available ciphers). Confirmed by a cipher from that tool's menu
    producing a match on the "Dualite" password or the 256-object reduction; killed
    by exhausting that tool's short menu with no match.
-6. **Follow "esrever", the earliest published hint** (minutes to hours). The
-   author's first hint, "reverse" spelled backwards, has been applied to the object
-   it was originally paired with but not to the current final-gate objects.
-   Confirmed by a reversal (string, bit, or reading-order) of one current object
-   matching an address; killed by exhausting the small set of reasonable reversals.
-7. **Use the 29 dropped bits somewhere** (minutes per reading). The drop sequence
+7. **Follow "esrever" on the remaining objects** (minutes to hours). The hint is
+   now explained for the object it was paired with: the bit-reversed image URL is
+   the second "Good job, Neo!" key. It has not been applied to the two locks'
+   plaintexts beyond the extended readings above, nor to the 256-symbol object.
+8. **Use the 29 dropped bits somewhere** (minutes per reading). The drop sequence
    `OOIIOOOIIOOIOIIOIOOOOIOIIOIOI` is all I and O, so binary or nothing; standalone
    readings are exhausted with no legible fragment, so the open question is what
    they select or gate, plausibly in combination with the even stream of lead 3.
-8. **Preimage the seven remaining hash-slug routes** (minutes per batch). Three of
+9. **Read the 29 dropped letters as their own message** (minutes). Reducing the
+   285-letter stream to the 256-symbol object drops exactly 29 letters, never read
+   as an object in their own right. Confirmed by a match or a legible fragment;
+   killed by exhausting the small set of reasonable reading orders.
+10. **Preimage the seven remaining hash-slug routes** (minutes per batch). Three of
    ten fell to sha256 over the puzzle's own phrases in one evening; each newly
    transcribed stage wording is another candidate batch. Confirmed by a preimage
    whose page carries content.
@@ -286,6 +428,7 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | `data/pipeline-stages.json` | the 6-stage label list for the derivation pipeline figure |
 | `data/salphaseion-streams.json` | the reconstructed Bifid output's three channels: the 256-symbol object, the 29 dropped letters, and the unexplained four-letter even stream, with parameters and checksums |
 | `data/finalpage-digit-streams.json` | the two raw final-page digit streams (dbbib/69 and faed/570) that `matrixsumlist` refers to, transcribed verbatim 2026-08-27 |
+| `data/planted-addresses.csv` | the creator's planted addresses with their OP_RETURN messages and verified preimages, and the one without |
 | `analysis/tested.md` | the complete negatives ledger |
 | `analysis/leads.md` | full notes behind the ranked leads |
 | `images/01-structure-stages.svg` | the published stage chain forking into the two final gates |
@@ -299,6 +442,9 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 - GSMG.io, platform site: https://www.gsmg.io/
 - Escrow first-funding transaction, mempool.space, 2019-04-13: https://mempool.space/tx/73e48ff571a7e9a4387574a50cf2fcb7b21b6ea5702c777a035664df57cbce02
 - First transfer to the second address, mempool.space, 2020-05-11: https://mempool.space/tx/2aa9a4a90be819d5122d70c993280785a0508f163521e7b38cebb4db0b071b13
+- Phase 2 and Phase 3 page with the creator's cipher convention, Wayback capture 2020-11-12: https://web.archive.org/web/20201112015439/https://gsmg.io/choiceisanillusioncreatedbetweenthosewithpowerandthosewithoutaveryspecialdessertiwroteitmyself
+- The creator's vanity wallet that funded the planted addresses, mempool.space: https://mempool.space/address/3GSMG24TujqfMJG1kQoBX18DzJHQLeJYMK
+- Issue #15, Y0lan, the halving rule and the second address, 2026-09-02: https://github.com/floflo777/open-crypto-puzzles/issues/15
 - Second transfer to the second address (public key source), mempool.space, 2024-04-24: https://mempool.space/tx/88cdb3cdca12b471551b1b26188508a14ca5fd8a415223ffb7c190381c9b9df3
 - bitcointalk topic 5532424, "Need help Puzzle GSMG.IO 5BTC": https://bitcointalk.org/index.php?topic=5532424.0
 - Reddit discussion, r/bitcoinpuzzles: https://www.reddit.com/r/bitcoinpuzzles/comments/bf7siz/gsmgio_5_btc_puzzle_challenge/

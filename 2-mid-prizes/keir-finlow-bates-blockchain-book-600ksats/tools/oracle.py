@@ -10,8 +10,14 @@ Purpose:
 
     1. sha256x3: a deduced text answer -> SHA-256 applied three times -> 32-byte
        private key -> P2PKH address (compressed and uncompressed both checked).
-       This is the transform behind EN_easy_1, IT_hard, and my working hypothesis for
-       the 3 lots still open (EN_medium, EN_veryhard, IT_veryhard).
+       This is the transform behind EN_easy_1, EN_easy_2, IT_hard, and my working
+       hypothesis for the 3 lots still open (EN_medium, EN_veryhard, IT_veryhard).
+       Four chaining conventions are checked for every candidate, because the author
+       demonstrably used two different hashing tools while writing the book: raw byte
+       chaining (digest fed back as bytes, the convention of the three known answers)
+       and hex-string chaining (the lowercase or uppercase hex digest fed back as text,
+       what a web tool or a shell loop does), each with and without a trailing newline
+       (Figure 11 of the book was produced with a newline-appending tool).
     2. bip39: a 12-word mnemonic (English or Italian BIP39 wordlist), empty
        passphrase, BIP44 path m/44'/0'/0'/0/0, compressed address. This is the
        transform behind EN_hard_1 and IT_medium.
@@ -114,19 +120,38 @@ def sha256_iter(text: str, depth: int) -> bytes:
 # Candidate checking
 # ---------------------------------------------------------------------------
 
+def _chains(text: str, depth: int = 3):
+    """Yield (method_label, 32-byte secret) for every chaining convention of a text."""
+    raw = text.encode("utf-8")
+    for newline in ("", "\n"):
+        tag = " +newline" if newline else ""
+        digest = hashlib.sha256(raw + newline.encode()).digest()
+        for n in range(1, depth + 1):
+            yield f"sha256^{n}{tag}", digest
+            digest = hashlib.sha256(digest).digest()
+        for case in ("lower", "upper"):
+            digest = hashlib.sha256(raw + newline.encode()).digest()
+            for n in range(2, depth + 1):
+                hexs = digest.hex() if case == "lower" else digest.hex().upper()
+                digest = hashlib.sha256((hexs + newline).encode()).digest()
+                yield f"sha256^{n} hex-{case} chain{tag}", digest
+
+
 def check_sha256x3(candidate: str) -> list[dict]:
-    """Check a text answer under SHA-256 applied 1, 2, and 3 times, both key forms."""
+    """Check a text answer under SHA-256 applied 1 to 3 times, raw and hex-string
+    chaining, with and without a trailing newline, both key forms."""
     hits = []
     text = candidate.strip()
-    for depth in (1, 2, 3):
-        secret = sha256_iter(text, depth)
+    seen = set()
+    for method, secret in _chains(text):
         addr_c, addr_u = p2pkh_from_secret(secret)
         for key_form, addr in (("compressed", addr_c), ("uncompressed", addr_u)):
-            if addr in LOTS:
+            if addr in LOTS and (addr, method) not in seen:
+                seen.add((addr, method))
                 hits.append({
                     "lot": LOTS[addr],
                     "address": addr,
-                    "method": f"sha256^{depth} ({key_form})",
+                    "method": f"{method} ({key_form})",
                 })
     return hits
 
@@ -163,6 +188,22 @@ def selftest() -> bool:
     found = any(h["lot"] == "EN_easy_1" and h["address"] == "14aFhno96fkt7knLWMDQ4j8yh8v5hBF4n1"
                 and h["method"] == "sha256^3 (uncompressed)" for h in hits)
     print(f'sha256x3("221B Baker Street") -> EN_easy_1: {"OK" if found else "FAIL"}')
+    ok = ok and found
+
+    hits = check_sha256x3("9781688289970")
+    found = any(h["lot"] == "EN_easy_2" and h["address"] == "14utGQn5GdfPvUrHNLAwTmmP99QpXm9mg6"
+                and h["method"] == "sha256^3 (uncompressed)" for h in hits)
+    print(f'sha256x3("9781688289970") -> EN_easy_2: {"OK" if found else "FAIL"}')
+    ok = ok and found
+
+    # hex-chain witness: plant a synthetic target derived by the hex-lower+newline chain
+    # and check the same code path re-finds it, then remove it
+    synth_secret = [s for m, s in _chains("witness phrase") if m == "sha256^3 hex-lower chain +newline"][0]
+    synth_addr = p2pkh_from_secret(synth_secret)[1]
+    LOTS[synth_addr] = "SYNTHETIC"
+    found = any(h["lot"] == "SYNTHETIC" for h in check_sha256x3("witness phrase"))
+    del LOTS[synth_addr]
+    print(f"hex-string chain with trailing newline re-finds a planted key: {'OK' if found else 'FAIL'}")
     ok = ok and found
 
     hits = check_sha256x3("Genova Firenze Bologna Brindisi")

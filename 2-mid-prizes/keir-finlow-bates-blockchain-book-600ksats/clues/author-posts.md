@@ -18,12 +18,18 @@ article:
 > "I do not have a record of the private keys for any of the twelve puzzles out there, nor
 > do I have notes explaining how the puzzles are constructed."
 
-## Front matter, "Move Over Brokers, Here Comes The Blockchain" (print-only)
+## Hunt announcement, "Move Over Brokers, Here Comes The Blockchain" (last section of the book)
 
-Present in the physical print runs of the book, absent from the ebook captures I hold:
+The section that lists the 8 English addresses, present in the ebook and in print. An
+earlier version of this file placed the quote in print-only front matter; that was wrong.
 
 > "You hold the source of each and every key in your hands... as long as you have a
-> physical copy, that is."
+> physical copy, that is. Note that there are plenty of red herrings too."
+
+The same section closes with a hint written in ROT13, which decodes to: "In many cases,
+you'll have to hash the answer three times." The EN_easy_2 answer (the paperback ISBN,
+recovered 2026-09-01) shows the "physical copy" line is literal: the ISBN is printed on
+the back cover of the paperback and nowhere in the ebook.
 
 ## Front matter, "Scansatevi Broker" (Italian edition), Ringraziamenti all'edizione italiana
 

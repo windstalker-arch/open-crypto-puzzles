@@ -53,3 +53,16 @@ if [ -f arweave_var_engine.cu ]; then
     -o libarv.so arweave_var_engine.cu
   echo "[build] OK -> $(pwd)/libarv.so"
 fi
+
+# 6) P2WSH 2-of-2 pair enumerator: N pubkeys -> all ordered pairs -> witness script
+#    OP_2 <Ki> <Kj> OP_2 OP_CHECKMULTISIG -> SHA256 -> compare to <= 8 target programs.
+#    Native sm_120 build when a CUDA >= 12.8 nvcc is available, JIT fallback otherwise.
+if [ -f p2wsh_2of2_pairs.cu ]; then
+  if [ -n "${NVCC_NATIVE:-}" ] && [ -x "$NVCC_NATIVE" ]; then
+    "$NVCC_NATIVE" -ccbin g++-12 -O3 -arch=sm_120 -diag-suppress 177 -o p2wsh_2of2_pairs p2wsh_2of2_pairs.cu
+    echo "[build] OK (native sm_120) -> $(pwd)/p2wsh_2of2_pairs"
+  else
+    nvcc $FLAGS $GENCODE -o p2wsh_2of2_pairs p2wsh_2of2_pairs.cu
+    echo "[build] OK (JIT compute_80/90) -> $(pwd)/p2wsh_2of2_pairs"
+  fi
+fi

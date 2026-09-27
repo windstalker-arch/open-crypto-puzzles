@@ -49,15 +49,35 @@ lead (see "Open leads, ranked" in the README).
 | Hypothesis | Space | Method | Result | Witness | Date |
 |---|---|---|---|---|---|
 | C(16,12) over a 16-word candidate pool, 6 image-exclusive icons forced present, 4 orderings of the remaining 8 slots | about 3,750,000 seeds (about 30,000,000 addresses across both change values) | old-Electrum v1 | 0 match | yes | 2026-06-13 |
+| Every 12-of-13 choice and every ordering of a 13-word pool read off the image without positions (`moon tower real black subject time first food this proof order receive mask`) | 6,227,020,800 sequences (389,185,926 checksum-valid) | BIP39 GPU kernel, `m/44'/0'/0'/0/0`, 12.7 million sequences/s, 489 s | 0 match | yes: the kernel's self-test recovers a planted target before the run | 2026-08-02 |
+| One fixed 12-word set built from the singled-out elements (Bill Cipher `day`, rune fragment `add two`, `black`, hidden labels `real subject food`, dial `moon tower`, repeated `this first`, heading `order`), all orderings | 479,001,600 (29,935,319 checksum-valid) | same, 37 s | 0 match | yes | 2026-08-02 |
+| The narrative set from the BitcoinTalk timeline reading (`black peace love health change future vote blue city march work mask`), all orderings | 479,001,600 (29,933,622 checksum-valid) | same, 37 s | 0 match | yes | 2026-08-02 |
+| Old-Electrum icon blocks (`stop fist war new breathe needle`, `moon tower time`, `black subject real`) read forward and reverse in every block order | 1,086 candidates | old-Electrum v1 | 0 match | yes | 2026-08-02 |
 | Structured "fresh" old-Electrum core, partial ordering sweep | 1,536 of 42,240 possible orderings generated | old-Electrum v1 | 0 match | yes | 2026-08-02 |
 | Visual-block rotations and reversals of the collage's Electrum-exclusive words | 1,578 candidates | old-Electrum v1 | 0 match | yes | 2026-08-02 |
 | Spatial and clockwise reading orders of the same word set | 896 candidates | old-Electrum v1 | 0 match | yes | 2026-08-02 |
 | Dial- and number-indexed word blocks | 590 candidates | old-Electrum v1 | 0 match | yes | 2026-08-02 |
 
-The extended anchor-free campaign above (about 3.75 million seeds) is the largest single test
-of the space that does not depend on the 4 refuted anchors, but it still forces 6 specific
-words present and only varies the remaining 8 slots: a full anchor-free sweep over a
-re-derived word pool (not yet re-derived from the image, see the leads) has not been run.
+## Contributed positional sweeps (@NoobSilence, issue #12, 2026-09-04)
+
+Reported in issue #12 after the anchor-free runs above; recorded as contributed. The
+counts are consistent with four free positions drawn from the whole pool with
+repetition (13^4 = 28,561 orderings, about 1 in 16 checksum-valid; 19^4 = 130,321). No
+witness protocol was described, so the rows are uncertified.
+
+| Hypothesis | Space | Method | Result | Witness | Date |
+|---|---|---|---|---|---|
+| Base `moon tower X black subject X first X this X order receive`, positions 3, 6, 8, 10 free over the 13-word pool | 28,561 orderings, 1,752 checksum-valid | BIP39 `m/44'/0'/0'/0/0` | 0 match | uncertified | 2026-09-04 |
+| Same base and pool, old-Electrum legacy path | 28,561 | old-Electrum v1 | 0 match | uncertified | 2026-09-04 |
+| Same base, positions free over a 19-word pool that adds drawn objects (`camera mask liberty eye pyramid vote police` and similar) | 130,321 orderings, 8,148 checksum-valid | BIP39 `m/44'/0'/0'/0/0` | 0 match | uncertified | 2026-09-04 |
+| Counting-read base `tower camera X black mask X first X this X order world`, positions 3, 6, 8, 10 free over the 13-word pool | 28,561 orderings, 1,763 checksum-valid | BIP39 `m/44'/0'/0'/0/0` | 0 match | uncertified | 2026-09-04 |
+
+The 13-word pool sweep is the largest test of the space that does not depend on the 4
+refuted anchor positions: no position is fixed and every 12-of-13 choice is covered. Its
+words, though, are still the community pool (7 of the 13 are words the retracted anchor
+lists carry), and the old-Electrum campaign above still forces 6 specific words present.
+A sweep over a pool re-derived directly from the image, independent of those lists, has
+not been run (see the leads).
 
 ## Steganography and cipher channels (all ruled out as separate carriers, not as word sources)
 

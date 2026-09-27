@@ -19,12 +19,12 @@ before I found it, and the 3rd share has not surfaced anywhere in 4 years of arc
 | Prize | 1.00016775 BTC (about $63,011 at BTC = $63,000, 2026-08-16) |
 | Chain | bitcoin |
 | Escrow | `bc1qyjwa0tf0en4x09magpuwmt2smpsrlaxwn85lh6` ([mempool.space](https://mempool.space/address/bc1qyjwa0tf0en4x09magpuwmt2smpsrlaxwn85lh6)) |
-| Last on-chain check | 2026-08-16: funded and unspent, 5 funding transactions, 100,016,775 sats, 0 spent |
+| Last on-chain check | 2026-08-28: funded and unspent, 5 funding transactions, 100,016,775 sats, 0 spent |
 | Status | OPEN |
 | Puzzle type | shamir, bip39-seed |
 | Target format | BIP39 12-word English mnemonic (the secret), BIP84 `m/84'/0'/0'/0/0`, no passphrase |
 | Certified oracle | yes: `tools/oracle.py --selftest` (certified against the public BIP84 test vector and a synthetic 3-of-5 GF(256) round trip; it reconstructs a candidate, it does not search for one) |
-| What remains | a 3rd Shamir share, never published, or a disclosed constraint on it |
+| What remains | a 3rd Shamir share, never published, or a disclosed constraint on it. Same-day copies, the 2020-07-04 Common Crawl body, and later archives all show only the original 2 shares. |
 | Series | none |
 
 ## The puzzle as published
@@ -96,7 +96,7 @@ path. Reproduced 2026-08-16.
 ### Established facts
 
 1. The escrow holds 1.00016775 BTC across 5 funding transactions, 0 spent, confirmed
-   2026-08-16 on [mempool.space](https://mempool.space/address/bc1qyjwa0tf0en4x09magpuwmt2smpsrlaxwn85lh6).
+   2026-08-28 on [mempool.space](https://mempool.space/address/bc1qyjwa0tf0en4x09magpuwmt2smpsrlaxwn85lh6).
 2. The 2 published shares decode to Shamir indexes 3 and 15; index 15 is only reachable
    under `jsbtc`'s 4-bit index field, which settles `jsbtc` over `pybtc` as the code of
    record.
@@ -105,15 +105,28 @@ path. Reproduced 2026-08-16.
 4. The GF(256) arithmetic and Lagrange interpolation behind that measurement were
    checked against an independent reference: 65,536 multiplication products and 32,553
    interpolation evaluations, 0 discrepancies.
-5. Every archived capture of the challenge page and its regional mirrors (Wayback +
-   Common Crawl, 2020-07-04 to 2024-02-25) shows only the same 2 shares. Common Crawl
-   independently confirms this at the earliest reachable point (2020-07-04, record
-   digest `VL2EUR4KXMBSCLVXAJN3VAYCO7WRVUPB`). Only the brief window from funding
-   (2020-06-19) to that first capture is uncaptured.
+5. 14 archived captures of the challenge page and its regional mirrors, spanning
+   2020-07-04 to 2024-02-25, show only the same 2 shares. The first Common Crawl
+   hit is `CC-MAIN-2020-29` at `20200704182040` (record digest
+   `VL2EUR4KXMBSCLVXAJN3VAYCO7WRVUPB`); that payload is now in-folder as
+   `challenge.warc` and still has only those 2 shares. Same-day copies on Reddit
+   and Telegram already carry only those 2 shares, so a later deletion of a 3rd
+   share from the challenge page would also have to explain those parallel
+   announcements. Only the brief window from funding (2020-06-19) to that first
+   capture is uncaptured.
 6. Two GitHub issues on `bitaps-com/jsbtc`, filed 2026-07-28 and 2026-07-29, reported
    the same entropy-check defect I measured, 6 days before I found it independently
    (verified via the GitHub API on 2026-08-03). Neither issue number resolves on a
    recheck on 2026-08-16; I could not determine why.
+7. The published zpub
+   `zpub6qdEDkv51FpxX6g1rpFGckmiL46vV8ccmtEgPAkj3qj8N4ZZHyXDRA9RwpTiFK2Kb8vRaDmSmwgX6rfB4t2K8Ktdq8ExQ6fumKpn2ndJCqL`
+   is a BIP84 account-level key (depth 3, last child `0'`), so `m/84'/0'/0'/0/0` is
+   the `0/0` child of that key. That derivation produces
+   `bc1qyjwa0tf0en4x09magpuwmt2smpsrlaxwn85lh6`. Confirmed from the 2020-07-04 WARC
+   string on 2026-08-28 (version `04b24746`, child `0x80000000`).
+8. Live challenge pages on `bitaps.com`, `tbtc.bitaps.com`, and `ltc.bitaps.com` still
+   show the same 2 shares on 2026-08-28. The `bitaps.com` page had returned HTTP 403 on
+   2026-08-16.
 
 ## What has been tested
 
@@ -127,6 +140,15 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | direct reconstruction from the 2 published shares alone | below the 3-share threshold | GF(256) interpolation with only 2 points | does not derive the escrow address | yes: `tools/oracle.py --selftest` | 2026-08-16 |
 | challenge `zpub` derives the target | 0..20 indices, /0/0../3/0 | derive each with python-bitcoinlib + bech32, compare to escrow | refuted: none match the target | yes: bech32 derivation + address compare | 2026-08-28 |
 | 3rd party `boha` pubkey is target's secret-relevant key | hash160 of `0385a3a5...` | RIPEMD160(SHA256(pubkey)) + bech32 | matches the target address, but is only the public half of the key pair | yes: hash + bech32 round trip | 2026-08-28 |
+| 3rd share in the 15-day Wayback/Common Crawl gap | 0 captures, 2020-06-19 to 2020-07-03 | Wayback CDX, Common Crawl 2020-24/29/34, Arquivo.pt | gap still empty; earliest hit remains 2020-07-04 | yes: same CDX query returns later known captures | 2026-08-28 |
+| 3rd share on archive.today | 1 snapshot, 2021-06-20 | fetched listing and snapshot `8bNRM` | same 2 shares | yes: both known shares recovered | 2026-08-28 |
+| 3rd share in same-day announcements | Reddit `hc4bfk` (26 comments), Telegram `bitapscom`, X status 1274018817304379394 | fetched each, extracted 12-word BIP39 sequences, oracle on overlap windows | 0 unpublished share; 13 overlap windows, 0 MATCH | yes: both known shares recovered from the Reddit body | 2026-08-28 |
+| 3rd share in a GitHub fork of `mnemonic-offline-tool` | 13 reachable forks | compare default-branch HEAD to `5b6dd995`; code search for the published share prefixes | 12 heads equal the known commit; 1 predates the challenge; 0 extra share | yes: 12 heads equal `5b6dd995` | 2026-08-28 |
+| 3rd share on the live challenge pages | 3 hosts | fetched 2026-08-28 | same 2 shares; zpub derives the escrow | yes: both known shares recovered; zpub-to-address exact match | 2026-08-28 |
+| determined 2-share algebraic models | 394,125 secrets and constructed shares | unique coefficient assumptions, global `a1`/`a2`, 6 mixed 2^16 families, constructed 3rd shares | 0 match; 65,536 constant-`(a1,a2)` pairs with 0 consistent | yes: `tools/structured_candidates.py --selftest` | 2026-08-28 |
+| 3rd share in the 2020-07-04 Common Crawl WARC payloads | 4 records (`challenge.warc`, `offline.warc`, `tool-en.warc`, `tool-ru.warc`) | parse records, strip tags, collect `span.word-N`, search for a third slot | 0 extra share; `offline.warc` truncated at 1 MiB in the dice wordlist, after empty restore slots; zpub is account-level, `0/0` derives the escrow | yes: stripped `challenge.warc` recovers both known shares; dice prefix matches BIP39 | 2026-08-28 |
+| `data/shares.md` | the 2 published shares verbatim, with decode indexes |
+| `data/channel_reads.csv` | channels read on 2026-08-28 for a 3rd share, with counts and witnesses |
 
 ## Open leads, ranked
 
@@ -137,18 +159,22 @@ Reid, the `boha` project) plus the `jsbtc` bug-bounty issues all reach the same 
 The only winning path is a 3rd share, which has never surfaced in 4+ years of archives. The
 few remaining leads below are only worth a bounded OSINT effort, not compute.
 
-1. **The short archive window around funding** (hours, low probability). Common Crawl has
-   now confirmed the challenge page content at the earliest reachable point (2020-07-04)
-   is identical to all later captures. Only the days between funding/publication
-   (2020-06-19) and that first capture are uncaptured. A 3rd share could only have been
-   removed within that window; a dated screenshot/forum mirror from those specific days is
-   the only remaining way to surface it.
+1. **The unpublished 3rd share** (hours to wait). Every public copy I can read, including
+   same-day Reddit and Telegram announcements, the 2020-07-04 Common Crawl body
+   (`challenge.warc`), archive.today's 2021-06-20 snapshot, and the live pages on
+   2026-08-28, shows the original 2 shares. A removal would have to fall in the 15
+   uncaptured days between funding (2020-06-19) and the first capture (2020-07-04), and it
+   would also have to leave the same-day Reddit and Telegram announcements consistent with
+   2 shares. Confirmed by the author publishing a 3rd share, or by a dated copy that
+   disagrees with the 2-share text.
 2. **Uncertified channels** (hours, low probability). archive.today returned HTTP 429 on
-   its own known-good witness page when I tried it; Memento TimeTravel was unreachable; I
-   found no verified anonymous read route for X replies to `@bitaps_com`; the 23 GitHub
-   forks of `mnemonic-offline-tool` are mostly auto-generated but the early ones show no
-   divergence; Telegram's `t.me/s/bitapscom` public preview has not been read. None of these
-   are established as empty, only as not yet checked with a working method.
+   its own known-good witness page when I tried it; Memento TimeTravel did not resolve on
+   2026-08-28 (DNS); I found no verified anonymous read route for X replies to
+   `@bitaps_com`; the 23 GitHub forks of `mnemonic-offline-tool` are mostly auto-generated
+   but the early ones show no divergence; Telegram's `t.me/s/bitapscom` public preview has
+   not been read. The one X reply tree that did come back carried 3 replies, one of them a
+   2025 ask for 1 or 2 words of the third share, with no author reply among the 3. None of
+   these are established as empty, only as not yet checked with a working method.
 
 Full notes: [analysis/leads.md](analysis/leads.md).
 
@@ -157,20 +183,26 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | Path | What it is |
 |---|---|
 | `clues/author-posts.md` | the challenge-page quotes and the 2 published shares, verbatim, with dates and links |
+| `challenge.warc` | Common Crawl payload of `bitaps.com/mnemonic/challenge`, 2020-07-04T18:20:40Z |
+| `tool-en.warc` | same-day payload of `bitaps.com/mnemonic?language=en` |
+| `tool-ru.warc` | same-day payload of `bitaps.com/mnemonic?language=ru` |
+| `offline.warc` | same-day payload of `bitaps.com/mnemonic/offline` (Common Crawl truncated at 1 MiB in the dice wordlist) |
 | `data/entropy_measurements.csv` | the 3 residual-entropy measurements behind "about 125 bits," with method and date |
 | `data/related_disclosures.csv` | dated timeline of events on the `jsbtc` repository and the challenge address |
-| `data/shares.md` | the 2 published shares verbatim, with decode indexes |
 | `analysis/tested.md` | full negatives ledger |
 | `analysis/leads.md` | full lead notes |
 | `tools/oracle.py` | reconstruction checker: candidate 3rd share plus the 2 published shares to a derived address |
+| `tools/structured_candidates.py` | 2-share algebraic models: unique coefficients, mixed 2^16 families, constructed 3rd shares |
 
 ## Sources
 
-- Bitaps, "Shamir Secret Backup Scheme" bug bounty, `bitaps.com/mnemonic/challenge`, 2020-06-19 (archived: [web.archive.org](https://web.archive.org/web/20230328022959/https://bitaps.com/mnemonic/challenge))
-- Bitaps, announcement, [x.com/bitaps_com/status/1274018817304379394](https://x.com/bitaps_com/status/1274018817304379394), 2020-06-19
+- Bitaps, "Shamir Secret Backup Scheme" bug bounty, `bitaps.com/mnemonic/challenge`, 2020-06-19 (archived: [web.archive.org](https://web.archive.org/web/20230328022959/https://bitaps.com/mnemonic/challenge); archive.today: [archive.is/8bNRM](https://archive.is/8bNRM), 2021-06-20). Earliest payload on file: `challenge.warc`, Common Crawl `CC-MAIN-2020-29`, 2020-07-04T18:20:40Z.
+- Bitaps, announcement, [x.com/bitaps_com/status/1274018817304379394](https://x.com/bitaps_com/status/1274018817304379394), 2020-06-19 (re-read 2026-08-28)
+- Bitaps, same-day Reddit copy, [r/Bitcoin `hc4bfk`](https://www.reddit.com/r/Bitcoin/comments/hc4bfk/1_btc_cryptographic_challenge_with_splitted/), 2020-06-19 (archived: [web.archive.org, 2023-06-11](https://web.archive.org/web/20230611002230/https://old.reddit.com/r/Bitcoin/comments/hc4bfk/1_btc_cryptographic_challenge_with_splitted/))
+- Bitaps, same-day Telegram copy, [t.me/bitapscom/15](https://t.me/bitapscom/15), 2020-06-19
 - `bitaps-com/mnemonic-offline-tool`, commit [`5b6dd995`](https://github.com/bitaps-com/mnemonic-offline-tool/commit/5b6dd995478b49c489b95444fbb0dca4006746a2), 2020-06-19
 - [`bitaps-com/jsbtc`](https://github.com/bitaps-com/jsbtc), repository (code of record)
 - [jsbtc issue #65](https://github.com/bitaps-com/jsbtc/issues/65), coefficient-bias defect, 2026-07-16
+- [mempool.space](https://mempool.space/address/bc1qyjwa0tf0en4x09magpuwmt2smpsrlaxwn85lh6), escrow address, checked 2026-08-28
 - Common Crawl index, `bitaps.com/mnemonic/challenge`, capture 2020-07-04 (CC-MAIN-2020-29, record digest `VL2EUR4KXMBSCLVXAJN3VAYCO7WRVUPB`)
 - `oritwe/o` `boha` project, challenge listing with target pubkey `0385a3a5...` and hash160 `249dd7ad2...`
-- [mempool.space](https://mempool.space/address/bc1qyjwa0tf0en4x09magpuwmt2smpsrlaxwn85lh6), escrow address, checked 2026-08-16
