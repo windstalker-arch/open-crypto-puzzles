@@ -370,16 +370,16 @@ method notes for each row are in `analysis/tested.md`.
    oracle. Confirmed by either lock opening; the families tested so far are in the
    table above.
 3. **Replay the dynamically-constructed candidates a filter bug never reached**
-3. **Replay the dynamically-constructed candidates a filter bug never reached**
-   not reach. Now to be replayed against both locks and the third door.
+   (hours to days). A 2026-07-28 review found that an appearance-based
+   acceptance filter had silently rejected the correct answer shape in 98 of
+   213 historical scripts. A first replay resubmitted 116,043 literal strings
+   from those scripts directly (0 match), but the same scripts also built
+   candidates dynamically (concatenations, permutations, chained transforms)
+   that this first replay does not reach. Now to be replayed against both
+   locks and the third door. Confirmed by re-running a script's own
+   generation logic and finding a match; killed, stage by stage, by
+   exhausting that logic with none.
 
- Confirmed by re-running a script's own generation logic and finding a
-   match; killed, stage by stage, by exhausting that logic with none.
-   (hours to days). A 2026-07-28 review found that an appearance-based acceptance
-   filter had silently rejected the correct answer shape in 98 of 213 historical
-   scripts. A first replay resubmitted 116,043 literal strings from those scripts
-   directly (0 match), but the same scripts also built candidates dynamically
-   (concatenations, permutations, chained transforms) that this first replay does
 4. **Decode the even-position stream of the Bifid output** (hours of reasoning).
    The reconstruction on the archived capture exposes 285 symbols drawn from only
    four letters (B, C, D, E) carrying every even slot of the output: an authored
