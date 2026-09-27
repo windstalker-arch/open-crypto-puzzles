@@ -14603,3 +14603,69 @@ Date: 2026-09-27, local.
   for cryptanalytic claims and its absence is the actual defect.
 
 Date: 2026-09-27, local.
+
+## R-DIG149-2026-09-27: THE SIBLING EXPERIMENT `R-P15NULL` PROMISED IS DONE, AND IT IS A CLEAN NULL - THE 149-DIGIT STRING HAS NO PERIOD-15 STRUCTURE AND SHARES NONE WITH THE 1,539-BYTE BLOB. The reframe's most obvious key-material source is eliminated. 0 oracle calls, 0 candidates.
+
+- SCOPE, AND THE TRAP I FELL INTO FIRST. `R-P15NULL` listed "I did not test the 149-digit string
+  for the same period-15 structure" as an open item, so that is what this row tests. First attempt: I
+  retyped the string into the test script from the earlier transcript and got **90 digits**. The
+  ledger's own count - "`1` occurs 56x and `4` occurs 14x" - disagreed with my 90-char version
+  (1 = 32x), which is how I caught it. Every figure below re-extracts the string from
+  `phase3.2.txt` line 6 programmatically and asserts `len == 149` and the 56/14 counts, which
+  reproduce exactly. **Transcribed constants are not data; assert them against the source before
+  analysing them.** The same row also produced a null distribution that was silently degenerate (I
+  scored null samples against the observation instead of against the null mean, capping the
+  statistic at 1.0 and producing a meaningless percentile). Only the two tests whose nulls are
+  correct are reported below.
+
+- THE STREAM. 149 digits, all ten values present, and severely skewed: `1` = 56 (37.6%), then
+  `3` = 16, `2` = 15, `4` = 14, `9` = 13, `6` = 11, `7` = 8, `5` = 7, `8` = 5, `0` = 4. Sum p^2 =
+  **0.1917** against 0.1000 for a uniform 10-symbol alphabet. Any period analysis of this string
+  therefore needs a marginal-matched null; a uniform null would manufacture structure out of the
+  `1` skew, and `R-P32BLOB` had already refuted the "one for one, four for one" reading of those
+  two counts.
+
+- **TEST 1 - AUTOCORRELATION, ALL 148 LAGS, MATCH COUNTS.** Per-lag z against 4,000 i.i.d. draws at
+  the observed marginal. The largest excursion is **|z| = 3.0 at lag 1**, and the expected maximum of
+  148 standard normals is already ~2.8-3.0, so the strongest excursion in the string is what noise
+  produces on its own. Nothing anywhere near the blob's z = +25.7. For completeness the two families
+  that would have mattered: multiples of 5 average z = **-0.06** (max |z| 1.5), multiples of 15
+  average z = **-0.19** (max |z| 1.2), multiples of 30 average z = **+0.19** (max |z| 1.2). All
+  flat, and all on the wrong side of zero for a periodic signal.
+
+- **TEST 2 - THE TARGETED PERMUTATION TEST, WHICH IS THE ONE THAT MATTERS.** Rather than reading 148
+  z-scores and picking a winner, I tested the actual hypothesis: is the mean match-rate at
+  multiples of 15 higher than at all other lags? Observed: **0.1777 at multiples of 15 versus 0.1864
+  elsewhere, a difference of -0.0087**. Null distribution of that same statistic over 4,000
+  marginal-matched draws: mean -0.0002, sd 0.0181, p95 **+0.0291**. The observed difference sits at
+  the **32.5th percentile** - and it is NEGATIVE, i.e. lags that are multiples of 15 match slightly
+  *less* than random lags. A period-15 signal cannot look like that.
+
+- **THE KASIKI CLUSTER IS AN ARTEFACT OF THE `1` SKEW, AND I CHECKED INSTEAD OF ASSUMING.** 25
+  repeated 4-grams, with a tempting gap=20 cluster (7 occurrences) pointing at period 20/10/5/4/2.
+  But every one of the top repeats is `1`-heavy - `3121` (x4), `1219` (x3), `1314` (x3), `3141` (x3),
+  `1213` (x2), `3131` (x2) - and with `1` at 37.6% a 4-gram containing two `1`s is unremarkable by
+  itself, so repeats accrue without any periodicity. The autocorrelation test, which does not depend
+  on repeated 4-grams at all, is the better-powered instrument here and it finds nothing, so the
+  gap=20 cluster carries no weight. Same shape of error as `R-IMGSCOPE`: a suggestive count that
+  dissolves once you check what generates it.
+
+- **WHAT THIS CHANGES FOR THE `R-P15NULL` REFRAME - AND THE HONEST LIMIT OF IT.** `R-P15NULL`
+  concluded that phase 3.2's blob needs "15 alphabet permutations, or 15 independent keys, from
+  outside the ciphertext", and nominated hunting for 15-item key material in the phase-2.1/3 assets.
+  This row removes the single most obvious such source: **the 149-digit string is not 15-periodic
+  in any form, so it is not the source of the blob's 15, and the two artefacts of `phase3.2.txt`
+  share no detectable periodicity at all.** That is a real narrowing - the "15" is a property of the
+  1,539-byte blob alone, not a shared structural constant of the phase. It does NOT tell us where
+  the 15 comes from; the reframe stands, only its first candidate is dead. Two things I am
+  explicitly not claiming: that no 15-derived key material exists in these assets, and anything at
+  all about the 149-digit string beyond this, whose VIC decode and ~30 rejected encodings are
+  `R-VIC149`'s business and remain unchanged.
+
+- STATUS. The four items in `R-P15NULL`'s "WHAT I DID NOT ESTABLISH" are now: (1) still no column
+  alphabet recovered; (2) transposition+substitution compositions still untested; (3) **the 149-digit
+  sibling test is now DONE and null**; (4) per-column shape still cannot identify a language. The
+  lead is closed as a source of new structure; phase 3.2 remains a keyless-ciphertext problem, and
+  the next real step is still external key material, now with one fewer place to look.
+
+Date: 2026-09-27, local.
