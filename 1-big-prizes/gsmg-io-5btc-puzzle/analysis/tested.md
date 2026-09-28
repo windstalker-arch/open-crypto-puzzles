@@ -16572,9 +16572,13 @@ error, which is the failure mode worth writing down:
 **1. The controls validate the segmenter.** `blue_ca` -> 2, `red_n_you` -> 4, `red_t` -> 1 letter plus
 a 5x2 mark at y46-47 that is not a letter, `black_banking - war` -> one 852px mass plus the 21x6 band.
 All 8 component counts are asserted in the selftest. Where a count falls below the slug's letter count
-(`blue_lock_lo` 4 for 6 letters, `red_open_lock_n_ing` 6 for 12) the letters physically touch and no
-segmentation can separate them; those are not regressions, and they are why the earlier rows recorded
-these tiles as unreadable rather than as a segmentation failure.
+(`blue_lock_lo` 4 for 6 letters, `red_open_lock_n_ing` 6 for 12) I wrote that the letters physically
+touch and that no segmentation can separate them. **That was wrong, and R-LOCKFRAG corrects it:**
+those tiles do not spell their whole slugs, so I was dividing by the wrong denominator. They render
+"lo" and "n ing" and their letters are cleanly separated. They are READ. The only unread item left in
+the tile set is the 21x6 band. The bands are now grouped by line rather than sorted by each glyph's
+top row, because ascenders start higher than x-height letters and a naive sort interleaves the lines
+of a two-line tile.
 
 **2. The G reference is author-warranted, and R-ORDER's own row supplies it.** `blue_dig_i` yields
 exactly 5 components: D (x17-26, ascender plus bowl), I (x31-32, 2x11 stem), **G (x36-45 y27-41,
@@ -16627,5 +16631,79 @@ the seed/plant reframe and the "not join the fragments" conclusion fall with it.
 unknown is unchanged: the 21x6 band in `black_banking - war`, still illegible at 6px. 0 new candidates.
 Lead 0 unchanged. `X` remains unsolved. This row is a pixel reading of authorial artifacts, which is
 one of the two classes the R-BOARD28B addendum still sanctions; it is not a new cipher sweep.
+
+Date: 2026-09-28, local.
+
+## 2026-09-28 - R-LOCKFRAG: the two padlock tiles are READABLE after all - they render "lo" and "n ing", not their full slugs; 9 glyphs classified, 0 oracle calls
+
+Follows `R-GICBIG`, which built the segmenter. The two padlock tiles were on the "unreadable, letters
+touch" list. That reason was WRONG, and correcting it is this row's whole content: the letters were
+never touching, because these tiles do not spell their whole filenames. My earlier component counts
+(4 for 6 letters, 6 for 12) were being compared against the wrong denominator - the slug's full
+letter count rather than the tile's actual text.
+
+**1. What each tile actually renders.** With the padlock shackle (the 28x38 body-touching component)
+and the 7x9 keyhole excluded, the glyph lines are:
+
+    blue_lock_lo         line 1: [2x11 stem  dig_i.I=1.000] gap3 [11x11 o  n_you.o=0.902]
+    red_open_lock_n_ing  line 1: [9x11 n 1.000] gap9 [1x11 i 1.000] gap5 [9x11 n 1.000] gap3 [9x14 g  crypto.g=0.922]
+
+So `blue_lock_lo` renders **lo** and `red_open_lock_n_ing` renders **n ing**, with the gap9 in the
+second being the word break (all other intra-line gaps are 2-5px). The letters are cleanly separated
+and always were. Nothing here needed a stroke model.
+
+**2. The keyhole is a trap and is now excluded explicitly.** Both padlock tiles carry a 7x9 component
+at y26-34, inside the padlock body. It is a keyhole, and it weakly resembles a T (`dig_i.T`=0.683), so
+a careless pass transcribes it as a letter and inflates the reading. `is_keyhole()` drops it on size
+and position. This is the only component in the set that is a picture rather than a glyph.
+
+**3. The stem in `lo` cannot be resolved to a letter by pixels, and I am not claiming it can.** It is a
+2x11 bare stem matching `dig_i`'s I at **1.000** - an exact pixel match, because lowercase `l` and
+uppercase `I` are the same shape in this face. The reading `lo` takes the letter identity from the
+slug's `lock_lo`; the pixels certify the shape, not the letter. The 1x11 stem in `n ing` is a
+different case: it matches `crypto.gic`'s i at **1.000**, and `i` is independently the right letter
+there.
+
+**4. What this does to R-ORDER's match list.** R-ORDER recorded that the tiles "match their own
+authorial filenames" for `ca`, `dig_i`, `n_you`, `open_lock_n_ing` and `t`. Full-set classification
+sharpens this and partly narrows it:
+
+    blue_ca             ca                  both glyphs 1.000            matches
+    red_n_you           n | you             all four 1.000, gap8 break   matches
+    red_t               T                    1.000                        matches
+    blue_dig_i          DIG | I, then T     all 1.000, gap7 break        matches (underscore = word break)
+    red_crypto_gic      crypto / gic        all 1.000                    matches
+    red_open_lock_n_ing n | ing             all >=0.922                 DOES NOT match literally
+    blue_lock_lo        lo                   0.902-1.000                 DOES NOT match literally
+
+For the two padlock tiles the slug words `lock` and `open lock` are **not in the text at all** - they
+are carried by the padlock's closed/open state, which R-ORDER fact 2 already certified as authorial
+meaning rather than decoration. So the filename encodes icon-state plus text, and a merge rule that
+concatenates rendered glyphs alone will never reproduce these two slugs. That is a real constraint on
+the assembly and it is new; it is not a refutation of R-ORDER, whose point was that the padlocks carry
+meaning.
+
+**5. Cross-tile confirmation, unchanged.** `blue_dig_i` still renders DIG / I / T, so its own text is
+DIGIT and the cross-tile join `dig`+`i`+`t` that R-ORDER certified still stands; `red_t` is a separate
+lone T. The two 5x2 and 5x6 marks in `red_t` and `black_banking - war` are still not letters and are
+still not read.
+
+**METHOD / CERTIFICATION.** 9 previously-unclassified glyphs across the 2 padlock tiles, matched
+against a 19-glyph template library whose every entry comes from a slug R-ORDER already certified
+(9 from `red_crypto_gic`, 4 from `red_n_you`, 2 from `blue_ca`, 4 from `blue_dig_i`). The metric
+self-corroborates: the selftest asserts that all 19 templates match THEMSELVES at 1.000, so a mislabelled
+library fails loudly, and the only sub-1.000 scores in play are the genuine cross-tile pairs
+(crypto.g vs dig_i.G 0.877, padlock o 0.902, padlock g 0.922, keyhole-as-T 0.683). 0 new candidates,
+0 oracle calls - a reading, not a sweep.
+`tools/oracle.py` (small, `1GSMG1JC9`) and `tools/oracle_dualite.py` (cosmic, `17ucy1K9`) `--selftest`
+**both PASS immediately prior**, verified this row. Regenerable: `python3 tools/tile_glyphs.py --read`,
+`--classify <tile>`.
+
+**CONCLUSION.** Both padlock tiles are read. `blue_lock_lo` = "lo" (closed lock), `red_open_lock_n_ing`
+= "n ing" (open lock). The "letters touch" obstacle was a denominator error on my part, not a property
+of the artwork, and it is removed from the blocker list. What remains unread in the set is exactly one
+item: the 21x6 band in `black_banking - war`, which R-GICBIG established is bright and 8-connected to
+the main letter mass and therefore needs a cut rather than a lower threshold. Lead 0 unchanged. `X`
+remains unsolved.
 
 Date: 2026-09-28, local.

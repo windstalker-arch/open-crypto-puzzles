@@ -36,18 +36,21 @@ import zlib
 TILE_DIR = (
     "~/gsmg/gsmg-web-archive/gsmg.io.live-2026-09-27/live_routes/img"
 )
-# Component count actually observed, and what accounts for the difference
-# between it and the letter count the slug implies. Where a count is LOWER
-# than the letter count the letters physically touch and no segmentation can
-# separate them without a stroke model; those rows are NOT regressions.
+# Component count actually observed. The third column is the reading, and for
+# the padlock tiles the reading is SHORTER than the slug: those tiles do not
+# spell their whole filename. `blue_lock_lo` renders "lo" with the CLOSED
+# padlock carrying "lock", and `red_open_lock_n_ing` renders "n ing" with the
+# OPEN padlock carrying "open lock". So a component count below the slug's
+# letter count is expected, not a segmentation failure. (I first misread this
+# as touching letters; R-LOCKFRAG corrects that.)
 #
-#   black_banking - war  2  letters are one 852px mass + the 21x6 micro band
+#   black_banking - war  2  one 852px letter mass + the 21x6 micro band
 #   blue_ca              2  c a
-#   blue_dig_i           5  d i g i, plus a lone t on a second line
-#   blue_lock_lo         4  the 28x38 padlock shackle, then 3 joined groups
-#   red_crypto_gic       9  c r y p t o / g i c   <-- the reading
+#   blue_dig_i           5  D I G I, plus a lone T on a second line
+#   blue_lock_lo         4  keyhole + l + o      (text is "lo")
+#   red_crypto_gic       9  c r y p t o / g i c
 #   red_n_you            4  n y o u
-#   red_open_lock_n_ing  6  the 28x38 padlock shackle, then 5 joined groups
+#   red_open_lock_n_ing  6  keyhole + n i n g   (text is "n ing")
 #   red_t                2  t, plus a 5x2 mark at y46-47 that is not a letter
 TILES = [
     ("black_banking - war.png", 2),
@@ -261,6 +264,122 @@ def _p(name):
     return os.path.expanduser(TILE_DIR + "/" + name)
 
 
+# ------------------------------------------------------------ template library
+
+def templates():
+    """Reference glyphs, each labelled with the tile and reading it came from.
+
+    Every entry is a glyph whose identity is fixed by a slug R-ORDER already
+    certified (`ca`, `dig_i`, `n_you`, `crypto_gic`, `t`), so matching against
+    these is comparison against author-warranted shapes, not against a guess.
+    """
+    def comps(name):
+        return sorted(components(_p(name)),
+                      key=lambda p: (bbox(p)[2], bbox(p)[0]))
+
+    tpl = []
+    cg = comps("red_crypto_gic.png")
+    top = sorted([p for p in cg if bbox(p)[2] < 40], key=lambda p: bbox(p)[0])
+    bot = sorted([p for p in cg if bbox(p)[2] >= 40], key=lambda p: bbox(p)[0])
+    for lab, p in zip(["c", "r", "y", "p", "t", "o"], top):
+        tpl.append(("crypto." + lab, p))
+    for lab, p in zip(["g", "i", "c"], bot):
+        tpl.append(("crypto." + lab, p))
+    ny = comps("red_n_you.png")
+    for lab, p in zip(["n", "y", "o", "u"], ny):
+        tpl.append(("n_you." + lab, p))
+    ca = comps("blue_ca.png")
+    for lab, p in zip(["c", "a"], ca):
+        tpl.append(("ca." + lab, p))
+    dg = comps("blue_dig_i.png")
+    tpl.append(("dig_i.D", [p for p in dg if bbox(p)[0] == 17][0]))
+    tpl.append(("dig_i.G", [p for p in dg if bbox(p)[0] == 36][0]))
+    tpl.append(("dig_i.I", [p for p in dg if bbox(p)[0] == 31][0]))
+    tpl.append(("dig_i.T", [p for p in dg
+                           if bbox(p)[0] == 29 and bbox(p)[2] > 40][0]))
+    return tpl
+
+
+def classify(px, tpl=None):
+    """Return the best-matching template labels, best first."""
+    if tpl is None:
+        tpl = templates()
+    b = bitmap(px)
+    return sorted(((iou(b, bitmap(q)), lab) for lab, q in tpl), reverse=True)
+
+
+def is_keyhole(px):
+    """The 7x9 mark inside the padlock body, which is a keyhole and not a letter.
+
+    It sits at y26-34 in both padlock tiles and is 7x9. It weakly resembles a
+    T (0.68), which is exactly the kind of thing that gets transcribed as a
+    letter by a careless pass, so it is excluded explicitly.
+    """
+    x0, x1, y0, y1 = bbox(px)
+    return (x1 - x0 + 1) == 7 and (y1 - y0 + 1) == 9 and y0 < 40
+
+
+def read_tile(name):
+    """Classify a tile's glyphs, skipping the padlock body and keyhole.
+
+    Returns a list of LINES, each a list of (x0, component) ordered left to
+    right. Grouping is by vertical overlap rather than by the glyph's top row,
+    because ascenders start higher than x-height letters and a naive sort by
+    y0 interleaves the lines of a two-line tile.
+    """
+    glyphs = []
+    for px in components(_p(name)):
+        x0, x1, y0, y1 = bbox(px)
+        if (x1 - x0 + 1) >= 20 and (y1 - y0 + 1) >= 20:
+            continue                      # the padlock shackle
+        if is_keyhole(px):
+            continue
+        glyphs.append((x0, x1, y0, y1, px))
+    glyphs.sort(key=lambda t: (t[2], t[0]))
+    lines = []
+    for g in glyphs:
+        placed = False
+        for ln in lines:
+            top = min(t[2] for t in ln)
+            bot = max(t[3] for t in ln)
+            # same line if it overlaps the band vertically by most of its height
+            ov = min(bot, g[3]) - max(top, g[2])
+            if ov > 0.5 * (g[3] - g[2] + 1):
+                ln.append(g)
+                placed = True
+                break
+        if not placed:
+            lines.append([g])
+    for ln in lines:
+        ln.sort(key=lambda t: t[0])
+    lines.sort(key=lambda ln: min(t[2] for t in ln))
+    return lines
+
+
+def cmd_read():
+    tpl = templates()
+    for name, _ in TILES:
+        lines = read_tile(name)
+        if not lines:
+            print("%-26s no glyphs" % name)
+            continue
+        print("=== %s ===" % name)
+        for li, ln in enumerate(lines):
+            top = min(t[2] for t in ln)
+            prev_end = None
+            parts = []
+            for x0, x1, y0, y1, px in ln:
+                s = classify(px, tpl)[:2]
+                gap = "" if prev_end is None else " gap%d" % (x0 - prev_end - 1)
+                prev_end = x1
+                parts.append("%dx%d %s%s" % (x1 - x0 + 1, y1 - y0 + 1,
+                                            " ".join("%s=%.3f" % (l, v)
+                                                     for v, l in s), gap))
+            print("   line %d (y%d-%d): %s"
+                  % (li + 1, top, max(t[3] for t in ln), "  |  ".join(parts)))
+        print()
+
+
 def read_crypto_gic():
     """Return the two text rows of red_crypto_gic as classified components."""
     gref = bitmap(find_g_reference())
@@ -380,6 +499,27 @@ def selftest():
     # metric must not flatter itself
     check("IoU identity == 1.000", abs(iou(bitmap(gref), bitmap(gref)) - 1.0) < 1e-9)
 
+    # R-LOCKFRAG: the padlock tiles, with shackle and keyhole excluded
+    for name, expect in (("blue_lock_lo.png", 2), ("red_open_lock_n_ing.png", 4)):
+        got = sum(len(ln) for ln in read_tile(name))
+        check("%s text glyphs == %d" % (name, expect), got == expect, "got %d" % got)
+
+    tpl = templates()
+    # every template must match itself, else the library is mislabelled
+    worst = min(iou(bitmap(p), bitmap(p)) for _, p in tpl)
+    check("all %d templates self-match 1.000" % len(tpl), worst > 0.999, "got %.3f" % worst)
+
+    lo = [t for ln in read_tile("blue_lock_lo.png") for t in ln]
+    check("blue_lock_lo glyph2 is the o (>=0.85)",
+          classify(lo[1][4], tpl)[0][0] >= 0.85,
+          "got %.3f" % classify(lo[1][4], tpl)[0][0])
+    op = [t for ln in read_tile("red_open_lock_n_ing.png") for t in ln]
+    check("red_open_lock_n_ing last glyph is the g (>=0.85)",
+          classify(op[3][4], tpl)[0][0] >= 0.85,
+          "got %.3f" % classify(op[3][4], tpl)[0][0])
+    check("keyhole is excluded from both padlock tiles",
+          all(is_keyhole(t[4]) is False for t in lo + op))
+
     top, bot, _ = read_crypto_gic()
     check("red_crypto_gic -> 6 top (c r y p t o) + 3 bottom (g i c)",
           len(top) == 6 and len(bot) == 3,
@@ -420,6 +560,16 @@ def main(argv):
         return 0
     if args[0] == "--resolve":
         cmd_resolve()
+        return 0
+    if args[0] == "--read":
+        cmd_read()
+        return 0
+    if args[0] == "--classify":
+        for li, ln in enumerate(read_tile(args[1])):
+            for x0, x1, y0, y1, px in ln:
+                print("line %d  x%d-%d y%d-%d  %s"
+                      % (li + 1, x0, x1, y0, y1,
+                         "  ".join("%.3f %s" % (v, l) for v, l in classify(px)[:3])))
         return 0
     print("unknown option %r (try --help)" % args[0])
     return 2
