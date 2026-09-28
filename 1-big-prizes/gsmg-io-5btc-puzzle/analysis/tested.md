@@ -16714,7 +16714,9 @@ DIGIT and the cross-tile join `dig`+`i`+`t` that R-ORDER certified still stands;
 lone T. The two 5x2 and 5x6 marks in `red_t` and `black_banking - war` are still not letters and are
 still not read.
 
-**METHOD / CERTIFICATION.** 9 previously-unclassified glyphs across the 2 padlock tiles, matched
+**METHOD / CERTIFICATION.** 6 previously-unclassified text glyphs across the 2 padlock tiles (2 in
+`blue_lock_lo`, 4 in `red_open_lock_n_ing`; the 2 padlock bodies and 2 keyholes are pictures and are
+excluded), matched
 against a 19-glyph template library whose every entry comes from a slug R-ORDER already certified
 (9 from `red_crypto_gic`, 4 from `red_n_you`, 2 from `blue_ca`, 4 from `blue_dig_i`). The metric
 self-corroborates: the selftest asserts that all 19 templates match THEMSELVES at 1.000, so a mislabelled
@@ -16897,7 +16899,7 @@ established its band is 3 blobs of 6px, so its icon still needs a human eye.
 
 **CORRECTIONS TO EARLIER ROWS.**
 - R-ORDER: page order is `sorted()`, not authorial; the "certified page order" premise is withdrawn.
-- R-ORDER fact 2 and the seed/plant reframe: fully void, not merely weakened. 6 of 6 testable slugs
+- R-ORDER fact 2 and the seed/plant reframe: fully void, not merely weakened. 7 of 7 testable slugs
   agree with their pixels.
 - R-IMGCORPUS Finding 3: the anaglyph measurement on the author's pairs is now done, and it is
   negative. The thread closes.
