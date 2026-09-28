@@ -696,8 +696,8 @@
         },
         {
           "rank": 6,
-          "title": "follow esrever on the remaining objects (explained for the image URL)",
-          "cost": "minutes-to-hours",
+          "title": "decode the even-position stream of the Bifid output (285 symbols drawn from only B, C, D and E)",
+          "cost": "hours of reasoning",
           "status": "open"
         },
         {
@@ -714,7 +714,25 @@
         },
         {
           "rank": 9,
-          "title": "the small blob is published on the SalPhaseIon page, whose own text names its password",
+          "title": "follow esrever on the remaining objects (explained for the image URL)",
+          "cost": "minutes-to-hours",
+          "status": "open"
+        },
+        {
+          "rank": 10,
+          "title": "use the 29 dropped bits somewhere; the sequence is all I and O, so binary or nothing",
+          "cost": "minutes per reading",
+          "status": "open"
+        },
+        {
+          "rank": 11,
+          "title": "preimage the seven remaining hash-slug routes; three of ten already fell to sha256 over the puzzle's own phrases",
+          "cost": "minutes per batch",
+          "status": "open"
+        },
+        {
+          "rank": 12,
+          "title": "recover the small blob's password; the page's tokens are ingredients in the key derivation, not the password itself",
           "cost": "hours",
           "status": "open"
         }

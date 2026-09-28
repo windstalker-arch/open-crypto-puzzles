@@ -361,6 +361,7 @@ method notes for each row are in `analysis/tested.md`.
    brainwallet pass over large dictionaries (SHA-256 construction) and a CPU pass for
    the raw construction (at most 32 bytes). Confirmed by an address match; killed
    family by family.
+
 2. **Every password against both 80-byte locks, with extended readings** (seconds
    per family). The phase 3.2.2 blob (2019) and the SalPhaseIon blob (2021) have the
    same shape; "the private keys belong to half and better half" precedes the first,
@@ -369,7 +370,21 @@ method notes for each row are in `analysis/tested.md`.
    reversed, bit-reversed, doubled, halved, plus or minus one modulo n) before the
    oracle. Confirmed by either lock opening; the families tested so far are in the
    table above.
-3. **Replay the dynamically-constructed candidates a filter bug never reached**
+
+3. **Re-run everything previously tested through the shipped oracle** (the cost of the
+   original sweep). `tools/oracle.py` derived its AES key with `EVP_BytesToKey` and MD5, and
+   its docstring called MD5 "the scheme used throughout this puzzle's earlier stages". That is
+   false, and it is checkable against the puzzle's own material: re-fetched from the live page,
+   the phase-2 and phase-3 blobs decrypt under SHA-256 with valid padding and known plaintext,
+   and fail under MD5. The phase-3 password digest was recomputed independently and reproduces
+   the digest the community published, so the password string and the digest choice are both
+   confirmed. The old self-test passed regardless, because it encrypted a self-made blob with
+   the same derivation it then decrypted with, which certifies self-consistency rather than the
+   digest. Every negative reached through that oracle is therefore suspect, which is why this
+   sits above the leads that extend it. Confirmed by a re-run that reproduces a match; killed
+   by re-running and still finding none.
+
+4. **Replay the dynamically-constructed candidates a filter bug never reached**
    (hours to days). A 2026-07-28 review found that an appearance-based
    acceptance filter had silently rejected the correct answer shape in 98 of
    213 historical scripts. A first replay resubmitted 116,043 literal strings
@@ -380,38 +395,61 @@ method notes for each row are in `analysis/tested.md`.
    generation logic and finding a match; killed, stage by stage, by
    exhausting that logic with none.
 
-4. **Decode the even-position stream of the Bifid output** (hours of reasoning).
+5. **Decode the two raw digit streams on the final page** (insight; the naive reads are
+   already negative). The decoded token `matrixsumlist` refers to two runs over `{a..i}`, the
+   `dbbib`-headed 91 and the `faed`-headed 570 with one trailing `z`. Both are recorded
+   verbatim in [data/finalpage-digit-streams.json](data/finalpage-digit-streams.json),
+   transcribed 2026-08-27 from the puzzle's own published final-page token stream. Base
+   translation to digits and grouping into 2- or 3-digit codes is negative, so what remains
+   is a rule to find rather than a sweep to run. Distinct from the Bifid stream below: these
+   are the raw page streams, that is a derived channel. Confirmed by a decoding that yields a
+   legible string or an address match.
+
+6. **Decode the even-position stream of the Bifid output** (hours of reasoning).
    The reconstruction on the archived capture exposes 285 symbols drawn from only
    four letters (B, C, D, E) carrying every even slot of the output: an authored
    channel with no public account, either a second message, a key or mask for the
    256-symbol object, or the author's unfound "second way". Confirmed by any
    encoding that yields a legible string or an address match; killed by exhausting
    four-symbol encodings at length 285 (which factors 3 x 5 x 19).
-5. **Determine whether the 256-symbol object is the right target at all** (an
+
+7. **Determine whether the 256-symbol object is the right target at all** (an
    afternoon of reasoning, not a sweep). Every negative in row 1 to row 5 of the
    tested table assumes the key comes directly from this object; the AES-blob route
    this folder's oracle implements is a different, untested-at-scale hypothesis.
    Confirmed by a reduction, other than the ones tried, that matches an address;
    redirected by establishing the AES-blob or "Dualite" route is the real one.
-6. **Identify the single tool reportedly used to build every phase** (hours). An
+
+8. **Identify the single tool reportedly used to build every phase** (hours). An
    authenticated author statement says one tool built every phase; comparing
    confirmed cipher conventions against one specific public tool's source code
    matches on non-obvious details (no period parameter on its Bifid cipher, a short
    menu of available ciphers). Confirmed by a cipher from that tool's menu
    producing a match on the "Dualite" password or the 256-object reduction; killed
    by exhausting that tool's short menu with no match.
-7. **Follow "esrever" on the remaining objects** (minutes to hours). The hint is
+
+9. **Follow "esrever" on the remaining objects** (minutes to hours). The hint is
    now explained for the object it was paired with: the bit-reversed image URL is
    the second "Good job, Neo!" key. It has not been applied to the two locks'
    plaintexts beyond the extended readings above, nor to the 256-symbol object.
-8. **Use the 29 dropped bits somewhere** (minutes per reading). The drop sequence
+
+10. **Use the 29 dropped bits somewhere** (minutes per reading). The drop sequence
    `OOIIOOOIIOOIOIIOIOOOOIOIIOIOI` is all I and O, so binary or nothing; standalone
    readings are exhausted with no legible fragment, so the open question is what
-   they select or gate, plausibly in combination with the even stream of lead 4.
-9. **Preimage the seven remaining hash-slug routes** (minutes per batch). Three of
+   they select or gate, plausibly in combination with the even stream of lead 6.
+
+11. **Preimage the seven remaining hash-slug routes** (minutes per batch). Three of
    ten fell to sha256 over the puzzle's own phrases in one evening; each newly
    transcribed stage wording is another candidate batch. Confirmed by a preimage
    whose page carries content.
+
+12. **Recover the small blob's password from the SalPhaseIon page** (hours). The page's own
+   tokens do not name it. `lastwordsbeforearchichoice` and `thispassword` read as an
+   instruction naming this blob's password is probably the wrong reading of them: those same
+   tokens were independently consumed to build the 32 raw bytes that key the derivation, as
+   ingredients rather than as the answer string. So the password is still unrecovered, and the
+   open question is what else on the page combines with it. Confirmed by a password whose
+   decryption is legible; killed by exhausting the last-words readings.
 
 Full notes: [analysis/leads.md](analysis/leads.md).
 

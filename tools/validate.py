@@ -604,6 +604,61 @@ def check_cross_references(folders):
             if txid and txid not in readme_text:
                 failures.append(f"{rel(readme_path)}:1: payout_txid {txid} from puzzle.json not found in README")
 
+        # A folder's ranked lead list lives in two places: the README's
+        # "## Open leads, ranked" section and the manifest's "leads" array. Nothing tied
+        # them together, so the gsmg folder drifted to two different sets: the manifest
+        # held three leads the README never mentioned, the README held three the manifest
+        # never listed, and the two disagreed on the relative order of three more. Titles
+        # are deliberately worded differently in each file, so compare the count and the
+        # rank sequence rather than the text.
+        leads = manifest.get("leads")
+        if isinstance(leads, list) and leads:
+            section = re.search(
+                r"(?ms)^## Open leads, ranked\s*$(.*?)(?=^## )", readme_text
+            )
+            if not section:
+                failures.append(
+                    f"{rel(readme_path)}:1: puzzle.json lists {len(leads)} leads but README has no '## Open leads, ranked' section"
+                )
+            else:
+                readme_ranks = [
+                    int(n)
+                    for n in re.findall(r"(?m)^(\d+)\.\s+\S", section.group(1))
+                ]
+                manifest_ranks = [l.get("rank") for l in leads]
+                # Several folders keep that heading as prose with no numbered list at all,
+                # and the manifest is then the only structured record, so there is nothing
+                # to compare. What is asserted below is deliberately weaker than parity.
+                #
+                # Parity is the wrong invariant for this repository. The folders do not
+                # share a convention for what the section contains: genesis lists only its
+                # three live leads while its manifest keeps six, three of them marked
+                # killed; fe-lang lists five leads it has struck through as closed; keysa
+                # lists four against one open manifest lead. A manifest can therefore
+                # legitimately hold more entries than the README enumerates, and comparing
+                # the two as equal sets would be wrong by design in at least one folder.
+                #
+                # What must hold everywhere: the manifest numbers its leads contiguously,
+                # the README numbers its list contiguously, and no lead the manifest calls
+                # open may be missing from the README. Set-level drift, which is how gsmg
+                # came to hold two different lists, is not mechanically checkable while
+                # the two files word their titles differently, so that stays a review item.
+                if not readme_ranks:
+                    continue
+                if manifest_ranks != list(range(1, len(manifest_ranks) + 1)):
+                    failures.append(
+                        f"{rel(readme_path)}:1: puzzle.json lead ranks are not 1..{len(manifest_ranks)}: {manifest_ranks}"
+                    )
+                if readme_ranks != list(range(1, len(readme_ranks) + 1)):
+                    failures.append(
+                        f"{rel(readme_path)}:1: README lead numbering is not contiguous: {readme_ranks}"
+                    )
+                open_leads = sum(1 for l in leads if l.get("status", "open") == "open")
+                if len(readme_ranks) < open_leads:
+                    failures.append(
+                        f"{rel(readme_path)}:1: README lists {len(readme_ranks)} leads but puzzle.json marks {open_leads} open"
+                    )
+
         first_line = readme_text.splitlines()[0] if readme_text.splitlines() else ""
         prize = manifest.get("prize", {})
         asset = str(prize.get("asset", ""))
