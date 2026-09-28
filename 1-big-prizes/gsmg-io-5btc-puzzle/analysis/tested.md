@@ -12291,6 +12291,8 @@ NEGATIVE 1, FIVE PREVIOUSLY UNMEASURED SLUGS ARE CONTENT-FREE SHELLS. `wb2_digil
 
 NEGATIVE 2, AND A LATENT TRAP IN THE CORPUS LAYOUT THAT IS WORTH MORE THAN THE NEGATIVE. The bare live slugs `architect`, `ca`, `hope1`-`hope4`, `phase1`, `phase2`, `phase3`, `phase3_2_2`, `phase3_2_2_2`, `whiterabbit`, plus six `.out` names, each return the 9-byte body `Hello :-)`. That is an author-controlled path-existence oracle, and it is STRICTLY WEAKER than a 404 for our purposes, because for most of those names the real page sits in the sibling `.html` file with real content: `phase1.html` 10,189 B, `phase2.html` 10,243 B, `phase3.html` 10,242 B, `phase3_2_2.html`, `phase3_2_2_2.html`, `merovingian.html` 10,551 B, and twelve `h_*` pages at 10,184-10,255 B. The author served `/puzzle/phase2.html` and not `/puzzle/phase2`. So the corpus stores, side by side and under confusingly similar names, a 9-byte `Hello :-)` stub and the real 10 KB page for the same stage. Any sweep keyed on FILENAME rather than content reads the stubs as "empty" or "nonexistent" and would report five stages of the puzzle as blank while their content sits next to them. That is failure class 2 latent in the directory layout, and it is the single most likely way for a future sweep of this corpus to manufacture a false negative. Certified: the bare slugs are not evidence of absence.
 
+AMENDED 2026-09-28 BY `R-CORPUSPROV-2026-09-28`: the content claim in NEGATIVE 2 is DISPROVEN, and the stated failure mode is inverted. `phase1.html` 10,189 B, `phase2.html` 10,243 B, `phase3.html` 10,242 B, `phase3_2_2.html`, `phase3_2_2_2.html`, `merovingian.html` 10,551 B and the twelve `h_*` files are NOT pages carrying content. Every one is a gzip or brotli payload that inflates to 36,627 B whose entire visible text is the single word `GSMG`; the byte sizes quoted above are COMPRESSED sizes, which is exactly what made eighteen shells read as eighteen distinct pages. All eighteen differ only in the per-request CSRF token. The one real PHASE 2 page is not `phase2.html` but `phase2_phase3_choice.html` (9,207 B, 8,544 visible chars), mirrored as `wayback/slugs2/choiceisanillusion...averyspecialdessertiwroteitmyself` across 8 witnesses. The trap is therefore the REVERSE of the one recorded in this paragraph: a sweep trusting NEGATIVE 2 would believe it had read five puzzle stages when it had read `GSMG` eighteen times. The bare-slug half of this row stands and is unaffected: the 9-byte `Hello :-)` bodies are still not evidence of absence.
+
 TWO SMALL REAL PAGES READ AND CLOSED. `live/cchash.unz` (1,224 B, byte-identical in live and wayback) is `gsmg.io Click here to enter` - an entry redirect, no content. `live/theseedisplanted.html` (832 B) is `GSMG Puzzle`, a stub. Both content-free.
 
 STILL UNCHARACTERISED, AND I AM NOT GUESSING AT IT. `wayback/wb2_ca`, 10,035 B, sha256 `a2b9fc71ea7eaf8b62058aaaae30e14639921e6005085e6d19857d56df6dc4ef`: all 256 byte values present in 10 KB, 56 zero bytes, and NOT gzip, zlib, raw-deflate, bz2 or lzma at any start offset 0-63, nor via partial inflate. It has no byte-identical twin anywhere under `~/storage/external/briefcase` (full-tree sha256 sweep), so it is not a misnamed copy of a known artifact. It is encrypted or corrupt; which one is not determinable from the bytes alone, and no key is available, so it stays open rather than being speculatively decoded. This is the same disposition as the pre-redesign favicon in `R-LOGO2`.
@@ -13417,6 +13419,20 @@ unknown remains the **26x6 micro-text in `black_banking - war`** - at 6px it def
 reading and Tesseract, and it sits in the one tile whose pixels match its slug least. 0 new
 candidates beyond the 228 tested. Lead 0 unchanged.
 
+AMENDED 2026-09-28 BY `R-GICBIG`: **fact 4 is DISPROVEN and the "seed/plant conflict" it certifies
+does not exist.** `red_crypto_gic` renders CRYPTO + **GIC**, not `CRYPTO` + `BIG`; the pixels agree with
+the filename slug, so this tile is not a seed/plant divergence at all. Evidence: the tile's bottom row
+is three components (x28-36, x40, x45-52), the first matching the G in `blue_dig_i` at IoU 0.877 and
+the third scoring 0.370 against that same G while being an open bowl with no crossbar, so the word is
+G-I-C. Reproduce with `python3 tools/tile_glyphs.py --resolve`. Two further consequences: the
+conclusion "the merge rule is therefore not join the fragments" is WITHDRAWN as unsupported, and
+R-MICRO's `RAPH`/`RAPHIC` dispreference, which rested on this fact, lapses. Facts 1, 2 and 3 are
+UNAFFECTED and still stand - page order, the closed/open padlock pair as a semantic bit, and the
+cross-tile cut points (`dig`+`i`+`t` = DIGIT, now independently re-derived by segmentation). The
+highest-value unknown named above is also unaffected: the 26x6 band in `black_banking - war` is still
+illegible at 6px, and the corpus still holds no extractable B. The 228-candidate negative on the
+slug-concatenation space is untouched and needs no rerun.
+
 ## 2026-09-27 - R-MICRO: the 21x6 micro-text is NOT decodable by glyph matching on this device; band is certified to be `word T`; 3 methods fail; 0 oracle calls
 
 R-ORDER left the 21x6 band in `black_banking - war` as the highest-value unknown. This row closes
@@ -13470,6 +13486,19 @@ instead, neither of which I am asserting: either the band is a deliberate red he
 something **non-textual** (a mini bitmap, or a seed for the very seed/plant divergence R-ORDER
 certified). The tile's own pixels disagree with its filename, which is the page's whole theme, and
 `banking - war` is the tile where they diverge most.
+
+AMENDED 2026-09-28 BY `R-GICBIG`: the ground on which this row dispreferred the `RAPH`/`RAPHIC`
+fragment-join is VOID, and the dispreference therefore lapses. The stated reason was that the idea
+"was a guess built on `crypto_gic`, which R-ORDER showed is a *false* premise - the pixels say
+`BIG`". R-ORDER's `BIG` reading is refuted: `red_crypto_gic` renders CRYPTO + **GIC**, with slug and
+pixels agreeing (bottom-row first glyph IoU 0.877 against the G in `blue_dig_i`; third glyph 0.370
+and an open bowl). The premise was not false. This does NOT promote `RAPH`/`RAPHIC` to a lead - it
+returns that reading to the undecided state it held before R-ORDER, which is where it belongs. The
+21x6 band is still not named and the "non-textual" alternative above loses its one concrete
+motivation, the seed/plant divergence, so it is now a bare guess rather than a supported reading.
+Everything else in this row stands: the band remains not decodable by glyph matching on this device,
+both `T` corroborations stand, and the corpus still holds no extractable B (the letters in
+`banking - war` are one 852px connected mass), so `BIG` is refuted by elimination only.
 
 0 candidates tested this row. 0 oracle calls. Lead 0 unchanged. This thread is now exhausted on this
 device - the only remaining unblock would be a higher-resolution rendering of these 8 tiles, which
@@ -16418,3 +16447,185 @@ called. The surviving mechanical frontier is still `R-P32BLOB`, and Lead 0's key
 application is still the only live semantic crux. Neither is moved by this row.
 
 Date: 2026-09-27, local.
+
+## R-CORPUSPROV-2026-09-28: the corpus's "pages" are eighteen identical SPA shells wearing page filenames, and the phase-1/3/3.2 page text was never author-captured by anyone. Plus FIVE classes closed by first-ever inspection. 0 oracle calls.
+
+AMENDS `R-COVERAGE-2026-09-26` NEGATIVE 2 at line 12292, which asserted that `phase1.html`, `phase2.html`, `phase3.html`, `phase3_2_2.html`, `phase3_2_2_2.html`, `merovingian.html` and twelve `h_*` files hold "the real 10 KB page". That is false, and the error is load-bearing enough to correct in place as well as here.
+
+THE MECHANISM, WHICH IS THE GENERAL LESSON. gsmg captures arrive COMPRESSED. The briefcase `.html` and `.unz` files under `live/` are gzip payloads, except `merovingian.html`, which is brotli. Every one inflates to 36,627 B. Grouping the twenty-two named files by inflated content gives eighteen distinct sha256 values over one identical 36,627 B body, differing only in the per-request CSRF token. Reading them raw is what produced eighteen apparent pages. Inflated and classified:
+
+```
+INFLATED  SHA256[:16]   VISIBLE            FILE
+36627     c81ed43f7169e941  'GSMG'         h_0b0f.html
+36627     2354eed7e1450442  'GSMG'         h_10d6.html
+36627     41c04eda3dc97818  'GSMG'         h_21ef.html
+36627     da752f2d224655c4  'GSMG'         h_673e.html
+36627     644f36cb366b69a7  'GSMG'         h_a2ae.html
+36627     a2b619a429802ff9  'GSMG'         h_aca2.html
+36627     93b9286cb1eaf03d  'GSMG'         h_c178.html
+36627     0d5e24bde2a21ac1  'GSMG'         h_c2ee.html
+36627     b7a7ebbb5174a989  'GSMG'         h_e24b.html
+36627     7cc924f5622dd961  'GSMG'         h_f971.html
+36627     34ab4da097eddddf  'GSMG'         h_iXJ8.html
+36627     a9307644a53e4776  'GSMG'         h_k27R.html
+36627     b5cb4659356890d1  'GSMG'         merovingian.html
+36627     a2f6b3b1542f00ac  'GSMG'         phase1.html
+36627     f974ed684c23d2ac  'GSMG'         phase2.html
+36627     3a83b5707b095da4  'GSMG'         phase3.html
+36627     c179a0d499101adf  'GSMG'         phase3_2_2.html
+36627     6d7ecf7549118fc7  'GSMG'         phase3_2_2_2.html
+```
+
+The only real page text anywhere in the briefcase, same method:
+
+```
+ 9207  06fbd4461ab20d45  'GSMG Puzzle PHASE 2 '  phase2_phase3_choice.html
+ 4536  a83d3de7810f26b1  'GSMG Puzzle SalPhase'  salphaseion.html (+1 duplicate)
+  832  7cb766d406008a39  'GSMG Puzzle'           theseedisplanted.html  (title only, 11 visible chars)
+ 1224  551e47d7187cb045  'gsmg.io Click here t'  cchash.html            (entry redirect, no puzzle)
+```
+
+CONSEQUENCE FOR THE LADDER'S PROVENANCE. Author-published puzzle text in hand is exactly TWO pages: PHASE 2 (8 witnesses, 8,544 visible chars, byte-stable) and SalPhaseIon (5 witnesses, 4,008 visible chars, identical across the 2020-11-12 Wayback capture, the 2026-05-18 alpha capture and the 2026-09-06 live capture, zero drift). The PHASE 1, PHASE 3, PHASE 3.2 and MEROVINGIAN page text is NOT author-published in any capture we hold or that Wayback holds. Evidence for those stages is community-captured only: `repo_assets/phase3.png` (127,044 B), `repo_assets/phase2.png`, `repo_assets/theseedisplanted.png` (8,619 B), and in the Naddiseo fork `phase2-assets/phase3.txt`, `phase2-assets/phase3_aes.txt`, `phase3-assets/phase3.2.txt`, `phase3-assets/phase3.2-aes.txt`, `phase3-assets/phase3.2-screenshot-utf8.png`, `phase3.ipynb`. `data/community-fork-2026-09-27/PROVENANCE.md` states that no file in that fork is author-published and none is certified as authorial. This is a REWEIGHTING, not a refutation: `phase2.1.txt` from the same fork is byte-identical to our independent `R-BLOBINV` derivation, which is what licenses treating the rest of the fork as the same artifacts rather than fabrication. Every cipher or plaintext claim touching phase 1, 3 or 3.2 should be labelled second-hand.
+
+FIVE CLASSES CLOSED BY FIRST-EVER INSPECTION THIS PASS.
+
+1. `js/app_20190428.js` (1,164,715 B), the 2019 SPA bundle, never previously parsed for its route table. Sixteen routes total: `*`, `/`, `/admin`, `/dashboard`, `/login`, `/marketallocations`, `/markets`, `/openorders`, `/password/reset`, `/password/reset/:token`, `/puzzle`, `/referral`, `/register`, `/register/verify/:token?`, `/settings`, `/subscriptions`. Exactly ONE is a puzzle route: `/puzzle` -> component `v0o2` -> "GSMG MEGANIGMA || 5 BTC". Zero occurrences of `salphaseion`, `phase1`, `phase2`, `phase3`, `whiterabbit`, `architect` or `merovingian`; zero embedded base64 blobs of 120 chars or more; zero hex blobs of 80 chars or more. So the 2019 site exposed a single puzzle route and every phase route postdates 2019. This also retires the standing question of whether the phase slugs were client-side-only in 2019: they were not routes at all.
+2. STEGO CLOSED. All 85 PNGs in `~/gsmg/gsmg-web-archive/` chunk-walked: ZERO bytes trailing after `IEND`, ZERO unknown chunks. Sixty-five files carry metadata, all benign: `zTXt date:modify=2020-07-11T07:04:24+00:00` (Nginx) and Adobe XMP `iTXt` packets on the two favicons. The `/puzzle` entry image has exactly six chunks (IHDR, sRGB, gAMA, pHYs, IDAT, IEND), no metadata, no trailing bytes, and all four witnesses are byte-identical at `38125bbdf1ea58b9b30b075bc6bf71e4089d04bba37098317e47097e2f2a1830`. No appended archive, no EXIF, and a chunk census this clean leaves no LSB carrier worth a further pass.
+3. `slugs2/faq.txt` (14,812 B) and `beta/faq_2023.pdf` (4,570 B) are the same commercial document, "GSMG FAQ v1.6 (25-04-2018)", being trading-bot product copy. Non-puzzle. The `pdf/` trio (Cookies Policy, General Terms, Privacy Policy, 2021-05-31 and 2021-06-25) is legal boilerplate.
+4. `data/dcl_worldmap/` (27 MB, three snapshots, 90,601 / 90,601 / 92,598 parcels, 169,971 named entries) is a DEAD END and is now closed as one. Zero parcels are owned by the vanity wallet `3GSMG24TujqfMJG1kQoBX18DzJHQLeJYMK` or by any of the nine planted addresses in `data/planted-addresses.csv`. Distinct owner count runs 2,793 / 3,509 / 8,795, all commercial. The 1,131 / 1,368 / 1,957 keyword-name hits are advertising copy ("Secret Key", "DJ Rabbit's Gallery", "Best Price in Center", "Decentraland Conference Center"). The creator never owned Decentraland land, so no parcel name is authorial and the named-keyed sweep over DCL has no surface left.
+5. THE 103x103 IS NOT RECOVERED DATA, and must never be described as a missing artifact. It is a structural hypothesis about the ciphertext blobs: 1,327 B is 103x103 plus 7 pad bits. It is already falsified as an application, spatially uncorrelated at adjacent 0.495 and lag-103 0.495, per this ledger at lines 656-657. Recorded here because "we still lack the 103x103" is a natural but wrong way to state the gap.
+
+ARCHIVE INTEGRITY, INDEPENDENTLY REVERIFIED. `sha256sum -c SHA256SUMS.txt` in `~/gsmg/gsmg-web-archive/` returns 397/397 OK with zero failures. `verify_png.py .` returns 82/82 PNGs chunk-CRC clean, zero bad. The CDX index `wayback/cdx_all_gsmg_puzzle.json` holds 600 rows over 245 unique paths, every one HTTP 200, across two hosts (`gsmg.io` 530, `www.gsmg.io` 70), with no `/phase4`, no `/phase5` and no `.enc`, `.bin` or `.b64` asset anywhere, consistent with the existing `R-P5FILE` supply-problem closure. A full content census of all 394 payloads yields 124 SPA shells, roughly 120 Help-Center articles, 24 `Hello :-)` 404 stubs, 5 gate / parking / Cloudflare-522 pages, 2 quarantined Wayback-404 impostors, 4 API / CSS / version files, and the two real puzzle pages. This reproduces the earlier `R-ARCHIVE-SWEEP` conclusion from two independent directions.
+
+STILL MISSING, RANKED, AFTER THIS PASS.
+
+1. Author-published PHASE 1 / 3 / 3.2 / MEROVINGIAN page text. Never captured by us or by Wayback. Highest value of anything outstanding, because it would move the middle of the ladder from community-second-hand to author-published.
+2. `puzzlepiece.mp3`, the creator's Decentraland audio file and the stated source of `HASHTHETEXT` per line 3717 of this ledger. Not present in any community repo (zero audio or video files tree-listed) and not on device. The only NAMED, SPECIFIC missing artifact in the whole corpus. Its spectrogram route is already closed as a literal, but the file's absence is a supply gap rather than a closure.
+3. `theseedisplanted` page content. 832 B and 11 visible chars in every capture, never server-rendered by the origin. A community screenshot exists at `repo_assets/theseedisplanted.png` (8,619 B) and is worth reading; it is not an author capture.
+4. The keyed 28-character alphabet for Lead 0, being 26 letters plus `.` and `/`. Unchanged and still the live semantic crux.
+5. Telegram edit-messages 39233 and 39237 in their pre-edit form, recoverable only from a user group snapshot.
+
+STANDING HAZARD, RESTATED BECAUSE IT IS THE SECOND ONE OF ITS KIND. This ledger at line 12096 established that the `hints/` tree is a single solver's screen session: 55 `Software=gnome-screenshot` PNGs inside six consecutive days, 18 to 23 Aug 2023, on one machine, with filenames like `part1-google-search-1/2/3.png`, `mr-robot-search-1.png`, `H-nothing-useful.png` and `beaufort-success.png`. It is not the author's hint archive. With the NEGATIVE 2 error corrected above, the corpus now contains two plausible-looking directories that are not what their names suggest, and the NEGATIVE 2 one is the more dangerous because it asserts content that is not present. General rule for future sweeps of this corpus: decompress first, then classify by CONTENT, never by filename or by on-disk size.
+
+REPRODUCTION.
+
+```sh
+cd ~/storage/external/briefcase/gsmg-puzzle/live
+python3 -c "
+import gzip,brotli,re,hashlib,os
+def dec(p):
+    b=open(p,'rb').read()
+    if b[:2]==b'\x1f\x8b':
+        try: b=gzip.decompress(b)
+        except: pass
+    else:
+        try: b=brotli.decompress(b)
+        except: pass
+    return b
+def vis(b):
+    t=b.decode('utf-8','replace')
+    t=re.sub(r'(?is)<(script|style)[^>]*>.*?</\1>',' ',t)
+    return re.sub(r'\s+',' ',re.sub(r'(?s)<[^>]*>',' ',t)).strip()
+for p in sorted(os.listdir('.')):
+    if p.endswith(('.html','.unz')):
+        b=dec(p); print(len(b), hashlib.sha256(b).hexdigest()[:16], repr(vis(b))[:24], p)
+"
+```
+
+The full write-up, with the disproof table and this row's supporting detail, is staged outside the repo at `~/storage/external/briefcase/CORPUS_PROVENANCE_CORRECTION_2026-09-28.md`. No gate moved. `R-P32BLOB` remains the surviving mechanical frontier and Lead 0's keyed 28-char alphabet application remains the only live semantic crux; neither is moved by this row.
+
+AMENDED 2026-09-28 BY `R-BOARD28B`: the second half of that sentence is WITHDRAWN as a false
+premise. There is no missing 28-character alphabet. `28 = 8 + 10 + 10` is arithmetic over the author's
+own dbbib/faed letter classes, the letters are author-derived, and the open quantity is the
+APPLICATION on dbbib_91 / faed_570 (map, escapes, transposition), not the alphabet. The
+`R-BOARD28B-ADDENDUM` further records that the mechanical surface is exhausted, so the surviving
+frontier is no longer an alphabet search in any form. `R-P32BLOB` is untouched by this amendment.
+
+Date: 2026-09-28, local.
+
+## 2026-09-28 - R-GICBIG: R-ORDER's slug-vs-pixel conflict is VOID - `red_crypto_gic` renders CRYPTO + GIC, not BIG; the seed/plant reframe is withdrawn; 0 new candidates
+
+Corrects R-ORDER point 4, the only place in the corpus where a tile's own pixels were held to
+contradict its own authorial filename. That claim does not survive pixel-level segmentation. R-ORDER
+facts 1-3 are untouched and still stand.
+
+**0. Method, and three mistakes I hit first.** `tools/tile_glyphs.py` is new and carries a
+`--selftest`. Pure pixel work: decode the PNG by hand (zlib plus the five PNG filters, no third-party
+image library), Rec.601 luma, threshold at lum >= 200, take 8-connected components, and discard every
+component touching the tile border. No OCR engine and no template font is involved, so there is no
+font metric left to argue about.
+
+The three mistakes are recorded because each produced a plausible-looking WRONG answer rather than an
+error, which is the failure mode worth writing down:
+- *Polarity.* These tiles are white glyphs on a COLOURED ground. Thresholding dark-as-ink returns the
+  coloured frame plus a few 6x7 solid blobs, which reads as a failed segmenter. The glyphs are the
+  bright interior.
+- *Stride.* The tiles are heterogeneous: `blue_ca` and `red_n_you` are colour type 2 (RGB), the other
+  six are colour type 6 (RGBA), and widths run 77-82px. Decoding them all as width*3 raises nothing
+  and shifts every row after the first. It merged the R and the Y of CRYPTO into one 16x15 blob, which
+  looks exactly like a legitimate joined letter pair and so concealed the bug. `--selftest` now
+  asserts decompressed length == height*(stride+1) for all 8 tiles so a mis-stride fails loudly.
+- *Indexing.* I first picked the reference glyph with a y-range shape heuristic, which labelled
+  `dig_i`'s second-line T as the G and produced a nonsense 0.370. The reference is now pinned by
+  coordinate (x36-45, y27-41) and cannot drift.
+
+**1. The controls validate the segmenter.** `blue_ca` -> 2, `red_n_you` -> 4, `red_t` -> 1 letter plus
+a 5x2 mark at y46-47 that is not a letter, `black_banking - war` -> one 852px mass plus the 21x6 band.
+All 8 component counts are asserted in the selftest. Where a count falls below the slug's letter count
+(`blue_lock_lo` 4 for 6 letters, `red_open_lock_n_ing` 6 for 12) the letters physically touch and no
+segmentation can separate them; those are not regressions, and they are why the earlier rows recorded
+these tiles as unreadable rather than as a segmentation failure.
+
+**2. The G reference is author-warranted, and R-ORDER's own row supplies it.** `blue_dig_i` yields
+exactly 5 components: D (x17-26, ascender plus bowl), I (x31-32, 2x11 stem), **G (x36-45 y27-41,
+79px, two bowls plus descender)**, I (x53-54, 2x11 stem), and T (x29-38 y48-58, 10x11 cross) on a
+second line. That is DIGI / T, which independently corroborates R-ORDER fact 3 (`dig`+`i`+`t` =
+DIGIT across tiles) and R-ORDER's own "DIGI on one line and T on the next". The reference glyph's
+identity therefore rests on a fact an earlier row already certified, not on an inference of mine.
+
+**3. `red_crypto_gic` is CRYPTO / GIC.** Six top-row components, one per letter, with no joins: c
+(x13-20), r (x24-29), y (x31-39), p (x43-51), t (x54-60), o (x63-72). Three bottom-row components:
+x28-36 (9x15, 81px), x40 (1x11 bare stem), x45-52 (8x11, 37px). Shift-tolerant IoU (+/-2px) against
+the pinned G: **first 0.877**, **third 0.370**, self-identity 1.000. The first glyph is therefore the
+G; the third is demonstrably not a G and is an open bowl with no crossbar and no right-side closure;
+the middle is a bare stem. G-I-C.
+
+**NET EFFECT, and it runs conservatively in both directions.**
+- The seed/plant divergence R-ORDER built a reframe on does not exist in this tile: the pixels and the
+  slug AGREE. R-ORDER's conclusion that "the merge rule is therefore not join the fragments" is
+  WITHDRAWN as unsupported.
+- R-MICRO dispreferred the `RAPH`/`RAPHIC` fragment-join on the stated ground that it "was a guess
+  built on `crypto_gic`, which R-ORDER showed is a *false* premise - the pixels say `BIG`". That
+  ground is void, so the dispreference lapses. The reading does not become a lead; it returns to
+  exactly the undecided state it held before R-ORDER, which is where it belongs.
+- R-MICRO's own open item, the 21x6 band in `black_banking - war`, is NOT cleared and remains
+  illegible at 6px. The corpus holds no extractable B: that tile's letters are one connected 852px
+  mass, so the B in "banking" cannot be templated. This row therefore refutes `BIG` by ELIMINATION -
+  `B-I-G` requires a G in position 3 and there is provably none - not by positively identifying a B.
+  The elimination is sound, but the missing B template is a real limit of this row and I am not
+  going to describe it as a confirmed B.
+
+**METHOD / CERTIFICATION.** 0 new candidates: this is a correction, not a sweep, and it generates none
+beyond R-ORDER's 228. `tools/oracle.py` (small, `1GSMG1JC9`) and `tools/oracle_dualite.py` (cosmic,
+`17ucy1K9`) `--selftest` **both PASS immediately prior**, verified this row. Regenerable and
+self-checking: `python3 tools/tile_glyphs.py --selftest`, `--list`, `--resolve`.
+
+**4. A by-product datum about R-MICRO's open band, since the segmenter now exists.** The
+21x6/26x6 micro-text band in `black_banking - war` (78x70) is NOT a contrast problem and NOT a
+threshold problem, which is worth recording because it is the opposite of what the earlier attempts
+imply. At thresh 200 the tile yields exactly 2 components: the 43x44 letter mass (852px) and a
+separate 5x6 mark (16px) at x33-37, y54-59 - and the band is not among them. The band is bright: in
+y40-70 the maximum luma is 255 with 479 px at >=240, so it is plainly not a dim 6px smear. Lowering the
+threshold does not free it either: at thresh 100/120/140/160/180 the main mass grows to 874/872/867/863/860
+px and the band still never separates, so it is 8-CONNECTED to the main letter mass. Anyone attacking
+that band needs a CUT, not a threshold, and a threshold sweep is provably the wrong tool. This does
+not decode the band and does not touch R-MICRO's negative, which was about template matching, not
+isolatability; it only removes one wrong first move.
+
+**CONCLUSION.** R-ORDER fact 4 is superseded. The tile reads `CRYPTO` + `GIC`; slug and pixels agree;
+the seed/plant reframe and the "not join the fragments" conclusion fall with it. The highest-value
+unknown is unchanged: the 21x6 band in `black_banking - war`, still illegible at 6px. 0 new candidates.
+Lead 0 unchanged. `X` remains unsolved. This row is a pixel reading of authorial artifacts, which is
+one of the two classes the R-BOARD28B addendum still sanctions; it is not a new cipher sweep.
+
+Date: 2026-09-28, local.

@@ -123,6 +123,19 @@ answer phrase also obeys a case/spacing requirement (insider-corroborated) that 
 sound decode can supply. Remaining forms are strictly **visual/layered reads** of the
 SalPhaseIon page.
 
+> **SUPERSEDED 2026-09-28, by `R-BOARD28B` and `R-BOARD28B-ADDENDUM` (both 2026-09-26), which are
+> later than the paragraph above and win.** There is **no missing 28-char interpreter alphabet to
+> find**. 28 is cipher arithmetic, not a clue (10 digits - 2 escapes = 8 plain cells, + 10 + 10
+> escape-row cells = 28, `tools/certified_vic.py:58-71`), and the letters were never missing: they
+> are the author's, from the Phase-3.2 sentence "A fubcd-king & oracle-queen, thingky mvps, on a sad
+> board but as wide as the first one seen." `R-BOARD28`'s "the missing alphabet must be a
+> permutation of the board" is WITHDRAWN as unfounded. Lead 0's open quantity is the
+> **application** (digit map / escapes / transposition) on `dbbib_91 + faed_570`.
+> `R-BOARD28B-ADDENDUM` goes further: the mechanical surface is EXHAUSTED and the crux is
+> **unspecifiable, not merely unsolved**, so do not run another cipher sweep on
+> `dbbib_91` / `faed_570`; meet any such proposal with `tested.md:8842`. The paragraph above is
+> retained for history only.
+
 ## What unblocks (pick any)
 
 1. **Alphabet hypothesis** (any word/phrase) -> `tools/lead0_try.sh "<keyword>"`
@@ -141,6 +154,12 @@ closed rows.
 The crux is unchanged: **Lead 0's keyed 28-char alphabet is still the only live gate**, and
 no battery below was widened. Four sessions' work closed negatives and removed process
 risk. Three items change how you should work.
+
+> **SUPERSEDED 2026-09-28: see the note under "The crux (Lead 0)" above.** `R-BOARD28B` and
+> `R-BOARD28B-ADDENDUM` (2026-09-26) retire the "28-char alphabet is the only live gate" framing:
+> no such alphabet is missing to be found. The live gate is the **application** on
+> `dbbib_91 + faed_570`, and the mechanical surface is declared exhausted. Retained for history
+> only.
 
 ## 1. Run `tools/coverage_check.py` before writing ANY row
 
@@ -252,6 +271,11 @@ side-to-move (`w`/`6R1` published vs `b`/`2R5` in the password, after `Rg6-c6+`)
 community's even/odd Bifid split (superseded note 18) was never it. Do not generalise enf/not-enf into an
 inversion rule. Taijitu geometry is chance-level negative on all four decrypted plaintexts. Lead 0's missing
 28-char alphabet is unchanged and remains the real open item.
+
+> **SUPERSEDED 2026-09-28: see the note under "The crux (Lead 0)" above.** The sentence above is
+> wrong on the "missing 28-char alphabet" point, per `R-BOARD28B` / `R-BOARD28B-ADDENDUM`
+> (2026-09-26). The letters are the author's and were never missing; the open quantity is the
+> application. Retained for history only.
 
 ## Lead 0 reframed: the 28-char alphabet is CLOSED twice over (R-BOARD28B, 2026-09-26)
 
