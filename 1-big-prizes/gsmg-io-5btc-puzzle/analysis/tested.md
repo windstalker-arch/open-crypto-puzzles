@@ -16999,3 +16999,70 @@ does not re-stage, re-litigate, or apply a claim that has been measured false.
 - **CHRONOLOGY DOES NOT EXCUSE THIS FAMILY, so the negative had to be earned.** `puzzlepiece.mp3` is 5.20 s of 44.1 kHz stereo tagged `Logic Pro X 10.4.1`, a 2019 version, so the audio predates the 2020-04-07 funding and "HASHTHETEXT" is chronologically admissible as a preimage. What makes the family inert is instead late-92's standing result - the mp3 carries NO painted glyphs at any spectrogram resolution, so the digit stream is a community transcription and not a measurement - together with late-209's audio-carrier battery, negative on both gates. Neither is re-run here; both are cited as the reason this family was never going to be the third door's key.
 - **WHAT REMAINS for the third door is unchanged and is not mechanical**: a rule the creator gave between the January 2020 poem and the April 2020 audio hint ("Yellow has a number and so does Blue", "primes", "zeroed out") read on a non-textual object, or - with noise acceptable - a GPU brainwallet pass, which this device cannot do. Lead 0 and the interpreter-alphabet crux are untouched, and this row does not touch either funded gate.
 - **DISPOSITION: 0 candidates, 0 funded-gate oracle calls, 720 third-door address derivations, 0 MATCH, 0.9 s.** `X` remains unsolved, both funded gates remain open, and the third door still has no known preimage. New artifact: `tools/third_door.py` (`--selftest` 5/5 witnesses, `--audio` 720 derivations), reusable by any later third-door family instead of re-deriving the six constructions by hand. Escrow checked live at run time: small 125,635,374 sat, dualite 375,055,856 sat, both funded and unspent. Date 2026-09-28 local.
+
+## R-TILESTRUCT-2026-09-28: the theseedisplanted strip measured from pixels - 8 cells, ONE 32px break = two groups of four, colours 1 black + 3 blue | 4 red; the caption text is NOT certifiable at 6px and the sticker lead stays KILLED per R-4E-PROV
+
+- **WHY THIS ROW EXISTS.** A prior session's summary described this tile as "a 44px icon plus a 6px band". That description does not match any file on disk and is retracted here; the measurements below replace it. No lead is opened or re-opened - the thread was closed on 2026-09-03 and killed on 2026-09-26, and this row only fixes the geometry so the next session stops re-deriving it.
+- **MEASUREMENT (exact, from `~/storage/external/briefcase/visual-pack/theseedisplanted-tile.png`).** 688x135, 263 distinct colours, palette exactly white `(255,255,255)` / red `(237,28,36)` / blue `(63,72,204)` / black `(0,0,0)` plus anti-aliasing. Column ink profile (a column is a gap if <=2 non-white pixels) yields exactly 8 cells, never 9 and never a single block:
+
+  | cell | x-range | w | y-range | h | colour |
+  |---|---|---|---|---|---|
+  | 0 | 7..76   | 70 | 11..114 | 104 | black |
+  | 1 | 89..158 | 70 | 11..114 | 104 | blue  |
+  | 2 | 171..240| 70 | 13..114 | 102 | blue  |
+  | 3 | 252..317| 66 | 13..114 | 102 | blue  |
+  | 4 | 350..416| 67 | 36..114 |  79 | red   |
+  | 5 | 434..500| 67 | 36..114 |  79 | red   |
+  | 6 | 521..586| 66 | 36..114 |  79 | red   |
+  | 7 | 603..669| 67 | 36..114 |  79 | red   |
+
+  Inter-cell gaps: **12, 12, 11, 32, 17, 20, 16**. The single 32px gap (x=318..349) is the ONLY structural break in the strip, and it falls after cell 3, so the strip is **two groups of four**: {black, blue, blue, blue} then {red, red, red, red}. That independently reproduces the 4-sticker x 2-row model the visual-pack README assumes (top row = banking war / ca / dig i / lock lo; bottom row = crypto gic / n you / open lock n ing / t) from the pixels, and it is the first time the separator is measured rather than assumed - `grep -c "groups of four\|32px" analysis/tested.md` was 0 before this row. The 1-black + 3-blue + 4-red split likewise matches the 8 strip filenames in `evidence/gsmg-strips-2026-09-27/` exactly. Caveat kept: cells 0-3 are 102-104px tall and cells 4-7 only 79px, so this file is a laid-out strip, not a uniform grid, and "two rows" is a layout inference rather than a reading of one row.
+- **THE TEXT IS NOT CERTIFIABLE, and the ambiguity is structural, not a resolution problem.** Each cell carries one large pictogram in its upper two-thirds and a caption in a 6px-tall band (cell 0's caption marks occupy rows 99..104 of the strip). At 6px cap height, per-glyph column segmentation of the 3x-autocontrast stickers returns 17-22 column groups for a cell the ledger reads as 2-3 characters - the segmentation and the human reading disagree by an order of magnitude, which is the l-vs-1 / I-vs-l / o-vs-0 trap the pack itself flags. Independent confirmation from the same pack: `visual-pack/OCR-RECONCILIATION.md` reports the OCR read as `CA dlgl crypto n you`, which does not match that pack's own filename read of `ca dig i` - an internal contradiction never reconciled, and its own verdict is "font too stylized for glyph-level certification". The 2026-09-27 strip pass already encodes the surviving ambiguities inline: `blue_ca  C|G . A`, `blue_lock_lo  b|l . o|0`, `red_open_lock_n_ing  padlock glyph + O . P . E . N`.
+- **WHAT STANDS, UNCHANGED.** The 2026-09-03 correction holds: the black cell is **WARNING** (w-a-r-n-i-n-g), not "banking war", and "banking war" stays withdrawn. The 2026-09-26 kill holds: R-4E-PROV showed the user-supplied reading `warningunlockwalletlockIOgicCAnyou+dig-it` is a SOLVER-GROUP annotation, not creator text, and R-XREF-READ characterised the whole 27-image hint library the same session. The 51-form phrase sweep and the 11,328-keyword keyed-alphabet sweep over "WARNING CAN YOU DIG IT CRYPTOLOGIC TO OPEN LOCKING" remain 0/0. **0 candidates, 0 oracle calls, 0 gate interactions, 0 spend.**
+- **DISPOSITION.** No lead is promoted and none is withdrawn. The tile is a closed surface whose only remaining content would be a human-eye glyph read, and the pixels available cannot certify one. Lead 0 and the interpreter-alphabet crux are untouched; both funded gates open. This row exists so the geometry is not measured a third time and so the "44px icon + 6px band" description does not survive into another summary. Date 2026-09-28 local.
+
+## 2026-09-28 - R-ARCHIVE-SWEEP addendum: the Help Center sub-corpus censused directly - 0 NEW, and the "non-data" classification is now CONFIRMED rather than assumed
+
+`R-ARCHIVE-SWEEP` above classified the ~120 Help-Center articles as non-data from a
+whole-archive census. That classification was never re-run in isolation, so it stood as an
+inference from the surrounding count. This pass censuses that sub-corpus on its own and
+converts the inference into a measurement. No thread is opened or closed; the point is that
+the last "but what if the Help Center hides something" surface is now checked rather than
+assumed.
+
+**Method.** `~/gsmg/gsmg-web-archive/gsmg.io.old-site-2026-09-27/help/` is 4 top-level
+entries plus `en/`, which holds 5 entries: `articles` (31 files), `articles_new` (29),
+`collections` (3), `collections_new` (14), and `index.html` - **78 files, 105,288 visible
+characters** after `script`/`style` stripping and tag removal. Each file was swept for 25
+puzzle-vocabulary terms: `salphaseion`, `white rabbit`, `whiterabbit`, `merovingian`,
+`phase1/2/3`, `phase 1`, `door`, `lock`, `cryptologic`, `puzzle`, `dualite`, `blob`, `cchash`,
+`matrix`, `seed`, `aes`, `hint`, `sticker`, `banking war`, `eps3.4`, and the two route hashes
+`4f7a1e4e` / `89727c59`.
+
+**Result: 78 files, 105,288 chars, 0 puzzle-bearing hits.** Not one of the 60 article
+bodies mentions any of those terms in a puzzle sense. The corpus is entirely trading-bot
+product documentation - Bittrex/Binance account connection, the dashboard, market settings,
+fee tiers, the Fuel System subscription model, the affiliate/referral program, topping up,
+and trailing-stop orders.
+
+**The six `lock`/`hint` hits are all trading vocabulary, and each was read in context so the
+term cannot be mistaken for a later one.** `lock` x4: "lock in" profit in the trailing-stop
+article, "keep locking in more as the market keeps moving in your favour" x2, and a
+top-up article's unrelated prose. `hint` x2: the Fuel System article's "Hint: When you are on
+a flat-fee subscription and you'd like to take a break trading". No `lockning`, no
+`unlock`, no `dig`, no `warning` anywhere in the sub-corpus.
+
+**This closes the old-site surface from a third independent direction.** Direction one was
+the original whole-archive census, direction two the 2026-09-27 integrity re-verification
+(`397/397` SHA256 OK, `82/82` PNGs chunk-CRC clean, 124 SPA shells / ~120 Help-Center
+articles / 24 `Hello :-)` stubs / 2 real puzzle pages), and direction three is this
+sub-corpus pass. All three agree: the archive holds exactly two real server-rendered puzzle
+pages, both already mined, the Phase 2 Architect page (visible-text SHA `5fae3f8031a80adf`)
+and SalPhaseIon (visible-text SHA `ec0fab2c9eb2d8fc`, now with three independent witnesses).
+
+**The CDX route list also independently confirms there is no `phase4`, no `phase5`, and no
+`.enc`, `.bin` or `.b64` asset on any of the 620 harvested urlkeys**, consistent with the
+existing `R-P5FILE` supply-problem closure. So the third door's key material was never
+published anywhere on the site - the site is not a missed-crawl hiding place, and the open
+question stays a derivation question, not a retrieval question. **0 candidates, 0 oracle
+calls, 0 gate interactions, 0 spend.** Date 2026-09-28 local.
