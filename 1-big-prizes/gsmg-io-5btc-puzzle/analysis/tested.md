@@ -17290,3 +17290,101 @@ exactly that. The remaining question is narrowed: what code maps 9 symbols to te
 be plain per-letter substitution to BF commands (R-BFLEAP-2026-09-25, 362,880 mappings
 exhausted, 0 survivors) and it is not base-9 with a small group. Positional/width-changing
 schemes (2 symbols per char, or 9-as-trit-style packing) remain untested.
+
+## R-COMMCRAWL-2026-09-28: the archive sweep's one blocked retrieval source is now REACHABLE and was queried for the first time - 179 Common Crawl records over 19 puzzle-era indexes, 0 puzzle routes; plus a third-party mirror repo whose 6 assets are byte-identical to certified copies
+
+MOTIVATION: `R-ARCHIVE-SWEEP` (2026-09-27) closed the old-site corpus as a certified negative, but
+it recorded THREE retrieval sources as **network-unreachable from this environment at that time** -
+`index.commoncrawl.org`, `archive.ph`, `timetravel.mementoweb.org` - so "the archive is exhausted"
+was a statement about what was in hand, not about what could be fetched. The user asked for the
+deep old-site data specifically. Re-testing reachability first is the whole point: an unreachable
+source is not a closed source.
+
+**REACHABILITY RE-TESTED BEFORE ANY CLAIM.** `index.commoncrawl.org/collinfo.json` -> **200**
+(128 collections listed). `archive.ph` -> **302** (redirect, so alive). `timetravel.mementoweb.org`
+-> **000**, still unreachable. So one of the three blocked sources opened and it is the one that
+matters, because Common Crawl is the only one of the three that indexed gsmg.io during the
+puzzle era at all.
+
+**WHAT WAS QUERIED.** 19 indexes spanning the whole puzzle era and the post-era: every
+`CC-MAIN-2019-*` (13,18,22,26,30,35,39,43,47,51), every `CC-MAIN-2020-*` reachable
+(05,10,16,24,29,34,40,45,50), and 2025-30 / 2026-30 / 2026-39. `url=gsmg.io&matchType=domain`:
+**179 records total**, spanning 2019-03-23 to 2026-07-19.
+
+**FINDING 1 - THE PUZZLE SURFACE IS ABSENT FROM EVERY SINGLE COMMON CRAWL RECORD, AND THIS IS
+THE FIRST INDEPENDENT CONFIRMATION FROM A SECOND CRAWLER.** Of the 179 records, 179 are
+`beta.gsmg.io` marketing, `help.gsmg.io` support prose, `stats.gsmg.io` / `slack-invite.gsmg.io`
+301s, `/register` invite pages, or `robots.txt`. **Zero** records for any puzzle route: not
+`/puzzle`, not `/theseedisplanted`, not `/slugs/*`, not `/slugs2/*`, not `/alpha/*`, not
+`89727c59...`, not `4f7a1e4e...`, not `673e3b1a...`, not `f9719d6d...`, not `gate/*`. This
+independently reproduces `R-ERA-2026-09-26`'s finding (the apex was a Vue SPA from day one) from a
+crawler that never saw the Wayback archive, which is the form of confirmation that does not depend
+on the other source's own gaps.
+
+**FINDING 2 - THE FIVE APEX CAPTURES WERE FETCHED FROM WARC AND ARE SHELLS, NOT A HIDDEN PAGE.**
+This is the part worth doing rather than trusting the index. Five apex records that are NOT in the
+local archive were pulled by byte-range from `data.commoncrawl.org` and decompressed:
+`www.gsmg.io` 2019-08-26 (5,343 B), `www.gsmg.io` 2020-03-28 (6,502 B), `gsmg.io` 2020-07-02
+(6,479 B), `www.gsmg.io` 2020-07-11 (6,490 B), `gsmg.io` 2020-08-08 (6,481 B). Every one extracts to
+visible text of **4 characters: `GSMG`**, with the `csrf-token` meta that the shell test keys on.
+The bodies grow from 5.3 KB to 6.5 KB over 2019-2020, which is the app bundle growing inside the
+shell - not text being added. So the era is genuinely shell-only, now shown twice over.
+
+**FINDING 3 - A NEW MIRROR REPO EXISTS AND IS A DEAD END, BUT IT IS A *CONTENT-CERTIFIED* DEAD
+END, WHICH IS WORTH MORE THAN THE ZERO.** The Wayback CDX for 2026-09-26 records the live pages
+linking out to `raw.githubusercontent.com/agntn/puzzles/main/assets/gsmg/`, so this is a live
+third-party mirror the ledger has never held. All six assets fetched and compared to certified
+copies: `puzzle.png` = `38125bbdf1ea...` (the anchor hash, unchanged), `follow-the-white-rabbit.png`
+= `5e8d84b88f8f...` = the in-repo `clues/follow_the_white_rabbit.png` **byte for byte**,
+`salphaseion.txt` tokenises to the identical **1,075 tokens** with `prefix identical for 1075` and
+normalised-equal, `phase2.txt` and `phase3.txt` decode to the same two ciphertexts
+(672 B salt `06286612d43ed7ed`, 4,112 B salt `9fbc451d13d071f4`, both matching the archive's
+page-embedded blobs to the byte), and `cosmic-duality.txt` = `92f9dddfdf5cb872...` = the in-repo
+`data/cosmic_duality_blob_2020.b64`. Git history on `assets/gsmg` is **3 commits** and the only
+change between them is a filename refactor (`follow_the_white_rabbit.png` ->
+`follow-the-white-rabbit.png`, `kebab-case identifiers`): **no content revision ever**. So the
+mirror is not a divergent transcription that could be searched for differences - it is the same
+bytes, confirmed, and the "maybe a mirror has a different reading" family dies here.
+
+**FINDING 4 - THE MIRROR NAMES A PLATFORM ADDRESS NOT IN THE LEDGER, AND IT CHECKS OUT.**
+`1EtbTvVB8QTGN4mduSdy7n4cZQm4iYTpQ1`, the GSMG platform's own withdrawal address, 50 txos,
+funded 6,479,857,827 sat, spent 6,479,843,911, balance **0.00013916 BTC**. Consistent with a drained
+platform wallet and with `R-LIVEFETCH`'s finding that the estate is wound down. It is not a gate
+and not in `data/planted-addresses.csv`. The mirror also records the three funding/withdrawal txids
+in full, and the two "halving" withdrawals (2.5 BTC 2020-05-11, 1.25 BTC 2024-04-24) go to
+**17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa** - i.e. the Dualite address is the creator's *withdrawal*
+sink, which is a real and previously unstated piece of context for why it reads as
+"creator controlled, not counted as prize" in `tools/check_escrows.py`.
+
+**FINDING 5 - LIVE RE-CHECK, AND THE THREE PAGES THAT MATTER STILL SERVE.** `gsmg.io/` visible text
+is byte-stable against BOTH stored captures (205 chars, `2017 - 2026 ... Follow the white rabbit`),
+and its only puzzle link is `/puzzle`. `/theseedisplanted` -> **200**, 832 B, the 8-tile row plus
+the `display: none` form posting to `/phase1verification`, with the comment "Nice to see you around!
+Good luck little bunny hunter ;)" - i.e. `R-TILESTRUCT` / `R-ASSEMBLY`'s reading is re-witnessed live.
+`89727c59...` -> **200**, 4,536 B, re-decoding to visible SHA `ec0fab2c9eb2d8fc` (a **4th**
+independent witness to the SalPhaseIon page). `gate1` / `gate3` / `/followthewhiterabbit` /
+`/whiterabbit` / `/puzzlepiece.mp3` all **404** on the live origin - so the old `gate/gate1` and
+`gate/gate3` parking captures are not hiding a live route, and the mp3 hint was never a live asset.
+
+**FINDING 6 - THE NEW STRINGS, PUT THROUGH THE CERTIFIED ORACLE. 1,690 DERIVATIONS, 0 MATCH.**
+`tools/third_door.py --selftest` = 5/5 witnesses, rc=0, run BEFORE the search. 32 strings this
+session surfaced for the first time - the author's homepage closing line in 4 renderings, its
+lower-cased and punctured forms, "Follow the white rabbit" in 4 forms, `1EtbTvVB...`, the three
+txids, the mirror's puzzle:parts digest `1a57c572...`, and the three page digests - each under
+all six constructions, both compressed and uncompressed, and five framings (raw, sha256-hex
+lower, sha256-hex upper, digit-raw, bytes-reversed) = **1,690 address derivations. 0 MATCH** on the
+third door, on the other 8 planted addresses, and on both funded gates.
+
+**WHAT THIS CHANGES.** One thing, and it is a closure rather than an opening: the old-site
+information class is no longer blocked on tooling. `R-ARCHIVE-SWEEP` certified the corpus in hand;
+this row certifies the *corpus obtainable*, via a second independent crawler, at 179 records, and
+adds the mirror as a content-witnessed null. **The remaining old-site gap is now a rate limit, not
+a source**: the two still-open slugs `673e3b1a...` and `f9719d6d...` have 0 records in Wayback AND
+0 in Common CrawL AND 404 live, and `timetravel.mementoweb.org` is the one archive left untried and
+is still unreachable from here.
+
+**DISPOSITION.** 0 gate oracle calls, 0 funded-gate interactions, 0 spend, nothing opened. Live
+escrow re-verified this session: small 125,635,374 sat (partially-spent, OK), dualite 375,055,856
+sat (funded-unspent, OK) - both gates open. WARC bytes and the mirror's 6 assets cached under
+`/data/data/com.termux/files/usr/tmp/opencode/`. New artifact: the five apex shells are now on disk
+(`ccwarc/*.html`) rather than only asserted. Date 2026-09-28 local.
