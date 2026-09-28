@@ -98,7 +98,10 @@ def main() -> int:
                            stdin=open(out), capture_output=True, text=True)
         lines = [l for l in p.stdout.splitlines() if l.strip()]
         print(f"[jyotiska_matrix_battery] {prog}: {lines[-1] if lines else 'NO MATCH'}")
-        if "MATCH" in p.stdout and "NO MATCH" not in p.stdout:
+        # A real hit prints a line STARTING with "MATCH ". Substring tests are
+        # wrong both ways: bare `"MATCH" in stdout` fires on "NO MATCH", while
+        # `and "NO MATCH" not in stdout` suppresses a genuine hit in a batch.
+        if any(l.startswith("MATCH ") for l in lines):
             print(p.stdout)
             return 0
     return 0

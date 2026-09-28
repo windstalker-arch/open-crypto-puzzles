@@ -318,9 +318,15 @@ def main() -> int:
         for prog in ("oracle.py", "oracle_dualite.py"):
             p = subprocess.run([sys.executable, os.path.join(ROOT, "tools", prog), "--stdin"],
                                stdin=open(SCRATCH), capture_output=True, text=True)
-            lines = [l for l in p.stdout.splitlines() if "MATCH" in l.upper() or l.strip().endswith("MATCH")]
-            print(f"[grid_interp] {prog}: " + (lines[-1] if lines else "NO MATCH"))
-            if "MATCH" in p.stdout.upper() and "NO MATCH" not in p.stdout:
+            lines = [l for l in p.stdout.splitlines() if l.strip()]
+            hits = [l for l in lines if l.startswith("MATCH ")]
+            print(f"[grid_interp] {prog}: " + (hits[-1] if hits else "NO MATCH"))
+            # A real hit prints a line STARTING with "MATCH " (oracle.py:366).
+            # Substring tests are wrong in both directions: bare
+            # `"MATCH" in stdout` fires on "NO MATCH", while adding
+            # `and "NO MATCH" not in stdout` SUPPRESSES a genuine hit, because
+            # a batch containing one match also contains many NO MATCH lines.
+            if hits:
                 print(p.stdout)
                 return 0
     return 0

@@ -772,7 +772,12 @@ def main() -> int:
                                stdin=open(SCRATCH), capture_output=True, text=True)
             lines = [l for l in p.stdout.splitlines() if l.strip()]
             print(f"[cipher_battery] {prog}: {lines[-1] if lines else 'NO MATCH'}")
-            if "MATCH" in p.stdout and "NO MATCH" not in p.stdout:
+            # A real hit prints a line STARTING with "MATCH " (oracle.py:366).
+            # Substring tests are wrong in both directions here: bare
+            # `"MATCH" in stdout` fires on "NO MATCH", while adding
+            # `and "NO MATCH" not in stdout` SUPPRESSES a genuine hit, because
+            # a batch containing one match also contains many NO MATCH lines.
+            if any(l.startswith("MATCH ") for l in lines):
                 print(p.stdout)
                 return 0
     return 0

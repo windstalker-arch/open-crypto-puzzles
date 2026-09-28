@@ -251,7 +251,10 @@ def main():
                                stdin=open(SCRATCH), capture_output=True, text=True)
             out = [l for l in p.stdout.splitlines() if l.strip()]
             print(f"[grid_route] {prog}: {out[-1] if out else 'NO MATCH'}")
-            if "MATCH" in p.stdout:
+            # Anchor to line-start: a bare `"MATCH" in p.stdout` is TRUE for the
+            # literal "NO MATCH", so a fully negative batch would dump every
+            # line and exit 0, falsely reporting success to any automation.
+            if any(l.startswith("MATCH ") for l in out):
                 print(p.stdout)
                 return 0
     return 0

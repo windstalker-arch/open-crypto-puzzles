@@ -17388,3 +17388,97 @@ escrow re-verified this session: small 125,635,374 sat (partially-spent, OK), du
 sat (funded-unspent, OK) - both gates open. WARC bytes and the mirror's 6 assets cached under
 `/data/data/com.termux/files/usr/tmp/opencode/`. New artifact: the five apex shells are now on disk
 (`ccwarc/*.html`) rather than only asserted. Date 2026-09-28 local.
+
+## R-CHESSCYPHER-2026-09-28: the naseer2426/Chess-Cypher primitive is ported and certified against the real App.js, and a CLOSED-FORM bound cuts the puzzle FEN's preimage space to L == 2 (mod 4), L >= 22 - plus a genuine JS integer-key-ordering quirk that silently reorders the whole board
+
+NEW CERTIFIED ARTIFACT `tools/chess_cypher.py` (selftest 14/14, including **10 ground-truth vectors
+captured from the upstream JavaScript**, so the port cannot silently drift) and
+`tools/jsfen_reference.js` (the extracted App.js functions, runnable under node). 0 oracle calls,
+0 gate interactions, 0 spend.
+
+**WHAT THE REPO IS.** github.com/naseer2426/Chess-Cypher (cloned to `~/Chess-Cypher`, MIT-ish React
+demo, `src/App.js` 232 lines, 4 commits) is NOT a puzzle artifact: nothing in it references GSMG,
+bitcoin, the 8x8 puzzle grid, or the a..i streams. Its primitive is, from `hashFunction` +
+`getFENString`: base64 the text (skipping `=`), add `(i+1)` into a per-character accumulator, then
+map each of the 64 slots to a piece letter via `sum % 10` on the outer ranks (`rRnNbBqQkK`, pawnless)
+and `sum % 12` on the inner ranks (`rRnNbBqQkKpP`), emitting a FEN placement. It is a one-way
+hash-to-board toy with a React GUI and a PNG download button.
+
+**THE PART THAT MATTERS FOR THE PUZZLE.** The puzzle already ships a real FEN -
+`B5KR/1r5B/6R1/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 w - - 0 1` at
+`data/wb_choiceisanillusion_20201112.html:55` - and **every one of its 20 piece letters is legal
+under this cipher's two alphabets**, so the shape is at least *compatible*. The cipher is therefore
+worth testing as a board-construction rule, which no prior row had done (row 139 used the FEN only
+as a source of king squares e4/g8; no chess/board cipher tool existed).
+
+**FINDING 1 - A REAL QUIRK IN THE UPSTREAM CODE, AND IT MATTERS.** `getFENString` iterates
+`Object.keys()` of an object literal keyed `A-Z a-z 0-9 + /`. **JavaScript orders integer-like keys
+FIRST**, so the actual slot order is `0-9 A-Z a-z + /`, NOT base64 order. Verified directly:
+`Object.keys(o).indexOf("0")===0`, `indexOf("A")===10`, `indexOf("Q")===26`, `indexOf("+")===62`.
+My first port used base64 order and disagreed with node on **12 of 12** test strings; after adding
+`SLOT_ORDER`, agreement is **12/12**, and the 10 vectors are now pinned in the selftest. Any
+analysis of this cipher that assumes base64 slot order is wrong - including the intermediate
+numbers from this same session, which were recomputed after the fix.
+
+**FINDING 2 - CLOSED-FORM CONSTRAINT, NOT A SEARCH.** Writing L for the number of non-padding base64
+symbols, the sum of ALL 64 slot accumulators is exactly `T = L(L+1)/2` (each position i contributes
+i+1 exactly once). The FEN fixes 20 chars to single residues, of which the outer-rank ones are mod 10
+and the inner-rank ones mod 12, giving `R = 145` and `Tmin = R + 12 = 157` (the one zero-residue
+slot, `J`->`9` slot 9, needs a non-zero multiple of 12). Two independent consequences:
+
+    * COUNTING: all 20 chars carry a visible piece, so each occupies >= 1 position => **L >= 20**,
+      which alone eliminates every shorter candidate (L=18 was the smallest the residues admitted).
+    * PARITY: `T - Tmin` is a non-negative combination of 10s and 12s, hence **even**. Since
+      `Tmin` is odd, `T` must be odd, and `L(L+1)/2` is odd only for **L == 2 (mod 4)**.
+
+Together: **L == 2 (mod 4) and L >= 22**, so the preimage, if any, is at least 22 base64 symbols
+(~16 input bytes). Feasible lengths to 3000 bytes: 995, all congruent to 2 mod 4. This is a real
+reduction, and it is a *proof* about the residue system rather than a swept guess.
+
+**WHAT WAS RUN.** (a) Vocabulary forward test: 66 in-hand puzzle strings and case variants
+(dbbib/faed/z-segments + the 16 stage words) encoded and checked against the full congruence system,
+**0 satisfy the FEN**. (b) Backtracking preimage construction over the feasible lengths, budget
+200k nodes, **0 preimages**. Note the cipher is 64-way lossy by construction, so a negative here is
+weak evidence about the puzzle - the *bound* in Finding 2 is the transferable result.
+
+**WHAT IS NOT CLAIMED.** That the FEN came from this cipher, or that the bound is the puzzle's
+intent. The bound is conditional on the cipher being the rule; if the FEN was authored by hand (as
+its chess-legality and the `"buddhist move"` reading in row 139 both suggest) the bound says nothing
+about the streams. No new lead is opened: this closes a user-steered third-party repo, adds a
+certified tool, and fixes a port bug that would have corrupted any future use of it.
+
+**PRE-EXISTING TOOLING BUG FOUND AND FIXED IN THE SAME SESSION** (affects 7 tools, not this cipher):
+the oracle-hit tests used substring matching, which is wrong in BOTH directions. `tools/*.py`
+`if "MATCH" in p.stdout` fires on the literal `NO MATCH`, so a fully negative batch dumped its whole
+output and returned 0 (exit code 0 = "found it") in `xorencryption_steer.py:235`,
+`grid_route_battery.py:254`, `grid_route_interp_sweep.py:298` - **false positives to automation**.
+The variant `and "NO MATCH" not in p.stdout` in `cipher_battery.py:775`,
+`grid_interpreter_battery.py:323`, `jyotiska_matrix_battery.py:101`, `sticker_column_combine.py:81`
+is worse: a batch containing one genuine match ALSO contains many `NO MATCH` lines, so it
+**suppresses a real solve** (demonstrated). All 7 now anchor to a line starting `"MATCH "`, which is
+exactly what `oracle.py:366` prints. The oracle had already submitted every candidate in every one
+of those runs, so **no recorded conclusion changes** - but the exit codes did lie. Regression guard
+added in `tools/nine_pair_decode.py --selftest` (9/9).
+
+**ALSO THIS SESSION.** `tools/nine_pair_decode.py` (new, selftest 9/9) closes the two grouping
+shapes that R-ABRUN-DECODE explicitly left open for the 9-letter channel ("2 symbols per char, or
+9-as-trit-style packing"). Base-9 pair read (81 values) swept over the full admissible offset
+bracket **32..46** - the +32 I first assumed was unique is NOT, 15 offsets work, and the tool now
+says so - across 4 stream orderings x both maps, plus TRIT3/TRIT4 packing: **784 reads, 163 fully
+printable candidates, 0 MATCH on either funded gate**. Both oracle selftests PASS before and after.
+Note the trit shapes are only testable via the longest-printable-window fallback, because 3 symbols
+span 0..728 and no offset makes them all printable.
+
+**OLD-SITE CLASS NOW FULLY CLOSED.** The two slugs still open in R-COMMCRAWL
+(`673e3b1a...`, `f9719d6d...`) DO have Wayback captures, 2026-01-05T00:49:05Z and 00:50:42Z, apex
+host, each **12,236 B as stored** which is the WARC record, decompressing to **36,627 B - the known
+SPA shell size**, visible text `GSMG` + `csrf-token`, sha prefixes `da752f2d224655c4` /
+`7cc924f5622dd961`. So they are certified SHELLS, upgrading "0 records" to a positive
+identification. `archive.ph`/`.is`/`.today`/`.vn` are all unreachable from this network (Cloudflare
+TLS blackhole; the 302 seen earlier is only http->https, and archive.ph returned 302 = "alive" in
+R-COMMCRAWL is therefore **retracted**). `arquivo.pt` has 0 records; `memgator.cs.odu.edu` 404s.
+timetravel.mementoweb.org still unreachable. The old-site information class is closed on content,
+not merely on tooling.
+
+Date 2026-09-28 local. Escrows last live-verified this date: small 125,635,374 sat, Dualite
+375,055,856 sat, both intact.
