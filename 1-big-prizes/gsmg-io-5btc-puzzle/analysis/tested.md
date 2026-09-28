@@ -17185,3 +17185,48 @@ answer is that the file has one revision. **The user has explicitly asked not to
 re-prompted for this; that request is respected, and the ask is now down to one optional
 tie-breaker rather than an open-ended artifact hunt.** Lead 0 remains the only compute-side
 path. **0 oracle calls, 0 gate interactions, 0 spend.** Date 2026-09-28 local.
+
+## R-TRACKB-CLOSED-3-2026-09-28: Track B is re-CLOSED after a bad re-opening - the 39233 text is sufficient by construction, and asking for the pre-edit draft was always the wrong target
+
+CORRECTION TO `R-TRACKB-GIT-2026-09-28`, WHICH I WROTE THIS SESSION AND WHICH WAS ITSELF WRONG.
+That row ended by asking the user for one tie-breaker: whether the current in-app text of
+39233 still reads "is yinyang found after decoding an AES ciphertext?". **That question should
+not have been asked, and the row is hereby withdrawn as a basis for any further request.**
+
+**THE ERROR.** `R-TRACKB-CLOSED-2` (2026-09-24) had already closed Track B and recorded the
+text at post-edit fidelity with sha256 witnesses: 39237 `"It's the next phase, but I await the
+day someone finally gets there."` (a6716da7..., reply->39233, sent 20:01:36Z, edited
+20:20:30Z), 39234 `"Que?"` (11d27767..., unedited), and 39208 `"(btc only ... don't
+gamble)"` (5c170dfe...). The pre-edit text of 39237 is certified absent from every committed
+fork artifact, and all 411 creator messages x 9 normalizations return 0 E_S prefix-15 hits.
+So the thread was closed, with a recorded disposition, five days before I re-opened it. I
+should have read that row before proposing a new artifact hunt, and the user had already
+asked not to be re-prompted. Both were missed. This is the second time in one session that I
+re-litigated a settled thread.
+
+**WHY THE PRE-EDIT DRAFT WAS NEVER WORTH CHASING, WHICH IS THE SUBSTANTIVE POINT.** 39233 is
+a SOLVER'S QUESTION, not a claim and not an assertion of possession. The premise it carries is
+"yinyang is found after decoding an AES ciphertext" - and that premise is already held
+certified in the chain, as the `faed -> yinyang` / `dbbib -> yellowblueprimes` coupling
+feeding the dualite / cosmic-duality lock (`tested.md:358`, `:11422`). The creator's reply
+is a status note ("the next phase"), not a key. Therefore the pre-edit draft could at best
+have revealed what silver_anth was wondering BEFORE he reworded it. That is discourse about
+the puzzle, not puzzle material, and it is not a candidate for any gate. Ranking it as "the
+only route that can supply new authorial text" was a misjudgement of yield, and the yield
+should have been scored against the fact that the object is a question.
+
+**WHAT IS AND IS NOT RECOVERED.** Recovered and sufficient: the full exchange 39233/39234/
+39237/39208 at post-edit fidelity, sha256-verified. Not recovered and NOT WORTH RECOVERING:
+the pre-edit drafts, which are server-side-only and which this row declines to request again
+from the user by any route, screenshot or otherwise.
+
+**DISPOSITION.** Track B is CLOSED, now twice over, and the residual ask recorded in
+`R-TRACKB-GIT-2026-09-28` is WITHDRAWN. The user is released from this thread entirely; a
+desktop export must not be requested, and a screenshot must not be requested. If a future
+session finds itself about to ask the user for telegram artifacts, the correct response is to
+read this row and `R-TRACKB-CLOSED-2` first. **Lead 0 - the interpreter alphabet for the
+dbbib/faed streams - is the only remaining compute-side path, and the three-phase structure
+confirmed via `R-SILVERANTH-PHASES` means the phase-2 answer must be emitted verbatim in
+original case, since the streams carry only lowercase {a..i,o,z} and case is undecodable from
+the stream alone. That is where the next real attempt belongs.** 0 oracle calls, 0 gate
+interactions, 0 spend. Date 2026-09-28 local.
