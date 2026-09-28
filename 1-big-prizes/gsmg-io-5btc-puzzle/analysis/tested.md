@@ -16787,3 +16787,107 @@ place; its main finding (CRYPTO + GIC) is untouched and its 852px/852px IoU arit
 since that measurement never involved the band.
 
 Date: 2026-09-28, local.
+
+## 2026-09-28 - R-ASSEMBLY: the slugs are all `COLOUR_REST` and every one now agrees with its pixels, so the seed/plant split is fully void; page order is just `sorted()`; no anaglyph offset exists; 0 new candidates
+
+**WHY.** With 7 of 8 tiles read, the remaining question is the merge. I went back to the page itself
+rather than to the fragments, because R-ORDER treated the page order as certified structure and I had
+never checked where it came from.
+
+**1. THE SLUGS ARE A TEMPLATE, NOT PROSE. `COLOUR_REST`, and the colour is always the first token.**
+All 8 slugs split cleanly at the first `_` into a colour (`black`/`blue`/`red`) and a remainder:
+`banking - war`, `ca`, `dig_i`, `lock_lo`, `crypto_gic`, `n_you`, `open_lock_n_ing`, `t`. The colour
+prefix is not decoration and not part of the text. It is the same colour that names the frame bar and
+the glyph ink in the file. This is the first hard structural fact about the slugs, and the 228-candidate
+`strip_order_sweep.py` battery never noticed it because it concatenated the colour words in.
+
+**2. PAGE ORDER IS `sorted()`. NOT AN AUTHORIAL ORDER.** I tested the served order against Python's
+alphabetical sort of the 8 filenames: they are **identical**. So the `<img>` sequence in
+`theseedisplanted` is a directory listing, not a reading order, and it carries no authorial signal.
+R-ORDER called the page order "certified" and built a battery on it. That premise is withdrawn. Any
+future assembly must justify its ordering from something other than position on the page, because
+position is alphabetical by construction.
+
+**3. EVERY SLUG NOW AGREES WITH ITS PIXELS - THE SEED/PLANT SPLIT IS FULLY VOID.** The seed/plant
+reframe had exactly one supporting tile, and R-GICBIG already killed it. Completing the accounting
+closes it. Stripping each colour prefix and comparing the remaining letters to what the pixels
+actually render:
+
+| tile | slug body letters | pixel read | verdict |
+|---|---|---|---|
+| `blue_ca` | ca | ca | agree |
+| `red_t` | t | t | agree |
+| `red_crypto_gic` | cryptogic | crypto + gic | agree (was the sole conflict) |
+| `red_n_you` | nyou | n + you | agree |
+| `blue_lock_lo` | locklo | lo + CLOSED padlock | agree once the icon counts as "lock" |
+| `red_open_lock_n_ing` | openlockning | n + ing + OPEN padlock | agree once the icon counts as "open lock" |
+| `black_banking - war` | bankingwar | 44px icon + 3 blobs | not yet testable |
+
+The two apparent exceptions are the two padlock tiles, and R-LOCKFRAG already explains them: the
+icon *is* the word. So 6 of 6 testable tiles agree once icon-bearing tiles are read correctly. There is
+no seed/plant divergence anywhere in the set. The page is not asking me to choose between a filename
+and an image; the filenames are simply correct descriptions of the artwork. I withdraw the
+"theseedisplanted means choose seed or plant" reading of the tile corpus in full.
+
+**4. THE FRAME BAR IS A COLOUR-MARKER ON A FIXED SIDE.** Every tile has a solid vertical bar running
+its full height: the three blue tiles and the black tile carry it on the **RIGHT** (cols 66-81), the
+four red tiles carry it on the **LEFT** (cols 0-15). Bar width tracks tile width (7-16px) rather than
+being constant, so it is a drawn border, not an encoding. The useful part is that the side is
+colour-determined with no exceptions, which means the colour name in the slug is corroborated by the
+pixel geometry independently of the file's palette. I am recording the asymmetry, not a reading of it.
+
+**5. NO ANAGLYPH OFFSET EXISTS BETWEEN ANY RED AND ANY BLUE TILE.** `R-IMGCORPUS` Finding 3 nominated
+the author's own red/blue pairs as the only admissible basis for colour-separation work, and this is
+that measurement. I registered every red glyph mask against every blue glyph mask over dx,dy in
+-6..6, with the frame bars excluded, and looked for an *interior* peak (a real registration) rather
+than a boundary maximum (a search artefact). Result: no consistent offset. The best pairs
+(`red_open_lock_n_ing` vs `blue_lock_lo` at 270px, `n_you` vs `blue_lock_lo` at 70px) either sit on
+the search boundary or are explained by both tiles containing the same 28x38 padlock icon, which
+overlaps by construction. With the frame bars included the maxima all run to the dx=-6 wall, which is
+what two same-coloured bars in opposite corners do. The earlier "cross-correlation peak at (0,-1)"
+from the community render does not reproduce on the author's own images, and per Finding 3 the
+community render was never admissible evidence for it anyway. **This closes the anaglyph thread.**
+
+**6. THE COLOUR CHANNEL SPLIT IS A RENDERING ARTEFACT, NOT A HIDDEN LAYER.** I also checked whether
+the R/G/B channels carry different glyphs. They do not. Every tile is a two-colour image: one flat
+ground (red 237,28,36 / blue 63,72,204 / black 0,0,0) plus white 255,255,255 glyphs, with the
+remaining entries anti-aliasing steps between them. Per-channel masks at threshold 128 have
+IoU(R,G)=IoU(R,B)=0.96-0.99 on the blue and black tiles and 0.15-0.34 on the red ones purely because
+on a red tile the R channel is saturated everywhere including the ground. Green and blue agree with
+each other at 0.90-1.00 on every tile. There is no second image hiding in a channel. The tiles are
+flat 2-colour PNGs and that is all.
+
+**METHOD / CERTIFICATION.** All measurements are direct pixel computations on the author's own
+archived PNGs, reproducible with `tools/tile_glyphs.py --selftest` plus the per-tile dumps in this
+row. The slug/page-order/agreement tables are pure string work on the 981-byte page capture. No new
+tool was needed for the assembly claims; the registration and channel work was ad hoc and is
+described in enough detail to re-run. Both oracles `--selftest` PASS. **0 new candidates, 0 oracle
+calls** - this row is a structural reading, and the honest consequence is that the assembly it
+describes is now fully specified without yielding a gate input.
+
+**WHAT THIS LEAVES.** The merge rule is now: strip the colour, keep the body, and the icon-bearing
+tiles contribute their icon word. That reconstructs all 6 readable slugs exactly. What it does NOT
+do is produce a phrase, because the bodies are not prose - they are `ca`, `dig_i`, `t`, `n_you`,
+`crypto_gic`, `lock_lo`, `open_lock_n_ing`, `banking - war`. The natural join is still fragment-level
+across tiles (`dig`+`i`+`t` = DIGIT, certified by R-ORDER fact 3 and re-confirmed here by the
+`blue_dig_i` pixels `D I G I` + the separate `T`). I have not found a rule that turns the fragment set
+into a sentence, and I am not going to invent one: the 228-candidate sweep plus these two closed
+leads (seed/plant, anaglyph) leave the fragment set genuinely unpromising as gate input. The
+`banking - war` tile remains the one tile whose body is not testable, and R-MICROBAND has now
+established its band is 3 blobs of 6px, so its icon still needs a human eye.
+
+**CORRECTIONS TO EARLIER ROWS.**
+- R-ORDER: page order is `sorted()`, not authorial; the "certified page order" premise is withdrawn.
+- R-ORDER fact 2 and the seed/plant reframe: fully void, not merely weakened. 6 of 6 testable slugs
+  agree with their pixels.
+- R-IMGCORPUS Finding 3: the anaglyph measurement on the author's pairs is now done, and it is
+  negative. The thread closes.
+- `strip_order_sweep.py`: its `PIXELS` table still records `CRYPTOBIG` and its docstring still calls
+  the order certified. Both are stale. I have not rewritten the tool, because rewriting a swept
+  battery would destroy the record of what was actually tested; the row supersedes it.
+
+**RETURNS TO.** Nothing new is promoted. `X` remains unsolved. Lead 0 (the interpreter alphabet on
+`dbbib_91 + faed_570`) is untouched and remains the only live mechanical route, and the tile corpus is
+now closed as a gate input on evidence rather than on exhaustion of effort.
+
+Date: 2026-09-28, local.
