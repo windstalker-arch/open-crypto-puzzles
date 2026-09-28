@@ -17066,3 +17066,62 @@ existing `R-P5FILE` supply-problem closure. So the third door's key material was
 published anywhere on the site - the site is not a missed-crawl hiding place, and the open
 question stays a derivation question, not a retrieval question. **0 candidates, 0 oracle
 calls, 0 gate interactions, 0 spend.** Date 2026-09-28 local.
+
+## R-NULY-2026-09-28: the third door's `1NULY` prefix is a function output, not a message - month-name family 1,188 derivations, 0 MATCH, and the uniform-1/58^k null is wrong (correct value 1-in-4.5M)
+
+MOTIVATION: the third door `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9` carries a four-character
+apparent-word prefix, and the hypothesis "NULY = JULY" is the obvious reading. It is
+untested in this ledger, and the question is decidable offline in seconds, so it is closed
+here rather than left as an attractive-looking ambiguity.
+
+**HARNESS CERTIFIED FIRST.** `tools/third_door.py --selftest` = 5/5 witnesses, rc=0, run
+BEFORE and the search executed only on rc=0. The five witnesses are rows this file already
+marks `verified`, so the harness and `data/planted-addresses.csv` demonstrably agree, and
+the third door is present in the target set and unclaimed by them.
+
+**BATTERY.** 99 distinct strings - all 12 month names and their 3-letter forms in
+lower/Title/UPPER (72), plus the near-set `nuly jul juli jul uly nulv only null nulyy`
+(8) and the prefix-reflexive forms `NULY JULY 1NULY nuly7 JULY7` (6), plus `july2020` and
+`2020-04-07` (2) - each under all six constructions in `third_door.constructions` and both
+compressed and uncompressed P2PKH forms: **99 x 6 x 2 = 1,188 derivations. 0 MATCH against
+the third door.** No other address in the target set was matched either.
+
+**FINDING 1 - THE PREFIX IS NOT AUTHORIAL, AND THIS IS DECIDABLE FROM THE FILE, NOT
+INFERRED.** The eight `verified` planted rows have known preimages, so their prefixes can be
+inspected directly: `1AD2wf`, `1Jqq37`, `1M5ypv`, `1K23RS`, `18Cchr`, `1GyT5W`, `148X2`,
+`13HGhj`. Every one is a pure function output and none is a word, even where a word was
+available (`1Jqq37` <- `causality`, and the two `Good job, Neo!` rows are the raw and
+bit-reversed forms of one image URL). The creator therefore did NOT mine prefixes for planted
+addresses, and `1NULY` is subject to the same rule: it is whatever the function emitted.
+There is no word encoded in it, and no prefix-reading family is licensed for this address.
+
+**FINDING 2 - A HARD CONSTRAINT KILLS THE MOST NATURAL READING OUTRIGHT.** Base58 excludes
+`0`, `O`, `I`, and `l`. So `NULY` is literally N-U-L-Y. It cannot be "ONLY" with a zero
+substituted, and the leading `1` is the ordinary P2PKH version-byte prefix carrying no
+information. Any future proposal that reads this prefix as a near-miss English word should
+be checked against the base58 alphabet first, because four of the usual substitutions are
+not representable in the address at all.
+
+**FINDING 3 - MY OWN FIRST NULL WAS WRONG, AND THIS IS THE THIRD OCCURRENCE OF THE SAME
+TRAP IN THIS PROJECT.** The instinctive estimate is the uniform `1/58^4` = 1-in-11,316,496.
+Measured against 400,000 real `sha256`-derived compressed P2PKH addresses, the per-position
+base58 distribution is strongly NON-uniform - at position 1 the most common character occurs
+at 0.044 versus a uniform 0.017 and the rarest at 0.001, because leading zero bytes in the
+hash160 make some digits far more likely. The empirical maximum 4-run in 400k samples is
+`PApu` at 1.0e-05, two orders of magnitude above the uniform figure. Computing the
+per-position product from the measured distribution gives **P(prefix "NULY") ~ 2.2e-07 =
+1 in 4,516,368**, not 1 in 11.3M. Over a creator generating addresses across years, 1-in-4.5M
+is unremarkable, so the coincidence is explained without positing a message. This is the
+identical error class already logged at `R-JRK8446D` and in the `4E` IoU pass, where a
+null model that does not share the structure of the data produced an apparently decisive
+result in both directions. **RECORDED AS A STANDING CORRECTION: never score a base58 prefix
+with a uniform 1/58^k null; measure the per-position distribution instead.**
+
+**DISPOSITION.** No lead is promoted. The third door is unchanged: the preimage is a text
+answer under one of the six constructions, every textual family remains negative, and the
+prefix carries nothing. This row closes an attractive-looking ambiguity rather than opening
+one. The frontier does not move: Lead 0 (the interpreter alphabet for the dbbib/faed streams)
+and the Track-B pre-edit messages 39233/39237 remain the only routes that can supply new
+authorial text, and the latter needs `@silver_anth` or a user-supplied group snapshot.
+**0 oracle calls against the funded gates, 0 gate interactions, 0 spend.** Date 2026-09-28
+local.
