@@ -468,6 +468,7 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | `images/01-structure-stages.svg` | the published stage chain forking into the two final gates |
 | `images/02-pipeline-derivation.svg` | the final-gate derivation pipeline for the small blob |
 | `tools/oracle.py` | candidate checker for the small-blob route, certified in two independent parts |
+| `tools/third_door.py` | candidate checker for the third door and the other planted addresses, six key constructions, certified against the preimages `data/planted-addresses.csv` already records |
 | `tools/fig_stages.py` | generates images/01-structure-stages.svg from data/stage-chain.json |
 | `tools/fig_pipeline.py` | generates images/02-pipeline-derivation.svg from data/pipeline-stages.json |
 
