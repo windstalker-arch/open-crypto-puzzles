@@ -16654,7 +16654,7 @@ one of the two classes the R-BOARD28B addendum still sanctions; it is not a new 
 
 Date: 2026-09-28, local.
 
-## 2026-09-28 - R-LOCKFRAG: the two padlock tiles are READABLE after all - they render "lo" and "n ing", not their full slugs; 9 glyphs classified, 0 oracle calls
+## 2026-09-28 - R-LOCKFRAG: the two padlock tiles are READABLE after all - they render "lo" and "n ing", not their full slugs; 6 text glyphs classified, 0 oracle calls
 
 Follows `R-GICBIG`, which built the segmenter. The two padlock tiles were on the "unreadable, letters
 touch" list. That reason was WRONG, and correcting it is this row's whole content: the letters were
@@ -16675,7 +16675,13 @@ and always were. Nothing here needed a stroke model.
 **2. The keyhole is a trap and is now excluded explicitly.** Both padlock tiles carry a 7x9 component
 at y26-34, inside the padlock body. It is a keyhole, and it weakly resembles a T (`dig_i.T`=0.683), so
 a careless pass transcribes it as a letter and inflates the reading. `is_keyhole()` drops it on size
-and position. This is the only component in the set that is a picture rather than a glyph.
+and position. Note the claim precisely: the keyhole is the only PICTURE component in these two tiles
+apart from the two padlock bodies themselves. It is not "the only picture in the set" - across the
+eight-tile set there are two padlock bodies and two keyholes, i.e. four non-glyph components, and
+`R-MICROBAND` later adds the banking icon and its three blobs. (Corrected 2026-09-28: the row
+originally read "9 previously-unclassified glyphs" and "the only component in the set that is a
+picture", both overstated. The count is 2 + 4 = 6 text glyphs, the 2x11 stem and the 11x11 `o` in
+`blue_lock_lo` plus the `n i n g` of `red_open_lock_n_ing`.)
 
 **3. The stem in `lo` cannot be resolved to a letter by pixels, and I am not claiming it can.** It is a
 2x11 bare stem matching `dig_i`'s I at **1.000** - an exact pixel match, because lowercase `l` and
@@ -16816,6 +16822,7 @@ actually render:
 | tile | slug body letters | pixel read | verdict |
 |---|---|---|---|
 | `blue_ca` | ca | ca | agree |
+| `blue_dig_i` | digi | D I G I (plus an external T from the neighbouring `red_t`) | agree |
 | `red_t` | t | t | agree |
 | `red_crypto_gic` | cryptogic | crypto + gic | agree (was the sole conflict) |
 | `red_n_you` | nyou | n + you | agree |
@@ -16824,17 +16831,29 @@ actually render:
 | `black_banking - war` | bankingwar | 44px icon + 3 blobs | not yet testable |
 
 The two apparent exceptions are the two padlock tiles, and R-LOCKFRAG already explains them: the
-icon *is* the word. So 6 of 6 testable tiles agree once icon-bearing tiles are read correctly. There is
+icon *is* the word. So 7 of 7 testable tiles agree once icon-bearing tiles are read correctly. There is
 no seed/plant divergence anywhere in the set. The page is not asking me to choose between a filename
 and an image; the filenames are simply correct descriptions of the artwork. I withdraw the
 "theseedisplanted means choose seed or plant" reading of the tile corpus in full.
 
+(Corrected 2026-09-28: this row originally tabulated 6 tiles and concluded "6 of 6". That omitted
+`blue_dig_i`, which is testable and does agree - its own four glyphs read D-I-G-I against the slug
+`dig_i`. The correct count is 7 of 7, with `black_banking - war` the only non-testable tile. The
+conclusion is unchanged and in fact slightly strengthened.)
+
 **4. THE FRAME BAR IS A COLOUR-MARKER ON A FIXED SIDE.** Every tile has a solid vertical bar running
-its full height: the three blue tiles and the black tile carry it on the **RIGHT** (cols 66-81), the
-four red tiles carry it on the **LEFT** (cols 0-15). Bar width tracks tile width (7-16px) rather than
-being constant, so it is a drawn border, not an encoding. The useful part is that the side is
-colour-determined with no exceptions, which means the colour name in the slug is corroborated by the
-pixel geometry independently of the file's palette. I am recording the asymmetry, not a reading of it.
+its full height, flush to one edge: the three blue tiles and the black tile carry it on the **RIGHT**
+(bar ends at `w-1`; measured spans 70-77 at w=78, 70-76 at w=77, 66-81 at w=82), the four red tiles
+carry it on the **LEFT** (bar starts at col 0; measured spans 0-11 at w=79, 0-12 at w=80, 0-15 at
+w=82). Bar width is a strict monotone function of tile width - w=77->7, w=78->8, w=79->12, w=80->13,
+w=82->16 - so the interior is not held at a constant width (70, 70, 70, 66, 67, 67, 66, 67) and the
+bar is a drawn border, not an encoding. The useful part is that the side is colour-determined with no
+exceptions, which means the colour name in the slug is corroborated by the pixel geometry
+independently of the file's palette. I am recording the asymmetry, not a reading of it.
+
+(Corrected 2026-09-28: this row originally gave "cols 66-81" and "cols 0-15" as if those spans held
+for every tile on that side. They are only the widest cases. The side-determination, which is the
+claim that matters, is unchanged and was re-measured per tile.)
 
 **5. NO ANAGLYPH OFFSET EXISTS BETWEEN ANY RED AND ANY BLUE TILE.** `R-IMGCORPUS` Finding 3 nominated
 the author's own red/blue pairs as the only admissible basis for colour-separation work, and this is
@@ -16891,3 +16910,79 @@ established its band is 3 blobs of 6px, so its icon still needs a human eye.
 now closed as a gate input on evidence rather than on exhaustion of effort.
 
 Date: 2026-09-28, local.
+
+
+## 2026-09-28 - R-CORPUSPROV-STAGED: the externally staged provenance correction is WITHDRAWN as disproven, and applying it would have re-broken a row that was already fixed 0 candidates, 0 oracle calls
+
+**WHY THIS ROW IS ABOUT NOT DOING SOMETHING.** `~/storage/external/briefcase/CORPUS_PROVENANCE_CORRECTION_2026-09-28.md`
+was staged on 2026-09-28 and left deliberately unapplied, pending an explicit decision to edit the
+shared ledger. This session's job was that decision. The answer is **do not apply it**, and the reason
+is that `R-CORPUSPROV-2026-09-28` had already superseded its central claim and I did not check that
+before re-verifying. Writing it into `tested.md:12292` would have re-asserted a claim that is now
+disproven, and would have inverted a documented trap back to the wrong orientation.
+
+**1. THE STAGED DOCUMENT'S CENTRAL CLAIM IS THE ONE THAT WAS DISPROVEN.** The staged file asserts that
+`phase1.html` 10,189 B, `phase2.html` 10,243 B, `phase3.html` 10,242 B, `merovingian.html` 10,551 B and
+the twelve `h_*` pages "sit in the sibling `.html` file with real content", and that the trap is that a
+filename-keyed sweep reads the 9-byte stubs as blank stages. `R-CORPUSPROV-2026-09-28` measured the
+opposite: every one of those `.html` files is a compressed payload that inflates to 36,627 B whose
+entire visible text is the single word `GSMG`, differing between routes only in the per-request CSRF
+token. The quoted byte counts are COMPRESSED sizes, which is exactly what made eighteen shells read as
+eighteen distinct pages. The real PHASE 2 page is `phase2_phase3_choice.html`.
+
+**2. I RE-DERIVED IT INDEPENDENTLY RATHER THAN TRUSTING EITHER ROW.** Both rows could be wrong, so
+this was measured from the bytes:
+
+    phase1.html   10189 B  magic=1f8b0800
+    phase2.html   10243 B  magic=1f8b0800
+    phase3.html   10242 B  magic=1f8b0800
+    phase2_phase3_choice.html   9207 B  magic=3c21646f   ("<!do" = plain HTML)
+
+`phase2.html` inflates as gzip to exactly 36,627 B; after stripping tags its visible text begins
+`GSMG window.config = {"appName":"GSMG",...`. So the `.html` files are the SPA shell, and the one real
+page is the uncompressed `phase2_phase3_choice.html`. **`R-CORPUSPROV-2026-09-28` is correct and the
+staged document is not.** Corroborating detail: the sibling `.unz` files are all 36,627 B and differ
+from each other by only 39 bytes (`cmp -l` count), with the route string embedded - exactly the
+CSRF-token-only difference the correction describes. `live/` and `wayback/` are byte-identical for
+every `.unz` name.
+
+**3. THE 9-BYTE `Hello :-)` HALF IS UNAFFECTED AND STILL STANDS.** The bare live slugs
+`architect`, `ca`, `hope1`-`hope4`, `phase1`, `phase2`, `phase3`, `phase3_2_2`, `phase3_2_2_2`,
+`whiterabbit` are each exactly 9 B and their body is literally `Hello :-)`. Per the capture
+FETCH-LOG that is the live apex's 404 body for unknown routes, so these are 404 captures rather than
+author content, and they remain no evidence of absence. This half of `tested.md:12292` is correct and
+is not disturbed by this row.
+
+**4. ONE CORRECTION TO `R-CORPUSPROV-2026-09-28` ITSELF: "EXTENSIONLESS" IS NOT A SAFE RULE.** The
+obvious next step after finding eleven 9-byte stubs is to write "extensionless files are stubs". That
+is false in the same directory. Enumerating every extensionless file in `live/`:
+
+    9 B x11   architect ca hope1 hope2 hope3 hope4 phase1 phase2 phase3
+              phase3_2_2 phase3_2_2_2 whiterabbit
+    9207 B    choice      <-- real content
+    29931 B   puzzle      <-- real content
+
+and in `wayback/`, all ten extensionless files are `wb2_*` and all ten are real content
+(9,232-10,243 B) - there are no stubs there at all. So the extension is not the discriminator; the
+size and the magic are. `choice` at 9,207 B is **byte-identical** to `phase2_phase3_choice.html`
+(sha256 `06fbd4461ab20d45c54a7053c7c0cfa256ba82a5ad4c73a47fac67f3f1cdf7d9`, `cmp` clean), i.e. the one
+real PHASE 2/3 page is present in `live/` under two names, one with and one without the extension.
+
+**5. WHAT I DID INSTEAD OF APPLYING IT.** I edited the staged file in place to replace its
+"not yet applied" header with a WITHDRAWN header naming this row, so that a later session which
+trusts the staging note does not apply a disproven correction. The file remains in `briefcase`, i.e.
+outside the repo, and nothing was copied into the ledger. If a future session wants the provenance
+lesson preserved in-repo, it belongs in `tools/coverage_check.py` as a magic-byte check, not as prose.
+
+**6. PROCESS NOTE, WHICH IS THE ACTUAL LESSON.** The staged document was internally honest - it said
+it was unapplied and that applying it should be an explicit decision. The failure mode it invited was
+not dishonesty but **staleness**: a staged artifact carries no expiry, and the row it wanted to amend
+had already been amended by someone else between the staging and the decision. The rule this
+suggests, consistent with the rest of the project: before acting on any externally staged note, grep
+the ledger for a row newer than the note itself. `grep -n "AMENDED 2026-09-28" analysis/tested.md`
+would have caught it in one command. The cost of skipping that check was a wrong amendment to a 1.9 MB
+ledger; the cost of running it was one command.
+
+DISPOSITION: **0 candidates, 0 oracle calls.** No lead is promoted, nothing is decoded, and the crux
+is untouched. `X` remains unsolved; both funded gates remain open. This row exists so the next session
+does not re-stage, re-litigate, or apply a claim that has been measured false.

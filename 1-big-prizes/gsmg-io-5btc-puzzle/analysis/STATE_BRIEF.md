@@ -20,7 +20,32 @@
 > is closed by `R-EBCDIC1141` plus the FINDING 3/5 rows. Exactly **one** direction survives from
 > `R-P32BLOB`: treat the 26 byte-values as non-alphabetic data (base-N / bit-packed). It is
 > expensive, speculative, and unguided. The remaining gap looks **interpretive, not mechanical**.
-
+>
+> **Tile corpus is now CLOSED as gate input (2026-09-28).** Four rows land after this brief's 2026-09-27
+> addendum and none of them opens a gate; they retire false leads so no session re-treads them.
+> Read them in order, they are one narrative:
+> - `R-GICBIG` - `red_crypto_gic` renders `CRYPTO + GIC`, not `CRYPTO + BIG`. The slug was right all
+>   along, which kills the seed/plant split's only supporting tile.
+> - `R-LOCKFRAG` - the two "unreadable, letters touch" padlock tiles are readable. They do not spell
+>   their whole slugs: they render `lo` and `n ing`, with the padlock icon supplying "lock" and "open
+>   lock". 6 text glyphs; the 7x9 keyholes are excluded as pictures, not transcribed as `T`.
+> - `R-MICROBAND` - retracts a false claim that a connector rectangle was cut between the banking icon
+>   and the band below it. Rows 46-53 are empty; the three 6px blobs need no cut and are non-letter
+>   scale for this face.
+> - `R-ASSEMBLY` - the slugs are a `COLOUR_REST` template, the colour prefix is not text, and 7 of 7
+>   testable slugs agree with their pixels. Page order is exactly `sorted()`, so it is a directory
+>   listing and carries no authorial signal. No anaglyph offset, no hidden channel.
+>
+> Net effect on the crux: **none.** No new candidates, no oracle calls, `X` still unsolved. What
+> changed is that the tile set is no longer a place where a session can spend a cycle: the four
+> questions it used to invite - seed vs plant, the "touching letters", the cut connector, and page
+> order - are all answered, three of them against the earlier claim. `tools/tile_glyphs.py` is the
+> reproducer (35 selftest assertions, `--selftest`).
+>
+> One tile item is still open and needs eyes rather than thought: the 44px icon in
+> `black_banking - war`, whose upper mass reads as a caret/lambda shape (two diagonals meeting at a
+> top apex) rather than the padlocks' arch (a dome), and whose lower box is undescribed. It is not
+> blocking, because `R-ASSEMBLY` closes the tile corpus either way.
 
 One-page onboarding for any solver/agent/contributor. Companion to `AUDIT-2026-09-20.md`
 (invariant + certified-boundary audit) and `analysis/leads.md` (ranked, dated leads).
@@ -138,15 +163,45 @@ SalPhaseIon page.
 
 ## What unblocks (pick any)
 
-1. **Alphabet hypothesis** (any word/phrase) -> `tools/lead0_try.sh "<keyword>"`
-   (or `--alphabet "<28 chars>"`) fires both gates immediately.
-2. **A human visual read** -> `analysis/lead0-inspection-checklist.md`; live micro-items:
-   the missing `.` marker, the lone `/`, the FEFEFE nest cell at grid (7,4).
-3. **A new author artifact** - e.g. pre-edit Telegram snapshot (2025-04-28 20:01-20:20),
-   restated "ca" formula text, or any post-2026-09-24 hint/statement.
+> **REWRITTEN 2026-09-28.** The previous version of this list was three items and every one of them
+> was wrong in the direction the addendum warns about. It is struck rather than amended, because
+> `R-BOARD28B-ADDENDUM` FINDING 1 holds that "a pointer that sends the next session into a closed
+> surface is worse than no pointer". Detail on each retraction is in the note below the list.
 
-No further battery is warranted without one of the three; per AGENTS.md we do not re-run
-closed rows.
+1. **A new authorial string or artifact** - the only class that has ever produced a result. Per
+   FINDING 5, the productive work is reading the author's own pages, transcript, images and groupchat
+   *for semantics*, never decoding the streams. Still-open objects: the pre-edit Telegram snapshot
+   (2025-04-28 20:01-20:20), the restated "ca" formula text, and any post-2026-09-24
+   hint or statement. Note that the two best-looking files have already been mined: `GSMG_JRK.md`
+   (427 creator messages) is closed by `R-JRKCORPUS`, and the solver-group image surface is closed
+   by `R-SOLVERGRP-STR` and `R-MATRIX69`.
+2. **A human visual read** - the one acknowledged gap, and the only item here that is not a
+   speculative guess. `analysis/lead0-inspection-checklist.md` still applies, but its three "live
+   micro-items" are closed and must not be re-offered:
+   - the FEFEFE nest cell at grid (7,4) is **pinned and closed** by `R-FEFEFE-LOCATE` (it holds a 0
+     bit, so the URL decode is unchanged) and its escape-key axis is closed by `R-FEFEFE-ESC-KEYBOARD`
+     at 0 MATCH;
+   - the missing `.` marker and the lone `/` are **mechanically exhausted** by `R-BOARD28B`, which
+     enumerated every punctuation variant of the board on both gates at 0 MATCH. That row explicitly
+     preserved the *human* question of which dot is the anomaly, but the follow-on `R-BOARD28B`
+     withdrew the missing-alphabet framing that the question depended on, so the item no longer has a
+     well-posed mechanical form.
+   - the one tile question still genuinely open is the 44px `black_banking - war` icon, which is not a
+     Lead 0 micro-item at all: it is a tile-corpus item, and `R-ASSEMBLY` treats the tile corpus as
+     closed gate input.
+
+3. ~~**Alphabet hypothesis** (any word/phrase) -> `tools/lead0_try.sh`~~ - **RETRACTED.** "Any word or
+   phrase" is not an unblocker, it is a guess, and `R-BOARD28B-ADDENDUM` FINDING 4 records this
+   session twice proposing a mechanical direction and withdrawing it on contact with the ledger.
+   `tools/lead0_try.sh` still works and is still the fastest path *if* an alphabet ever arrives from
+   an authorial string under item 1, but the tool's existence is not a reason to try one. Its
+   `fubcdora/lethingkymvpszjqwx.` default board is the withdrawn `R-FORK` hypothesis.
+
+No further battery is warranted without item 1 or item 2; per `AGENTS.md` we do not re-run closed
+rows. The honest standing position is FINDING 4: the mechanical surface is exhausted and the crux is
+**unspecifiable, not merely unsolved**. That is a statement about the search, not a licence to
+manufacture activity, and a session that produces zero candidates after honest inventory has
+succeeded, exactly as `R-JRKCORPUS` did.
 ---
 
 # Addendum 2026-09-26 (rows `R-LOGO2`, `R-PACKCRYPTO`, `R-PHASE2-2026-09-26`, `R-COVERAGE-2026-09-26`)
