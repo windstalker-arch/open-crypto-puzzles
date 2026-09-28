@@ -16621,10 +16621,30 @@ imply. At thresh 200 the tile yields exactly 2 components: the 43x44 letter mass
 separate 5x6 mark (16px) at x33-37, y54-59 - and the band is not among them. The band is bright: in
 y40-70 the maximum luma is 255 with 479 px at >=240, so it is plainly not a dim 6px smear. Lowering the
 threshold does not free it either: at thresh 100/120/140/160/180 the main mass grows to 874/872/867/863/860
-px and the band still never separates, so it is 8-CONNECTED to the main letter mass. Anyone attacking
-that band needs a CUT, not a threshold, and a threshold sweep is provably the wrong tool. This does
-not decode the band and does not touch R-MICRO's negative, which was about template matching, not
-isolatability; it only removes one wrong first move.
+px and the band still never separates, so I wrote that the band was 8-CONNECTED to the main letter
+mass and that anyone attacking it needs a CUT rather than a threshold.
+
+**AMENDED 2026-09-28 (R-MICROBAND): that connectivity claim is FALSE and I retract it.** Rows 46-53
+carry no inner pixel at all - verified by direct scan, zero lit pixels for x in 1..w-9. The band is
+therefore *not* fused to the letter mass; it is a separate strip with 8 blank rows above it. Nothing
+needed cutting. The reason it vanished under my own segmenter is `MIN_SIZE = 8`: the band's ink is
+scattered one-pixel specks (42 of 114 cells are pure black even at thresh 100), and a speck filter
+that exists to protect the `i`-dot silently deletes them. The single 16px survivor at x33-37 was the
+one blob big enough to clear the floor, which is why the tile appeared to yield "2 components, band
+not among them". That was a self-inflicted artefact of my own filter, not a property of the tile.
+
+**R-MICROBAND RESULT.** Lowering `MIN_SIZE` to 1 at thresh 100, the band resolves into exactly
+**3 discrete blobs, all 6px tall**: 9x6 (30px) at x23-31, 5x6 (20px) at x33-37, 4x6 (10px) at
+x40-43, spanning x23-43, y54-59. So "the 21x6 band" is not one illegible mark but three, and the
+width discrepancy that had the ledger saying 21x6 vs R-ORDER's 26x6 is just which specks the floor
+kept. A 5th check: component heights across the whole tile set are 2, 6, 11, 14, 15, 16, 38, 44 -
+**nothing at 7-10px**, and every letterform in this face is 11-16px tall. The band's 6px is
+non-letter scale, matching only `red_t`'s 5x2 mark. That is a structural argument that the band is
+NOT this font's text, independent of R-MICRO's failed template matching.
+
+This does not decode the band. It corrects a wrong first move of mine and sharpens the negative: the
+band is 3 blobs of non-letter height, so the productive next question is what it *is* (icon? rule?
+texture? a second write in a different face?), not which font to match it against.
 
 **CONCLUSION.** R-ORDER fact 4 is superseded. The tile reads `CRYPTO` + `GIC`; slug and pixels agree;
 the seed/plant reframe and the "not join the fragments" conclusion fall with it. The highest-value
@@ -16702,8 +16722,68 @@ library fails loudly, and the only sub-1.000 scores in play are the genuine cros
 **CONCLUSION.** Both padlock tiles are read. `blue_lock_lo` = "lo" (closed lock), `red_open_lock_n_ing`
 = "n ing" (open lock). The "letters touch" obstacle was a denominator error on my part, not a property
 of the artwork, and it is removed from the blocker list. What remains unread in the set is exactly one
-item: the 21x6 band in `black_banking - war`, which R-GICBIG established is bright and 8-connected to
-the main letter mass and therefore needs a cut rather than a lower threshold. Lead 0 unchanged. `X`
-remains unsolved.
+item: the 21x6 band in `black_banking - war`, which is now 3 blobs of 6px each, not one fused
+strip needing a cut - see R-MICROBAND, which retracts R-GICBIG's connectivity claim. Lead 0
+unchanged. `X` remains unsolved.
+
+Date: 2026-09-28, local.
+
+## 2026-09-28 - R-MICROBAND: the 21x6 band needs no cut, it is 3 blobs of 6px - and R-GICBIG's "8-connected to the letter mass" is retracted; 0 new candidates
+
+**WHY THIS ROW.** R-LOCKFRAG left exactly one unread item in the tile set, and R-GICBIG had just
+told everyone to attack it with a cut operator. Both of those were my own claims, and both were
+wrong for the same reason: my segmenter. So before building any cut, I checked the premise.
+
+**THE PREMISE WAS FALSE.** R-GICBIG said the band was 8-connected to the main letter mass. It is not.
+Rows 46-53 of `black_banking - war` (78x70) contain **zero** lit pixels for x in 1..w-9, verified by
+direct scan rather than by thresholding. The 43x44 letter mass ends at y45; the band starts at y54.
+Eight blank rows separate them. The band was never fused to anything, so there was nothing to cut.
+
+**WHAT ACTUALLY HID IT.** `MIN_SIZE = 8`, my own speck filter, whose stated purpose is to keep the
+`i`-dot from registering as a letter. The band's ink is scattered specks: even at thresh 100, 42 of
+its 114 cells are pure black and the rest are isolated single pixels. A filter built to protect a
+2x2 dot erased them. Exactly one 16px blob at x33-37 cleared the floor, which produced the
+confusing observation that the tile "yields 2 components and the band is not among them". That was
+an artefact of my own filter, not a fact about the tile. I reported the filter's output as if it were
+the artwork.
+
+**THE BAND IS THREE BLOBS.** At thresh 100, `MIN_SIZE=1`, restricted to y >= 54:
+
+| blob | bbox | size |
+|---|---|---|
+| 1 | x23-31, y54-59 | 9x6, 30 px |
+| 2 | x33-37, y54-59 | 5x6, 20 px |
+| 3 | x40-43, y54-59 | 4x6, 10 px |
+
+Span x23-43, y54-59, 60 px of ink. So the ledger's long-running "21x6 vs R-ORDER's 26x6"
+discrepancy was never a measurement disagreement - it is the same strip under two different speck
+floors. The band was never one illegible mark. It is three.
+
+**A STRUCTURAL ARGUMENT THE BAND IS NOT TEXT IN THIS FACE.** Component heights across all 8 tiles
+are {2, 6, 11, 14, 15, 16, 38, 44}. There is **nothing at 7-10px**. Every letterform in this face
+is 11-16px tall; the only shorter components are `red_t`'s 5x2 mark and the band's own blobs, both
+non-letter scale. All three band blobs are exactly 6px. So this reaches R-MICRO's negative by a
+different route than the one it used: R-MICRO failed to match templates, and I can add that the
+height class itself is wrong for text. A band one half the cap-height of this face's smallest
+letter is not a downscaled word in that face.
+
+**WHAT I AM NOT SAYING.** I have not decoded the band and I do not know what it is. It could be an
+icon, a rule or border, a texture, a watermark, or a second write in a face I have not sampled. I am
+declining to guess. But the productive question has changed: it is no longer "which threshold or cut
+frees it" (it is already free) and no longer "which font matches it" (the height argues against this
+one). It is "what is a 21x6 three-blob strip doing under a 44px icon in a tile whose slug says
+banking and war", which is a puzzle-semantics question rather than a segmentation one.
+
+**METHOD / CERTIFICATION.** `band()` and `band_blobs()` added to `tools/tile_glyphs.py`; the selftest
+now asserts the empty gap, the 3-blob count, the exact 9x6/5x6/4x6 boxes, the absent 7-10px height
+class, and that every band blob is 6px. **35 assertions, `SELFTEST OK`**, exit 0. The empty-gap
+assertion is the load-bearing one: it is what makes the retraction checkable on any re-run, and it
+would fail loudly if anyone re-fused the band to the mass. Both oracles `--selftest` PASS. 0 new
+candidates, 0 oracle calls.
+
+**RETURNS TO.** R-MICRO's open item is reclassified, not closed: still unnamed, but now known to be
+three 6px blobs and known not to be text in this face. R-GICBIG's by-product datum is amended in
+place; its main finding (CRYPTO + GIC) is untouched and its 852px/852px IoU arithmetic is unaffected,
+since that measurement never involved the band.
 
 Date: 2026-09-28, local.

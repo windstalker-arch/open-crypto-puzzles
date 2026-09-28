@@ -66,6 +66,9 @@ TILES = [
 THRESH = 200      # lum >= THRESH counts as ink (white glyphs)
 MIN_SIZE = 8      # drop specks; an i-dot smaller than this is not a letter
 PUNCT = "\t\n\r"  # tolerated, not used
+BAND_TILE = "black_banking - war.png"
+BAND_ROWS = (46, 59)   # the gap-plus-band strip below the icon
+BAND_GAP = (46, 53)    # asserted empty, which is what frees the band
 
 
 # ---------------------------------------------------------------- PNG decode
@@ -319,6 +322,29 @@ def is_keyhole(px):
     return (x1 - x0 + 1) == 7 and (y1 - y0 + 1) == 9 and y0 < 40
 
 
+def band(name=BAND_TILE, thresh=100):
+    """The 21x6 strip under black_banking - war, and the empty gap above it.
+
+    Returns (gap_is_empty, blobs). The gap assertion is the load-bearing part:
+    rows 46-53 carry no inner pixel at all, so the band is a separate strip and
+    never needed a cut. It only looked fused to the icon because MIN_SIZE=8
+    discarded its one-pixel specks, leaving a single 16px survivor.
+    """
+    w, h, nch, rows = load_png(_p(name))
+    g = gray(w, h, nch, rows)
+    gy0, gy1 = BAND_GAP
+    gap_clear = not any(g[y][x] for y in range(gy0, gy1 + 1) for x in range(1, w - 8))
+    blobs = [q for q in components(_p(name), thresh=thresh, min_size=1)
+             if bbox(q)[2] >= gy1 + 1]
+    return gap_clear, blobs
+
+
+def band_blobs(name=BAND_TILE, thresh=100):
+    """The band as width x height boxes, left to right, for size assertions."""
+    return [(bbox(q)[1] - bbox(q)[0] + 1, bbox(q)[3] - bbox(q)[2] + 1)
+            for q in sorted(band(name, thresh)[1], key=lambda q: bbox(q)[0])]
+
+
 def read_tile(name):
     """Classify a tile's glyphs, skipping the padlock body and keyhole.
 
@@ -538,10 +564,32 @@ def selftest():
     check("bottom[1] is a 1px-wide bare stem", (x1 - x0 + 1) == 1,
           "got %dpx wide" % (x1 - x0 + 1))
 
+    # black_banking - war: the band is a separate strip, not a fused mass
+    gap_clear, blobs = band()
+    sizes = band_blobs()
+    check("banking rows 46-53 carry no inner pixel at all", gap_clear)
+    check("the band is 3 discrete blobs, not one fused mark", len(blobs) == 3,
+          "got %d" % len(blobs))
+    check("band blobs are 9x6, 5x6, 4x6", sizes == [(9, 6), (5, 6), (4, 6)],
+          "got %s" % (sizes,))
+    # Every letterform in this face is 11-16px tall; the only shorter
+    # components are the two non-letter marks, at 2px and 6px. So a 6px strip
+    # is the non-letter scale, not a letter scale.
+    heights = {bbox(q)[3] - bbox(q)[2] + 1
+               for nm, _ in TILES for q in components(_p(nm)) if not is_keyhole(q)}
+    check("no component in the set is 7-10px tall, so 6px is mark-scale",
+          not heights & set(range(7, 11)),
+          "got heights %s" % (sorted(heights),))
+    check("every band blob is exactly 6px tall",
+          all(h == 6 for _, h in sizes),
+          "got %s" % (sizes,))
+
     print()
     print("  SELFTEST %s" % ("OK" if ok else "FAILED"))
     print("  Read: red_crypto_gic renders CRYPTO + GIC, so the pixels agree")
     print("  with the filename slug. R-ORDER's 'BIG' reading is superseded.")
+    print("  The banking band needs no cut: rows 46-53 are empty, and it is 3")
+    print("  blobs of 9x6, 5x6, 4x6. It was hidden by MIN_SIZE=8, not fused.")
     return 0 if ok else 1
 
 
