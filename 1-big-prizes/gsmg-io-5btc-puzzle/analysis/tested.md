@@ -17125,3 +17125,63 @@ and the Track-B pre-edit messages 39233/39237 remain the only routes that can su
 authorial text, and the latter needs `@silver_anth` or a user-supplied group snapshot.
 **0 oracle calls against the funded gates, 0 gate interactions, 0 spend.** Date 2026-09-28
 local.
+
+## R-TRACKB-GIT-2026-09-28: Track B pre-edit 39233 re-attempted from MY side - the public transcript has exactly ONE revision, so the pre-edit text is not recoverable without the user
+
+The user (a new member of the private solver group, and unable to act on the mobile-only
+request as of the previous session) asked me to stop re-raising `@silver_anth`. Rather than
+simply drop the thread, this pass tries to close it **from the machine side** so the ask
+stops depending on the user at all. It does not succeed, and the residual dependency is now
+narrower and better specified than "ask silver_anth".
+
+**ATTEMPT 1 - GIT HISTORY OF THE PUBLIC TRANSCRIPT. NEW, AND IT IS THE RIGHT PLACE TO LOOK.**
+`late-319` established that the pre-edit text is not in any *current* public archive, but it
+never checked whether the transcript FILE has an earlier revision. `halbgott29a`'s
+`chat_transcript.txt` (7,182,658 B, 181,125 lines) is the one public artifact carrying
+message 39233's text, so an earlier commit would be exactly the pre-edit snapshot. Result:
+**the file has been committed exactly once.** Local clone `2c97f44` (2026-06-12) is the only
+commit in that repository. Via the GitHub API on both branches (`master`,
+`gsmg-cryptanalysis`), `commits?path=_work/chat_transcript.txt` returns a single commit
+`8d043ad11` (2026-06-13, "Add cryptanalysis of the unsolved SalPhaseIon/Cosmic Duality").
+There is no parent revision, so there is nothing to diff and **no pre-edit revision exists
+on GitHub.** The repository has 0 forks, so no fork preserves an earlier state either.
+
+**ATTEMPT 2 - THE MESSAGE IN CONTEXT, TO CONFIRM THE FINGERPRINT.** 39233 sits at transcript
+line 110453, timestamped `28.04.2025 12:00:12`, text "is yinyang found after decoding an AES
+ciphertext?", answered 14 s later by the creator `Jrk Bgrt` with "Que?" and again at 12:00:46.
+The surrounding exchange is dense and live - 30+ distinct speakers in the 12 minutes around
+it, including the creator - so this was an on-the-spot question, not a stashed theory posted
+for later editing. `silver_anth`'s immediately preceding message (11:54:58) is "this will be
+the next jrk message interpreted as a hint. calling it now", and his next (12:01:52) is a
+single "😔". The edit is therefore consistent with him softening a question he had already
+asked publicly, and it does not look like a pre-edit text that was *withholding* key
+material. That is an inference about yield, not a recovery.
+
+**ATTEMPT 3 - PUBLIC INDEXES FOR A DIVERGENT COPY.** Sourcegraph GraphQL for the exact
+fingerprint and for the surrounding vocabulary returns `matchCount: 0`, i.e. the transcript is
+not indexed there at all, so no divergent copy can be hiding in that index. `grep.app` is
+now behind a Vercel bot checkpoint and the GitHub code-search API requires authentication, so
+those two are unavailable rather than negative this session. Consistent with `late-309`/`late-318`,
+which already swept DDG, Google, `site:t.me`, Sourcegraph and forks.
+
+**WHAT IS STILL TRUE, AND THE ONE THING THAT REMAINS.** Telegram edits are server-side only and
+exports carry current text, so no export - the user's included - can contain the pre-edit
+39233. Combined with attempts 1-3, the pre-edit wording is unreachable from every public
+source, which upgrades the earlier "bounded" status to a firmer statement: **recoverable only
+from `@silver_anth` himself or from a third party who read the group before 2025-08-27.**
+
+**THE RESIDUAL ASK IS NOW A SINGLE TIE-BREAKER, NOT AN ARTIFACT.** The one fact only the user
+can supply is whether the CURRENT in-app text of 39233 still equals the transcript's
+"is yinyang found after decoding an AES ciphertext?". If it does, the edit predates the
+2026-06-12 export, and a third-party recollection or an older private export becomes the only
+remaining path. If it does not, the edit postdates every public copy and the pre-edit text is
+permanently gone. Either answer closes the thread permanently. A screenshot of the message
+with its "edited" marker is sufficient; a desktop export is not required and must not be
+re-requested (`late-319` already established the user cannot produce one).
+
+**DISPOSITION.** No new puzzle material, no lead promoted or withdrawn. This row exists so
+the git-history question is not asked a third time - it is answered, negatively, and the
+answer is that the file has one revision. **The user has explicitly asked not to be
+re-prompted for this; that request is respected, and the ask is now down to one optional
+tie-breaker rather than an open-ended artifact hunt.** Lead 0 remains the only compute-side
+path. **0 oracle calls, 0 gate interactions, 0 spend.** Date 2026-09-28 local.
