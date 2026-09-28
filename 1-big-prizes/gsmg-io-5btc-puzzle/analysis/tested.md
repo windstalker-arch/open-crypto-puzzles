@@ -17230,3 +17230,63 @@ confirmed via `R-SILVERANTH-PHASES` means the phase-2 answer must be emitted ver
 original case, since the streams carry only lowercase {a..i,o,z} and case is undecodable from
 the stream alone. That is where the next real attempt belongs.** 0 oracle calls, 0 gate
 interactions, 0 spend. Date 2026-09-28 local.
+
+## R-ABRUN-DECODE-2026-09-28: the page's two-letter channel decodes to literal English, and yields RAW_PW elements 1 and 2 - plus a 104-token block the ledger had never recorded
+
+NEW CERTIFIED RESULT, deterministic, tool `tools/ab_run_decode.py` (selftest 6/6, all
+assertions green). 0 oracle calls, 0 gate interactions, 0 spend.
+
+**THE GAP.** The 1075-token SalPhaseIon capture (`data/live_salphaseion.txt`) had only ever
+been partially mapped. The ledger recorded dbbib_91 = raw[0:91], faed_570 = raw[195:765],
+and the z-delimited segments at raw[766:829] and raw[830:859]. **raw[91:195] - 104 tokens
+that had never been characterised at all - is a TWO-LETTER block, alphabet exactly {a,b},
+with zero 'o' and zero 'z'.** It is the only such block on the page besides raw[959:999].
+
+**THE DECODER, RECOVERED NOT ASSUMED.** Rule: a->0, b->1, concatenate, MSB-first, 8 bits per
+character. This was derived from the data, not supplied. Scanning all 134 maximal {a,b} runs,
+exactly 132 are shorter than 8 tokens and so cannot hold a whole character. The two survivors
+are at 100% printability with zero leftover bits:
+
+    raw[ 91:195]   104 tokens -> 13 chars -> "matrixsumlist"
+    raw[959:999]    40 tokens ->  5 chars -> "enter"
+
+Primitive check: "abbabbab" -> b'm', rem=0.
+
+**WHY THIS IS NOT CIRCULAR.** RAW_PW was derived earlier and independently (community chain
++ creator-authored material). This decode independently reproduces its first two elements
+from the page's own token layer:
+
+    RAW_PW = matrixsumlist + enter + lastwordsbeforearchichoice + thispassword + matrixsumlist
+
+So elements 1 and 2 are now PAGE-CONFIRMED rather than inferred, and elements 3-5 are the
+only unconfirmed remainder. This is the first positive decode out of the 91-token and
+570-token streams, and it validates the stream layer as a carrier of literal authorial text -
+which is what the whole Lead-0 interpreter-alphabet premise needed and never had.
+
+**CORRECTED STRUCTURE (this supersedes the partial map).**
+
+    raw[  0: 91]  dbbib_91   91 tokens  alphabet {a..i}       no 'o', no 'z'
+    raw[ 91:195]  GAP        104 tokens  alphabet {a,b}        -> "matrixsumlist"
+    raw[195:765]  faed_570  570 tokens  alphabet {a..i}       no 'o'
+    raw[765]      'z' separator
+    raw[766:...]  tail band  17 'o' (zeros, certified R-SAL-DIGITS-2026-09-22), z at 829, 859, 958
+    raw[959:999]  {a,b}       40 tokens  -> "enter"   (immediately follows the z at 958)
+
+The z at 958 sitting directly before "enter" indicates the z characters are DELIMITERS for
+the readable-word channel, consistent with the certified z-segments at 766-859. The author
+therefore alternates 9-letter data blocks with z-delimited 2-letter word blocks.
+
+**WHAT IS NOT CLAIMED.** The two 9-letter streams are NOT decoded. A base-9 sweep over
+dbbib_91 and faed_570 (group size 1-8, both bit orders, both stream directions, 8 printable
+offsets) returns only punctuation/digit noise at 100% "printable" - i.e. no grouping so far
+tried yields text, and g=1 with an offset is trivially printable and therefore worthless as a
+signal. The grouping for the 9-letter channel is UNKNOWN and remains open. Per
+R-SILVERANTH-PHASES the answer must be emitted verbatim in original case, because the streams
+carry only lowercase {a..i,o,z} and case is undecodable from the stream alone.
+
+**IMPLICATION FOR LEAD 0.** The premise that dbbib/faed hide literal words is now
+EVIDENCE-SUPPORTED rather than assumed, because the same page, under a sibling code, does
+exactly that. The remaining question is narrowed: what code maps 9 symbols to text? It cannot
+be plain per-letter substitution to BF commands (R-BFLEAP-2026-09-25, 362,880 mappings
+exhausted, 0 survivors) and it is not base-9 with a small group. Positional/width-changing
+schemes (2 symbols per char, or 9-as-trit-style packing) remain untested.
