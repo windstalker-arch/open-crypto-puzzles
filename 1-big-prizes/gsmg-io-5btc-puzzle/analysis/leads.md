@@ -2095,3 +2095,19 @@ revive it, it has to say what reading order the three existing negatives did not
   numeric forms, hint language) = 0 MATCH small gate AND 0 MATCH dualite. This rules out the date
   AS THE ANSWER only; salt/index/stride/key use all remain untested and unspecified, which is
   where the real gap is.
+- **THE RABBIT-HOLE WARNING IS ACTIONABLE, and I was wrong to park it (`R-RABBIT-HOLE`).** The
+  creator names the hazard TWICE: 2023-08-06 "The main risk is to fall into the wrong rabbit hole"
+  and 2024-03-26 "or at least when tempering with rabbit holes" (replying to a solver who used the
+  word; `tempering` = 0 in all three docs, so `R-GRPCHAT23` found only the first). The 2020-01-14
+  hint is the specific one: **"beware that the rabbit's nest may contain a whole lot more"** - a
+  PLURALITY claim, and the ledger reads exactly ONE nest. Exhaustive 2x2 scan of the 14x14 (rebuilt
+  from `gsmgio_bunny_nest.py` source, not transcribed): exactly ONE all-`r` window at (6,6), rows
+  7-8 cols 7-8. So plurality is falsified for the nest reading on this grid - and I am NOT guessing
+  where else it points.
+  **Incidental, exact:** `~/briefcase/gsmg-community/gsmg_finalgrid.txt` (14x14 of 0/1) is the
+  **bitwise complement** of the bunny-nest grid - `o->1`, `w->0`, **167/167 inverted, 0 exceptions**
+  on the black/white substrate, with the 28 colored cells breaking the rule (13 map to 0, 15 to 1).
+  Recorded as a measured relation, significance OPEN: an exact complement is also what any
+  image-inversion preprocessing produces, so I cannot yet call it a deliberate second reading.
+  **Live risk flagged:** `R-GRID14`'s single-nest conclusion may be a partial read, and per this
+  hint "found the nest" is exactly the rabbit-hole progress the creator warns against.

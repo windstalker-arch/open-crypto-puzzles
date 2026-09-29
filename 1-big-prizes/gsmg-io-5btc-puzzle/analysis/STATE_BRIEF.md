@@ -1340,3 +1340,44 @@ false positive, a standing methodological correction, and a square-search screen
   51-row table in front of it.
 - Unchanged: 0 candidates promoted, no lead, X unsolved, gates funded at 125,635,374 sats (small,
   partially spent) and 375,055,856 sats (dualite, unspent).
+
+---
+
+## 2026-09-29 addendum 12: the rabbit-hole warning resolves - named twice, and it is not the hole we are stuck on; plus an exact complement relation between two grids (`R-RABBIT-HOLE`)
+
+- **I OVERTURNED MY OWN `R-GRPCHAT23` FINDING 1.** It said the 2023-08-06 warning could not be
+  honoured without knowing the right hole. That reasoning was backwards: a warning to avoid a
+  specific attractor is a POSITIVE constraint if the corpus documents what solvers converged on.
+  Screened all 372 creator messages in `Msgs.txt` for direction-giving vocabulary; 25 match, 20 are
+  conversational/procedural/key-custody, **5 are substantive and name the hole**.
+- **The creator names the hazard TWICE.** (a) 2023-08-06: "The main risk is to fall into the wrong
+  rabbit hole." (b) **2024-03-26 10:46: "Yeah, being lost is a common aspect of being on this
+  planet I guess, or at least when tempering with rabbit holes."** - an explicit reply to a solver
+  who used the word, and `tempering` = **0** in all three docs, so `R-GRPCHAT23` found only the
+  first occurrence.
+- **The specifying hint is 2020-01-14:** "It might have shown you only one door, beware that the
+  rabbit's nest may contain a whole lot more." The clause is a **PLURALITY** claim, and the ledger
+  reads exactly ONE nest (`R-GRID14`'s single nest glyph). Already ledgered at `tested.md:13884`,
+  so this is not a new transcription - what is new is that the plurality was never tested.
+- **Multiplicity is FALSIFIED for the nest reading on the 14x14.** Rebuilt the grid from
+  `~/storage/external/briefcase/gsmg-solver-group/gsmgio_bunny_nest.py` SOURCE (not from any
+  transcription), then scanned all 169 possible 2x2 windows: exactly ONE all-`r` window, 0-based
+  (6,6) = rows 7-8, cols 7-8, 1-based. The nest is 2x2 and unique on this grid, so "a whole lot
+  more" is not about more `r` cells here. I am NOT guessing where else it points.
+- **INCIDENTAL BUT EXACT:** `~/briefcase/gsmg-community/gsmg_finalgrid.txt` is **14 rows x 14 cols**
+  of 0/1 (I earlier mis-read 13 from a truncated preview; corrected by parsing the file), and it is
+  the **bitwise complement** of the bunny-nest grid: `o->1`, `w->0`, **167/167 inverted, 0
+  exceptions** over cells where the nest has a plain `o`/`w`. Re-derived by re-parsing the `.py`
+  source independently rather than reusing my own transcription, so the comparison is not
+  self-confirming. The 28 colored (`b`/`y`/`r`) cells do NOT follow the rule: 13 map to `0`, 15 to
+  `1`, i.e. not a consistent third value - the color channel is discarded rather than complemented.
+  **Significance deliberately OPEN:** an exact complement is also what any image-inversion
+  preprocessing yields, so I cannot distinguish "deliberate second reading" from "someone inverted
+  the PNG to get a 0/1 matrix". Recording it as measured, not as meaning - the `01911` error was a
+  pattern observed and a meaning asserted.
+- **LIVE RISK, flagged not reopened:** `R-GRID14`'s single-nest conclusion may be a partial read, and
+  per this hint "found the nest" is precisely the rabbit-hole progress the creator warns against.
+  Applied to this session's own work: the `R-DATEBATT` 51-candidate battery and the passport chase
+  are both rabbit holes in the plain sense; recording them as negatives is the correct handling, but
+  neither should be reported as progress.
+- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged.

@@ -18451,3 +18451,75 @@ of it.
 0 oracle calls wasted on duplicates, 51 evaluated, 0 candidates promoted, no lead. X unsolved, both
 gates unchanged at 125,635,374 sats (small, partially spent) and 375,055,856 sats (dualite,
 unspent).
+
+## R-RABBIT-HOLE-2026-09-29: the "wrong rabbit hole" warning resolves - the creator named the hole TWICE, and it is NOT the one we are stuck on; plus an EXACT bitwise-complement relation between two on-disk grids
+
+`R-GRPCHAT23` FINDING 1 recorded the 2023-08-06 creator warning - "The main risk is to fall into the
+wrong rabbit hole" - and declined to act on it, reasoning that naming the wrong hole requires
+knowing the right one and that the crux is unsolvable without a premise. I think that reasoning was
+backwards, and this row overturns it. A warning to avoid a specific attractor is a POSITIVE
+constraint if the corpus documents what solvers actually converged on. It does.
+
+METHOD. Parsed all 372 creator messages out of `Msgs.txt` and screened all of them for
+direction-giving vocabulary (wrong / not the / don't / waste / distraction / dead end / pointless /
+mislead / rabbit / stop / won't help). 25 of 372 match. 20 are conversational, procedural or
+key-custody. FIVE are substantive, and they name the hole.
+
+FINDING 1 - THE 2024-03-26 RESTATEMENT, IN RESPONSE TO A SOLVER NAMING THE HOLE.
+2024-03-26 10:46, creator, replying to a solver's "being lost": **"Yeah, being lost is a common
+aspect of being on this planet I guess, or at least when tempering with rabbit holes."** He echoes
+the solver's own framing. `tempering` = **0 hits** in all three analysis docs. This is a SECOND,
+later occurrence of the creator naming rabbit holes as a hazard, 15 months after the first, and
+`R-GRPCHAT23` found only the first.
+
+FINDING 2 - THE 2020-01-14 HINT, WHICH IS THE ONE THAT ACTUALLY SPECIFIES THE HOLE. Verbatim:
+  "Roses are White but often Red. / Yellow has a number and so does Blue. / Go back to the first
+   puzzle piece without further ado. / It might have shown you only one door, beware that the
+   rabbit's nest may contain a whole lot more. / Hush hush."
+The operative clause is **"beware that the rabbit's nest may contain a whole lot more"**. The hedge
+"may ... a whole lot more" is a PLURALITY claim, and the ledger has been reading ONE nest: the
+`R-GRID14` cell (7,4) "white nest glyph drawn inside a red cell" is a single object. So the
+creator's instruction is arguably not "find the nest" (done, 2026-09-29) but "the one you found is
+not the whole set" - which would mean the entire current frontier rests on a partial read.
+This hint is ALREADY ledgered (`tested.md:13884` carries the full transcription), so this is NOT a
+new transcription. What is new is that I had never tested the plurality.
+
+FINDING 3 - THE MULTIPLICITY IS FALSIFIED FOR THE NEST READING, ON THE 14x14. Re-derived the grid
+directly from source rather than trusting any transcription:
+`~/storage/external/briefcase/gsmg-solver-group/gsmgio_bunny_nest.py` holds a 14x14 letter matrix
+(`o`/`w`/`b`/`y`/`r`). Exhaustive scan of all 169 possible 2x2 windows: **exactly ONE** all-`r`
+window, at 0-based (6,6) - i.e. rows 7-8, cols 7-8, 1-based. The nest is 2x2 and there is exactly
+one of them. So "a whole lot more" is NOT about more `r` cells in THIS grid. The plurality, if
+real, points somewhere other than a second nest glyph - and I am not going to guess where, because
+guessing is the error `R-GRPCHAT23` just documented.
+
+FINDING 4 - AND HERE IS THE THING I DID NOT EXPECT. While testing FINDING 3 I compared the
+bunny-nest matrix against the other on-disk grid, `~/briefcase/gsmg-community/gsmg_finalgrid.txt`
+(14 rows x 14 cols of `0`/`1`, which I had earlier mis-read as 13 rows from a truncated preview -
+corrected here by parsing the file, it is 14). The relation is EXACT:
+  - over every cell where the nest grid has a plain `o`/`w` and the final grid has a `0`/`1`,
+    the mapping is `o -> 1` and `w -> 0`, with **167/167 inverted and 0 exceptions**
+  - re-derived by re-parsing the `.py` source independently, NOT by transcribing my own earlier
+    transcription, so this is not a self-confirming comparison
+  - the 28 colored cells (`b`/`y`/`r`) have NO `o`/`w` counterpart and do not follow the rule:
+    they map to `0` in 13 cases and `1` in 15, i.e. they are not a consistent third value
+So `gsmg_finalgrid.txt` is the **bitwise complement of the bunny-nest grid on the black/white
+substrate, with the color channel discarded**. That is a precise, mechanical, previously-unrecorded
+relation between two community artifacts, and it is the sort of thing `R-POINTERS` established is
+worth having. What it is WORTH is not established: an exact complement is also what you get from
+any "flip the image" preprocessing, so I cannot yet distinguish "deliberate second reading" from
+"someone inverted the PNG to make a 0/1 matrix". I am recording the relation as measured and
+leaving its significance open, because claiming the first would be the same move as the `01911`
+error - a pattern observed, a meaning asserted.
+
+THE NET CORRECTION TO `R-GRPCHAT23` FINDING 1. That row said the warning could not be honoured
+without knowing the right hole. Wrong: the creator names the hazard twice, and the second naming is
+an explicit reply to a solver who used the word. So the constraint IS actionable - it says do not
+treat rabbit-hole material as progress. Applied honestly to THIS project's recent work, that
+constraint bites in one specific place: `R-DATEBATT`'s 51-candidate date battery and the
+`R-GRPCHAT23` passport chase are both rabbit holes in the plain sense, and I recorded them as
+negatives, which is the correct handling. What I should NOT do is treat "the nest is found" as
+progress, and `R-GRID14`'s single-nest reading is exactly that. Flagging that as a live
+interpretation risk on an already-committed row rather than reopening it.
+
+0 oracle calls, 0 candidates, no lead promoted. X unsolved, both gates unchanged.
