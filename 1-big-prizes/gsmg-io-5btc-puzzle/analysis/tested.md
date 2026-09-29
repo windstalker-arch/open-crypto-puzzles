@@ -3440,7 +3440,7 @@ Date: 2026-09-03.
 
 ## 2026-09-03 - "dig deep": primary-artifact re-audit, no new mechanical lead
 - Re-examined the primary sources for any un-mined content. Findings (all nulls for new leads):
-  1. live_salphaseion.html (1075 tokens): re-derived the exact z-segmentation (z at token idx 765, 829, 859, 958). The raw HTML carries the 91-token dbbib form WITH the spurious middle run (abfdhbeffcdbbfcccgbfbeegg); this matches the known 91-vs-69 correction documented in data provenance + sections 48-50 (3x PNG OCR -> true dbbib = 69 = 3x23). NOT a new discrepancy; fully adjudicated. Stored faed_570 is a verbatim substring of the page (offset 195), unaffected.
+  1. live_salphaseion.html (1075 tokens): re-derived the exact z-segmentation (z at token idx 765, 829, 859, 958). The raw HTML carries the 91-token dbbib form WITH the spurious middle run (abfdhbeffcdbbfcccgbfbeegg); this matches the known 91-vs-69 correction documented in data provenance + sections 48-50 (3x PNG OCR -> true dbbib = 69 = 3x23). NOT a new discrepancy; fully adjudicated. Stored faed_570 is a verbatim substring of the page (offset 195), unaffected. **[SUPERSEDED 2026-09-12 - the "spurious middle run" call and the 69-is-authoritative conclusion here are BOTH WRONG. `finalpage-digit-streams.json` `_provenance` and rows 193-199 settle it the other way: the 91-token stream is tokens 0-90 of the live page textarea, byte-identical on the live site, in Wayback 2023-06-01 + 2026-04-05, and at community README line 371; the 69 is the superseded shallow-OCR crop of `salphaseion_enhanced.png` that dropped [44:66]. Ground truth is `dbbib_91`. This line still reads as current and is the most likely way to reach the wrong conclusion; see `R-VOIDROWS` FINDING 3.]**
   2. ~/briefcase/gsmg_era/app_*.js (2019/2020 GSMG page JS): standard Bitcoin address/base58/bech32/keccak library code bundled in the page front-end; no SalPhaseIon cipher/decode logic. Not a lead.
   3. ~/briefcase/MEMORY.md: records a DIFFERENT campaign (CryptoDeepTools audits, whale tracing, ECDSA nonce-reuse) - unrelated to the SalPhaseIon interpreter alphabet.
   4. ~/briefcase/GSMG-puzzle-research-summary.md (2026-09-01 brief): confirms the crux is the visual/on-page interpreter alphabet ("in front of your eyes"), the layered 16x7x23 construction is untestable until the alphabet/key-seed is fixed, and every mechanic (badly: VIC, matrixsum, prime-position/value, Architect quote 93-95, rose->row diff section 64 {248 cands}, color) is oracle-closed negative.
@@ -3471,7 +3471,7 @@ goal: a fast C oracle/checker whose EC-key-derivation is not the bottleneck. Reb
 ## 2026-09-03 - audit: fresh vision-LLM OCR re-encounters the disposed 91-token dbbib form (NOT a new discrepancy)
 - A fresh MiniMax-M3 (vision) pass on the enhanced working copy `salphaseion_enhanced.png` (full-image, 4x top-crop, and 4x pre-faed crop) re-read the section-1 (top) stream as the 91-token form WITH a middle run `...abfdhbeffcdbbfcccgbfbeegg...` and a further contiguous 104-token `abb...` run before `faed` (total 195 tokens to the `faed` offset, consistent with "faed_570 at page offset 195").
 - This re-places the exact 91-token string (and the 104-token abb block) that sections 48-50 / 76 / 83 and research note 9 already disposed as the CORRUPTED/spurious community-HTML reading, superseded by verified ground truth 69 = 3x23 via three independent OCR passes on the original SalPhaselonCosmicDuality.png plus CMYK C-channel separation and grayscale OCR.
-- Adjudication unchanged: the vision-LLM (and any single-model OCR) is NOT authoritative over the established multi-method ground truth for this crux stream. `data/finalpage-digit-streams.json` is therefore left at dbbib=69 / faed=570 (a transient local edit to 195 was reverted to restore the verified values). faed_570 (verbatim at page offset 195, trailing z) remains correct and untouched.
+- Adjudication unchanged: the vision-LLM (and any single-model OCR) is NOT authoritative over the established multi-method ground truth for this crux stream. `data/finalpage-digit-streams.json` is therefore left at dbbib=69 / faed=570 (a transient local edit to 195 was reverted to restore the verified values). faed_570 (verbatim at page offset 195, trailing z) remains correct and untouched. **[SUPERSEDED 2026-09-12 - "left at dbbib=69" is no longer the state. The file now carries BOTH fields: `dbbib_91` (91 tokens, AUTHORITATIVE) and `dbbib` (69 tokens, the superseded shallow-OCR crop, retained for tool back-compat only). The 91 was verified byte-identical on the live site, in Wayback 2023-06-01 + 2026-04-05, and at community README line 371; tools must read `d['dbbib_91']`, and `stream_field_audit.py --check` now enforces it. The "single-model OCR is not authoritative" principle here is CORRECT and still applies - it just does not imply the 91 is spurious, because the 91 was confirmed by the live textarea, not by any OCR. See `R-VOIDROWS` FINDING 3.]**
 - Net: no new mechanical lead; this row is a re-verification/audit only, not a new negative or candidate. Date: 2026-09-03, local.
 
 ## 2026-09-03 - session deltas: lead-8 preimage extend (fresh transcription), esrever full sweep, and binary-decode reproduction (all negative / verifying)
@@ -18593,3 +18593,288 @@ only under a reading this search cannot see: a different encoding, a non-image c
 complement between `gsmgio_bunny_nest.py` and `gsmg_finalgrid.txt`, which may be the "more" - but that
 is a complement, not a second nest, and image inversion explains it equally well. X unsolved, both gates
 unchanged.
+
+## R-VOIDROWS-2026-09-29: THE 18/6/12 VOID-ROW ACCOUNTING REPRODUCES EXACTLY, AND IS STILL OVER-COUNTED BY ONE - ROW 180 IS A FALSE POSITIVE BECAUSE ITS OBJECT IS A RENDER, NOT dbbib
+
+Audit, not a sweep. `R-DBBIBFIELD3` states the rule precisely ("18 rows are void on the dbbib side
+(pre-2026-09-07 AND citing a crop-reading tool AND mentioning dbbib)") but commits no derivation, so
+the number is not checkable from the repository. Re-derived it.
+
+METHOD. The 34-tool crop-reading set was recovered exactly rather than taken on trust: the current
+`stream_field_audit.py` was run against the pre-fix tree (`git worktree add --detach` at `fb67667`,
+the `R-DBBIBFIELD` commit), which returns CRITICAL 0 / STALE 34 - the figure `R-DBBIBFIELD` reported.
+Rows were then cut on `#`-level headers, dated from the header (falling back to line order against
+`## 193.` at line 4665, the 2026-09-07 reinstatement), and matched against that tool set.
+
+FINDING 1 - THE COUNT REPRODUCES, AND IS NOT AN ARTEFACT OF WHERE A ROW IS SAID TO START. 18 rows:
+numbered 68, 123, 124, 125, 129, 131,
+137, 138, 143, 144, 145, 146, 147, 149, 158, 164, 180, plus one UNNUMBERED row, `## 65` (line 1622,
+`cosmicd_base64idx_sweep`, whose own text says "combined with dbbib(69)/faed(570)"). The result is
+unchanged when the header cut is widened or narrowed to levels 2..6, so it is not an artefact of
+where a row is considered to start. 18 - 6 cleared by `R-DBBIBFIELD2` (125, 138, 143, 144, 149, 180)
+= 12, and the 12 resolve exactly as 7 re-run by `R-DBBIBFIELD3` (68, 123, 124, 129, 131, 137, 164) +
+4 load-line-fixed-but-still-void (65, 146, 147, 158) + 1 deliberately skipped (145). The arithmetic
+`6 + 12 = 18` and `7 + 4 + 1 = 12` is sound. The one thing a reader cannot do is see the 12th member
+of the list, because `## 65` is identified only by tool name and never by row id.
+
+FINDING 2 - BUT ONE OF THE 18 IS A FALSE POSITIVE, AND IT IS ONE OF THE SIX `R-DBBIBFIELD2` COUNTED
+AS CLEARED. Row 180 (line 4223) is "Rendered continuous digit field (SalPhaseIon.png) through the
+certified half-pair/pyramid/join tools, 304 candidates NO MATCH on both gates (2026-09-06)". Its
+candidate object is the 593-character RENDER, not dbbib: its own method line reads "streams =
+{render593, render593-noz, render593-ai+o, CONTROL dbbib+faed(638) as a regression check vs
+section 149}", and its instrument was a scratch script, not the tool - it mentions
+`xor_halfpair_sweep.py` only to say it reuses that tool's 17/18 triangle math. dbbib enters row 180
+twice and neither time as the tested object: as a regression control that duplicates row 149, and as
+a witness ("render[:69] == stored dbbib byte-exact"). Row 149 IS repaired - `R-DBBIBFIELD2` re-ran
+`xor_halfpair_sweep.py` and reproduced its own 312 candidates on `dbbib_91` - so row 180's dbbib-side
+content is covered. But re-running the tool does not re-derive row 180's 304 render-derived
+candidates, so counting it as an independently cleared row is the same class of error as the 14->18
+over-count these two rows were written to correct. TRUE COUNT: 17 void rows, 11 remaining, 5 cleared.
+
+FINDING 3 - WITHDRAWN BY THIS ROW. I first wrote that row 180's witness
+"render[:69] == stored dbbib byte-exact" showed two independent OCR artifacts agreeing on the SAME
+22-char gap, and therefore that the run `bfdhbeffcdbbfcccgbfbee` is absent from the image rather
+than dropped by one OCR pass. **That inference was wrong in both directions, and the run is the
+AUTHORITATIVE text, not a gap.** Two errors, both now closed:
+  - **The witness is a containment identity, not corroboration.** Row 180's own method states the
+    render is the page's CONTINUOUS field, `dbbib(69) + ab-run + faed(570+z) + z + seg1(63) + z +
+    seg2(29)`. So `dbbib` IS a 69-char PREFIX of the render by construction, and `render[:69] ==
+    stored dbbib` only asserts the render and the stored crop agree on that shared prefix - it is
+    an in-run sanity check, and it appears in row 180 under "Witnesses (in-run PASS)". The render
+    came from the same shallow-OCR view of the same page (`sal_ocr.txt`, SalPhaselonCosmicDuality.png
+    vs the crop of `salphaseion_enhanced.png`). One observation, not two. "Two independent readings
+    agree" would have been worth something; containment is worth nothing here.
+  - **The direction of the claim was inverted.** `data/finalpage-digit-streams.json` `_provenance`
+    records the settlement: the 91-token stream is tokens 0-90 of the LIVE PAGE TEXTAREA, verified
+    byte-identical on the live site (HTTP 200, gsmg.io/89727c...), in Wayback captures
+    2023-06-01 and 2026-04-05, and at community README line 371; the 69-token value is the
+    SUPERSEDED shallow-OCR crop that dropped the middle run, retained only for tool back-compat.
+    The run is therefore present in four non-image sources. Nothing is missing from the pixels, and
+    the question "why do the pixels not carry those 22 tokens" is moot - the text does not depend on
+    the image at all. Structural check: `dbbib[:45] + 'bfdhbeffcdbbfcccgbfbee' + dbbib[45:]` ==
+    `dbbib_91` exactly, so the 91 is the 69 with that run restored at [44:66].
+  The usable lesson is the opposite of the one I drew, and it is a trap the ledger already documents
+  twice: a witness that looks like independent corroboration is often a within-run PASS assertion
+  about two views of the same source, and this repo has twice been bitten by a superseded baseline
+  (`R-BASELINE-SUPERSEDED`, `R-MATRIX69` filename mismatch). A contradiction between two ledger
+  sections should be resolved by reading `_provenance` and the newest row, never by re-deriving from
+  the weaker artifact. Note also that this exact inversion is ALREADY IN THE LEDGER at an older
+  vintage: `tested.md:3443` and the 2026-09-03 vision-LLM audit (`:3474`) take the OPPOSITE position
+  - 69 authoritative, the 91 a "spurious middle run" - and that is superseded by the 2026-09-12
+  correction. So the file contains both positions; the stale one still reads as current. That is a
+  navigability hazard worth flagging, and it is the most likely way I got this wrong.
+
+FINDING 4 - TWO BOOKKEEPING DEFECTS, BOTH IN TEXT I AM NOT CHANGING SILENTLY. (a) `tested.md:18008`'s
+"net of this row" sentence does not add up: "6 of 18 void rows repaired, 4 load-line-fixed-but-still-void,
+1 (row 145) deliberately skipped, 4 re-runs of the ciphertools/Bifid-dependent rows in 123/164 folded
+into the 480-candidate run, leaving 1 row (131, Beaufort) now closed" enumerates 6+4+1+4+1. The 6 are
+FAMILIES covering 7 rows, the "4 re-runs ... in 123/164" are 2 rows in 1 run, and 131 is inside the 6.
+The sentence left uncorrected, because a correction that rewrites a committed accounting without
+saying which is right is the `R-P15FIX` failure mode. (b) `STATE_BRIEF.md:1081` (addendum 2) says
+"12 rows remain void-but-unrepaired" while the row it summarises, `tested.md:17925` (and, echoing
+it, `tested.md:17947`), says 14, and
+addendum 3 describes the 14 as the over-count. One of the two is wrong; addendum 2 appears to have been
+edited after the fact without a note.
+
+FINDING 5 - ONE REPORTED FIGURE NO LONGER REPRODUCES, AND IT IS USED AS A BASELINE.
+`R-DBBIBFIELD` reported "CRITICAL 0 / STALE 34 / DUAL 12 / OK 44" and `R-DBBIBFIELD3` quotes "down from
+34 STALE and 44 OK at R-DBBIBFIELD". The current checker run against that same commit gives
+CRITICAL 0 / STALE 34 / DUAL 10 / OK 46. STALE and CRITICAL reproduce; DUAL and OK do not, because the
+checker was corrected twice in the two rows that followed (a third read-spelling, then a key/label
+false-positive fix that moved two tools DUAL -> OK). The "44 OK" baseline is a number from a version
+of the checker that no longer exists. Current state confirmed today: CRITICAL 0 / STALE 18 / DUAL 10 /
+OK 62, rc=0.
+
+NOT CLAIMED. No negative is re-run and no tool is re-classified by this row; the 11 still-void rows
+are exactly as void as `R-DBBIBFIELD3` left them, and the 11 STALE tools are untouched. Row 180's
+304 candidates are NOT re-run - they cannot be re-derived from `dbbib_91`, and re-running the tool on
+the crop's replacement is not the same experiment. FINDING 3 is a SELF-RETRACTION and is recorded as
+one: it originally claimed the 22-char run was absent from the image, and that was wrong - the run is
+part of the authoritative 91-token stream and the witness it rested on was a containment check, not
+a second reading. It yields no lead, and nothing else in this row depends on it. No positive is
+claimed, altered or retracted. No claim about key uniqueness from the phase-3.2 object, unchanged
+and still uncertified.
+
+STATE UNCHANGED. X unsolved, 0 new candidates, 0 oracle calls. Both gates intact (1GSMG1JC9 =
+125635374 sats partially-spent, 17ucy1K9 = 375055856 sats funded-unspent, both OK 2026-09-29). Crux
+unchanged: X is still the decode of dbbib_91/faed_570 under the interpreter alphabet.
+
+GATES: stream_field_audit 24/24 + --check rc=0 (CRITICAL 0 / STALE 18 / DUAL 10 / OK 62);
+retraction_audit --check 0 problems; p32key_verify 24/24; p15null_chitest 11/11; oracle +
+oracle_dualite --selftest rc=0 both; validator 14 pass / 1 warn (pre-existing French leftovers) /
+0 fail. Escrow check rc=0, both gates OK.
+
+Date: 2026-09-29, local.
+
+## R-GRPCHAT23-CORRECTION-2026-09-29: the "38 creator messages" and "15 unmined" figures are both wrong, and BOTH surviving findings are MISATTRIBUTED TO A SOLVER
+
+`R-GRPCHAT23` is committed (`tested.md:18214`) and its headline is a count. Counts are the one class
+of claim in this ledger that other rows are allowed to lean on, so it was re-derived rather than
+inherited. Three of its numbers do not survive, and the two findings it promotes are about a
+person who is not the creator.
+
+METHOD. Parsed `storage/external/briefcase/gsmg-solver-group/jan2023-aug2023.txt` on its real
+structure, which is a flat sequence of `  - From: NAME` blocks, each with `  - Timestamp: [ISO]`,
+optionally `  - Type: A reply to another user`, and then EITHER `  - Message: "..."` for a
+non-reply OR `  - Message from other user:` + `     - Response: "..."` for a reply. Continuation
+lines are indented >=6 spaces and carry the rest of a wrapped message. Then joined every creator
+record to `GSMG_JRK.md` positionally.
+
+FINDING 0 - THE EXPORT PUTS A REPLY'S TEXT IN A DIFFERENT FIELD. A reply record's own
+`- Message:` is EMPTY; the reply's actual words are the `- Response:` value on the same record.
+Reading only `Message:` silently drops the text of all 23 replies, which is what makes a corpus of
+this shape look like it has far fewer messages than it has. This single field choice explains the
+whole "38" error and it is the reusable lesson: on this corpus, `Message` alone is not the text.
+
+FINDING 1 - THE REAL COUNTS. The file holds **943 records from 39 participants**, 2023-01-01 to
+2023-08-06 (`R-GRPCHAT23` said 759 messages and 35 participants - both wrong, both in the
+direction of undercounting). Of those, **62 are `Jrk Bgrt`**: **23 replies** and **39 non-replies**.
+58 of the 62 carry text and all 58 texts are DISTINCT; 4 are blank (one empty reply at
+2023-01-11T05:45:22, plus three records whose body is the literal `""` at 2023-01-12T08:13:36,
+2023-08-03T17:32:25 and 2023-08-03T17:32:47). "38" is none of 62 / 58 / 39 / 23, and I could not
+build it from any predicate - not total, not non-blank, not non-reply, not distinct, not
+date-windowed. The nearest structural candidate is 39 non-replies minus one, but nothing in the
+corpus selects which one, so I am not offering it. Per `R-NEOPASSPORT`, `R-NEOPASSPORT`'s 23/62
+reply split reproduces exactly and is unaffected by this row.
+
+FINDING 2 - "15 ARE NOT IN THE CREATOR-ONLY CORPUS" IS FALSE, AND IT IS FALSE BY A LOT.
+`R-GRPCHAT23`'s whole point was a gap in the direction that matters: it claimed 15 of the creator
+messages were absent from `GSMG_JRK.md`, so the hint -> VALIDATION chains it wanted were only
+available in the mixed corpus. They are not absent. Joining on time (the mixed export is
+UTC+5/+4; `GSMG_JRK.md` is the same instants, so `GSMG_JRK = jan - 5h` before 2023-03-26 and
+`= jan - 4h` from 2023-03-26 - the DST switch, confirmed on 26 independently text-matched pairs
+and then holding at 62/62): **62/62 present, 0 missing.** 57 match byte-exact, 1 matches only
+after case/emoji normalisation, and the 4 blank records are all present as bullets at the
+expected times. The claim is 15 when the true number is 0.
+
+FINDING 3 - A DATA-QUALITY DEFECT IN `GSMG_JRK.md` THAT MANY PARSERS WILL TRIP ON. Line 431 is
+`- **#8472** ... - :)? ### 2023-04-07`: a bullet whose text ends in an un-consumed `###` date
+header. Any parser that takes the date from the most recent `###` line attributes that bullet, and
+everything up to the next real header, to 2023-04-07 - and in my parse it swallowed the creator's
+2023-03-03 `🐰` message, which is how that message first appeared to be "missing" from April. The
+`###` header is glued to the previous bullet; the fix belongs in the reader, not in the corpus.
+
+FINDING 4 - BOTH PROMOTED FINDINGS ARE A SOLVER'S WORDS, NOT THE CREATOR'S. This is the part that
+changes the reading of the thread, and it is checked against `Msgs.txt`, which carries the
+speaker on every line.
+  - `R-GRPCHAT23` FINDING 1: "The main risk is to fall into the wrong rabbit hole", attributed to
+    `Jrk Bgrt` at 07:56 and built into "a creator risk warning that solvers provoked and the
+    creator did not resolve". It is **omaru (@oomaruu)**, a solver, at 2023-08-06 10:57 UTC. The
+    creator's line in that same burst is "You know if you know." So the warning is a solver's
+    impression of where the difficulty lies, and the creator's actual contribution is a refusal to
+    elaborate - which is a much weaker and much more honest reading.
+  - `R-GRPCHAT23` FINDING 1, later in the same paragraph: "I really feel like it's close to being
+    solved. I think if I had one good day to actually focus on it I could almost do it", described as
+    "the creator's own statement that a focused day nearly closes it". It is **ArchOptic
+    (@Saberto_0th)**, a solver, at 2023-08-06 12:45 UTC. Attributing it to the creator makes it
+    evidence about puzzle difficulty; as solver talk it is evidence about solver confidence, and
+    the two are not interchangeable.
+  So the single characterisation "the creator named the hole TWICE" collapses on both of its
+  supports, at least as stated. `R-RABBIT-HOLE` FINDING 1 (the 2024-03-26 "tempering with rabbit
+  holes" quote) is INDEPENDENT of both and still stands, so the "do not treat rabbit-hole material
+  as progress" constraint survives - it now rests on one verified creator quote instead of two, one
+  of which was a solver's and the other of which was a misattribution.
+
+NOT CLAIMED. No corpus is re-attributed in place and no committed row is edited; this row is the
+correction of record and the earlier text stays auditable. The passport quote (FINDING 2 of the
+original, 2023-05-02 16:12) is UNAFFECTED - it is verified present in `GSMG_JRK.md` - and
+`R-NEOPASSPORT` and its addendum are untouched. No message is promoted to a lead on the strength of
+a solver's line. No positive claimed, altered or retracted.
+
+STATE UNCHANGED. X unsolved, 0 new candidates, 0 oracle calls. Both gates intact (1GSMG1JC9 =
+125635374 sats partially-spent, 17ucy1K9 = 375055856 sats funded-unspent, both OK 2026-09-29).
+Crux unchanged: X is still the decode of dbbib_91/faed_570 under the interpreter alphabet.
+
+GATES: stream_field_audit 24/24 + --check rc=0; retraction_audit --check 0 problems; p32key_verify
+24/24; p15null_chitest 11/11; oracle + oracle_dualite --selftest rc=0 both; validator 14 pass /
+1 warn (pre-existing) / 0 fail. Escrow check rc=0, both gates OK.
+
+Date: 2026-09-29, local.
+
+## R-RABBIT-HOLE-CORRECTION-2026-09-29: the "exact bitwise complement" is NOT a complement, NOT a second reading, and NOT 167 - `gsmg_finalgrid.txt` IS the phase-1 bit field, off by one cell
+
+`R-RABBIT-HOLE` FINDING 4 recorded a relation between two on-disk grids and, commendably, declined
+to interpret it. It is now interpreted, and the relation does not survive its own description: the
+artefact it called new is the project's own certified read, and the polarity it called a
+complement is the polarity the project already documents.
+
+METHOD. Three grids, all parsed from source with no transcribed intermediate:
+  - `~/storage/external/briefcase/gsmg-solver-group/gsmgio_bunny_nest.py` - a 14x14 LETTER matrix
+    (`o`/`w`/`b`/`y`/`r`). Census: `o`=86, `w`=82, `b`=15, `y`=9, `r`=4, total 196. The file
+    carries NO colour information beyond the header comment `o - black, w - white, b - blue,
+    y - yellow, r - rabbit`; there is no RGB anywhere in it, so no threshold argument can be made
+    from this file.
+  - `~/briefcase/gsmg-community/gsmg_finalgrid.txt` - 14x14 of `0`/`1`, 101 ones / 95 zeros.
+  - `data/phase1-matrix-14x14-full.json` - the 196-cell COLOUR map this project already certifies
+    (`"B/K=1 W/Y=0"`, `"_provenance": "identical in all 196 cells to clues/puzzle.png (cell=75)
+    and to the recovered img/follow_the_white_rabbit.png (cell=25)"`). Census: `B`=15, `K`=87,
+    `W`=85, `Y`=9, no `R`.
+
+FINDING 1 - THE 28 COLOURED CELLS ARE PERFECTLY CONSISTENT, NOT "NOT A CONSISTENT THIRD VALUE".
+`R-RABBIT-HOLE` observed "0 in 13 cases and 1 in 15, i.e. they are not a consistent third value" and
+stopped at the two totals. Broken down by symbol the rule is exact, with no exceptions: `b`->1
+**15/15**, `y`->0 **9/9**, `r`->0 **4/4**. The 13 is simply 9 yellow + 4 rabbit, i.e. the two
+colours that are light agree with each other, and the 15 is the one colour that is dark. A class
+split by colour is not an inconsistency; the row treated a merged total as a failed hypothesis.
+
+FINDING 2 - THE SUBSTRATE COUNT IS 168/168, NOT 167/167, AND THE ROW NEVER COVERED ITS OWN LAST
+CELL. Parsed as a proper 14x14 the substrate is `o`+`w` = 168 cells, and the mapping `o`->1,
+`w`->0 holds on **168/168 with 0 exceptions**. 167 is what a row-splitter that dropped the first
+cell of row 0 produces, and the tell is that the row's own arithmetic reached 195 of 196: 167
+substrate + 28 coloured = 195, one cell unaccounted for, with no comment. So the "exact"
+complement was exact on 195/196 and the missing cell is the first `o` at (0,0). The relation is
+stronger than reported, not weaker - but see FINDING 4, because that is not what makes it
+interesting.
+
+FINDING 3 - IT IS NOT A COMPLEMENT; IT IS A THRESHOLD, AND IT IS THE PROJECT'S OWN POLARITY.
+`o` is BLACK and `w` is WHITE. Emitting 1 for black and 0 for white is a threshold with the
+bright class named 0 - not an inversion. The phase-1 file settles it independently: its `_read`
+field already specifies **`B/K=1 W/Y=0`**, which is exactly `b`,`o`->1 and `w`,`y`->0. Scoped to the
+four colours the legend does define, the split is a single-channel threshold with a wide margin:
+red-channel value is 0 for `K` and 63 for `B` against 255 for both `W` and `Y`, so `1 = R <= 63`
+and `0 = R >= 255` separates the two classes with a 4x gap and no per-cell tuning. (`r` is excluded
+from that argument: the nest file stores no colour for it and the phase-1 map has no `R` entry.)
+
+FINDING 4 - AND THE DECISIVE ONE: `gsmg_finalgrid.txt` IS THE PHASE-1 BIT FIELD. Comparing
+`gsmg_finalgrid.txt` against the phase-1 map under phase-1's own documented rule (`B/K=1`,
+`W/Y=0`) gives **195/196 identical - ONE cell differs.** phase-1 has 102 ones, `gsmg_finalgrid.txt`
+has 101, and the single difference is 0-based (7,6): phase-1 says `K` (1), the final grid says `0`.
+That cell is inside the 2x2 `r` block at 0-based (6,6),(6,7),(7,6),(7,7), whose other three cells
+are `W` in phase-1 and therefore already `0` and already agreeing. So the two censuses differ by
+exactly the 4 cells of a drawn 2x2 icon that overwrites the grid it sits on: 1 black cell and
+3 white cells underneath, with the icon's own value written over all four. `gsmg_finalgrid.txt` is
+the certified phase-1 bit field with one bit changed by an overlaid drawing.
+
+FINDING 5 - THE TWO LETTER/GRID ARTEFACTS ARE THE SAME OBJECT, WHICH IS THE ACTUAL RESULT. The
+independent confirmation is positional, and it is exact: between `gsmgio_bunny_nest.py` and
+`data/phase1-matrix-14x14-full.json`, blue agrees on **15/15 cells by position** and yellow on
+**9/9**, with black a strict subset (86 of phase-1's 87) and white a strict subset (82 of 85), the
+four surplus cells being exactly the `r` block. Two separately produced community transcriptions
+of the same 14x14 object agree on every coloured position. THAT is a real cross-render check of
+the kind `R-GRID14` and `R-POINTERS` exist to produce, and it is worth having.
+
+NET. The question `R-RABBIT-HOLE` left open - "deliberate second reading" versus "someone
+inverted the PNG" - resolves to the second, on three independent grounds: the polarity is the
+project's own documented convention, the polarity is reproducible as a single-channel threshold,
+and the artefact is byte-equal to the certified phase-1 field bar one overlaid cell. So
+`gsmg_finalgrid.txt` is a lossy 5-to-2 reduction of a grid we already hold, adds ZERO information,
+and cannot be "the whole lot more". The one open visual thread that `R-NEST-SEARCH` left standing
+at the end of its row is therefore CLOSED as a negative. This does not touch `R-GRID14`'s single
+nest-glyph observation, which stands and remains the only verified nest object.
+
+NOT CLAIMED. No phase-1 read is altered, re-run, or re-certified; the certified field is 102 ones
+and stays 102 ones, and the 101-one community file is not substituted for it. No claim that the
+rabbit-hole warning is refuted - `R-RABBIT-HOLE` FINDING 1 (the 2024-03-26 "tempering" quote) is
+independent of this row and stands. No new candidate, and the `R-NEST-SEARCH` negative is not
+reopened. No positive claimed, altered or retracted.
+
+STATE UNCHANGED. X unsolved, 0 new candidates, 0 oracle calls. Both gates intact (1GSMG1JC9 =
+125635374 sats partially-spent, 17ucy1K9 = 375055856 sats funded-unspent, both OK 2026-09-29).
+Crux unchanged: X is still the decode of dbbib_91/faed_570 under the interpreter alphabet.
+
+GATES: stream_field_audit 24/24 + --check rc=0 (CRITICAL 0 / STALE 18 / DUAL 10 / OK 62);
+retraction_audit --check 0 problems; p32key_verify 24/24; p15null_chitest 11/11; oracle +
+oracle_dualite --selftest rc=0 both; validator 14 pass / 1 warn (pre-existing) / 0 fail. Escrow
+check rc=0, both gates OK.
+
+Date: 2026-09-29, local.

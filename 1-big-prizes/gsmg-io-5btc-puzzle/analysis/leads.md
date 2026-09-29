@@ -2051,13 +2051,16 @@ revive it, it has to say what reading order the three existing negatives did not
   NOT the same tree - searching the wrong one produces a confident false negative, which is
   what I did and then caught with a positive control.
 
-- `jan2023-aug2023.txt` (199KB, 759 msgs, 35 participants, 2023-01..08) is a SECOND group-chat
-  corpus, not a subset of the creator-only `GSMG_JRK.md`; 15 of its creator messages are
-  unmined and 2 matter (`R-GRPCHAT23`). The creator warns "The main risk is to fall into the
-  wrong rabbit hole" when explicitly pressed to say more, and points at "the expiration date of
-  his passport" in a scene that is NOT in the corpus. Both are method constraints / artifact
-  pointers, not candidate strings - the existing sweep only saw "rabbit hole" as a cipher
-  candidate. Honouring the first requires knowing the right hole, which is the crux.
+- `jan2023-aug2023.txt` (199KB, **943 msgs, 39 participants**, 2023-01..08) is a SECOND group-chat
+  corpus, not a subset of the creator-only `GSMG_JRK.md`. **CORRECTED `R-GRPCHAT23-CORRECTION`:** it
+  holds **62** `Jrk Bgrt` records (23 replies / 39 non-replies / 58 with text), not 38 - and
+  **0** of them are missing from `GSMG_JRK.md`, not 15 (join is 62/62, `-5h` before 2023-03-26 and
+  `-4h` after; 57 byte-exact, 1 case/emoji variant, 4 blank-but-present). So the "unmined creator
+  material" gap that justified the row **does not exist**. Separately, "The main risk is to fall
+  into the wrong rabbit hole" is **omaru (@oomaruu), a solver**, and the passport pointer (see
+  `R-NEOPASSPORT`) is real and IS in the creator-only corpus. The passport pointer survives as a
+  method constraint / artifact pointer, not a candidate string - the existing sweep only saw
+  "rabbit hole" as a cipher candidate.
 
 - **AUTHORITATIVE UNLEDGERED HINT (`R-NEOPASSPORT`): 2021-12-31, creator, verbatim - "The only date
   I give away is the expiry date of neo's passport."** Zero hits for "only date I give away" across
@@ -2096,18 +2099,26 @@ revive it, it has to say what reading order the three existing negatives did not
   AS THE ANSWER only; salt/index/stride/key use all remain untested and unspecified, which is
   where the real gap is.
 - **THE RABBIT-HOLE WARNING IS ACTIONABLE, and I was wrong to park it (`R-RABBIT-HOLE`).** The
-  creator names the hazard TWICE: 2023-08-06 "The main risk is to fall into the wrong rabbit hole"
-  and 2024-03-26 "or at least when tempering with rabbit holes" (replying to a solver who used the
-  word; `tempering` = 0 in all three docs, so `R-GRPCHAT23` found only the first). The 2020-01-14
+  creator names the hazard **ONCE, not twice** - **CORRECTED by `R-GRPCHAT23-CORRECTION`:** the
+  2023-08-06 "The main risk is to fall into the wrong rabbit hole" is **omaru (@oomaruu), a
+  solver**, so the surviving creator leg is 2024-03-26 "or at least when tempering with rabbit
+  holes" (replying to a solver who used the word; `tempering` = 0 in all three docs). One verified
+  creator quote is still enough to hold the constraint. The 2020-01-14
   hint is the specific one: **"beware that the rabbit's nest may contain a whole lot more"** - a
   PLURALITY claim, and the ledger reads exactly ONE nest. Exhaustive 2x2 scan of the 14x14 (rebuilt
   from `gsmgio_bunny_nest.py` source, not transcribed): exactly ONE all-`r` window at (6,6), rows
   7-8 cols 7-8. So plurality is falsified for the nest reading on this grid - and I am NOT guessing
   where else it points.
-  **Incidental, exact:** `~/briefcase/gsmg-community/gsmg_finalgrid.txt` (14x14 of 0/1) is the
-  **bitwise complement** of the bunny-nest grid - `o->1`, `w->0`, **167/167 inverted, 0 exceptions**
-  on the black/white substrate, with the 28 colored cells breaking the rule (13 map to 0, 15 to 1).
-  Recorded as a measured relation, significance OPEN: an exact complement is also what any
-  image-inversion preprocessing produces, so I cannot yet call it a deliberate second reading.
+  **RETIRED (`R-RABBIT-HOLE-CORRECTION`) - the "complement" was our own phase-1 field, not a second
+  reading.** `~/briefcase/gsmg-community/gsmg_finalgrid.txt` (14x14 of 0/1) is **168/168, not
+  167/167** (the old count dropped the first cell of row 0), and the colour cells are **consistent,
+  not broken**: `b`->1 15/15, `y`->0 9/9, `r`->0 4/4. It is a **threshold, not a complement** - `o`
+  is black, `w` is white, so 1=dark/0=light - and the polarity is the one
+  `data/phase1-matrix-14x14-full.json` already documents (`B/K=1 W/Y=0`). Under that rule it equals
+  the certified phase-1 field on **195/196 cells**, the single exception being 0-based (7,6) inside
+  the 2x2 `r` block, which overwrites 1 black + 3 white cells. So it adds **zero** information and
+  cannot be the "whole lot more"; the `R-NEST-SEARCH` thread this left open is **CLOSED negative**.
+  **Keepable result (positional, not semantic):** the nest letter matrix and the phase-1 colour map
+  agree on **15/15 blue and 9/9 yellow positions** - an exact cross-render check of one object.
   **Live risk flagged:** `R-GRID14`'s single-nest conclusion may be a partial read, and per this
   hint "found the nest" is exactly the rabbit-hole progress the creator warns against.

@@ -1381,3 +1381,110 @@ false positive, a standing methodological correction, and a square-search screen
   are both rabbit holes in the plain sense; recording them as negatives is the correct handling, but
   neither should be reported as progress.
 - 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged.
+
+---
+
+## 2026-09-29 addendum 13 (audit): THREE COMMITTED ROWS CORRECTED; NO STATE CHANGE
+
+`R-VOIDROWS`, `R-GRPCHAT23-CORRECTION` and `R-RABBIT-HOLE-CORRECTION` in `tested.md`. This is an
+audit of committed claims, not new exploration: 0 oracle calls, 0 candidates, no lead promoted, no
+positive claimed, altered or retracted, X unsolved, both gates unchanged. It supersedes addenda 8
+and 12 and corrects a figure in addendum 2. Four corrections, in descending order of consequence.
+
+**1. THE "COMPLIMENT" IS THE PROJECT'S OWN PHASE-1 BIT FIELD - `R-RABBIT-HOLE` FINDING 4 IS
+RETIRED.** The last line of addendum 3 calls `gsmg_finalgrid.txt` an "INCIDENTAL BUT EXACT"
+bitwise complement, 167/167, and leaves significance open. Three things settle it, all verified
+from source:
+  - **168/168, not 167/167.** The substrate is 168 cells and `o`->1 / `w`->0 holds on every one,
+    0 exceptions. 167 was a parser that dropped the first cell of row 0; the old row's own
+    arithmetic reached 195 of 196 and did not notice the shortfall.
+  - **The colours are consistent, not inconsistent.** `b`->1 15/15, `y`->0 9/9, `r`->0 4/4. The
+    "13 and 15, not a consistent third value" reading mistook a merged total for a failed rule.
+  - **It is a threshold, not a complement, and the polarity is already ours.**
+    `data/phase1-matrix-14x14-full.json` documents `_read: ... B/K=1 W/Y=0`, which is exactly this
+    mapping. Compared under that rule, `gsmg_finalgrid.txt` equals the certified phase-1 field on
+    **195 of 196 cells**; the one difference is 0-based (7,6), inside the 2x2 `r` block, which
+    overwrites 1 black + 3 white cells of the base grid. 102 ones vs 101 ones.
+  So `gsmg_finalgrid.txt` is a lossy 5-to-2 reduction of a grid we already hold, adds zero
+  information, and cannot be the "whole lot more" the 2020-01-14 hint points at. The one open
+  visual thread that `R-NEST-SEARCH` left standing is now CLOSED as a negative. The keepable result
+  is positional, not semantic: the nest letter matrix and the phase-1 colour map agree on **15/15
+  blue and 9/9 yellow cell positions**, an exact cross-render check of the same 14x14 object.
+  `R-GRID14`'s single nest glyph is untouched and remains the only verified nest object.
+
+**2. THE CREATOR-MESSAGE COUNTS WERE WRONG AND BOTH PROMOTED FINDINGS ARE A SOLVER'S - `R-GRPCHAT23`
+IS CORRECTED.** Its headline "38 creator messages, of which **15 are not in the creator-only
+corpus**" does not survive:
+  - The real figures: **943 records / 39 participants** (the row said 759 / 35), of which **62 are
+    `Jrk Bgrt`** - 23 replies, 39 non-replies, 58 carrying text, all 58 distinct, 4 blank. "38" is
+    none of 62 / 58 / 39 / 23 and I could not construct it from any predicate. The cause is
+    mechanical: in this export a reply's words live in `- Response:`, not `- Message:`, so reading
+    `Message` alone silently discards all 23 replies.
+  - **The 15-message gap is 0.** Joining every creator record to `GSMG_JRK.md` on time
+    (`GSMG_JRK = jan - 5h` before 2023-03-26, `- 4h` after; the DST switch, fixed on 26
+    independently text-matched pairs) gives **62/62 present, 0 missing** - 57 byte-exact, 1
+    case/emoji variant, 4 blank-but-present. So the corpus is not a source of unmined creator
+    material, which removes the reason that row existed.
+  - **"The main risk is to fall into the wrong rabbit hole" is `omaru (@oomaruu)`, a solver**
+    (2023-08-06 10:57 UTC), not the creator. The creator's line in that burst is "You know if you
+    know." **"I really feel like it's close to being solved..." is `ArchOptic (@Saberto_0th)`, a
+    solver** (2023-08-06 12:45 UTC), not the creator - so it cannot be read as a statement about
+    puzzle difficulty. Both of the row's two promoted findings lose their author, and the
+    "the creator named the hole TWICE" characterisation collapses with them.
+  - **The constraint survives on one leg, not two.** `R-RABBIT-HOLE` FINDING 1, the 2024-03-26
+    "tempering with rabbit holes" reply, is independent of both and still stands. Treat
+    rabbit-hole material as non-progress - that instruction is unchanged and still the right
+    default. `R-NEOPASSPORT` and its addendum are UNAFFECTED: the 2023-05-02 passport pointer is
+    verified present in `GSMG_JRK.md`, and its 23-of-62 reply split reproduces exactly.
+  - **New data-quality note:** `GSMG_JRK.md:431` has a `### 2023-04-07` header glued to the end of
+    the previous bullet, so date-attributed parsers misfile the 2023-03-03 `🐰` message into April.
+
+**3. THE 18 VOID-ROW COUNT REPRODUCES, BUT ROW 180 IS A FALSE POSITIVE - AND THE TWO
+BOOKKEEPING NUMBERS IN ADDENDUM 2 ARE WRONG.** Re-derived the `R-DBBIBFIELD3` rule by rebuilding
+the 34-tool crop-reading set from the pre-fix tree at `fb67667` (STALE 34 / CRITICAL 0 reproduces)
+and cutting rows on `#`-level headers. The count is exactly 18: rows 68, 123, 124, 125, 129, 131,
+137, 138, 143, 144, 145, 146, 147, 149, 158, 164, 180 plus UNNUMBERED row `## 65`
+(`cosmicd_base64idx_sweep`, listed only by tool name - which is why a reader cannot see the 12th
+member). The `6 + 12 = 18` and `7 + 4 + 1 = 12` arithmetic is sound and is insensitive to the
+header cut. But **row 180 tests the 593-char RENDER, not dbbib** - dbbib appears there only as a
+control (duplicating row 149) and as a witness - and it reuses `xor_halfpair_sweep.py`'s math
+rather than running the tool, so its 304 candidates are not re-derivable from `dbbib_91` and it is
+not a void row at all. **True count: 17 void rows, 11 remaining, 5 cleared** (row 180 is
+double-counted as a clear against a claim it never made). The net unresolved count is therefore
+unchanged at 11, and **addendum 2's "12 rows remain void-but-unrepaired" is wrong on both sides**
+- it disagrees with the row it summarises (`tested.md:17925` says 14) and it predates this audit.
+  Also note: `R-DBBIBFIELD`'s "DUAL 12 / OK 44" no longer reproduces (current checker on that same
+  commit gives DUAL 10 / OK 46; the checker was corrected twice since), so the "from 44 OK"
+  baseline quoted in `R-DBBIBFIELD3` is a dead number.
+
+**4. WITHDRAWN - THE ONE "NEW FINDING" THIS AUDIT APPEARED TO SURFACE WAS WRONG, AND IT IS THE
+INVERSE OF THE SETTLED PROVENANCE.** Item 4 of my first draft of this addendum read: row 180's
+witness `render[:69] == stored dbbib byte-exact` means two independent OCR artifacts agree on the
+same 22-char gap, so those tokens are absent from the image and the real question is why the pixels
+do not carry them. **Retracted - both halves were wrong.** The witness is a CONTAINMENT identity,
+not corroboration: row 180's own method says the render is the page's continuous field
+`dbbib(69) + ab-run + faed(570+z) + z + seg1 + z + seg2`, so `dbbib` is a 69-char PREFIX of the
+render by construction and the assertion only checks that two views of the same shallow OCR of the
+same page agree on a shared prefix. It is an in-run PASS sanity check and nothing more. And the
+direction was inverted: `finalpage-digit-streams.json` `_provenance` records the 91-token stream as
+tokens 0-90 of the LIVE PAGE TEXTAREA - byte-identical on the live site (HTTP 200, gsmg.io/89727c...),
+in Wayback 2023-06-01 and 2026-04-05, and at community README line 371 - with the 69-token value the
+SUPERSEDED shallow-OCR crop kept only for tool back-compat. The 22-char run is therefore PRESENT in
+four non-image sources; nothing is missing from the pixels and the question is moot. Structurally,
+`dbbib[:45] + 'bfdhbeffcdbbfcccgbfbee' + dbbib[45:]` == `dbbib_91` exactly, so the 91 is the 69 with
+the run restored at [44:66]. **Net effect on this audit: nothing. It produces no new lead, and
+findings 1-3 stand unaltered.** The lesson is the one the ledger already pays for twice
+(`R-BASELINE-SUPERSEDED`, `R-MATRIX69`): a witness that looks like independent corroboration is
+often a within-run assertion about two views of one source, and a contradiction between two ledger
+sections is resolved by reading `_provenance` and the newest row - never by re-deriving from the
+weaker artifact. **Navigability hazard, worth fixing in a future row:** the stale position still
+reads as current at `tested.md:3443` and the 2026-09-03 vision-LLM audit at `:3474` (69
+authoritative, 91 a "spurious middle run"), which is superseded by the 2026-09-12 correction. The
+file contains both positions and the wrong one is not marked at the point of use.
+
+Gates re-run 2026-09-29, all green: `stream_field_audit` selftest 24/24 and `--check` rc=0
+(CRITICAL 0 / STALE 18 / DUAL 10 / OK 62); `retraction_audit --check` 0 problems; `p32key_verify`
+24/24; `p15null_chitest` 11/11; `oracle` and `oracle_dualite` `--selftest` rc=0; `validate.py`
+14 pass / 1 warn (pre-existing French leftovers) / 0 fail; escrow check rc=0 with 1GSMG1JC9 =
+125635374 sats partially-spent and 17ucy1K9 = 375055856 sats funded-unspent, both OK. **Crux
+unchanged: X is still the decode of dbbib_91/faed_570 under the interpreter alphabet.**
