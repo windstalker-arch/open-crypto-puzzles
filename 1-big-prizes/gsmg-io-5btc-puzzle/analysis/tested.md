@@ -17482,3 +17482,57 @@ not merely on tooling.
 
 Date 2026-09-28 local. Escrows last live-verified this date: small 125,635,374 sat, Dualite
 375,055,856 sat, both intact.
+
+## R-P32FLAG-2026-09-28: THE 1539-BYTE BLOB'S PERIOD-15 SPIKE IS A **FLAG-BIT** EFFECT, NOT A LETTER SUBSTITUTION. New tool `tools/p32blob_flagbit.py` (selftest 16/16). Two prior-row errors corrected. Key and plaintext NOT recovered. 0 oracle calls. **NOT SOLVED**, but the search space is now different.
+
+This row answers the question `R-P32BLOB`/`R-P32BLOB2` never asked. Both worked on the blob's *period*; neither asked what its 26 symbols *are*. They are not letters.
+
+- **F1 - THE 26 SYMBOLS ARE NOT A LETTER ALPHABET.** Exactly 26 distinct bytes, and they are
+  `25 2C 2F 3A 3E 3F 5B 5F 60` (9 low) and `C0 C1 C2 C3 C5 C7 C8 C9 CA CB CC CD CE CF D1 F6 F8` (17 high).
+  Subtracting 0x80 from the high set yields `@ A B C E G H I J K L M N O Q v x` - **14 of 17 are plain
+  uppercase ASCII**, which is why this looks like a letter cipher and is not one. Missing from A-Z:
+  `DFPRSTUVWXYZ`. **NOT UTF-8**, and this is provable rather than assumed: a UTF-8 lead byte in 0xC0-0xCF
+  requires a continuation byte in 0x80-0xBF, and the blob contains **zero** bytes in 0x80-0xBF; and
+  0xF6/0xF8 exceed 0xF4 so they cannot be UTF-8 lead bytes at all. The "mangled multibyte" reading is
+  refuted, which closes it.
+- **F2 - THE 0x80 BIT SPLITS THE ALPHABET 17 / 9, AS A PROPERTY OF THE SYMBOL.** Not of the key: all 15
+  period-15 columns are MIXED high/low (0.456..0.854), and a per-column key bit would make every column
+  pure-high or pure-low. The 17/9/0 split is the shape the page's "one for one, four for one" language
+  and the board's `17 | 9 | 0` cell counts have been gesturing at all along.
+- **F3 - THE PERIOD-15 IC SPIKE IS REAL, AND IT LIVES ENTIRELY IN THE FLAG BIT.** IC(1)=0.0406,
+  IC(15)=0.0645, IC(30)=0.0654. **The null control `R-P32BLOB` never ran**: a 2000-trial shuffle over the
+  same multiset gives max/min per-column-spread mean 1.304, p95 1.439, p99 1.520 and a **maximum of
+  1.644 across all 2000 trials**, against the observed **1.872**. P < 0.0005, outside the entire null.
+  So the period is real - but note only **1 of 15 columns (col 8) is individually significant** at
+  n=103; the effect is a genuine spread across all 15, not a standout column, and a future session must
+  not report the 0.456..0.854 range as "15 significant columns".
+- **F4 - THE COLUMNS ARE EXCHANGEABLE *WITHIN* EACH TRACK. This is the finding that redirects the attack.**
+  Restricting to the 17 high symbols, column x symbol chi-square is **243.8** against a 5-trial shuffle
+  null of 172-274 - indistinguishable. So this is **not 15 different letter alphabets**, which is what
+  every prior row assumed. It is **one alphabet used with a per-column mixture proportion over the 17/9
+  split** - a fractionation/Baruch-like structure, not a Vigenere key. A fourth English polyalphabetic
+  sweep would still fail, and `R-P32BLOB2`'s prohibition on it is not merely a time-saving rule: it was
+  pointed the wrong way. The next attack must model a per-column 17/9 mixture.
+- **F5 - OPEN ITEM (i) FROM `R-P32BLOB` IS CLOSED NEGATIVE.** "The 26 blob byte-values may not be a
+  letter substitution at all - try base-N / bit-packed / non-alphabetic interpretation" was the last
+  surviving item on the ACTUALLY-LEFT list. Tried: base26-as-integer both directions (905 B, 37%
+  printable, 12-30% letters), base26-as-decimal-text (2178 B, digits only - a decimal integer, not a
+  text signal), 5-bit packing (961 B, 20% letters), 8->5 unpacking (0% printable), hex-nibble pairs
+  (33% printable). **Nothing yields letter text.** Item (i) is dead; the real content of the blob is
+  the 17/9 mixture, not a base-N packing.
+
+**TWO CORRECTIONS TO PRIOR ROWS.**
+1. `R-P32BLOB` says the blob is `phase3.2.txt` **line 4**. It is **line 5**; line 4 is blank and line 1
+   is 332 bytes, line 3 is 107, line 7 is the 149-digit string, line 9 is the `fubcd` sentence.
+2. `R-P32BLOB` says "the notebook's own `blob_start`/`blob_end` code isolates the same bytes". That code
+   is **not in `phase3.2.txt` at all** - `blob_start`/`blob_end` appear nowhere in it. It is in the
+   sibling **`phase3.2.ipynb`**, which finds the blob as `file_as_bytes[find(b'four for one.\r\n\r\n') :
+   find(b'\r\n\r\n151659')]`. Replicated verbatim, that slice is **1539 bytes and byte-identical** to
+   the blob - so the blob boundary is now double-witnessed by two independent procedures (the author's
+   byte offsets, and this tool's 26-symbol-signature selection). The claim was right about the *result*
+   and wrong about *where the code lives*; pinned as a selftest check so the two cannot drift.
+
+**STATUS.** No key, no plaintext, 0 candidates, 0 oracle calls, `X` unsolved. What changed: the blob's
+26 symbols are now characterised as a 17/9 flag-bit alphabet, the period-15 signature is confirmed real
+against a proper same-marginal null, and the "15 letter alphabets" framing is refuted in favour of a
+per-column mixture. Anyone continuing should model the mixture, not the alphabets.
