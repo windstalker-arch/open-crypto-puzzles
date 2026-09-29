@@ -2070,3 +2070,19 @@ revive it, it has to say what reading order the three existing negatives did not
   (`0x484264AB...D8B7F0191185D22...`), not a date, and the surrounding 9/11 numerology (BIP32
   paths, base91, "every 9th and 11th letter") is authorless. Read the prop from the film, not the
   forum. New authorial datum, NOT a lead: it is a scalar, not an N/D/t premise for dbbib_91+faed_570.
+- **CORRECTION + REFINEMENT (`R-NEOPASSPORT-ADDENDUM`).** (a) My previous row said the passport
+  is a **Mr. Robot** reference. That was a fabrication - Neo's passport is from **The Matrix (1999)**,
+  the ~18m22s Agent Smith interrogation. `grep -ci "mr. robot" analysis/tested.md` returns 2 and
+  both are lines I wrote, so my own error was the only source of the claim. Mr. Robot is a SEPARATE
+  creator hint thread (the "last scene" line); I welded two threads together and both concern a
+  "scene", so this conflation will recur unless the seams stay separate.
+  (b) The prop's surface form is **`11 Sep/Sep 01`** (ICAO day-month-month/2-digit-year), not
+  `09/11/2001` and not `01911` - so the community's `01911` theory was wrong on provenance (hex
+  digits in a WIF key) AND on notation. The prop is internally consistent: issued 12/Sep/91, expiring
+  11/Sep/01, the ordinary ten-year rule, so the 9/11 coincidence is non-load-bearing.
+  (c) SOURCED: I have NOT watched the film. The value rests on two independent fact-checks (Snopes
+  and Yahoo/Screen Geek, both TRUE, both quoting the same unaltered frame), which outranks the
+  excluded solver thread but is still SECONDARY, not primary.
+  (d) The first real mechanism-shaped observation in this thread: a date **printed in words**
+  (`11 Sep/Sep 01`) is a different KIND of object from the digit strings this project has been
+  sweeping. Not acted on - deciding what it indexes is precisely the rabbit-hole error.

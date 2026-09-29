@@ -1270,3 +1270,35 @@ false positive, a standing methodological correction, and a square-search screen
   scripts, not the corpus - the latter because the export puts an `@handle` between name and text
   and my pattern excluded `@` (literal count: 29 `passport`, 4 `expirat`). Any negative search
   result is now reported only after a literal-substring confirmation with a known-present control.
+
+---
+
+## 2026-09-29 addendum 10: correction - the passport is a MATRIX prop, its surface form is `11 Sep/Sep 01`, and my previous attribution was fabricated (`R-NEOPASSPORT-ADDENDUM`)
+
+- **CORRECTION, AND IT WAS A FABRICATION.** `R-NEOPASSPORT` called the antecedent "a Mr. Robot
+  reference". Unverified and wrong: Neo's passport is from **The Matrix (1999)**, the Agent Smith
+  interrogation at ~18m22s. The cheap check I skipped: `grep -ci "mr. robot" analysis/tested.md`
+  returns **2**, and both hits are lines I wrote in that row - so my own error was the sole source
+  and no corpus evidence supported it. Mr. Robot is a **separate** creator hint thread ("I hope to
+  witness the day that the last scene of mr. Robot becomes a reality"); I conflated two threads
+  because both concern a "scene". Recorded, not silently deleted - the error shipped in 5b05f2e and
+  the record should show that a fabrication entered it.
+- **THE PROP'S SURFACE FORM IS `11 Sep/Sep 01`** (ICAO day-month-month / 2-digit-year, bottom-right
+  of a late-1990s passport). Not `09/11/2001`, not `01911`. So the community's `01911` theory was
+  wrong on provenance (four hex digits inside a solver's WIF key) AND on notation; the solver who
+  wrote "YY-MM-DD format tho" guessed a format the prop does not use.
+- **THE 9/11 COINCIDENCE IS NON-LOAD-BEARING.** The prop is internally consistent - issued
+  12/Sep/91, expiring 11/Sep/01, the ordinary ten-year passport rule. The ICAO convention produced
+  the date; treating it as planted numerology inverts cause and effect. The authorial signal is the
+  creator pointing at it, not the arithmetic.
+- **SOURCE TYPING, honestly labelled.** I did NOT watch the film and have no primary access. The
+  value rests on two INDEPENDENT fact-checks (Snopes; Yahoo/Screen Geek - both rate the claim TRUE,
+  both quote the same `11 Sep/Sep 01` string, Yahoo noting the screenshot is unaltered), which
+  outranks the excluded solver thread but remains SECONDARY. Ordering used: PRIMARY (not obtained)
+  < SECONDARY FACT-CHECK (two, agreeing) < SOLVER THREAD (excluded).
+- **THE FIRST MECHANISM-SHAPED OBSERVATION IN THIS THREAD:** a date **printed in words** is a
+  different KIND of puzzle object from the digit strings this project has been sweeping. Recorded,
+  not acted on: deciding what it indexes into is exactly the rabbit-hole error just documented.
+- Unchanged: the hint's status (verbatim, negative-space, zero ledger presence, restated 17 months
+  apart, ignored by the group). Only the ATTRIBUTION was wrong. Date now better sourced, USE still
+  unestablished, still NOT promoted to a lead.

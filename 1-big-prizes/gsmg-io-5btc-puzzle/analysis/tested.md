@@ -18327,3 +18327,66 @@ ALSO NOT ESTABLISHED: any use. A date that is "the only date given away" is natu
 METHOD NOTE, and it is a repeat offence. My first pass at this reported "0 passport mentions in Msgs.txt" and I nearly recorded that as a corpus fact. It was my REGEX failing - the export format places an `@handle` between the display name and the message text, and my pattern excluded `@`, so it could not match. A plain substring count returns 29 `passport` and 4 `expirat`. This is the second time this session that a negative from my own script was wrong and a real result was hiding behind it (the first was `R-POINTERS`' 17 missing files). A zero from a regex over a format I have not read is not evidence of absence; the discipline that worked both times is to re-run the count as a dumb literal before writing "none". I got this wrong twice in one session, so it is now a standing rule for this project: any negative search result is reported only after a literal-substring confirmation with a known-present positive control.
 
 0 oracle calls, 0 candidates, no lead promoted. X unsolved, both gates unchanged.
+
+## R-NEOPASSPORT-ADDENDUM-2026-09-29: CORRECTION - the passport is a MATRIX prop, not Mr. Robot; I invented that attribution, and the prop's surface form is "11 Sep/Sep 01", not 09/11/2001
+
+Two corrections to `R-NEOPASSPORT`, one of them a fabrication on my part.
+
+CORRECTION 1 - I FABRICATED THE ATTRIBUTION, AND THE LEDGER PROVES IT. `R-NEOPASSPORT` states the
+antecedent is "a Mr. Robot reference" and speaks of "the movie scene". I had not verified that,
+and it is wrong, though the correction is recorded in
+`R-NEOPASSPORT-ADDENDUM` rather than applied here. Neo's passport is from **The Matrix (1999)** - the interrogation scene with Agent
+Smith, roughly 18m22s in, where the passport is handed over. I appear to have imported "Mr. Robot"
+because the creator's hints ALSO reference Mr. Robot, via a different and unrelated line ("I hope to
+witness the day that the last scene of mr. Robot becomes a reality"). Those are TWO SEPARATE HINT
+THREADS and I welded them together. The check that catches it is cheap and I did not run it before
+writing: `grep -ci "mr. robot" analysis/tested.md` returns **2**, and both hits are the lines I
+wrote in `R-NEOPASSPORT` itself. Before this row the term was ABSENT from the ledger, i.e. my own
+error was the sole source of the claim, and no corpus evidence ever supported it. Recorded rather
+than quietly edited, because the wrong inference was already committed at 5b05f2e and a silent fix
+would hide that a fabrication entered the record. A hint-thread conflation is a real failure mode
+here: both threads concern a "last scene", so the confusion is natural and will recur unless the
+seams stay separate.
+
+CORRECTION 2 - THE DATE'S SURFACE FORM IS "11 Sep/Sep 01", AND THAT IS THE PART THAT MATTERS. The
+prop is formatted as a late-1990s passport and the expiry is printed bottom-right as
+**`11 Sep/Sep 01`** - day-month-month/two-digit-year, the standard ICAO machine-readable convention.
+So the value is 11 September 2001, which IS 9/11/2001 in the sense the community meant, but the
+literal STRING ON THE ARTIFACT is not `09/11/2001` and not `01911`. The community's `01911` reading
+(already shown void in `R-NEOPASSPORT` (4), where it turned out to be hex digits in a WIF key) does
+not even match the prop's own notation, so that theory was wrong twice over: wrong string AND wrong
+provenance. The solver who wrote "YY-MM-DD format tho" was guessing at a format the prop does not
+use. Note also the prop is internally CONSISTENT rather than coincidental: the issue date is
+12/Sep/91 and 11/Sep/01 is the ten-year expiry that follows, which is the ordinary passport
+construction. Anyone treating 9/11 as a planted numerology is inverting cause and effect - the
+Writers' Guild / ICAO ten-year convention produced the date; the coincidence is real but
+non-load-bearing, and the creator pointing at it is the authorial signal, not the arithmetic.
+
+SOURCE TYPING, since I refused to take the value from the solver thread and must show what I took
+it from instead. I did not watch the film or read the prop directly; I have no primary access.
+What I have is SECONDARY reporting, and it is unusually good: Snopes and Yahoo/Screen Geek
+independently fact-checked this exact claim, both rating it TRUE, both citing the same screenshot
+with the same `11 Sep/Sep 01` string, and Yahoo's notes the screenshot is UNALTERED. So the value is
+corroborated by two independent fact-checkers who inspected the same frame, and it is consistent
+with the passport-issue-date arithmetic. That is a real upgrade over forum consensus, and it is
+STILL not a primary observation. Labelled accordingly: PRIMARY (not obtained) < SECONDARY FACT-CHECK
+(two, agreeing, quoting the frame) < SOLVER THREAD (excluded). I am recording the value as
+`11 Sep/Sep 01` / 11 Sep 2001 because two independent fact-checks beat a forum, not because I saw it.
+
+WHAT THIS DOES NOT CHANGE. The status of `R-NEOPASSPORT` is unchanged in the part that mattered: a
+verbatim negative-space creator hint, zero ledger presence, restated 17 months apart, ignored by
+the group. Only its ATTRIBUTION was wrong. The date is now better sourced, and its use is still
+unestablished - a scalar in `11 Sep/Sep 01` is not an N/D/t construction premise for `dbbib_91` +
+`faed_570`, and I am still not promoting it to a lead. What matters now is the notation
+itself: `11 Sep/Sep 01` contains two 11s, a 01, and a literal month name, and a date-in-words
+notation is a different KIND of object from the digit strings this project has been sweeping. If
+the creator says the only date he gives away is this one, then a date PRINTED IN WORDS is on the
+table as a puzzle object in a way `01911` never was. That is a new observation about shape, and it
+is the first thing in this thread that suggests a mechanism. I am recording it as such and NOT
+acting on it, because any concrete use still requires deciding what the date indexes into, and
+guessing that is exactly the `R-GRPCHAT23` rabbit-hole error I just documented.
+
+STILL TRUE, STILL OUTSTANDING: the two `mr. robot` occurrences in the ledger are now known-false and
+are superseded by this row rather than deleted, so the record shows the error and its correction.
+
+0 oracle calls, 0 candidates, no lead promoted. X unsolved, both gates unchanged.
