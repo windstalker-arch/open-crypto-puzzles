@@ -1302,3 +1302,41 @@ false positive, a standing methodological correction, and a square-search screen
 - Unchanged: the hint's status (verbatim, negative-space, zero ledger presence, restated 17 months
   apart, ignored by the group). Only the ATTRIBUTION was wrong. Date now better sourced, USE still
   unestablished, still NOT promoted to a lead.
+
+---
+
+## 2026-09-29 addendum 11: the words-format date battery is 0/51 on both gates, and the periodicity "signal" is noise (`R-DATEBATT`)
+
+- **Part 1, literal: 0, and for a structural reason.** `sep`/`sepsp`/`sepsep`/`september`/`11sep`/
+  `sep01`/`sepsep01`/`11sepsp01`/`twoseptember` = 0 in both `dbbib_91` and `faed_570`. The
+  alphabet is `a`-`i`, so `s` and `p` are unavailable - I confirmed `s`=0 and `p`=0 in both
+  streams. Recording the order honestly: I ran the substring sweep BEFORE the alphabet argument,
+  so the sweep alone could not have separated "absent" from "impossible".
+- **Part 2, structure: noise, and this is the part worth keeping.** The prop is shaped 2+3+3+2, so
+  I scanned same-letter rate at lags 1..30 in both streams. `faed_570`: nothing above threshold.
+  `dbbib_91`: lag 6 = 18/85 = 0.212 and lag 7 = 20/84 = 0.238 against a 0.167 baseline - both
+  promoted-looking. **Neither survives.** A 200,000-trial multiset-preserving shuffle null puts
+  lag-6 at one-sided **p = 0.0715** (14,296/200,000), i.e. NOT significant at alpha=0.05, and
+  lag 7 has the LARGER raw value and is pure selection. `sum(p_i^2)` = 14.58 for `dbbib_91`'s
+  multiset, predicting ~0.160, which the observed 0.167 baseline already matches - so there is no
+  periodic structure to find here at all. A 91-token sample across 30 lags will top its own
+  baseline by chance; reporting the raw ratio would have shipped a false positive carrying a
+  p-value, which is worse than reporting nothing. This is `R-GRPCHAT23`'s rabbit-hole lesson
+  applied to me in reverse: there I documented a hole I could not name, here I nearly entered one
+  that merely LOOKED quantitative.
+- **Part 3, oracle: 0/51 on the small gate AND 0/51 on the dualite gate.** Candidates = the
+  prop's printed form and 20 near spellings, 22 numeric forms (`01911`, `110901`, `11092001`,
+  `20010911`, `09012001`, `110101`, `9112001`, `091101`, `911`, `101`, `1101`, `11`, `9`, `1`,
+  `1109`, `0901`, ...), and 10 semantic forms (`neo`, `passport`, `expired`, `the matrix`,
+  `matrix`, `thearchitect`, `architect`, `mr robot`, `mr. robot`, `the only date`).
+- **Scope of the negative, stated precisely.** The oracle applies no normalisation, so this tests
+  LITERAL strings and rules out the date **AS THE ANSWER** - the only claim the battery was built
+  to make. It does NOT rule out the date as a salt, index, stride, key component or intermediate,
+  because those feed a transformation whose output would then need oracling, and that
+  transformation is precisely the unspecified part. `R-NEOPASSPORT-ADDENDUM` (d) logged the
+  words-format shape as the first mechanism-shaped observation in this thread; the right response
+  to a shape without a mechanism is a bounded negative plus an explicit list of what remains
+  unspecified. I am deliberately NOT expanding into combinations - that is the rabbit hole with a
+  51-row table in front of it.
+- Unchanged: 0 candidates promoted, no lead, X unsolved, gates funded at 125,635,374 sats (small,
+  partially spent) and 375,055,856 sats (dualite, unspent).

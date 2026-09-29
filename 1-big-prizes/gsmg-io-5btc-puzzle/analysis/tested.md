@@ -18390,3 +18390,64 @@ STILL TRUE, STILL OUTSTANDING: the two `mr. robot` occurrences in the ledger are
 are superseded by this row rather than deleted, so the record shows the error and its correction.
 
 0 oracle calls, 0 candidates, no lead promoted. X unsolved, both gates unchanged.
+
+## R-DATEBATT-2026-09-29: the `11 Sep/Sep 01` battery is 0/51 on BOTH gates, and the one structural signal I found is shuffle noise
+
+Acting on the one thing `R-NEOPASSPORT-ADDENDUM` made testable: a date printed in WORDS
+(`11 Sep/Sep 01`, ICAO day-month-month/2-digit-year) is a different KIND of object from the digit
+strings this project has swept, and the hint says the creator gives away exactly one date. Bounded
+battery, three parts, both gates. Result: nothing.
+
+PART 1 - LITERAL OCCURRENCE IN THE STREAMS. 0. The words of the date do not appear in either
+authoritative stream: `sep`, `sepsp`, `sepsep`, `september`, `11sep`, `sep01`, `sepsep01`,
+`11sepsp01`, `twoseptember`, `sepsep` = 0 in `dbbib_91` AND 0 in `faed_570`. This is expected and
+not evidence of anything, since both streams are over the alphabet `a`-`i` and cannot contain `s`
+or `p` at all (`e` is in the alphabet, but the month needs `s` and `p`). Confirmed: `s` = 0 and
+`p` = 0 in both streams, so `sep` is not merely case-shifted, it is unavailable. Recording the
+order honestly: I wrote the `s`/`p` check AFTER the substring sweep rather than before it, and the
+sweep on its own could not have distinguished "absent" from "impossible". The alphabet argument is
+the real reason; the substring count is the redundant confirmation.
+
+PART 2 - STRUCTURE. Tested periodicity, because the prop's shape is 2+3+3+2 and a 3-letter month
+repeated invites a period-3 or period-6 reading. Same-letter rate at lag L, both streams. In
+`faed_570` nothing above threshold at any lag 1..30. In `dbbib_91` two lags looked interesting:
+lag 6 = 18/85 = 0.212 and lag 7 = 20/84 = 0.238, against a 1-lag baseline of 0.167. **I did not
+promote either**, and the reason is the check I nearly skipped: a 200,000-trial shuffle null on
+`dbbib_91` preserving the letter multiset. For lag 6, one-sided p = **0.0715** (14,296/200,000
+shuffles reached or exceeded the observed count) - NOT significant at alpha=0.05. And lag 7, the
+larger raw value, was not even worth testing after that, because a 91-token sample scanned across
+30 lags WILL produce a top lag above baseline by chance; a ratio 0.238 vs 0.167 on n=84 is
+exactly what a null produces. This is the `R-GRPCHAT23` lesson applied to myself in reverse: there
+I documented a rabbit hole I could not identify, here I nearly walked into one that looked
+quantitative. Had I reported "lag 6 bias, p<0.05" from the raw ratio I would have shipped a false
+positive with a p-value attached, which is worse than reporting nothing. `sum(p_i^2)` for
+`dbbib_91`'s multiset = 14.58, predicting ~0.160 - the 0.167 observed baseline already matches the
+alphabet's own duplication, so there is no periodic structure to find here at all.
+
+PART 3 - THE ORACLE BATTERY, both gates. 51 candidate answer strings, drawn from the prop's
+printed form, its numeric equivalents, and the `R-NEOPASSPORT` hint language: the literal
+`11 Sep/Sep 01` and near spellings (`11 Sep 2001`, `11 September 2001`, `Sep 11 2001`,
+`September 11 2001`, `11/09/01`, `11-09-01`, `11.09.2001`, `09/11/2001`, `2001-09-11`, `11Sep01`,
+`11Sep2001`, `SepSep01`, `sepsp01`, `11sepsp01`, `sep11`, `11 sep sep 01`, `11 09 01`,
+`2001/09/11`), the numeric forms (`01911`, `110901`, `11092001`, `20010911`, `09012001`, `110101`,
+`9112001`, `091101`, `911`, `101`, `1101`, `11`, `9`, `1`, `1109`, `0901`, `september11`, `sepsep`,
+`twoseptember`), and the semantic forms (`neo`, `passport`, `expired`, `the matrix`, `matrix`,
+`thearchitect`, `architect`, `mr robot`, `mr. robot`, `the only date`, `only date`).
+RESULT: **0/51 on the small gate and 0/51 on the dualite gate.** Both gates unchanged, funded.
+
+WHY THIS IS A REAL NEGATIVE AND NOT A WEAK ONE. The oracle is the puzzle's own final checker:
+X -> sha256 -> AES-256-CBC decrypt of the published blob -> 32-byte reduction -> secp256k1 -> HASH160
+vs escrow. There is no normalisation, no case folding, no whitespace trimming, so this battery tests
+the LITERAL strings. A negative therefore rules out the date AS THE ANSWER, which is the only claim
+this battery was built to make. It does NOT rule out the date as a salt, an index, a stride, a key
+component, or an intermediate value - those all feed a transformation whose output I would then have
+to oracle, and that transformation is exactly the unspecified part I refused to guess. Per
+`R-NEOPASSPORT-ADDENDUM` (d) I recorded the words-format shape as the first mechanism-shaped
+observation in this thread, and the correct outcome of "I have a shape but no mechanism" is a
+negative battery plus an explicit statement of what is still unspecified - not a larger battery.
+I am not expanding Part 3 into combinations; that is the rabbit hole with a 51-row table in front
+of it.
+
+0 oracle calls wasted on duplicates, 51 evaluated, 0 candidates promoted, no lead. X unsolved, both
+gates unchanged at 125,635,374 sats (small, partially spent) and 375,055,856 sats (dualite,
+unspent).

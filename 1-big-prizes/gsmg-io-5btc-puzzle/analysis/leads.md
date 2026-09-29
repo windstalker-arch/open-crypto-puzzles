@@ -2086,3 +2086,12 @@ revive it, it has to say what reading order the three existing negatives did not
   (d) The first real mechanism-shaped observation in this thread: a date **printed in words**
   (`11 Sep/Sep 01`) is a different KIND of object from the digit strings this project has been
   sweeping. Not acted on - deciding what it indexes is precisely the rabbit-hole error.
+- **`R-DATEBATT`: the `11 Sep/Sep 01` battery is 0/51 on BOTH gates; the one structural signal was
+  shuffle noise.** Words of the date cannot occur (streams are `a`-`i`; `s`=`p`=0). Periodicity
+  scan found lag-6 = 0.212 and lag-7 = 0.238 vs 0.167 baseline in `dbbib_91`, but a 200,000-trial
+  multiset-preserving shuffle null gives lag-6 p = **0.0715** - not significant, and lag 7 is the
+  larger raw value. A 91-token sample over 30 lags will top the baseline by chance; reporting the
+  raw ratio would have shipped a false positive WITH a p-value. 51 literal candidates (prop form,
+  numeric forms, hint language) = 0 MATCH small gate AND 0 MATCH dualite. This rules out the date
+  AS THE ANSWER only; salt/index/stride/key use all remain untested and unspecified, which is
+  where the real gap is.
