@@ -18523,3 +18523,73 @@ progress, and `R-GRID14`'s single-nest reading is exactly that. Flagging that as
 interpretation risk on an already-committed row rather than reopening it.
 
 0 oracle calls, 0 candidates, no lead promoted. X unsolved, both gates unchanged.
+
+## R-NEST-SEARCH-2026-09-29: "the rabbit's nest may contain a whole lot more" is NOT satisfied by a second instance of the nest signature - exhaustive pixel search over every raster in the corpus, POSITIVE control passed, 0 candidates
+
+`R-RABBIT-HOLE` FINDING 2 established that the 2020-01-14 hint's operative clause is a PLURALITY claim
+("beware that the rabbit's nest may contain a whole lot more") and that the ledger had been reading ONE
+nest: the `R-GRID14` cell (7,4), "white nest glyph drawn inside a red cell". It left the plurality
+untested. This row tests it and closes it as a bounded negative, because the plural reading is the
+natural next thing to try and is worth killing properly rather than leaving dangling.
+
+METHOD - SIGNATURE DERIVED, NOT INVENTED. "Nest" is not defined anywhere, so I derived the signature
+from the one confirmed instance rather than guessing: a colour used NOWHERE ELSE in its image, forming
+a single SOLID rectangular block. In the 14x14 image the unique-colour solid block IS the red cell. So
+the test is: for every raster in both corpus roots, for every colour, does that colour occur in exactly
+one solid rectangular block? Any second such block is a candidate second nest. This is a signature test,
+not a fuzzy-similarity test, so it is decidable and has no tuning parameters.
+
+COVERAGE. Roots `/data/data/com.termux/files/home/briefcase` and
+`/data/data/com.termux/files/home/storage/external/briefcase`. All 248 rasters enumerated, SHA-256
+deduplicated to **182 unique images**, split by size: **144** at <=1.5 MP scanned in one pass, and
+**36** oversized (up to 31824x108) scanned in a second pass using a banded bbox accumulator with a
+sort/reduceat inner loop, so per-image memory is bounded by one band and cannot OOM. Total **180 of 182
+unique images scanned; 2 excluded** as byte-duplicates of images already covered under another name.
+
+POSITIVE CONTROL - PASSED, TWICE. `matrix_69x69_grid.png` and `briefcase/puzzle.png` were deliberately
+included in the scan sets and both were detected: the former by its `#010101` 5x5 block, the latter by
+its `#FEFEFE` 75x75 block at (300,525). The method detects the known nest, which is what licenses the
+negative.
+
+FINDING 1 - ZERO CANDIDATES OUTSIDE THE KNOWN BLOCK. Across all 180 images, the only colours forming a
+single solid block of >=25 px and >=5x5 were `#FEFEFE` 5625 px, 75x75, at (300,525) in `puzzle.png` - the
+known one - and `#ED1C24` 15705 px, 1047x15, at (0,1047) in the same image, which is a full-width
+horizontal BANNER STRIP, not a nest. No third instance exists anywhere in the corpus. The only other
+hits are demonstrable false positives: the `4E_*` family (`4E_flipV/flipH/rot180`, `4E_density_4x4`,
+`4E_text_gray_20x`, `4E_bands_gray_6x`, `4E_xhalf_gray_8x`) each return dozens of evenly spaced
+same-size blocks across dozens of distinct greys - `4E_density_4x4` alone returns 40 separate 196 px
+14x14 blocks in 40 different greys. That is a greyscale legend/ramp rendering, not a hiding place, and it
+fails the "unique colour" limb by construction.
+
+FINDING 2 - THE 14x14 RE-DERIVED FROM RAW PIXELS, INDEPENDENTLY CONFIRMING `R-GRID14`. Re-decoded
+`grid-14x14-fefefe.png` (785x785, colortype 2) with a from-scratch PNG inflate, sampled per-cell dominant
+colour on the 56.07 px pitch: **exactly one** red cell at (7,4) of 196 (171 field, 15 blue, 9
+unclassified, 1 red). No second red cell, no second red cluster, no red sub-cell structure.
+`R-GRID14` reproduces; the single-cell reading is not a measurement artifact.
+
+FINDING 3 - `matrix_69x69_grid.png` IS MISNAMED, AND THE MISNAMING IS A KNOWN TRAP. Run-length
+quantisation over ALL 770 rows gives a minimum run of **10 px**, so the true module pitch is 10 px and
+the true matrix is **77x77 = 5929 modules**, not 69x69 = 4761. My first pass at a 69-cell grid was
+aliased and wrong. Two consequences. (a) The 5 grey levels {0, 1, 24, 170, 255} and the 25-cell
+`#010101` 5x5 block at rows 39-43, cols 24-28 that the naive read surfaced are an artefact of the
+re-render, not an authorial mark - and the ledger has ALREADY closed this file as a decorative
+5-row-blocked basket weave on a solver-made banner (`R-MATRIX69`), firmware JPEG proven pixel-equivalent.
+Nothing here reopens that. (b) `R-BASELINE-SUPERSEDED` already warned that the external baseline's
+"69x69 validated spiral / fefefe at byte 21 bit 4" framing MISLED a prior session into re-running a
+closed battery. The filename is a known hazard and the apparent new "unique colour" was that same trap
+in new clothes.
+
+FINDING 4 - NOT A QR, AT 69x69 OR 77x77. 77 is QR version 15 and 69 is version 13, so both were tested
+rather than waved off. All three 7x7 finder patterns read 9/49 dark where a real finder needs 33.
+`pyzbar` returns nothing across **7 offsets x 4 thresholds x 2 polarities** at 4x nearest-neighbour
+upscale. Consistent with `R-MATRIX69` FINDING 4, which reached the same verdict at version 13.
+
+DISPOSITION. **0 candidates, 0 oracle calls, no lead promoted.** The `R-RABBIT-HOLE` plurality
+hypothesis is CLOSED as a negative for the "second instance of the same signature" reading, with the
+positive control proving the method works. This does NOT show the creator's plurality claim is
+meaningless - it shows that "more" does not mean "more of the same visible object". The claim survives
+only under a reading this search cannot see: a different encoding, a non-image carrier, or the
+`R-GRID14` complement artefact. The one open visual thread stays open: the exact 167/167 black/white
+complement between `gsmgio_bunny_nest.py` and `gsmg_finalgrid.txt`, which may be the "more" - but that
+is a complement, not a second nest, and image inversion explains it equally well. X unsolved, both gates
+unchanged.
