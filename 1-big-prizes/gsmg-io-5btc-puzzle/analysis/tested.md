@@ -14823,10 +14823,7 @@ Date: 2026-09-27, local.
   exactly right. So that rejection carries no evidential weight, and neither did the four Vigenere
   and monoalphabetic results in the sense of narrowing the field.
 
-- ~~**THE REFRAME, WHICH IS THE ACTIONABLE PART.**~~ **[RETRACTED 2026-09-29 by `R-P15FIX` - this is the
-  most costly error in the cluster, because it is written as an instruction to the next session. It tells you
-  not to re-run a Vigenere and to hunt for 15-column key material instead; the answer had already been found
-  by exactly the run it tells you to skip. Retained verbatim so the failure is legible.]** The question is not "what 15-character key
+- ~~**THE REFRAME, WHICH IS THE ACTIONABLE PART. The question is not "what 15-character key
   decrypts this". Each column has its own alphabet and the alphabets are unrecoverable from the
   ciphertext by any amount of statistics - 1,539 symbols is simply not enough to rank 26 permuted
   alphabets, and the one thing this blob has plenty of (a 25-sigma structural signal) turns out to be
@@ -14835,7 +14832,11 @@ Date: 2026-09-27, local.
   checkable statement about what the puzzle still owes us, and it reclassifies the blob from
   "attackable ciphertext" to "keyless ciphertext". It also means the honest next move for phase 3.2
   is a hunt for 15-item or 15-column key material in the phase-2.1/3 assets, NOT more cipher-class
-  sweeps. Anyone picking this up should read this paragraph before re-running a Vigenere.
+  sweeps. Anyone picking this up should read this paragraph before re-running a Vigenere.~~
+  **[RETRACTED 2026-09-29 by `R-P15FIX` - this is the most costly error in the cluster, because it
+  is written as an instruction to the next session. It tells you not to re-run a Vigenere and to hunt
+  for 15-column key material instead; the answer had already been found by exactly the run it tells
+  you to skip. Retained verbatim so the failure is legible.]**
 
 - WHAT I DID NOT ESTABLISH. (1) I did not recover any column's alphabet, so this is a model
   identification, not a decryption. (2) I did not test transposition-plus-substitution compositions,
@@ -17664,10 +17665,12 @@ This row exists because `R-CERTAUDIT` fixed a correction that had landed in the 
   convention and not the verdict - both land an order of magnitude inside the noise band, and the contrast
   between the two rows of the table is the whole point.
 
-- **THE PHRASE "KEYLESS CIPHERTEXT" NOW APPEARS IN EXACTLY TWO PLACES IN THIS FILE, AND BOTH ARE INSIDE
-  RETRACTED TEXT** (this row's quotation of the reframe, and `R-DIG149`'s struck STATUS). A header scan for
-  `keyless` is clean, and `STATE_BRIEF.md`, `leads.md` and `README.md` never adopted the reframe at all - the
-  corruption was confined to three rows in the ledger.
+- **THE REFRAME'S "KEYLESS CIPHERTEXT" VERDICT IS NOW STRUCK WHEREVER IT WAS ASSERTED, AND
+  `tools/retraction_audit.py --check` ENFORCES IT.** The two assertions were `R-P15NULL`'s reframe
+  paragraph and `R-DIG149`'s STATUS; both are struck. `STATE_BRIEF.md`, `leads.md` and `README.md` never
+  adopted the reframe, so the corruption stayed inside three ledger rows. Re-check with
+  `python3 tools/retraction_audit.py --check` (rc=0 clean). It also enforces the eight expected
+  header tags, so a retag that misses a row fails loudly instead of decaying.
 
 - **WHY ITS OWN POSITIVE CONTROL COULD NOT CATCH THIS - AND IT HAD ALREADY WRITTEN THE LESSON DOWN.**
   `R-P15NULL` validated its instrument on a synthetic Vigenere. But a synthetic Vigenere has no `L` in it, so
@@ -17721,7 +17724,24 @@ This row exists because `R-CERTAUDIT` fixed a correction that had landed in the 
   false claims in it; the tag made the row look handled, which is worse than leaving it untagged, because
   the audit then stops. Retagging means re-reading the body for assertions, not just re-stamping the title.
 
-- **STATUS.** Documentation and one certifier; no new key, no new plaintext, 0 candidates, 0 oracle calls, `X`
+- **(E) THE RETRACTIONS THEMSELVES HAD A BUG, AND IT IS THE SAME CLASS OF ERROR AS THE ONES BEING
+  CORRECTED.** After the rows were tagged, I checked the markdown and found the file carried **47 `~~`
+  tokens - an odd count**, because `R-P15NULL`'s reframe was struck with an opener and no closer. A
+  cross-line strike span in a 17,000-line file does not stop at the paragraph: it runs to the next
+  strike marker anywhere, and this one was silently striking out `R-P15NULL`'s own "WHAT I DID NOT
+  ESTABLISH" and METHOD
+  NOTE - i.e. the correction was erasing the evidence it cited. The visible symptom was a claim of mine
+  ("`keyless` appears in exactly two places") that was **false on two counts**: the word appears 16 times,
+  and two of the line numbers I cited were wrong. Both were mine and both came from trusting a grep I had
+  already stopped looking at. Two things follow. (i) **A retraction is a claim about the file, so it needs a
+  check, not a promise** - hence `tools/retraction_audit.py` (`--selftest` 14/14, `--check` rc=0), which
+  enforces an even `~~` count, no live `keyless ciphertext` assertion, and the presence of all eight
+  expected header tags, across the ledger *and* `STATE_BRIEF.md`. It is negative-tested: injecting a live
+  assertion or removing a closer makes it exit 1. (ii) **Never quote a line number or a count you have not
+  re-read after the last edit** - a `git checkout` mid-task silently reverted two of my own fixes and I
+  nearly re-broke the row while repairing the breakage.
+
+- **STATUS.** Documentation and two certifiers; no new key, no new plaintext, 0 candidates, 0 oracle calls, `X`
   unsolved, both gates unchanged (small partially-spent, dualite funded-unspent). The live crux is unchanged:
   Lead 0's map-search on `dbbib`(91)/`faed`(570). The mechanical frontier remains exhausted - and note that
   for the third time in three days, the only new information available was in the ledger's own bookkeeping.
