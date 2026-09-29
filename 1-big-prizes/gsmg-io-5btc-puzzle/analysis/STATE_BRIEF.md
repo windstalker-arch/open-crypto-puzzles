@@ -1202,3 +1202,32 @@ false positive, a standing methodological correction, and a square-search screen
   `The answer is women`, which score 0 on a naive grep only because row 4572 wraps them across a
   line break. Whitespace-normalised search is required before believing any zero count here.
 - 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged.
+
+---
+
+## 2026-09-29 addendum 8: a second group-chat corpus found, with 15 unmined creator messages (`R-GRPCHAT23`)
+
+- `~/storage/external/briefcase/gsmg-solver-group/jan2023-aug2023.txt` (199,267 B, 759 messages,
+  35 participants, 2023-01-01..2023-08-06) is NOT a subset of the creator-only `GSMG_JRK.md`. It
+  carries 38 creator messages, **15 of which are not in the corpus `R-SOLVERGRP-NEW` declared
+  exhausted**. The gap is in the direction that matters: the hint -> VALIDATION chain needs the
+  solver thread, not the hint alone.
+- 13 of the 15 are noise. Two survive, both 0 ledger hits on their distinctive phrases:
+  - **2023-08-06 07:56, creator, in reply to solvers pressing for detail: "The main risk is to
+    fall into the wrong rabbit hole."** `Zil` had just asked for exactly the specification
+    ("we should definitely know more than just 'be careful what you get yourselves into'") and
+    the creator gave the risk but not the which. Same burst: "I really feel like it's close to
+    being solved. I think if I had one good day to actually focus on it I could almost do it."
+    This is a METHOD constraint, not a candidate string, which is why the existing sweep missed
+    it - rows 9155/9156/9244 swept "rabbit hole" as a cipher candidate, a different claim class.
+    Not promoted to a lead: honouring it needs the right hole, which is the crux.
+  - **2023-05-02: "Still remarkable that scene. Especially the expiration date of his passport."**
+    An authorial pointer at a date in a document, whose antecedent scene is NOT in this corpus
+    (the file jumps 04-30 -> 05-02). A genuine artifact gap and a pointer into the already-known
+    halving-date family, not a new class.
+- Method note carried: the "unmined" screen is a filename/stem test and produces false zeros
+  (the `R-POINTERS` dust file scored 0 by name, 24/24 by content), so its 180-file zero set is a
+  screening list, not a claim.
+- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged. First NEW
+  authorial object found this session, and both surviving items are semantics rather than
+  ciphers - consistent with `R-SOLVERGRP-NEW`.

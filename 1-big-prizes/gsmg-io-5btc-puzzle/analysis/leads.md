@@ -2050,3 +2050,11 @@ revive it, it has to say what reading order the three existing negatives did not
   canonical, `storage/external/briefcase` holds solver-side and image material) and they are
   NOT the same tree - searching the wrong one produces a confident false negative, which is
   what I did and then caught with a positive control.
+
+- `jan2023-aug2023.txt` (199KB, 759 msgs, 35 participants, 2023-01..08) is a SECOND group-chat
+  corpus, not a subset of the creator-only `GSMG_JRK.md`; 15 of its creator messages are
+  unmined and 2 matter (`R-GRPCHAT23`). The creator warns "The main risk is to fall into the
+  wrong rabbit hole" when explicitly pressed to say more, and points at "the expiration date of
+  his passport" in a scene that is NOT in the corpus. Both are method constraints / artifact
+  pointers, not candidate strings - the existing sweep only saw "rabbit hole" as a cipher
+  candidate. Honouring the first requires knowing the right hole, which is the crux.
