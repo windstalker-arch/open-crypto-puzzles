@@ -28,7 +28,7 @@ ORACLE = os.path.join(ROOT, "tools", "oracle.py")
 import json
 
 d = json.loads(Path(DATA).read_text())
-dbbib = d["dbbib"]
+dbbib = d["dbbib_91"]   # authoritative; d["dbbib"] is the crop
 faed = d["faed_570"].rstrip("z")
 blob = "".join(Path(BLOB_TXT).read_text().split())
 

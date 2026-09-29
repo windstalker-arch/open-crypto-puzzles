@@ -23,7 +23,7 @@ DATA = os.path.join(ROOT, "data", "finalpage-digit-streams.json")
 ORACLE = os.path.join(ROOT, "tools", "oracle.py")
 
 d = json.loads(Path(DATA).read_text())
-dbbib = d["dbbib"]
+dbbib = d["dbbib_91"]   # authoritative; d["dbbib"] is the crop
 faed = d["faed_570"].rstrip("z")
 
 def build_keyed(keyword, alpha="abcdefghijklmnopqrstuvwxyz"):

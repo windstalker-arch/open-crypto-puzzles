@@ -66,8 +66,9 @@ completion rather than reported as `MATCH=0`. `tools/stream_field_audit.py`
 (24/24) enforces the field split and was itself corrected twice: broadening it
 exposed `zseg_bifid_sweep.py`, and it then over-corrected into a false positive
 on `phase322_literal_sweep.py`, which is now pinned as a key/label false-positive
-regression test. 14 rows remain void-but-unrepaired and 29 tools stale; neither
-is claimed as cleared.
+regression test. That pass left 12 rows void-but-unrepaired (an earlier count of 14 in the
+same paragraph was an over-count, corrected in `R-DBBIBFIELD3`) and 29 tools stale;
+neither is claimed as cleared.
 2026-09-29 CORRECTION to the paragraph above (`R-DBBIBFIELD`): the dbbib half of
 late-58 was computed on the WRONG OBJECT. `tools/lead0_vicgap.py` read
 `d["dbbib"]` - the superseded 69-token OCR crop - while printing `dbbib(91)` on

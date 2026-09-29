@@ -21,7 +21,7 @@ import base58
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data", "finalpage-digit-streams.json")
 d = json.loads(Path(DATA).read_text())
-DBBIB = d["dbbib"]
+DBBIB = d["dbbib_91"]   # authoritative; d["dbbib"] is the crop
 FAED = d["faed_570"].rstrip("z")
 
 ORACLE = os.path.join(ROOT, "tools", "oracle.py")

@@ -1078,6 +1078,34 @@ false positive, a standing methodological correction, and a square-search screen
   confirm the output ends in a newline; a short file is a truncated child, not a negative.
   And a checker written to prevent a specific failure must itself be regression-tested
   against the tools it is supposed to clear, or it will clear a correct tool by accident.
-- NOT claimed: 14 rows remain void-but-unrepaired and 29 tools remain unrepaired. No
+- NOT claimed: 12 rows remain void-but-unrepaired and 29 tools remain unrepaired. No
   blanket clearance, no positive altered, nothing retracted. X unsolved, 0 new candidates,
   0 oracle MATCH, both gates unchanged.
+
+---
+
+## 2026-09-29 addendum 3: the void list worked down; one family skipped on N/D grounds (`R-DBBIBFIELD3`)
+
+- Precise accounting: 18 rows are void on the dbbib side, not the 14 stated in
+  `R-DBBIBFIELD2` (over-count, corrected). 6 were cleared by the previous pass, leaving 12.
+- Six of those families are now re-run on `dbbib_91` - ciphertools Bifid blank-period (480),
+  Bifid-into-pipeline (19), Base58 (34), white-rabbit columnar (56), section-title keywords
+  (2,576 lines), Beaufort/Vigenere (560) - **3,314 oracle-line evaluations, 0 MATCH on both
+  gates**, each confirmed by matching the oracle's record count to the candidate file's line
+  count, so none is a truncated child.
+- The exhaustive 9! interpreter-permutation sweep (row 145) is fixed to read `dbbib_91` but
+  **deliberately not run**: N = 2,903,040 lines per gate, D = 263.2 perms/s measured,
+  t = 6.1 h for both gates. Above the two-hour line the rule is a constraint that shrinks N,
+  not more compute. Its dbbib side stays void and that is stated, not hidden.
+- `lattice_probe`, `xor_pyramid_research`, `matrix_solver`, `cosmicd_base64idx_sweep` have
+  their load line corrected but are **not** re-run, so their dbbib sides are still void.
+  A fixed load line is not a re-run.
+- Two of my own errors, both caught before any claim: a `ciphertools_bifid_sweep.py` edit
+  that renamed the dict KEY while leaving the read as `raw.get("dbbib")` - relabelling the
+  bug rather than fixing it; and a `beaufort_sweep.py` one-line patch to a compound
+  statement that swallowed the `faed=` assignment into a comment and broke the tool with a
+  `NameError`. Every patched tool was executed or its candidate file re-validated after the
+  edit. A patch that silences a checker while breaking the instrument is worse than none.
+- Checker: CRITICAL 0 / STALE 18 / DUAL 10 / OK 62, down from 34 STALE / 44 OK. The 18
+  remaining STALE tools are cited by no void row and no live claim rests on them.
+- X unsolved, 0 new candidates, 0 oracle MATCH, both gates unchanged. Nothing retracted.

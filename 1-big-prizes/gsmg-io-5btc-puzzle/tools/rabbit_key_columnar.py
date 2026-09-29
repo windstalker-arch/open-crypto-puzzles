@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".")
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 d = json.loads(Path(os.path.join(ROOT, "data", "finalpage-digit-streams.json")).read_text())
-DBBIB = d["dbbib"]
+DBBIB = d["dbbib_91"]   # authoritative; d["dbbib"] is the crop
 FAED = d["faed_570"].rstrip("z")
 ONES = [1, 7, 8, 9, 11, 13, 17, 18, 21]  # 0-based one-positions
 

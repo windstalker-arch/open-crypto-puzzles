@@ -35,7 +35,7 @@ DATA = json.loads(Path(os.path.join(BASE, "data",
 STORED = json.loads(Path(os.path.join(BASE, "data",
                                      "salphaseion-streams.json")).read_text())
 
-DBBIB = DATA["dbbib"].lower()
+DBBIB = DATA["dbbib_91"].lower()   # authoritative; DATA["dbbib"] is the crop
 FAED = DATA["faed_570"].rstrip("z").lower()
 CANON = {"a": 8, "b": 1, "c": 5, "d": 0, "e": 6, "f": 3, "g": 7, "h": 4, "i": 2}
 

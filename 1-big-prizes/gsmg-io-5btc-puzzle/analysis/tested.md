@@ -17930,3 +17930,79 @@ Date: 2026-09-29, local.
   pyflakes clean on the checker and the four patched load lines.
 
 Date: 2026-09-29, local.
+
+## R-DBBIBFIELD3-2026-09-29: THE REMAINING VOID ROWS ARE RE-RUN ON dbbib_91 - SIX MORE FAMILIES, 3,314 ORACLE LINES, 0 MATCH - AND ONE FAMILY IS DELIBERATELY NOT RUN ON N/D GROUNDS
+
+- SCOPE. `R-DBBIBFIELD2` left 14 rows void-but-unrepaired and 29 tools stale, flagged
+  rather than papered over. This row works that list down. Precise accounting first:
+  18 rows are void on the dbbib side (pre-2026-09-07 AND citing a crop-reading tool
+  AND mentioning dbbib). 6 were cleared by the `R-DBBIBFIELD2` re-runs (rows 125, 138,
+  143, 144, 149, 180), leaving exactly 12. The 14 previously stated was an
+  over-count and is corrected here.
+- RE-RUN ON THE AUTHORITATIVE OBJECT, all 0 MATCH on BOTH funded gates:
+  - ciphertools Bifid blank-period (`ciphertools_bifid_sweep.py`, rows 123 + 164):
+    N = 480 candidates, 480/480 NO MATCH both gates. Carries its own witness, re-confirmed:
+    Bifid(DBIFHCEG, blank period) on the clean faed reproduces the expected head
+    `BTCSEEDDEOEMC...` (WITNESS match: True).
+  - Bifid-stage-into-pipeline (`bifid_to_pipeline.py`, row 124): N = 19, 19/19 both
+    gates; self-witness re-confirmed (faed -> Bifid full reproduces the stored
+    plaintext head, True).
+  - Base58/Bitcoin-charset reading (`base58_vic_sweep.py`, row 129): N = 34, both gates
+    0 MATCH; its own report also shows "Direct privkey->addr hits: none".
+  - white-rabbit 24-bit key, columnar+transposition (`rabbit_key_columnar.py`, row 137):
+    N = 56, both gates 0 MATCH.
+  - on-page section-title keywords as keyed-alphabet (`titlekw_checkerboard.py`, row 68):
+    N = 2,576 oracle lines (1,288 pure-letter candidates x 2 gates), 2,576/2,576
+    NO MATCH both gates.
+  - Beaufort/Vigenere (`beaufort_sweep.py`, row 131): N = 560, both gates 0 MATCH.
+  - Total for this row: 3,314 oracle-line evaluations, 0 MATCH, all verified by reading
+    the oracle's own record count back against the candidate file line count - the check
+    added in `R-DBBIBFIELD2` after the truncation incident. Every gate here reports
+    records == input lines, so none of these negatives is a truncated child.
+- NOT RUN, ON PURPOSE, WITH THE ARITHMETIC. `interpreter_perm_sweep.py` (row 145, the
+  exhaustive 9! interpreter-permutation sweep) was fixed to read `dbbib_91`, and then
+  measured before being run: N = 362,880 perms x 4 formats x 2 cases = 2,903,040 oracle
+  lines PER GATE; D = 263.2 perms/s measured over the first 5,000-perm block (19s);
+  t = 184 min per gate, 6.1 h for both. AGENTS.md is explicit that above two hours the
+  answer is a constraint that shrinks N, not more compute, so the sweep is NOT run and
+  the load-line fix stands unreported-as-a-negative. Its dbbib side remains void.
+  This is the correct outcome, not an omission: a 6-hour re-run of a family whose
+  2026-09-05 negative is not load-bearing for any live claim is a poor use of the
+  frontier while Lead 0 waits on an idea.
+- TWO MORE ERRORS OF MINE, BOTH CAUGHT BEFORE ANY CLAIM.
+  (a) In `ciphertools_bifid_sweep.py` my first edit renamed the dict KEY to
+  `objects["dbbib_91"]` while leaving the read as `raw.get("dbbib")` - i.e. I had
+  relabelled a bug rather than fixed it, which is the CRITICAL shape under a new name.
+  Caught by re-reading the tool's own load lines after patching; the read is now
+  `raw.get("dbbib_91")`. (b) My `beaufort_sweep.py` patch was a one-line edit to a
+  compound statement (`dbbib=...; faed=...`), so the trailing `faed=` assignment was
+  swallowed into the comment and the tool died with `NameError: name 'faed' is not
+  defined`. Caught by running the tool, not by assuming the patch was safe; both
+  statements are now separate lines. A patch that silences a checker while breaking the
+  instrument is worse than no patch, which is why every patched tool here was executed
+  or its candidate file re-validated afterwards.
+- ALSO FIXED, NOT RE-RUN: `lattice_probe.py` (row 146), `xor_pyramid_research.py`
+  (row 147), `matrix_solver.py` (row 158) and `cosmicd_base64idx_sweep.py` (row 65) now
+  read `dbbib_91`. Their dbbib sides remain VOID-UNREPAIRED; only the load line is
+  corrected, so a future run is on the right object. Stated explicitly so the fix is not
+  mistaken for the re-run.
+- CHECKER STATE. `stream_field_audit.py` unchanged this row: selftest 24/24, `--check`
+  rc=0. Progress is mechanical and worth stating plainly - CRITICAL 0 / STALE 18 / DUAL
+  10 / OK 62, down from 34 STALE and 44 OK at `R-DBBIBFIELD`. The 18 remaining STALE
+  tools are all pre-existing tools not cited by any void row; no live claim rests on
+  them and this row makes none about their results.
+- STATE UNCHANGED. X unsolved, 0 new candidates, 0 oracle MATCH across 3,314
+  evaluations. Both gates intact (1GSMG1JC9 = 125635374 sats partially-spent, 17ucy1K9 =
+  375055856 sats funded-unspent, both OK 2026-09-29). Crux unchanged: X is still the
+  decode of dbbib_91/faed_570 under the interpreter alphabet. Net of this row: 6 of 18
+  void rows repaired, 4 load-line-fixed-but-still-void, 1 (row 145) deliberately skipped
+  on N/D grounds, 4 re-runs of the ciphertools/Bifid-dependent rows in 123/164 folded
+  into the 480-candidate run, leaving 1 row (131, Beaufort) now closed and no other
+  claim altered. Nothing retracted; no positive claimed or removed.
+- GATES: stream_field_audit 24/24 + --check rc=0; retraction_audit 0 problems;
+  p32key_verify 24/24; p15null_chitest 11/11; oracle + oracle_dualite --selftest rc=0
+  both; validator 14 pass / 1 warn (pre-existing French leftovers) / 0 fail. All 12
+  touched tools parse; pyflakes clean apart from pre-existing unused-name warnings in
+  the historical tools I only edited a load line in.
+
+Date: 2026-09-29, local.

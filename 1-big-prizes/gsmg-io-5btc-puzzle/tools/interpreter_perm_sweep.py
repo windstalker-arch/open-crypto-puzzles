@@ -31,7 +31,7 @@ DATA = json.loads(Path(os.path.join(BASE, "data",
                                    "finalpage-digit-streams.json")).read_text())
 TOKEN_VAL = {chr(ord("a") + i): i for i in range(9)}
 
-DBBIB = DATA["dbbib"].lower().encode()
+DBBIB = DATA["dbbib_91"].lower().encode()   # authoritative
 FAED = DATA["faed_570"].rstrip("z").lower().encode()
 FORMATS = {
     "dbbib": DBBIB,

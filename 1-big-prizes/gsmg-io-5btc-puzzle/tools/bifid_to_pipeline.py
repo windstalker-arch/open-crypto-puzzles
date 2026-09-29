@@ -108,7 +108,7 @@ def main():
     oracle = os.path.join(base, "tools", "oracle.py")
 
     faed = streams["faed_570"].rstrip("z")
-    dbbib = streams["dbbib"]
+    dbbib = streams["dbbib_91"]   # authoritative; streams["dbbib"] is the crop
 
     grid, pos = build_grid("DBIFHCEG")
 

@@ -5,7 +5,8 @@ from pathlib import Path
 d = json.loads(Path(os.path.expanduser("~/open-crypto-puzzles/1-big-prizes/gsmg-io-5btc-puzzle/data/salphaseion-streams.json")).read_text())
 djj = json.loads(Path(os.path.expanduser("~/open-crypto-puzzles/1-big-prizes/gsmg-io-5btc-puzzle/data/finalpage-digit-streams.json")).read_text())
 object_256=d['object_256']; even=d['even_stream']; odd=d['odd_pre_reduction']; dropped=d['dropped_29']
-dbbib=djj['dbbib']; faed=djj['faed_570'].rstrip('z')
+dbbib=djj['dbbib_91']   # authoritative; djj['dbbib'] is the superseded 69-token crop
+faed=djj['faed_570'].rstrip('z')
 def beaufort_dec(ct,key):
     k=key.upper();out=[];ki=0
     for c in ct.upper():

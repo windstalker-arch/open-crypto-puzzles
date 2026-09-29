@@ -134,9 +134,9 @@ def main():
     if faed:
         objects["faed"] = faed.rstrip("z")
     # dbbib raw
-    dbbib = raw.get("dbbib") if raw else None
+    dbbib = raw.get("dbbib_91") if raw else None
     if dbbib:
-        objects["dbbib"] = dbbib
+        objects["dbbib_91"] = dbbib   # authoritative; "dbbib" is the crop
 
     candidates = []
     for oname, otext in objects.items():

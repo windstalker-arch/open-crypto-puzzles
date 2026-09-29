@@ -21,7 +21,7 @@ FF = json.loads(Path(f"{BASE}/data/finalpage-digit-streams.json").read_text())
 SF = json.loads(Path(f"{BASE}/data/salphaseion-streams.json").read_text())
 
 FAED = FF["faed_570"].rstrip("z")
-DBBIB = FF["dbbib"]
+DBBIB = FF["dbbib_91"]   # authoritative; FF["dbbib"] is the crop
 EVEN = SF["even_stream"]
 ODD = SF["odd_pre_reduction"]
 OBJ = SF["object_256"]
