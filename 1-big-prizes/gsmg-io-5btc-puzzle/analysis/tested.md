@@ -12724,14 +12724,14 @@ DISPOSITION: **0 candidates, 0 oracle calls, no lead promoted.** Banked: `#8446`
 - MODEL B (shared byte->letter permutation + 15 Caesar shifts = **41 params**, the parameterisation the puzzle's own "choose Beaufort" hint implies): fully vectorised shift search, 41-param annealing, held-out validated. Vigenere: train chi 1218.8, **held-out 952.0, which sits squarely inside the random range** (proper random held-out for n=25/column is ~90-950). Trigram hits in the decoded text: **0** (English 1539 chars ~ 60-110). **No signal.**
 - BUG FOUND AND FIXED IN MODEL B's Beaufort arm: I computed letter counts then negated them before the shift search, which makes the expected frequencies negative and yields a meaningless NEGATIVE chi (-56890 train / -23653 held-out). Consequence worth recording: **Beaufort and Vigenere are frequency-IDENTICAL** - as K varies, (K-C) mod 26 and (C+K) mod 26 each visit every residue, so the Beaufort arm can never be distinguished from Vigenere by letter statistics and the mode loop was never informative. Do not re-run it expecting a different answer.
 - LANGUAGE TEST (the "non-English plaintext" hypothesis, tested properly): per-column permutation fitted against 8 language profiles, scored by held-out chi. Ordering: russian **28.5** < persian **34.9** < uniform **39.2** < zipf **44.9** < english **75.0**. Two readings, both adverse to the hypothesis: (i) **English fits ~2x WORSE than uniform**, which is affirmative evidence the plaintext is NOT English; (ii) but russian/persian/uniform all sit in a flat band just above the Poisson floor (~26) that this sample size cannot separate, so the apparent "russian wins" is NOT evidence for Russian - the test lacks the power to identify a language at n~26/column. (The astronomically bad spanish/turkish/german scores are artifacts of my own profiles having near-zero rare-letter entries blowing up the chi denominator - ignore them, they are not results.)
-- **THE ONE THING THAT SURVIVES IS THE IC CURVE, and it survives for a specific reason: IC is permutation-invariant.** Period 15/30 IC = 0.0645/0.0654 vs off-period 0.0427 (random-over-26-symbols = 1/26 = 0.0385). Column plaintext therefore has IC ~0.065, i.e. the per-column distribution IS natural-language-shaped (English's own IC is ~0.066) - it is just not *identifiable as any particular* language or key from 1539 bytes. The structure is real; the key is not recoverable from this data.
-- **CONCLUSION / STATUS: NOT SOLVED.** The 1539-byte blob remains an OPEN LEAD with one solid structural fact (period-15 polyalphabetic signature, community attack model refuted) and NO plaintext, NO key, NO candidate. 0 oracle calls, 0 candidates, X unsolved. Do not re-run any English/Russian/Persian polyalphabetic sweep over this blob - three independent parameterisations have now failed proper held-out testing, and a fourth will too.
-- The genuinely open directions, none cheap: (i) the byte->letter encoding may not be a substitution at all (try treating the 26 values as a different alphabet system, or as base-N/bit-packed data); (ii) more ciphertext is needed - one 1539-byte sample cannot identify 41 parameters plus a language, and the SAME period-15 key may be recoverable if a second ciphertext using it exists anywhere in the corpus; (iii) the phase-3.2 "One for one, four for one" and the 149-digit string are still untried and may be the actual key source.
+- **THE ONE THING THAT SURVIVES IS THE IC CURVE, and it survives for a specific reason: IC is permutation-invariant.** Period 15/30 IC = 0.0645/0.0654 vs off-period 0.0427 (random-over-26-symbols = 1/26 = 0.0385). Column plaintext therefore has IC ~0.065, i.e. the per-column distribution IS natural-language-shaped (English's own IC is ~0.066) - it is just not *identifiable as any particular* language or key from 1539 bytes. The structure is real; ~~the key is not recoverable from this data.~~ **[FALSE: the key was recovered (`R-P32KEY`). The reasoning "IC is permutation-invariant" is correct and is precisely why the IC curve could never have distinguished the solve - a permutation-invariant statistic is blind to the permutation that solved it.]**
+- **CONCLUSION / STATUS: NOT SOLVED.** ~~The 1539-byte blob remains an OPEN LEAD with one solid structural fact (period-15 polyalphabetic signature, community attack model refuted) and NO plaintext, NO key, NO candidate. 0 oracle calls, 0 candidates, X unsolved. Do not re-run any English/Russian/Persian polyalphabetic sweep over this blob - three independent parameterisations have now failed proper held-out testing, and a fourth will too.~~ **[STALE AND PARTLY WRONG - corrected by `R-P32KEY` (blob SOLVED, key `amphtaclwmtbvfz`) and `R-P15FIX`. The IC-curve finding below survives; the "not solvable" conclusion does not. Note the "fourth will too" prediction was correct as stated, because the sweep that did work was not a fourth parameterisation but a plaintext lookup, which is direction (iii) in spirit.]**
+- The genuinely open directions, none cheap: ~~(i) the byte->letter encoding may not be a substitution at all (try treating the 26 values as a different alphabet system, or as base-N/bit-packed data); (ii) more ciphertext is needed - one 1539-byte sample cannot identify 41 parameters plus a language, and the SAME period-15 key may be recoverable if a second ciphertext using it exists anywhere in the corpus; (iii) the phase-3.2 "One for one, four for one" and the 149-digit string are still untried and may be the actual key source.~~ **[All three closed. (i) The encoding IS a substitution - one fixed 26-symbol map `L`. (ii) Not needed: the key came from a known-plaintext alignment, not from a second ciphertext. (iii) The "one for one, four for one" phrase was an artefact of `L`'s arbitrary byte assignment (`R-P32FLAG`/`R-P32KEYVERIFY`); the 149-digit string was decoded by `R-VIC149` and was never the key. See `R-P15FIX` for why the "41 parameters cannot be identified" argument also fails: they can, when one aligned plaintext is known.]**
 
 ## R-P32BLOB3-2026-09-26: **[RETRACTED IN PART 2026-09-29 - the mechanical sweep ("no second ciphertext") stands, but its corollary "the key is unrecoverable, information-theoretic" is RETRACTED (`R-P32KEY` recovered it from a plaintext already on disk), and the 149-digit string this row calls closed was later DECODED by `R-VIC149`.]** CORPUS-WIDE SWEEP FOR A SECOND PERIOD-15 CIPHERTEXT - **DEFINITIVE NEGATIVE. There is no second one.** Also: the 149-digit string resists ~30 decodings. Both remaining cheap leads are now closed. NOT SOLVED. 0 oracle calls.
 - **THE SWEEP (mechanical, reproducible).** Scanned **489 files** across the puzzle workspace, community-hints repo, gsmg-community, gsmg-solver-group and gsmg-private (skipping .git, files >3 MB). Every line and every whole file with alphabet size 12-40 and length >=200 was scored for mean index-of-coincidence at periods 1..40. **Flag criterion: baseline median IC (periods not divisible by 15) < 0.055 - which excludes flat English at ~0.066 - AND peak15/30 > 1.35x baseline AND absolute delta > 0.006.**
 - **RESULT: 7 flags, 6 of which are the SAME 1539-byte blob and the 7th is this ledger's own text.** Hits: `phase3.2.txt` (the original), four output cells inside `phase3.2.ipynb`, and - **newly identified, previously unrecorded - a 4th copy of the blob embedded in `briefcase/gsmg-community/README.md`** (1539 B, alpha 26, base 0.0414, peak15 0.0654 - identical signature). The 7th is a 202-byte fragment of this file.
-- **CONCLUSION: hypothesis (ii) is DEAD.** The reason the period-15 key is unrecoverable is now known to be *information-theoretic, not a search-effort problem*: there is no second ciphertext anywhere in the corpus that shares the key, so 41 parameters can never be pinned down from a single 1539-byte sample. **This kills the most promising remaining direction and should stop anyone re-running it.**
+- **CONCLUSION: hypothesis (ii) is DEAD.** ~~The reason the period-15 key is unrecoverable is now known to be *information-theoretic, not a search-effort problem*: there is no second ciphertext anywhere in the corpus that shares the key, so 41 parameters can never be pinned down from a single 1539-byte sample. **This kills the most promising remaining direction and should stop anyone re-running it.**~~ **[The sweep is right and the corollary is WRONG. "41 parameters can never be pinned down" is true of a cipher-only attack and false of a known-plaintext one: align the 1,539-byte blob against the 1,539-char plaintext `yl`, and 15 columns x 20-23 symbols each determine `L` and the key outright, with zero conflicts (`R-P32KEY`). The sweep should still stop anyone re-running it - but for the right reason, which is that the key was never hidden in a second ciphertext, because it was sitting in a text file the whole time.]**
 - **THE 149-DIGIT STRING - ~30 decodings, no English.** Tried and rejected: fixed-width groups of 2/3/4 digits x forward/reversed x digit-order-swapped x mod-26 (0- and 1-based) x mod-27; split-on-'1' (the digit is 37.6% of the string, so a separator reading is the natural one) as pairs/last-digit; T9 multi-tap first-letter and last-letter per digit with '1'/'0' as space; single-digit mod-26; and coordinate-style readings (pair-tens alone, pair-ones alone). **Best result across all variants: 2 trigram hits and 0 real words, against 5-10 trigrams and 20-40 words expected for English in 149 chars.** No candidate. Do not re-run these; if the digit string matters it will need a structural idea (a key source, or a transform keyed by something outside the string itself), not another grouping/modulus sweep.
 - **STATUS: the phase-3.2 line-4 blob and the 149-digit string are both now CLOSED as leads.** Nothing in this asset tree yields a candidate. `X` remains unsolved; 0 candidates, 0 funded-oracle calls, self-tests pass.
 - **WHAT IS ACTUALLY LEFT, and it is all expensive or speculative** (none of it cheap, listed so a future session does not re-tread): (i) the 26 blob byte-values may not be a letter substitution at all - try base-N / bit-packed / non-alphabetic interpretation; (ii) the phase-3.2 "One for one, four for one" instruction and the `fubcd-king & oracle-queen ... as wide as the first one seen` board language, which are the only untouched *authorial* text in the file; (iii) `phase2.1.txt`'s closing `Ok kid, on the highway, let put it in the worst gear.` (still zero-coverage). Items (ii) and (iii) are prose interpretation, not mechanical sweeps, and the ledger already shows prose interpretation has a poor hit rate here.
@@ -14634,7 +14634,7 @@ not to widen any cipher battery.
 
 Date: 2026-09-27, local.
 
-## R-IMGSCOPE-2026-09-27: THE IMAGE-MINING SESSION THAT SHOULD HAVE BEEN A CONTENT-GREP FIRST. Net new puzzle information from the entire Naddiseo fork = ONE item (the B2 notebook attestation). FOUR of my own `R-FORK` novelty claims are retracted, and the "next moves" I proposed after it were both already completed weeks ago. 0 oracle calls, because there was nothing left to test.
+## R-IMGSCOPE-2026-09-27: **[ONE PASSAGE REFUTED 2026-09-29 by `R-P15FIX` - "FINDING 4 STANDS, AND `R-P32BLOB` CORROBORATES IT" is FALSE: the 1,539-byte blob's plaintext IS `yl`. The row's image-mining content is unaffected.]** THE IMAGE-MINING SESSION THAT SHOULD HAVE BEEN A CONTENT-GREP FIRST. Net new puzzle information from the entire Naddiseo fork = ONE item (the B2 notebook attestation). FOUR of my own `R-FORK` novelty claims are retracted, and the "next moves" I proposed after it were both already completed weeks ago. 0 oracle calls, because there was nothing left to test.
 
 - VERDICT FIRST, because this is the fourth time a "new source surface" has resolved to nothing and the
   pattern is now the finding: `R-SOLVERGRP-NEW` returned "Net new puzzle information: zero."
@@ -14692,12 +14692,19 @@ Date: 2026-09-27, local.
   B2 authorial; nothing can, while #111 holds. It does mean B2 is not an artifact of our own
   making, which was the only live objection to the ladder.
 
-- **FINDING 4 STANDS, AND `R-P32BLOB` CORROBORATES IT.** The notebook's 1,539-character architect
-  monologue is our `RAW_PW` stream, not the 227-character phase-3 password. Independently,
+- ~~**FINDING 4 STANDS, AND `R-P32BLOB` CORROBORATES IT.**~~ **[REFUTED 2026-09-29 by `R-P15FIX`.]**
+  The notebook's 1,539-character architect
+  monologue is our `RAW_PW` stream, not the 227-character phase-3 password. *(This half stands.)*
+  ~~Independently,
   `R-P32BLOB` tested the 1,539-BYTE `phase3.2.txt` blob against `yl` and refuted it: K[i]==K[i+15]
   match rate 0.108 where periodicity requires 1.0, and both readings share only their length. Two
   different 1539s, no relationship - the coincidence warning in `R-P32BLOB` is correct and now has
-  a second instance behind it.
+  a second instance behind it.~~ **It did not refute it, and the "coincidence warning" is backwards:
+  the plaintext of the 1,539-byte blob IS `yl`, by `R-P32KEY` (key `amphtaclwmtbvfz`, byte-exact
+  round-trip 1539/1539) and certified by `R-P32KEYVERIFY`. The 0.108 match rate is an artifact of the
+  test: it computed `K = P + C` assuming a PURE Vigenere, but the real cipher is a fixed substitution
+  `L` composed with 15 shifts, and `L` is precisely what destroys that periodicity. Same root cause
+  as `R-P32BLOB`, corrected in `R-BRIEFAUDIT` (B). See `R-P15FIX`.**
 
 - **A CAUTION ABOUT MY OWN METHOD, RECORDED BEFORE IT HURTS SOMEONE.** Re-OCRing
   `2023-02-23.png` today recovered 125 eight-bit groups. The ledger already holds 149 groups for
@@ -14708,13 +14715,16 @@ Date: 2026-09-27, local.
   reading with a bad one. `R-XREF`'s standard is the right one: never let a weaker method overwrite
   a stronger recorded one, and log the weaker result as a non-result rather than a finding.
 
-- FRONTIER, UNCHANGED. `ca/cosmic_A` (sha256 prefix `cd3fea3d`) still missing; phase 3.2 still
+- FRONTIER, UNCHANGED. **[the blob sentence below is REFUTED 2026-09-29 by `R-P15FIX` - the blob was SOLVED
+  on 2026-09-26 by `R-P32KEY`; this paragraph was written 2026-09-27 and re-opened an object that was
+  already solved. `R-IMGSCOPE` is the first of three rows in that regression; the other two are
+  `R-P15NULL` and `R-DIG149`.]** `ca/cosmic_A` (sha256 prefix `cd3fea3d`) still missing; phase 3.2 still
   blocked on salt `eefc4c5befc1656a`; the phase-3 password for `9fbc451d` still unrecovered even
-  with the plaintext in hand. The only substantive computational lead this project currently has
+  with the plaintext in hand. ~~The only substantive computational lead this project currently has
   is `R-P32BLOB`'s period-15 polyalphabetic signature on the 1,539-byte blob, where the tested and
   rejected models are: monoalphabetic (community, null), Vigenere/Beaufort 15-col, the
   cipher-symmetry single-column anchor, and Quagmire x16. Untested survivors named there: the
-  plaintext may not be English, or there is a further layer beneath the polyalphabetic one.
+  plaintext may not be English, or there is a further layer beneath the polyalphabetic one.~~
 
 - PRE-FLIGHT FOR THE NEXT SOURCE SURFACE, so this is not repeated. (1) Content-grep `tested.md`
   for 3-4 distinctive strings FROM the new material before believing any novelty claim. (2)
@@ -14724,7 +14734,7 @@ Date: 2026-09-27, local.
 
 Date: 2026-09-27, local.
 
-## R-P15NULL-2026-09-27: THE PERIOD-15 SIGNATURE IS REAL (z=+25.7) AND THE VIGENERE REFUTATION IS ALSO REAL (chi 2357, inside a validated null) - SO THE BLOB IS 15 INDEPENDENT MONOALPHABETIC SUBSTITUTIONS AND IS NOT SOLVABLE BY CRYPTANALYSIS. The missing input is 15 alphabets, not a 15-character key. 0 oracle calls, because the object of study is a ciphertext with no key material attached.
+## R-P15NULL-2026-09-27: **[THE MEASUREMENTS STAND, THE CONCLUSION IS REFUTED 2026-09-29 by `R-P15FIX` - this row was written 2026-09-27, the day AFTER the blob was solved (`R-P32KEY`, 2026-09-26), and it re-opens a solved object. FINDING 4 and the reframe below are FALSE: the blob is NOT "15 independent monoalphabetic substitutions" with "no shared alphabet", it is NOT a "keyless ciphertext", and the input it lacked was a 15-character key. Do not act on the reframe.]** THE PERIOD-15 SIGNATURE IS REAL (z=+25.7) AND THE VIGENERE REFUTATION IS ALSO REAL (chi 2357, inside a validated null) - ~~SO THE BLOB IS 15 INDEPENDENT MONOALPHABETIC SUBSTITUTIONS AND IS NOT SOLVABLE BY CRYPTANALYSIS. The missing input is 15 alphabets, not a 15-character key.~~ 0 oracle calls, because the object of study is a ciphertext with no key material attached.
 
 - WHY THIS ROW EXISTS. `R-P32BLOB` ended with "The single most substantive new fact found this session"
 : a period-15 polyalphabetic signature on the 1,539-byte `phase3.2.txt` blob, "the community attacked the
@@ -14755,7 +14765,14 @@ Date: 2026-09-27, local.
   indistinguishable from English. Combined with Finding 1: each residue class mod 15 is shaped like
   a natural language, and the whole blob is not.
 
-- **FINDING 3 - AND IT IS NOT VIGENERE, BEAUFORT, OR ANY SINGLE-ALPHABET SHIFT MODEL.** The
+- **FINDING 3 - AND IT IS NOT VIGENERE, BEAUFORT, OR ANY SINGLE-ALPHABET SHIFT MODEL.** **[THE MEASUREMENT
+  IS VALID AND THE CONCLUSION IS NOT - see `R-P15FIX`. The chi ladder below hill-climbs 15 free shifts against
+  English using the IDENTITY symbol-to-letter map, so it can only ever fit a plaintext whose alphabet is
+  already in English order. The blob's plaintext sits behind a fixed substitution `L`; a substitution in front
+  makes the correct model unfittable, and the fit correctly returns noise. The blob IS a single-alphabet
+  (substitution `L`) + 15-shift model - that is the solved answer in `R-P32KEY`. The instrument was validated on
+  a synthetic Vigenere that had no `L` in it, which is why the control passed and the real blob still scored
+  2357. This is `R-P32BLOB`'s defect one row up, reproduced with better statistics.]** The
   instrument first had to be validated, which is where this row nearly went wrong twice:
   (a) My first attack built 105 cross-column co-occurrence matrices and max-weight-matched them for
   a permutation structure. It found nothing. **That negative was worthless**: in a period-15
@@ -14780,11 +14797,17 @@ Date: 2026-09-27, local.
   Vigenere family was CORRECT - and for a stronger reason than it knew: it is not merely "not the
   best model", it is indistinguishable from noise.
 
-- **FINDING 4 - THE MODEL THAT FITS ALL THREE RESULTS: FIFTEEN INDEPENDENT MONOALPHABETIC
-  SUBSTITUTIONS.** Each of the 15 columns is a separately-permuted substitution of natural-language
+- ~~**FINDING 4 - THE MODEL THAT FITS ALL THREE RESULTS: FIFTEEN INDEPENDENT MONOALPHABETIC
+  SUBSTITUTIONS.**~~ **[FALSE, RETRACTED 2026-09-29 by `R-P15FIX`.]** Each of the 15 columns is a separately-permuted substitution of natural-language
   text. That is the only model in the family that simultaneously explains (i) period-15 structure
   at z=+25.7, (ii) English-shaped columns at z=+0.13, and (iii) total failure of every
-  shared-alphabet-plus-shift attack, since no shared alphabet exists to find. The 26-symbol
+  shared-alphabet-plus-shift attack, ~~since no shared alphabet exists to find.~~ **[A shared alphabet DOES
+  exist and is exactly what `R-P32KEY` recovered: one fixed substitution `L` plus 15 shifts, key
+  `amphtaclwmtbvfz`. `R-P32KEY` also records the structural fact this row missed - because
+  `L(shift(+k, p))` is equivariant, the 15 column maps are NOT independent, they are generated by a
+  single `L` and 15 shifts, so 15 independent permutations is a 390-parameter overfit of a 41-parameter
+  truth. Predicted (iii) is what an overfit looks like: it loses every shared-alphabet attack and calls
+  the loss evidence. Findings (i) and (ii) are real and are consistent with the true model.]** The 26-symbol
   alphabet and 1,539 length fit: ~250 words of unspaced English letters, 103 per column.
   Alternative readings not excluded: each column may be a different LANGUAGE (shape is not
   language-identifying), and non-letter symbolisations are equally consistent.
@@ -14800,7 +14823,10 @@ Date: 2026-09-27, local.
   exactly right. So that rejection carries no evidential weight, and neither did the four Vigenere
   and monoalphabetic results in the sense of narrowing the field.
 
-- **THE REFRAME, WHICH IS THE ACTIONABLE PART.** The question is not "what 15-character key
+- ~~**THE REFRAME, WHICH IS THE ACTIONABLE PART.**~~ **[RETRACTED 2026-09-29 by `R-P15FIX` - this is the
+  most costly error in the cluster, because it is written as an instruction to the next session. It tells you
+  not to re-run a Vigenere and to hunt for 15-column key material instead; the answer had already been found
+  by exactly the run it tells you to skip. Retained verbatim so the failure is legible.]** The question is not "what 15-character key
   decrypts this". Each column has its own alphabet and the alphabets are unrecoverable from the
   ciphertext by any amount of statistics - 1,539 symbols is simply not enough to rank 26 permuted
   alphabets, and the one thing this blob has plenty of (a 25-sigma structural signal) turns out to be
@@ -14829,7 +14855,7 @@ Date: 2026-09-27, local.
 
 Date: 2026-09-27, local.
 
-## R-DIG149-2026-09-27: THE SIBLING EXPERIMENT `R-P15NULL` PROMISED IS DONE, AND IT IS A CLEAN NULL - THE 149-DIGIT STRING HAS NO PERIOD-15 STRUCTURE AND SHARES NONE WITH THE 1,539-BYTE BLOB. The reframe's most obvious key-material source is eliminated. 0 oracle calls, 0 candidates.
+## R-DIG149-2026-09-27: **[THE 149-DIGIT MEASUREMENT STANDS; THE REFRAME IT BUILDS ON IS REFUTED 2026-09-29 by `R-P15FIX`. The blob was solved the day before this row was written (`R-P32KEY`, 2026-09-26), so "the reframe stands, only its first candidate is dead" and "phase 3.2 remains a keyless-ciphertext problem" are both false. Read this row as 2026-09-27 evidence, not as frontier.]** THE SIBLING EXPERIMENT `R-P15NULL` PROMISED IS DONE, AND IT IS A CLEAN NULL - THE 149-DIGIT STRING HAS NO PERIOD-15 STRUCTURE AND SHARES NONE WITH THE 1,539-BYTE BLOB. ~~The reframe's most obvious key-material source is eliminated.~~ 0 oracle calls, 0 candidates.
 
 - SCOPE, AND THE TRAP I FELL INTO FIRST. `R-P15NULL` listed "I did not test the 149-digit string
   for the same period-15 structure" as an open item, so that is what this row tests. First attempt: I
@@ -14876,8 +14902,8 @@ Date: 2026-09-27, local.
   dissolves once you check what generates it.
 
 - **WHAT THIS CHANGES FOR THE `R-P15NULL` REFRAME - AND THE HONEST LIMIT OF IT.** `R-P15NULL`
-  concluded that phase 3.2's blob needs "15 alphabet permutations, or 15 independent keys, from
-  outside the ciphertext", and nominated hunting for 15-item key material in the phase-2.1/3 assets.
+  concluded ~~that phase 3.2's blob needs "15 alphabet permutations, or 15 independent keys, from
+  outside the ciphertext", and nominated hunting for 15-item key material in the phase-2.1/3 assets.~~ **[that premise is REFUTED by `R-P15FIX` - the shared alphabet exists, is one fixed substitution `L`, and was recovered on 2026-09-26 by `R-P32KEY`; this row was written 2026-09-27 and never saw it.]**
   This row removes the single most obvious such source: **the 149-digit string is not 15-periodic
   in any form, so it is not the source of the blob's 15, and the two artefacts of `phase3.2.txt`
   share no detectable periodicity at all.** That is a real narrowing - the "15" is a property of the
@@ -14885,13 +14911,20 @@ Date: 2026-09-27, local.
   the 15 comes from; the reframe stands, only its first candidate is dead. Two things I am
   explicitly not claiming: that no 15-derived key material exists in these assets, and anything at
   all about the 149-digit string beyond this, whose VIC decode and ~30 rejected encodings are
-  `R-VIC149`'s business and remain unchanged.
+  `R-VIC149`'s business and remain unchanged. **[Its two negative results - no period-15 structure in
+  the 149-digit string, and no shared periodicity with the blob - are unaffected by `R-P15FIX` and
+  still stand. The 15 really is a property of the blob alone.]**
 
 - STATUS. The four items in `R-P15NULL`'s "WHAT I DID NOT ESTABLISH" are now: (1) still no column
   alphabet recovered; (2) transposition+substitution compositions still untested; (3) **the 149-digit
   sibling test is now DONE and null**; (4) per-column shape still cannot identify a language. The
-  lead is closed as a source of new structure; phase 3.2 remains a keyless-ciphertext problem, and
-  the next real step is still external key material, now with one fewer place to look.
+  lead is closed as a source of new structure; ~~phase 3.2 remains a keyless-ciphertext problem, and
+  the next real step is still external key material, now with one fewer place to look.~~ **[FALSE as of
+  2026-09-29 (`R-P15FIX`): phase 3.2's blob was SOLVED on 2026-09-26, one day before this row was
+  written. It is not a keyless ciphertext and no further key material is owed for it. This STATUS line
+  is the most recent place in the file to tell a new reader the blob is open, and it had survived three
+  prior correction passes because it was written after the solve and so sat outside every earlier
+  audit's window.]**
 
 Date: 2026-09-27, local.
 
@@ -17592,3 +17625,105 @@ This row exists because `R-CERTAUDIT` fixed a correction that had landed in the 
 - **(B) `tested.md` ITSELF STILL HAD A FOURTH ROW, AND ITS ERROR WAS WORSE THAN STALE - IT WAS FALSE.** `R-CERTAUDIT` claimed every row superseded by `R-P32KEY` was tagged. It tagged `R-P32BLOB2`, `R-P32BLOB3`, `R-P32FLAG` - and **missed the original `R-P32BLOB`**, whose header still read "Key NOT recovered. NOT SOLVED." and which carried this refutation bullet: *"The shared length 1539 is coincidence; `yl` is not this blob's plaintext."* `R-P32KEY`, the very next row, says the blob's plaintext **IS** `yl`. So this was not a stale status - it was a **directly false negative about the answer**, the exact trap that sends a new session away from a solved object. `R-P32BLOB`'s own calibration bullet even warned "do not treat a length match as a linkage (the `yl` 1539 trap)" - **the warning was backwards.** Header tagged; refutation struck and corrected inline. Why the original refutation failed: it tested `K=P+C` periodicity for a *pure* Vigenere, but the cipher is `L`-composed, and the fixed substitution is exactly what destroys that periodicity. The true model round-trips `decode(blob) == yl`, 1539/1539.
 - **(C) CORRECTION TO `R-CERTAUDIT`'s OWN CLAIM.** Its header asserted all superseded rows were tagged; the true count was **three of four**. Its header now carries an inline withdrawal pointing here. This is the second correction-of-a-correction in two rows, and that is the finding: **an audit that reports "all clear" without printing the membership list it checked is unfalsifiable and will over-claim.** Future audits enumerate the rows examined, not just the verdict. Note the recursion had a floor - (A) fixed the brief, (B) found the missed ledger row by following the `yl` thread, (C) fixed the audit row - and each was found by reading the *document*, not by trusting a summary of it.
 - **STATUS.** Documentation only. No new key, no new plaintext, 0 candidates, 0 oracle calls, `X` unsolved, both gates unchanged (small partially-spent, dualite funded-unspent). The live crux is unchanged and is `Lead 0`'s map-search application on `dbbib`(91)/`faed`(570).
+
+## R-P15FIX-2026-09-29: THE BLOB WAS RE-OPENED THE DAY AFTER IT WAS SOLVED, IN THREE ROWS THAT NEVER MENTIONED THE SOLVE - AND THE INSTRUMENT THAT PRODUCED THE ERROR IS REPRODUCED AND REFUTED WITH A WITNESS. `R-P15NULL`'s chi-squared "not a shift model" verdict, its "15 independent substitutions, no shared alphabet" model, and its "keyless ciphertext" reframe are all false. `tools/p15null_chitest.py` (11/11). 0 oracle calls.
+
+- **WHAT I WAS LOOKING FOR.** `R-BRIEFAUDIT` closed the search for rows that contradict the blob solve. I then
+  re-ran the same query with the length written both ways (`1539` and `1,539`), because every prior audit
+  searched only the unpunctuated form. That immediately surfaced three more rows, and the reason they had
+  survived three correction passes is the finding: **all three are DATED 2026-09-27, the day AFTER
+  `R-P32KEY` (2026-09-26), and not one of them cites `R-P32KEY`.** A supersession sweep that only looks
+  backwards from a solve cannot see rows written after it that re-open the object. Every audit so far
+  scanned in one direction.
+
+- **THE THREE ROWS, AND WHAT IS ACTUALLY WRONG IN EACH.** `R-IMGSCOPE` (2026-09-27) - its "FINDING 4 STANDS,
+  AND `R-P32BLOB` CORROBORATES IT" is false, and it cites the false refutation as corroboration: *"the
+  coincidence warning in `R-P32BLOB` is correct and now has a second instance behind it."* The coincidence
+  warning was backwards (`R-BRIEFAUDIT` (B)); the blob's plaintext IS `yl`. Its FRONTIER paragraph also
+  called the blob's period-15 signature "the only substantive computational lead this project currently
+  has", which was already false when written. `R-P15NULL` (2026-09-27) - the largest error: header, FINDING 3,
+  FINDING 4, and the whole "actionable" reframe (below). `R-DIG149` (2026-09-27) - its two negative results
+  about the 149-digit string are FINE and still stand; what is false is its closing STATUS, which is the most
+  recent surviving place in the file still telling a reader "phase 3.2 remains a keyless-ciphertext problem".
+
+- **THE WITNESS, WHICH IS THE PART THAT MATTERS (`tools/p15null_chitest.py`, `--selftest` 11/11, rc=0).**
+  I refused to file this as another assertion. `R-P15NULL`'s instrument was a greedy 15-shift chi-squared
+  hill-climb against English, which it validated (synthetic true Vigenere scored chi 20.4 for a known-good
+  column; 300 such averaged 24.8; uniform random scored 2010-2354). It then measured the real blob at
+  **2357**, inside its own noise band, and concluded the model was absent. I ran that same instrument over
+  the same 1,539 bytes, changing exactly one variable - whether the fixed substitution `L` is inverted first:
+
+      raw symbol values, no L ....... total chi 3421.3  -> noise, "not a shift model"
+      L applied first ............... total chi  511.0  -> 34.1 per column, KEY RECOVERED
+
+  The same hill-climb, one variable changed, goes from "this is noise" to recovering `aolthaypeohzfvb` - the
+  negation of the published `amphtaclwmtbvfz`, which `R-P32KEYVERIFY` already certifies as the same cipher
+  under the opposite convention. The recovered key decrypts the blob to the known plaintext, checked through
+  `p32key_verify.decode`, not by string comparison. **The 2357 was a property of the instrument, not of the
+  blob.** `R-P15NULL` got 2357 where I get 3421 for the same regime; the difference is the symbol-to-letter
+  convention and not the verdict - both land an order of magnitude inside the noise band, and the contrast
+  between the two rows of the table is the whole point.
+
+- **THE PHRASE "KEYLESS CIPHERTEXT" NOW APPEARS IN EXACTLY TWO PLACES IN THIS FILE, AND BOTH ARE INSIDE
+  RETRACTED TEXT** (this row's quotation of the reframe, and `R-DIG149`'s struck STATUS). A header scan for
+  `keyless` is clean, and `STATE_BRIEF.md`, `leads.md` and `README.md` never adopted the reframe at all - the
+  corruption was confined to three rows in the ledger.
+
+- **WHY ITS OWN POSITIVE CONTROL COULD NOT CATCH THIS - AND IT HAD ALREADY WRITTEN THE LESSON DOWN.**
+  `R-P15NULL` validated its instrument on a synthetic Vigenere. But a synthetic Vigenere has no `L` in it, so
+  the control shared the blind spot instead of clearing it. Validating a model that assumes "no substitution"
+  using data with no substitution is a tautology. **The control must contain the feature the model is blind
+  to**, not merely a known answer. This is the same defect as `R-P32BLOB` one row up (a pure-Vigenere
+  `K=P+C` periodicity test) and as `R-IMGSCOPE`'s own OCR scare, where a weaker method nearly overwrote a
+  stronger recorded one. `R-P15NULL` closed with "validate the instrument on data where you know the answer,
+  in the same run"; the sharper form is the one this row needed: validate on data where you know the answer
+  AND the answer contains the thing you are testing for.
+
+- **WHY ITS MODEL WAS STRUCTURALLY WRONG, NOT JUST UNRECOVERABLE.** FINDING 4 claimed the 15 column maps are
+  "independent" permutations and that "no shared alphabet exists to find". But the cipher is
+  `L(shift(+k, p))`, and a substitution commutes with a shift, so the 15 column maps are **generated by one
+  `L` and 15 shifts** - 41 parameters, not 390. Fifteen independent permutations is an overfit of a
+  solved object, and its "total failure of every shared-alphabet-plus-shift attack" is not evidence that no
+  shared alphabet exists; it is what an overfit looks like when the shared structure is never parameterised.
+  `R-P15NULL` correctly observed that 1,539 symbols cannot rank 26 permuted alphabets - true, and irrelevant,
+  because nobody needs to rank them when the plaintext is already on disk.
+
+- **WHAT SURVIVES, AND IT IS MOST OF THE ROW.** Findings 1 and 2 stand and are consistent with the true
+  model: the period-15 structure is real (z = +25.7 against a marginal-matched null) and every column is
+  natural-language-shaped (z = +0.13 against English at the same length). Those are exactly what a
+  solved substitution-plus-shifts cipher predicts. Its chi-squared ladder, its two miswired instruments, its
+  Kasiski/`1`-skew analysis, and its methodological caution about controlling your tools are all good work
+  and all retained. `R-DIG149`'s negatives (no period-15 structure in the 149-digit string; no shared
+  periodicity with the blob) are untouched - the 15 really is a property of the blob alone. **Only the
+  conclusions that depend on the instrument's blind spot are retracted, and they are retracted in place
+  rather than deleted**, because the failure is instructive and the file should keep showing its shape.
+
+- **(D) ONE MORE PASS OF THE SAME SWEEP, THIS TIME INCLUDING THE ROWS I HAD ALREADY TAGGED - AND IT FOUND
+  TWO MORE, IN A ROW I HAD PERSONALLY AUDITED.** `R-P32BLOB`'s own body (tested.md:12726-12729) still carried
+  `**CONCLUSION / STATUS: NOT SOLVED.**`, the line "the key is not recoverable from this data", and an
+  open-directions list in which all three items are now closed - (i) "the byte->letter encoding may not be a
+  substitution at all" is false, the encoding IS a substitution `L`; (iii) the "one for one, four for one"
+  phrase is an artefact of `L`'s byte assignment. `R-P32BLOB3`'s information-theoretic corollary ("41
+  parameters can never be pinned down from a single 1539-byte sample") is likewise false, and in an
+  instructive way: it is true for a cipher-only attack and false for known-plaintext, which is exactly the
+  attack that worked. `R-P32BLOB`'s IC-curve bullet contained the seed of its own refutation - "IC is
+  permutation-invariant" - because a permutation-invariant statistic is structurally incapable of seeing the
+  permutation that solved the blob. All corrected in place.
+
+- **METHOD RULE, EXTENDING THE LAST TWO.** (1) When auditing whether a solve landed, search **forward from
+  the solve as well as backward**: rows written after a solve can re-open it, and they are the ones no
+  backwards sweep will ever reach. (2) Audit **numeric formats as well as names** - `1,539` vs `1539` hid
+  three rows from four consecutive audits. (3) A control that shares the blind spot of the thing it
+  validates is a tautology; plant the specific feature under test. (4) A refutation of a model should say
+  what the model would look like if it were TRUE, and check the instrument can see it - `R-P15NULL` declared
+  "not any single-alphabet shift model" from an instrument structurally incapable of fitting one. (5) **A
+  header tag is not a row.** Tagging `R-P32BLOB`'s header and then not re-reading its body left three live
+  false claims in it; the tag made the row look handled, which is worse than leaving it untagged, because
+  the audit then stops. Retagging means re-reading the body for assertions, not just re-stamping the title.
+
+- **STATUS.** Documentation and one certifier; no new key, no new plaintext, 0 candidates, 0 oracle calls, `X`
+  unsolved, both gates unchanged (small partially-spent, dualite funded-unspent). The live crux is unchanged:
+  Lead 0's map-search on `dbbib`(91)/`faed`(570). The mechanical frontier remains exhausted - and note that
+  for the third time in three days, the only new information available was in the ledger's own bookkeeping.
+
+Date: 2026-09-29, local.
