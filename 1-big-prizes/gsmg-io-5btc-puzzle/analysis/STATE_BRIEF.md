@@ -15,11 +15,17 @@
 > from a summary rather than the ledger, re-derive it once.
 >
 > **Cheap leads are exhausted.** The `abbaabab...` residue is a certified author-page artifact
-> (`R-DIGRUN`), the 1539-byte period-15 blob has failed three independent parameterisations under
-> proper held-out testing and a corpus-wide sweep found no second ciphertext, and the phase-3.2 prose
-> is closed by `R-EBCDIC1141` plus the FINDING 3/5 rows. Exactly **one** direction survives from
+> (`R-DIGRUN`), and the phase-3.2 prose is closed by `R-EBCDIC1141` plus the FINDING 3/5 rows.
+> ~~The 1539-byte period-15 blob has failed three independent parameterisations under proper held-out
+> testing and a corpus-wide sweep found no second ciphertext. Exactly **one** direction survives from
 > `R-P32BLOB`: treat the 26 byte-values as non-alphabetic data (base-N / bit-packed). It is
-> expensive, speculative, and unguided. The remaining gap looks **interpretive, not mechanical**.
+> expensive, speculative, and unguided.~~ **CORRECTED 2026-09-29 (`R-BRIEFAUDIT`, `R-P32KEYVERIFY`):
+> THE 1539-BYTE BLOB IS SOLVED.** `R-P32KEY` (key `amphtaclwmtbvfz`, 2026-09-26) decoded it;
+> `tools/p32key_verify.py` re-derives and round-trips it (`R-P32KEYVERIFY`), and the headers of
+> `R-P32BLOB`/`R-P32BLOB2`/`R-P32BLOB3`/`R-P32FLAG` now carry retraction tags (`R-CERTAUDIT`). The
+> "one surviving direction - treat the 26 byte-values as non-alphabetic data" is **WITHDRAWN as
+> moot**: the bytes ARE a letter substitution and it was decoded. **Do not re-attack this blob.**
+> The remaining gap looks **interpretive, not mechanical** (Lead 0's map-search).
 >
 > **Tile corpus is now CLOSED as gate input (2026-09-28).** Four rows land after this brief's 2026-09-27
 > addendum and none of them opens a gate; they retire false leads so no session re-treads them.
@@ -711,7 +717,7 @@ labelled dictionary (that band's text is corpus `#5717`).
 
 ## ADDENDUM 2026-09-27 (5) - where the frontier stands after this session.
 - Unchanged and not moved by anything above: both gates funded, no key recovered, Lead 0's keyed 28-char alphabet still the only
-  live semantic crux, and the surviving mechanical direction still `R-P32BLOB`. What changed is that **one whole family is now
+  live semantic crux, and (CORRECTED 2026-09-29, `R-BRIEFAUDIT`: this line was already stale when written - `R-P32BLOB` was SOLVED the previous day by `R-P32KEY`, key `amphtaclwmtbvfz`) the surviving mechanical direction is **none**. What changed is that **one whole family is now
   closed by measurement** (faed is not text) and the last "blocked because missing" object is **certified present and confirmed
   re-encrypted**.
 - **Both cheap next moves from this session are now spent or closed.** The live re-fetch is closed by robots + known 404s. The
@@ -981,6 +987,28 @@ comparison - **O(1) per candidate**, not O(570) plus a full reduction. Any futur
 should exploit this and must not re-run the reduction per candidate.
 
 **Net frontier effect: none.** No gate input, no oracle call. Two gates verified funded earlier this
-session. The surviving mechanical frontier is still `R-P32BLOB`; the only live semantic crux is
+session. (CORRECTED 2026-09-29, `R-BRIEFAUDIT`: there is no surviving mechanical frontier - `R-P32BLOB` was SOLVED by `R-P32KEY`.) The only live semantic crux is
 still Lead 0's keyed 28-char alphabet application. This row adds a retracted over-claim, a killed
 false positive, a standing methodological correction, and a square-search screening rule.
+
+## ADDENDUM 2026-09-29 - `R-BRIEFAUDIT`: this brief's OWN status block was stale on the one object a new session meets first.
+
+- The top "VERIFIED STATUS" block asserted the 1539-byte period-15 blob "has failed three independent
+  parameterisations ... a corpus-wide sweep found no second ciphertext", and named "exactly one direction
+  survives from `R-P32BLOB`: treat the 26 byte-values as non-alphabetic data". Both were **stale**: the blob
+  was SOLVED 2026-09-26 by `R-P32KEY` (key `amphtaclwmtbvfz`) and certified 2026-09-29 by
+  `tools/p32key_verify.py` in `R-P32KEYVERIFY`. The recommended direction is **moot** - the bytes ARE a
+  letter substitution, already decoded.
+- The same staleness appeared twice more: ADDENDUM 2026-09-27 (5)'s "the surviving mechanical direction still
+  `R-P32BLOB`" (already false the day it was written, since `R-P32KEY` predates it) and `R-FAEDCOORD`'s closing
+  "the surviving mechanical frontier is still `R-P32BLOB`". All three now carry dated inline corrections.
+- **This is the `R-P32FLAG` failure mode one document level up.** `tested.md` carried **four** rows telling a
+  future session the blob was unsolved (`R-P32BLOB`, `R-P32BLOB2`, `R-P32BLOB3`, `R-P32FLAG`; `R-CERTAUDIT` tagged
+  three and missed `R-P32BLOB`, whose refutation was outright false - `R-BRIEFAUDIT` fixed it); this brief - the
+  document read FIRST - had three more. A frontier summary that
+  mis-states its own headline object is worse than a stale ledger row, because it is the entry point.
+- **Method rule (extends `R-CERTAUDIT`):** when a solve supersedes a row, sweep BOTH the ledger and every summary
+  document that names the object (`STATE_BRIEF.md`, the README "open leads" list, `leads.md`). A correction that
+  lands only in `tested.md` is half a correction.
+- Status: documentation only. No new key, no new plaintext, 0 candidates, 0 oracle calls, `X` unsolved, both
+  gates unchanged.
