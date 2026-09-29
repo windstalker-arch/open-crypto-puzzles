@@ -112,6 +112,16 @@ a verification address and a year later said that door was "still a thing"
 padded, or bit-reversed) into a key and its compressed and uncompressed P2PKH
 addresses compared to the list, at about 176,000 keys/s per core.
 
+RATE, CORRECTED 2026-09-29 (row R-COLORDOOR). The 176,000 keys/s figure is section 18's
+substring-sweep rate and is right for that engine, but it is not this oracle's rate: a
+third-door comparison needs a secp256k1 point multiply per construction before a hash160
+exists. Measured through `tools/third_door.py` on one phone core, this oracle runs at
+**1,117 address derivations/s** (95 candidates/s), ~158x slower. The difference is
+irrelevant for the 367-candidate families actually being run and decisive for planning
+one: at 1.1k/s a 10^6 family is 15 min and a 10^8 family is 25 h, where the quoted rate
+would have said a 10^8 family was affordable. Budget third-door families at 1.1k/s on this
+device, not 176k/s.
+
 Everything textual is negative under the six constructions (`analysis/tested.md`
 sections 18 and 19): the puzzle's vocabulary, the system dictionary, short word
 windows of every text and of the three films, `gsmg.io/` paths, the image's text and

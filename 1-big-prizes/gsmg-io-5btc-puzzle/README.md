@@ -469,6 +469,7 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | `images/02-pipeline-derivation.svg` | the final-gate derivation pipeline for the small blob |
 | `tools/oracle.py` | candidate checker for the small-blob route, certified in two independent parts |
 | `tools/third_door.py` | candidate checker for the third door and the other planted addresses, six key constructions, certified against the preimages `data/planted-addresses.csv` already records |
+| `tools/third_door_colors.py` | the creator's colour rule read on a non-textual object against the third door: per-class counts, prime ranks, zeroed-out runs, tile indices and class-to-number maps, over colour runs parsed from the certified pixel artifacts |
 | `tools/fig_stages.py` | generates images/01-structure-stages.svg from data/stage-chain.json |
 | `tools/fig_pipeline.py` | generates images/02-pipeline-derivation.svg from data/pipeline-stages.json |
 
