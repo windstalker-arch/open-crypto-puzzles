@@ -1231,3 +1231,42 @@ false positive, a standing methodological correction, and a square-search screen
 - 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged. First NEW
   authorial object found this session, and both surviving items are semantics rather than
   ciphers - consistent with `R-SOLVERGRP-NEW`.
+
+---
+
+## 2026-09-29 addendum 9: an unledgered verbatim creator hint, and the community's only argument for it is a hex-digit coincidence (`R-NEOPASSPORT`)
+
+- **The hint, 2021-12-31 17:14, `Jrk Bgrt` (@SoWut), verbatim from `Msgs.txt`: "The only date I
+  give away is the expiry date of neo's passport."** `only date I give away` = **0** in
+  tested.md, leads.md, STATE_BRIEF.md; `expiry date of neo` = 0. Unprompted and standalone: it
+  answers `Lazy Prophet`'s "how old are you? or are you married?" with a date in NEO'S PASSPORT,
+  and **no one responds** - the next message is `Zil` six hours later wishing happy new year.
+  Negative-space form ("the ONLY date") makes it falsifiable, and a hint the group walked past
+  matches the `R-SOLVERGRP-NEW` profile exactly.
+- This RECURSES 17 months later in the 2023-05-02 message `R-GRPCHAT23` recorded as a gap.
+  `R-GRPCHAT23`'s "antecedent scene missing" framing is CORRECTED: the antecedent is Neo's passport
+  in Mr. Robot, and the authoritative 2021 statement sits in the same corpus, in `Msgs.txt`, which
+  spans 2017-07-03..2024-12-31 and is the most complete export present. I had compared only
+  `jan2023-aug2023.txt` and creator-only `GSMG_JRK.md`, both of which truncate it - so the corpus
+  was blind to its own recurrence.
+- I also over-weighted the reply-parent metadata: 23 of 62 creator records carry
+  `Type: A reply to another user`, and the 2023-05-02 one does not, which is true but only proves
+  the antecedent is not a chat message - it is a FILM SCENE, so it was never in the chat. The
+  metadata was a red herring for one step; the recurrence claim stands on the 2021 hit.
+- **The community's sole supporting argument is FALSE, tested.** The 2024-10-09 note claims
+  `01911` is "only thing in the puzzle that has 01911 in it". On the 30,000,943-byte `found.txt`:
+  `01911` = 1, and `9/11`, `09/11`, `9-11`, `11-9`, `11/9`, `09-11`, `20010911`,
+  `11 September`, `11.9.2001`, `1/9/2001` = **0 each**. The single hit is inside
+  `Priv (HEX): 0x484264AB79F501A3CB0803451F19D8B7F0191185D227EAE43C0D34A1D23A99F8`, a
+  solver-derived WIF key in a vanity-key dump. In hex, `01911` is four DIGITS, not a date. So the
+  uniqueness is real and the reading is void, and the downstream stack (BIP32 `m/44'/0'/0'/9/11`,
+  base91, "every 9th and 11th letter", 1EHxfmrG birthday subliminals) is authorless numerology.
+  The community does not even agree on the digits: 11/September/2001 vs 11-9-2001 vs 09.11.2001.
+- NOT established: the date VALUE (I will not inherit it from the thread) and any USE (a scalar
+  salt/index/path component is not an N/D/t premise for `dbbib_91` + `faed_570`). Recorded as a
+  new authorial datum, not a lead.
+- STANDING RULE, earned twice this session: a negative from my own regex is not evidence of
+  absence. Both the `R-POINTERS` 17-missing-files alarm and today's "0 passport mentions" were my
+  scripts, not the corpus - the latter because the export puts an `@handle` between name and text
+  and my pattern excluded `@` (literal count: 29 `passport`, 4 `expirat`). Any negative search
+  result is now reported only after a literal-substring confirmation with a known-present control.

@@ -2058,3 +2058,15 @@ revive it, it has to say what reading order the three existing negatives did not
   his passport" in a scene that is NOT in the corpus. Both are method constraints / artifact
   pointers, not candidate strings - the existing sweep only saw "rabbit hole" as a cipher
   candidate. Honouring the first requires knowing the right hole, which is the crux.
+
+- **AUTHORITATIVE UNLEDGERED HINT (`R-NEOPASSPORT`): 2021-12-31, creator, verbatim - "The only date
+  I give away is the expiry date of neo's passport."** Zero hits for "only date I give away" across
+  all three analysis docs. It is a NEGATIVE-SPACE claim, so falsifiable and informative; it answers
+  a question about the creator's own AGE; and nobody in the group responds. Restated 17 months
+  later ("Still remarkable that scene. Especially the expiration date of his passport"), which is
+  why `R-GRPCHAT23` mistook it for a missing artifact. The date VALUE is NOT taken from the
+  community: the only support is a uniqueness claim I tested and it is FALSE - the single `01911`
+  in the 30MB `found.txt` is four hex DIGITS inside a solver-derived WIF key
+  (`0x484264AB...D8B7F0191185D22...`), not a date, and the surrounding 9/11 numerology (BIP32
+  paths, base91, "every 9th and 11th letter") is authorless. Read the prop from the film, not the
+  forum. New authorial datum, NOT a lead: it is a scalar, not an N/D/t premise for dbbib_91+faed_570.
