@@ -1012,3 +1012,35 @@ false positive, a standing methodological correction, and a square-search screen
   lands only in `tested.md` is half a correction.
 - Status: documentation only. No new key, no new plaintext, 0 candidates, 0 oracle calls, `X` unsolved, both
   gates unchanged.
+
+---
+
+## 2026-09-29 addendum: "Swept" and "swept the right object" are not the same claim (`R-DBBIBFIELD`)
+
+- `data/finalpage-digit-streams.json` carries two dbbib fields. `dbbib_91` (91 tokens) is
+  authoritative; `dbbib` (69) is the superseded OCR crop, which is the authoritative object
+  with a 22-char run DELETED at offset 45. 91 = 7x13 exactly; 69 is not, so a 7x13 grid on the
+  crop silently truncates.
+- The crop is not a benign degraded copy: the deleted 22 chars are the evidence that motivated
+  the 2026-09-07 reinstatement in the first place.
+- `tools/lead0_vicgap.py` read the crop while printing `dbbib(91)` on every output line. So
+  late-58's "the last structural gap is now closed ... applied to dbbib(91)" certified a
+  family that was never run on the 91-token object. late-150's BUG-2 assurance that "recent
+  sweep rows were all re-derived on the live 91-token object" is FALSIFIED by it, and BUG-2
+  named 5 stale readers where a full scan finds 34.
+- Re-run on the authoritative object: 393 candidates x both oracles, 0 MATCH, top scores all
+  degenerate. late-58's CONCLUSION is unchanged and now actually earned; its date and basis
+  were wrong. The faed half was never affected.
+- `tools/stream_field_audit.py` (17/17 selftest, --check rc=0) now enforces the split
+  mechanically and classifies tools OK / DUAL / STALE / CRITICAL, where CRITICAL is the
+  late-58 shape (reads the crop while claiming 91). CRITICAL = 0 today. 34 STALE remain:
+  flagged, not fixed - they are historical sweeps and this claims nothing about their results
+  beyond the mechanical fact that a future re-run would mis-test.
+- **Method rule (new):** a negative is only certified if the row records WHICH FIELD the
+  instrument loaded, and the instrument's own printed label is checked against it. A tool that
+  labels its output `dbbib(91)` while reading 69 tokens defeats every downstream reader, because
+  the label is what gets trusted. Prose flags ("remaining stale readers flagged") failed here
+  exactly the way a prose retraction once did - the flag has to be a checker.
+- Status: one tool load-line fixed, one optional `--emit` added, one new checker. No new key, no
+  new plaintext, 0 candidates, 0 oracle MATCH, `X` unsolved, both gates unchanged
+  (125635374 partially-spent / 375055856 funded-unspent, both OK 2026-09-29).

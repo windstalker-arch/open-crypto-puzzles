@@ -17747,3 +17747,95 @@ This row exists because `R-CERTAUDIT` fixed a correction that had landed in the 
   for the third time in three days, the only new information available was in the ledger's own bookkeeping.
 
 Date: 2026-09-29, local.
+
+## R-DBBIBFIELD-2026-09-29: THE "STRUCTURAL GAP CLOSED" ON dbbib WAS CLOSED ON THE WRONG STREAM - LATE-58 FED A 69-TOKEN OCR CROP TO A TOOL THAT PRINTED `dbbib(91)` ON EVERY LINE. FIXED, RE-RUN, AND NOW ENFORCED BY A CHECKER. `tools/stream_field_audit.py` (17/17). 393 candidates x 2 gates, 0 MATCH.
+
+- FOUND BY testing the one avenue the blob solve newly enabled (key/board
+  relationship: disjoint alphabets, no Caesar shift into the board; key
+  provenance: `amphtaclwmtbvfz` appears in no repo or briefcase file, is not a
+  substring or anagram-window of the plaintext - it is DERIVED, not quoted). Dead
+  ends, filed so they are not re-run. THEN, reading the streams themselves:
+  `data/finalpage-digit-streams.json` carries TWO dbbib fields and the whole
+  session's evidence discipline turns on which one a tool loaded.
+- THE TWO OBJECTS. `dbbib_91` (len 91) is authoritative: live page + Wayback
+  2023-06-01/2026-04-05 + community README line 371. `dbbib` (len 69) is the
+  superseded shallow-OCR crop, and its `_provenance` note says exactly why. The
+  crop is not a prefix or suffix of the authoritative object: it is the
+  authoritative object with a 22-char run DELETED at offset 45. Verified by
+  difflib: the only opcode is `insert dbbib(69)[45:45] ->
+  dbbib_91[45:67]='bfdhbeffcdbbfcccgbfbee'`, so
+  `crop[:45] + <22> + crop[45:] == dbbib_91` exactly, and 69+22 = 91.
+- WHY THE MISSING 22 MATTER. 91 = 7x13 exactly; 69 = 5x13 + 4, so a 7x13 grid
+  built from the crop silently truncates a 4-token remainder. And the deleted
+  run is the very data that MOTIVATED the 2026-09-07 reinstatement - the ledger's
+  reason for distrusting the crop in the first place. So the crop is not a
+  degraded copy of the object; it is missing precisely the discriminating
+  evidence.
+- THE BUG. `tools/lead0_vicgap.py` line 24 read `d["dbbib"]` (the crop) while its
+  own docstring says "dbbib(91)", it emits `streams = {"dbbib(91)": DBBIB, ...}`
+  at line 142, and line 180 iterates `("dbbib", DBBIB, 13)`. Every single line of
+  its output therefore ATTESTED to 91 tokens while feeding 69. The tool was
+  committed once (19820f5) and never fixed. `python3 tools/lead0_vicgap.py` on the
+  crop prints, e.g. `[A dbbib(91) canon certifie e14 rev0]` - the label is the
+  thing a reader trusts, and it was false.
+- CONSEQUENCE FOR THE LEDGER. late-58 (2026-09-13) reads: "the last structural
+  gap is now closed - the certified FUBCDORA.LETHINGKYMVPS.JQZXW board applied to
+  dbbib(91)/faed(570) ... is all negative". That dbbib-side negative was computed
+  on the crop. The certified 91-token object was NEVER actually tested by that
+  family. This DIRECTLY falsifies the BUG-2 assurance in late-150 (2026-09-17):
+  "recent sweep rows were all re-derived on the live 91-token object". late-58
+  post-dates the 2026-09-07 reinstatement, cites the stale tool, and is therefore
+  not re-derived. BUG-2's flag was also incomplete on its face: it named 5 stale
+  readers; a full scan of `tools/*.py` finds 34 that still read the crop and
+  never read `dbbib_91`, of which only 3 (base9_number_route,
+  ciphertools_bifid_sweep, free_interp_alpha_sweep) were in the named 5
+  (certified_vic.py was the one actually fixed, so 4 of the 5 are in the 34).
+  31 were never flagged anywhere. The flag was prose; prose was wrong.
+- FIX + RE-RUN. One-line load fix (`d["dbbib"]` -> `d["dbbib_91"]`) plus an
+  optional `--emit` so the candidate set is exportable. Re-run on the
+  authoritative object: 393 candidates over the tool's own f>0.06/keyword
+  threshold, exported and run through BOTH oracles -
+  `oracle.py --stdin` rc=1 and `oracle_dualite.py --stdin` rc=1, 393/393
+  `NO MATCH` on each. Top-15 English-like scores are all degenerate A-heavy
+  strings (max 0.952, e.g. `AAAAVAAAIAAAA.AAAAA...`). So the CONCLUSION of
+  late-58 survives; its BASIS did not exist. This is a demotion from
+  "certified on the right object" to "certified on the right object, now,
+  properly", not a retraction of a positive.
+- NEW CHECKER, BECAUSE PROSE FAILED TWICE. `tools/stream_field_audit.py`
+  classifies every tool as OK (reads dbbib_91), DUAL (reads both, so intent is
+  legible), STALE (reads the crop, makes no 91 claim) or CRITICAL (reads the
+  crop WHILE claiming the 91-token object - the late-58 shape). `--selftest`
+  17/17, `--check` rc=0 with CRITICAL 0 / STALE 34 / DUAL 12 / OK 44. The
+  selftest also certifies the data invariants themselves (69 vs 91, the 22-char
+  run's exact offset, 91 = 7x13 vs 69 not divisible by 13) so the checker fails
+  loudly if the data file is ever changed underneath it. Authoring note: the
+  selftest caught MY OWN error mid-task - I first wrote the 23-char
+  `bfdhbeffcdbbfcccgbfbeeg` as the crop's diff, which rebuilds a 92-char string.
+  `phase322_literal_sweep.py`'s `HEAD/MID/TAIL` is 45+23+23 and is CORRECT - that
+  is the partition `dbbib_91[:45] + dbbib_91[45:68] + dbbib_91[68:91]`, a
+  different and equally exact split. Both are now pinned as separate invariants
+  so nobody conflates them again. There is NO off-by-one defect in 45+23+23; the
+  off-by-one was mine, and it was caught before it reached the ledger.
+- NOT CLAIMED. The 34 STALE tools are not asserted to have produced any false
+  NEGATIVE. Most of their dbbib-side conclusions were re-derived or are about
+  faed, and this row makes no claim about them beyond the mechanical fact that
+  they read the superseded field and would mis-test any future re-run. Fixing
+  all 34 is mechanical but broad and touches historical sweeps; flagged, not done.
+  Also NOT claimed: anything about key uniqueness from the phase-3.2 object.
+  That experiment failed on my own faulty code and is filed in R-P15FIX as
+  uncertified, unchanged.
+- STATE UNCHANGED. X unsolved, 0 candidates, 0 oracle calls (the 393 x 2 above
+  are sweep outputs, all NO MATCH, and produced no new candidates). Both funded
+  gates intact: 1GSMG1JC9 = 125635374 sats partially-spent,
+  17ucy1K9 = 375055856 sats funded-unspent (re-read 2026-09-29, both OK).
+  Crux unchanged: X is still the decode of dbbib_91/faed_570 under the
+  interpreter alphabet. This is the FOURTH time in four days that the only new
+  information was in the ledger's own bookkeeping - which is itself the finding:
+  the margin between "swept" and "swept the right object" is where this puzzle
+  has been losing information.
+- GATES: stream_field_audit 17/17 + --check rc=0; retraction_audit 0 problems;
+  p32key_verify 24/24; p15null_chitest 11/11; validator 14 pass / 1 warn (the
+  pre-existing French-leftovers warning) / 0 fail. pyflakes clean on the new
+  tool and on the edited load line.
+
+Date: 2026-09-29, local.

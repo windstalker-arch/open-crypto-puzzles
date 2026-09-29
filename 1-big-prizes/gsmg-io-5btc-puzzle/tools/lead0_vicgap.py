@@ -14,6 +14,7 @@ import json
 import os
 import re
 import string
+import sys
 from collections import Counter
 from pathlib import Path
 
@@ -21,7 +22,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data", "finalpage-digit-streams.json")
 d = json.loads(Path(DATA).read_text())
 
-DBBIB = d["dbbib"]
+DBBIB = d["dbbib_91"]   # authoritative 91-token object; d["dbbib"] is the
+                        # superseded 69-token OCR crop (BUG-2 class, see tested.md)
 FAED = d["faed_570"].rstrip("z")
 
 CANON = {"d": 0, "b": 1, "i": 2, "f": 3, "h": 4, "c": 5, "e": 6, "g": 7, "a": 8}
@@ -247,6 +249,12 @@ def main():
         print(f"{f:.3f}  {tag}")
         print("   ", t[:200])
     print(f"candidates>0.05: {len(best)}")
+
+    if len(sys.argv) > 2 and sys.argv[1] == "--emit":
+        with open(sys.argv[2], "w") as fh:
+            for _f, _tag, t in best:
+                fh.write(t + "\n")
+        print(f"wrote {len(best)} candidates to {sys.argv[2]}")
 
 if __name__ == "__main__":
     main()

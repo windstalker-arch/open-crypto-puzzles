@@ -51,6 +51,18 @@ as matrix-sum readings, and via Beaufort/Vigenere under the 7 page tokens, plus
 base-9 pair reading, is all negative (`analysis/tested.md` late-58). The two
 streams remain the author-cited never-decoded artifacts; every single-classical
 reading in the tested toolbook now returns noise.
+2026-09-29 CORRECTION to the paragraph above (`R-DBBIBFIELD`): the dbbib half of
+late-58 was computed on the WRONG OBJECT. `tools/lead0_vicgap.py` read
+`d["dbbib"]` - the superseded 69-token OCR crop - while printing `dbbib(91)` on
+every line, so the certified 91-token object was never actually tested by that
+family. The crop is the authoritative object with a 22-char run deleted at
+offset 45, and 91 = 7x13 while 69 is not, so the grid was silently truncated
+too. late-58 has now been re-run on `dbbib_91`: 393 candidates x both oracles,
+0 MATCH, all top scores degenerate - so the CONCLUSION stands, but it is a 2026-09-29
+conclusion, not a 2026-09-13 one. This also falsifies late-150's BUG-2 assurance
+that "recent sweep rows were all re-derived on the live 91-token object", and 34
+tools (not the 5 BUG-2 named) still read the crop; `tools/stream_field_audit.py`
+now enforces the split mechanically. The faed half of late-58 is unaffected.
 2026-09-13 addendum: chain-2 (C2, salt b45a5e3d827593ca) is confirmed ALREADY
 decrypted in the ledger (briefcase/MEMORY.md)  -  not a lock to attack.
 2026-09-27 addendum: that "already decrypted" is now certified rather than reported -
