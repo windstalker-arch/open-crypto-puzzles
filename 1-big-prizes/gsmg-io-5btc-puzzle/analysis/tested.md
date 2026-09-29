@@ -18106,3 +18106,51 @@ their filenames as SETS, and `dig_i` shows a `T` after `DIG | I` as row 16740 re
 remaining human-eye items are now ONE: the 14x14 FEFEFE cell at row 7 col 4. The
 `theseedisplanted` item is closed, and closed negatively for the puzzle - the tiles carry icons
 and fragments, not a hidden sentence.
+
+## R-GRID14-2026-09-29: the last human-eye item closes from pixels, and it is a RED cell with a white glyph inside it, not a FEFEFE cell
+
+The checklist's final open item was "14x14 grid: confirm the FEFEFE cell really sits at
+(row 7, col 4) as a white cell". Closed from pixels, same method as `R-STRIPGLYPH`, and the
+answer is that the question misdescribes the object. N = 1 cell, D = 0, t = 0.
+
+The grid is `~/storage/external/briefcase/visual-pack/grid-14x14-fefefe.png`, 785x785 RGB.
+785/14 = 56.07px pitch, so it is a true 14x14 of 56px cells with no drawn borders. Full colour
+census, all 196 cells, dominant colour per cell: field `#F5F5F5` 517,275 px, blue `#4285F4`
+45,375, yellow `#FBBC05` 27,225, grey `#B4B4B4` 23,325, red `#F02828` 2,421, and pure white
+`#FFFFFF` exactly 504 px. The 14x14 read off cell centres reproduces the ledger's grid
+row-for-row: 15 blue, 9 yellow, 1 red, 171 field.
+
+FINDING 1 - THE CELL AT (7,4) IS RED, NOT FEFEFE, AND IT IS THE ONLY RED CELL IN THE GRID.
+Both the red pixels and the white pixels fall entirely inside cell (7,4) and nowhere else:
+red spans x225-279 y393-447 and white spans x230-274 y398-442, each 1x1 cell. The 785x785
+pixel file is 1 red cell of 24 `red #F02828` sub-samples plus one 45x45 white frame, and
+nothing red anywhere else. So "the FEFEFE cell" is not a cell colour at all: it is a white
+OUTLINE drawn inside a red cell. `visual-pack/grid-follow-white-rabbit.txt` records the same
+thing as "FEFEFE nest (r7,c4)" and the ledger carried it forward as a colour claim, which is
+what made the human-eye item look load-bearing.
+
+FINDING 2 - IT IS A GLYPH, AND THE GLYPH IS A NEST/BASKET ICON, NOT A LETTER. Inside the red
+cell, `#FFFFFF` traces a 45x45 square ring (3px stroke) with a small field-coloured square
+void at x233-236 y404-411, i.e. a white-outlined shape with a hole near its top-left. Read at
+1:1 against the 24 red sub-cells, this is a white square outline containing a small square, on
+a red tile. That is a nest, matching the "nest" name the txt already gives it and the yinyang
+nesting theme. It is NOT a white cell and NOT a letter, so the question "does the FEFEFE cell
+sit at (7,4)" has no answer to give: the cell at (7,4) is red, and what is white is a pictogram
+drawn on it.
+
+FINDING 3 - THE `#B4B4B4` GREY IS NOT A CELL VALUE, IT IS THE IMAGE BORDER. The 23,325 grey
+px touch all four edges (grey x-coords span 0..784 continuously), so it is frame/edge
+antialiasing, not a 15th cell colour. Anyone counting grey as a grid value would be wrong.
+
+WHAT THIS DOES NOT DO: it does not open a lead. The red cell is a 1-in-196 marker and the
+ledger already swept 12 colour masks of this grid in 5 reading orders (rows 903, and the
+colour-channel audit at 287 mentions), so red-as-a-cell-value has been through the machine.
+The nest glyph is a new RENDER detail, not a new string, and per `R-BOARD28B-ADDENDUM` F5 no
+battery is run on it. Recorded because it converts a standing "needs a human" item into a
+closed one and because the FEFEFE framing was itself a misdescription that would have kept
+being re-inherited.
+
+0 oracle calls, 0 candidates, no lead promoted. X unsolved, both gates unchanged. The
+`visual-pack/README.md` note that the page background is `#FEFEFE` "may be deliberate" is
+SEPARATELY falsified by this file: the grid's field is `#F5F5F5`, not `#FEFEFE`, and its
+white glyph is `#FFFFFF`. Three distinct near-whites, none of them `#FEFEFE`.

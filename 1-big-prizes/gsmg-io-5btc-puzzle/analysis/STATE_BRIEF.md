@@ -1152,3 +1152,26 @@ false positive, a standing methodological correction, and a square-search screen
   human" is a claim about the question, not the data.
 - 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged. ONE
   human-eye item remains: the 14x14 FEFEFE cell at row 7, col 4.
+
+---
+
+## 2026-09-29 addendum 6: the last human-eye item closed, and the human-eye class is now empty (`R-GRID14`)
+
+- The 14x14 grid is 785x785, 785/14 = 56.07px pitch, true 14x14, no drawn borders. Full census
+  of all 196 cells: field `#F5F5F5`, blue `#4285F4` x15, yellow `#FBBC05` x9, red `#F02828` x1,
+  pure white `#FFFFFF` 504px total. The cell-centre read reproduces the ledger grid exactly.
+- **Cell (7,4) is RED and is the only red cell in the grid.** Both the red px (x225-279,
+  y393-447) and the white px (x230-274, y398-442) lie entirely within that one cell. The
+  "FEFEFE cell" is not a cell colour: it is a 45x45 white ring with a small field-coloured
+  void, i.e. a nest glyph drawn on a red tile. The checklist item asked whether a colour sits
+  at a position; the object at that position is a pictogram.
+- Two adjacent misdescriptions corrected while measuring: the grey `#B4B4B4` is image border,
+  not a cell value, and the field is `#F5F5F5`, not `#FEFEFE`. Three distinct near-whites are
+  in play and none is FEFEFE, which separately falsifies the standing "the page background may
+  be FEFEFE on purpose" note.
+- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged. The red cell
+  is 1-in-196 and the grid's colour channel is already swept 12 masks x 5 orders, so this is a
+  closed item, not an opening.
+- **ZERO human-eye items remain open.** Two items, both filed as needing eyes on solver-made
+  images, both fell to a threshold on the white channel. That closes the class the addendum
+  called the one acknowledged gap, and it closes it without a human.

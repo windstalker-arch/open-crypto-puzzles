@@ -1,5 +1,23 @@
 # Lead 0  -  Human inspection checklist (SalPhaseIon page image)
 
+> **STATUS 2026-09-29: EVERY ITEM BELOW IS RESOLVED, AND NO HUMAN IS NEEDED FOR ANY OF THEM.**
+> Closed after this file was written, by pixel measurement rather than eye inspection:
+>  - Item 4 (the `theseedisplanted` glyph disputes `lock`/`1ock`, `ca`/circumflex, `in`/`ln`) is
+>    closed by `R-STRIPGLYPH`: plain `C`, a 1px vertical rule, and a padlock ICON with `LO`
+>    beneath it. The eight strip PNGs are two-tone at 82x70 and legible as bitmaps.
+>  - The 14x14 FEFEFE cell at (7,4) is closed by `R-GRID14`: that cell is RED, the only red cell
+>    in the grid, and the "FEFEFE" is a white nest glyph drawn on it.
+>  - Item 5 (verify the bottom edge for `anstoo`) is closed by `R-LEAD0-STAGED`: the page text
+>    is byte-exact on disk in `data/live_salphaseion.html`, all four captures hash-identical, so
+>    the tail is readable as text and needs no screenshot at all.
+>  - Items 1-3 (ambiguous glyphs, case asymmetry, faint marks) are superseded by
+>    `R-BOARD28B`/`R-BOARD28B-ADDENDUM`: there is no missing 28-char alphabet to find, and the
+>    colour/subpixel channel is certified closed (sub-character run widths, 1-3px against a
+>    9.98px pitch).
+> The file is retained for history. It is NOT a request for a human, and no item in it is
+> outstanding. The live crux is Lead 0's APPLICATION on `dbbib_91` + `faed_570`, which needs an
+> N/D/t construction premise - see `analysis/STATE_BRIEF.md`.
+
 Goal: supply the ONE unprovided input the machine cannot invent  -  the
 **interpreter alphabet** (the a..i -> digit mapping, and/or a keyed VIC
 alphabet) that turns `dbbib` / `faed` into readable plaintext. The streams are

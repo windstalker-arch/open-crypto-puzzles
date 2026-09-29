@@ -2038,3 +2038,9 @@ revive it, it has to say what reading order the three existing negatives did not
   letter), and `lock` is a padlock ICON with `LO` beneath it rather than a glyph row, so
   `1ock` was never on the table. The strips are two-tone white-on-colour at 82x70 and are
   legible as bitmaps without a human. One human-eye item remains: the 14x14 FEFEFE cell.
+
+- The last human-eye item is CLOSED (`R-GRID14`): cell (7,4) of the 14x14 grid is RED, the only
+  red cell in the grid, and the "FEFEFE cell" is a white-outlined nest glyph drawn on it - a
+  45x45 `#FFFFFF` ring with a small field-coloured void, not a cell colour and not a letter. The
+  grid field is `#F5F5F5` and the grey is image border, not a cell value. No human, no image
+  modality. Zero human-eye items remain open; the "needs eyes" class is now empty.
