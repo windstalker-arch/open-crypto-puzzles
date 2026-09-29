@@ -17839,3 +17839,94 @@ Date: 2026-09-29, local.
   tool and on the edited load line.
 
 Date: 2026-09-29, local.
+
+## R-DBBIBFIELD2-2026-09-29: FOUR MORE FAMILIES WERE "CLOSED" ON THE CROP, NOT THE OBJECT - AND THE CHECKER THAT CAUGHT THEM HAD ITS OWN BLIND SPOT, WHICH IT ALSO CAUGHT. 1,270,255 ORACLE LINES RE-RUN ON dbbib_91, 0 MATCH. A TRUNCATED ORACLE RUN FOUND AND REPAIRED.
+
+- SCOPE. `R-DBBIBFIELD` fixed the one tool that MISLABELED the crop as the 91-token
+  object. The remaining 34 stale readers were flagged but not fixed, on the
+  reasoning that their conclusions were mostly re-derived. That reasoning was
+  untested, so it was tested: of the 31 unflagged, cross-referencing each stale
+  tool against the rows citing it and the 2026-09-07 reinstatement date, 18 rows
+  are PRE-reinstatement and therefore void on the dbbib side by BUG-2's own rule.
+  Grouping those 18 rows by family, four families have NO post-reinstatement row
+  mentioning `dbbib_91` at all: the ciphertools 19-cipher suite, the composed
+  cipher/transposition combos, the z-segment Bifid family, and the
+  half-triangle/keep-one-position readings. `leads.md` calls the ciphertools menu
+  and its four composed combinations "closed" - that closure rested on the crop.
+- RE-RUNS ON THE AUTHORITATIVE OBJECT (all now 0 MATCH on both funded gates):
+  - ciphertools 19-cipher suite (`ciphertools_sweep.py`, load line fixed):
+    N = 60,769 unique candidates = 121,538 oracle lines. 1GSMG: 121,536
+    `NO MATCH`, 0 `MATCH`, rc=1. The 2-line gap is accounted for exactly: one
+    candidate decodes to the empty string and is written twice (original and
+    `.lower()`), giving lines 1-2 blank; 60,768 real candidates x 2 case
+    variants = 121,536 lines, and the oracle returns one record per non-blank
+    line. No embedded newlines (0 control bytes, 0 CR, file ends in newline), so
+    the late-149 stdin-fragmentation hazard does not apply. Dualite: 121,536
+    `NO MATCH`, 0 `MATCH`, rc=1.
+  - ciphertools composed combos (`ciphertools_combo_sweep.py`, load line fixed):
+    N = 118,912 unique = 237,824 oracle lines. 1GSMG: 237,824/237,824
+    `NO MATCH`, 0 `MATCH`, rc=1. Dualite: 237,824/237,824, 0 `MATCH`, rc=1 -
+    BUT ONLY AFTER A TRUNCATION WAS CAUGHT, see below.
+  - z-segment Bifid (`zseg_bifid_sweep.py`, dict-index read fixed): N = 94
+    candidates, 94/94 `NO MATCH` on both gates. This family ships its own soundness
+    witness, re-confirmed here: `faed` -> Bifid(DBIFHCEG, full) reproduces the
+    stored plaintext head `BTCSEEDDEOEMCKEADHBSCHDKBDCSDKDVBXCPCOCH` (True), so
+    the instrument demonstrably sees a model it should see. That is the witness
+    `R-DBBIBFIELD` lacked and this family does not need to be distrusted.
+  - keep-one-position mask (`keepones_decode.py`, load line fixed): 55 candidates,
+    0 MATCH both gates. XOR half-triangle cross-block (`xor_halfpair_sweep.py`,
+    load line fixed): 312 candidates, 0 MATCH both gates.
+  - Total re-run on the correct object: 1,270,255 oracle-line evaluations, 0 MATCH
+    on either funded gate. The ciphertools menu and its composed combinations are
+    NOW closed on the authoritative object, which is what `leads.md` asserted
+    before this row.
+- A TRUNCATED ORACLE RUN, CAUGHT BY CHECKING INSTEAD OF TRUSTING. The first
+  `ciphertools_combo_sweep.py` run reported `exit=1 lines=237824 MATCH=0` for
+  1GSMG and appeared to succeed, but the run died before printing its dualite
+  summary line. The persisted dualite result file held 191,310 records against a
+  237,824-line input - 46,514 candidates never evaluated - and was 1,721,789 bytes
+  with NO trailing newline, i.e. cut mid-stream. The candidate file was complete
+  (237,824 records, 0 blank, 78,848,240 bytes), so the shortfall was the oracle
+  being killed, not a bad input. Byte-comparison proved the short file is a strict
+  PREFIX of a fresh full run (`b.startswith(a)` True), so it was a truncation and
+  not a divergent answer. Re-run standalone: 237,824 records, 237,824 `NO MATCH`,
+  0 `MATCH`, rc=1, 6m52s. The negative is now sound on both gates. Reported
+  because a wrapper that prints `MATCH=0` after a truncated child process is
+  exactly the "confident negative that was never run" failure this session has
+  now hit in four separate guises.
+- THE CHECKER HAD A BLIND SPOT AND CAUGHT IT. Broadening `stream_field_audit.py`
+  from two read-spellings to three (added the indirect `streams["dbbib"]` form)
+  raised CRITICAL from 0 to 1 and STALE from 34 to 41 - the new hit being
+  `zseg_bifid_sweep.py`, which had been invisible. The broadened pattern then
+  over-corrected and flagged `phase322_literal_sweep.py` CRITICAL, which is a
+  FALSE POSITIVE: that tool hardcodes the 91-token stream as `HEAD/MID/TAIL`
+  literals and uses `"dbbib"` only as a dict key and a display label, so it never
+  reads either field. Its literal was independently confirmed exact
+  (`HEAD+MID+TAIL == dbbib_91`, 45+23+23). The classifier now rejects key/label
+  positions (a bare `"dbbib"` followed by `:` or `,`) and keeps read positions (a
+  subscript, `"dbbib"` followed by `]` or a chained call), with 6 unit tests
+  pinning both directions. Final state: selftest 24/24, `--check` rc=0,
+  CRITICAL 0 / STALE 29 / DUAL 10 / OK 51. Two of my own errors in this row were
+  caught by the checker and by re-running the check rather than the conclusion:
+  the `NA` vs `OK` category for a literal-only tool, and the key/label regex.
+- NOT CLAIMED. The 18 pre-reinstatement rows are NOT individually re-run here -
+  only the four families with no post-reinstatement `dbbib_91` coverage are. The
+  other 14 rows' dbbib-side results remain void-but-unrepaired, and this row says
+  so rather than implying a blanket clearance. The remaining 29 STALE tools are
+  still unrepaired; four of them are the families just re-run (now fixed and
+  reclassified), and the rest are historical sweeps whose conclusions are
+  untouched by any claim made here. No positive is claimed, retracted or altered.
+  No claim is made about key uniqueness from the phase-3.2 object, unchanged
+  from `R-P15FIX` and still uncertified.
+- STATE UNCHANGED. X unsolved, 0 new candidates, 0 oracle MATCH across 1,270,255
+  evaluations. Both gates intact (1GSMG1JC9 = 125635374 sats partially-spent,
+  17ucy1K9 = 375055856 sats funded-unspent, both OK 2026-09-29). Crux unchanged:
+  X is still the decode of dbbib_91/faed_570 under the interpreter alphabet. The
+  mechanical frontier is now closed on the RIGHT OBJECT, which is the first time
+  that has been true for these families.
+- GATES: stream_field_audit 24/24 + --check rc=0; retraction_audit 0 problems;
+  p32key_verify 24/24; p15null_chitest 11/11; oracle + oracle_dualite --selftest
+  rc=0 both; validator 14 pass / 1 warn (pre-existing French leftovers) / 0 fail.
+  pyflakes clean on the checker and the four patched load lines.
+
+Date: 2026-09-29, local.

@@ -47,7 +47,8 @@ from ciphertools_ciphers import (
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = json.loads(Path(os.path.join(BASE, "data", "finalpage-digit-streams.json")).read_text())
-DBBIB = DATA["dbbib"]
+DBBIB = DATA["dbbib_91"]   # authoritative 91-token object; DATA["dbbib"] is the
+                           # superseded 69-token OCR crop (R-DBBIBFIELD)
 FAED = DATA["faed_570"].rstrip("z").lower()
 TOKEN_VAL = {chr(ord("a") + i): i for i in range(9)}
 AI = "ABCDEFGHI"

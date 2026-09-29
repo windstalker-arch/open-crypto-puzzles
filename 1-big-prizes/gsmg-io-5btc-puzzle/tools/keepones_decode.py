@@ -20,7 +20,7 @@ from certified_vic import decode as vic_decode
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 d = json.loads(Path(os.path.join(ROOT, "data", "finalpage-digit-streams.json")).read_text())
-DBBIB = d["dbbib"]
+DBBIB = d["dbbib_91"]   # authoritative; d["dbbib"] is the crop
 FAED = d["faed_570"].rstrip("z")
 KEYBITS = "010000011101010001100100"
 KB = [int(b) for b in KEYBITS]

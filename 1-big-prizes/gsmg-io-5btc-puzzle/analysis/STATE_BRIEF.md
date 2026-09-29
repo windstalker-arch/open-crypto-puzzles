@@ -1044,3 +1044,40 @@ false positive, a standing methodological correction, and a square-search screen
 - Status: one tool load-line fixed, one optional `--emit` added, one new checker. No new key, no
   new plaintext, 0 candidates, 0 oracle MATCH, `X` unsolved, both gates unchanged
   (125635374 partially-spent / 375055856 funded-unspent, both OK 2026-09-29).
+
+---
+
+## 2026-09-29 addendum 2: four more "closed" families were closed on the crop (`R-DBBIBFIELD2`)
+
+- `R-DBBIBFIELD` fixed the single tool that mislabeled the 69-token crop as the 91-token
+  object and left the other 34 flagged. Testing that flag found it wrong twice over:
+  - 18 PRE-2026-09-07 rows cite a crop-reading tool, so their dbbib side is void under
+    BUG-2's own rule. Grouped by family, four had NO post-reinstatement `dbbib_91`
+    coverage at all: the ciphertools 19-cipher suite, its composed combinations, the
+    z-segment Bifid family, and the keep-one-position / XOR half-triangle readings.
+    `leads.md` described the ciphertools menu and its four combinations as "closed" -
+    on the crop.
+- All four re-run on `dbbib_91`: 1,270,255 oracle-line evaluations, 0 MATCH on either
+  funded gate. The closures now hold on the authoritative object, which is the first
+  time that has been true for these families. The z-segment family carries its own
+  soundness witness (faed -> Bifid(DBIFHCEG, full) reproduces the stored plaintext head).
+- A truncated oracle run was caught, not trusted: the combo sweep's dualite result file
+  held 191,310 records against a 237,824-line input, 46,514 candidates unevaluated, cut
+  mid-stream with no trailing newline. Byte-comparison showed it was a strict prefix of
+  a fresh full run, so it was a killed process rather than a divergent answer; re-run to
+  237,824/237,824. A wrapper printing `MATCH=0` after a truncated child is the same
+  failure shape as the rest of this session, and checking was what caught it.
+- `stream_field_audit.py` is 24/24 with CRITICAL 0 / STALE 29 / DUAL 10 / OK 51. It was
+  itself corrected twice while being used: broadening the pattern from two read
+  spellings to three exposed `zseg_bifid_sweep.py` (previously invisible), and the
+  broadened pattern then over-corrected into a false positive on `phase322_literal_sweep.py`,
+  which hardcodes the correct 91-token literal and uses `"dbbib"` only as a key/label. That
+  false positive is now a pinned regression test.
+- **Method rule (new):** a sweep wrapper's own `exit=1 lines=N MATCH=0` is not evidence
+  that N candidates were tested. Check the record count against the input line count and
+  confirm the output ends in a newline; a short file is a truncated child, not a negative.
+  And a checker written to prevent a specific failure must itself be regression-tested
+  against the tools it is supposed to clear, or it will clear a correct tool by accident.
+- NOT claimed: 14 rows remain void-but-unrepaired and 29 tools remain unrepaired. No
+  blanket clearance, no positive altered, nothing retracted. X unsolved, 0 new candidates,
+  0 oracle MATCH, both gates unchanged.

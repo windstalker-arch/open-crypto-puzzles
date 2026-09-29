@@ -51,6 +51,23 @@ as matrix-sum readings, and via Beaufort/Vigenere under the 7 page tokens, plus
 base-9 pair reading, is all negative (`analysis/tested.md` late-58). The two
 streams remain the author-cited never-decoded artifacts; every single-classical
 reading in the tested toolbook now returns noise.
+2026-09-29 CORRECTION (second pass, `R-DBBIBFIELD2`): the dbbib half of late-58
+and FOUR further families  -  the ciphertools 19-cipher suite, its composed
+combinations, the z-segment Bifid family, and the keep-one-position / XOR
+half-triangle readings  -  were all closed on the superseded 69-token crop, not
+on the authoritative 91-token object. Cross-referencing every stale tool against
+the rows that cite it found 18 PRE-2026-09-07 rows whose dbbib side is void under
+BUG-2's own rule; four families had no post-reinstatement `dbbib_91` coverage at
+all, including the ciphertools menu this file calls "closed". All four have now
+been re-run on `dbbib_91`: 1,270,255 oracle-line evaluations, 0 MATCH on either
+funded gate, so the closures now hold on the right object. A truncated dualite
+oracle run (191,310 of 237,824 lines, cut mid-stream) was caught and re-run to
+completion rather than reported as `MATCH=0`. `tools/stream_field_audit.py`
+(24/24) enforces the field split and was itself corrected twice: broadening it
+exposed `zseg_bifid_sweep.py`, and it then over-corrected into a false positive
+on `phase322_literal_sweep.py`, which is now pinned as a key/label false-positive
+regression test. 14 rows remain void-but-unrepaired and 29 tools stale; neither
+is claimed as cleared.
 2026-09-29 CORRECTION to the paragraph above (`R-DBBIBFIELD`): the dbbib half of
 late-58 was computed on the WRONG OBJECT. `tools/lead0_vicgap.py` read
 `d["dbbib"]` - the superseded 69-token OCR crop - while printing `dbbib(91)` on

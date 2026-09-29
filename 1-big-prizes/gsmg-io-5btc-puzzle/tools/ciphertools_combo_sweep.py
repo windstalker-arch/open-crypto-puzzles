@@ -47,7 +47,7 @@ from ciphertools_ciphers import (
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = json.loads(Path(os.path.join(BASE, "data", "finalpage-digit-streams.json")).read_text())
-DBBIB = DATA["dbbib"].lower()
+DBBIB = DATA["dbbib_91"].lower()   # authoritative; DATA["dbbib"] is the crop
 FAED = DATA["faed_570"].rstrip("z").lower()
 TOKEN_VAL = {chr(ord("a") + i): i for i in range(9)}
 AI = "ABCDEFGHI"

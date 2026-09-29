@@ -116,7 +116,8 @@ def main():
     oracle_dual = os.path.join(base, "tools", "oracle_dualite.py")
 
     faed = streams["faed_570"].rstrip("z")
-    dbbib = streams["dbbib"]
+    dbbib = streams["dbbib_91"]   # authoritative; streams["dbbib"] is the
+                               # superseded 69-token OCR crop (R-DBBIBFIELD)
 
     seg1 = "agdafaoaheiecggchgicbbhcgbehcfcoabicfdhhcdbbcagbdaiobbgbeadedde"
     seg2 = "cfobfdhgdobdgooigdocdaoofidh"

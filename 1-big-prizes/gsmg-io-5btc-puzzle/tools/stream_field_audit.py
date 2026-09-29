@@ -32,9 +32,34 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TOOLS = os.path.join(ROOT, "tools")
 DATA = os.path.join(ROOT, "data", "finalpage-digit-streams.json")
 
-# A bare read of the superseded field: d["dbbib"] / d.get("dbbib") / djj['dbbib']
-BARE_91 = re.compile(r"""\[\s*["']dbbib["']\s*\]|\.get\(\s*["']dbbib["']""")
+# A read of the superseded field. Three spellings occur in this repo:
+#   d["dbbib"] / DATA["dbbib"]     - direct subscript off a loaded mapping
+#   DATA["dbbib"].lower()          - the common chain form
+#   streams["dbbib"]               - indirect, via a mapping returned by a loader
+# The third was added after zseg_bifid_sweep.py escaped the first two, so the
+# pattern is broad -- but NOT so broad that a dict KEY or a display label counts.
+# phase322_literal_sweep.py hardcodes the correct 91-token literal and uses
+# "dbbib" only as a key/label; a naive `"dbbib"` scan flags it as CRITICAL,
+# which is why the negative-lookahead also rejects a key position.
+BARE_91 = re.compile(r"""["']dbbib["'](?!_91)""")
+# A key/label is followed by ":" or ","  (dict key, or a display tuple element).
+# A READ is a subscript, so it is followed by "]" or a chained call.
+# phase322_literal_sweep.py uses "dbbib" only as a dict key and a tuple label
+# while hardcoding the correct 91-token literal; a naive scan flags it CRITICAL.
+IS_KEY = re.compile(r"""^\s*["']dbbib["']\s*[:,]""")
 CLAIM_91 = re.compile(r"dbbib\(91\)|91-token|dbbib_91")
+
+
+def has_crop_read(src: str) -> bool:
+    for line in src.splitlines():
+        if "dbbib_91" in line:
+            continue
+        for m in BARE_91.finditer(line):
+            tail = line[m.start():].lstrip()
+            if IS_KEY.match(tail):
+                continue          # dict key or display label, not a read
+            return True
+    return False
 
 # The 22-char run that distinguishes the authoritative object from the crop:
 # dbbib_91[45:67]. (phase322_literal_sweep.py uses a DIFFERENT but equally exact
@@ -53,7 +78,7 @@ def classify(src: str) -> str:
        CRITICAL- reads the crop while claiming the 91-token object
        STALE   - reads the crop, makes no 91 claim (still wrong, lower blast)
     """
-    bare = bool(BARE_91.search(src))
+    bare = has_crop_read(src)
     uses91 = "dbbib_91" in src
     if bare and uses91:
         return "DUAL"
@@ -125,8 +150,22 @@ def selftest():
        classify('X = d["dbbib_91"]') == "OK")
     ck("classify: crop only, no claim -> STALE",
        classify('X = d["dbbib"]') == "STALE")
+    ck("classify: dict KEY is not a read -> NA",
+       classify('W = {"dbbib": [7,13] , "faed": [15]}') == "NA")
+    ck("classify: display label tuple is not a read -> NA",
+       classify('for s,st in [("dbbib", D), ("faed", F)]:') == "NA")
+    ck("classify: tuple label + a real read -> STALE",
+       classify('W={"dbbib":1}\nX = streams["dbbib"]') == "STALE")
+    ck("classify: hardcoded 91-token literal + labels only -> NA (reads neither field)",
+       classify('X="dbbibfbhccbeg"\nW={"dbbib":[7]}\nfor s,v in [("dbbib",X)]:') == "NA")
     ck("classify: crop + 91 claim -> CRITICAL",
        classify('X = d["dbbib"]\nprint("dbbib(91)")') == "CRITICAL")
+    ck("classify: indirect dict read is caught too",
+       classify('dbbib = streams["dbbib"]') == "STALE")
+    ck("classify: chained .lower() read is caught too",
+       classify('D = DATA["dbbib"].lower()') == "STALE")
+    ck("classify: dbbib_91 is not flagged as a crop read",
+       classify('X = d["dbbib_91"]') == "OK")
     ck("classify: crop + 91-token claim -> CRITICAL",
        classify("X = d['dbbib']\n# 91-token stream") == "CRITICAL")
     ck("classify: both fields -> DUAL",
