@@ -2032,3 +2032,9 @@ revive it, it has to say what reading order the three existing negatives did not
   the below-fold 21% of textarea 1 is already on disk in the HTML and the `anstoo` human-read
   item needs no image. Its own `anstoo` character offset was wrong (spaced, not contiguous) and
   its three CLEAN renders are absent from disk, so its measurements are probable, not certified.
+
+- The `theseedisplanted` human-glyph item is CLOSED from pixels (`R-STRIPGLYPH`): `ca` is a plain
+  `C` with no circumflex, the disputed narrow run is a 1px vertical rule (layout furniture, not a
+  letter), and `lock` is a padlock ICON with `LO` beneath it rather than a glyph row, so
+  `1ock` was never on the table. The strips are two-tone white-on-colour at 82x70 and are
+  legible as bitmaps without a human. One human-eye item remains: the 14x14 FEFEFE cell.

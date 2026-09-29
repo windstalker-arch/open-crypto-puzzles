@@ -1133,3 +1133,22 @@ false positive, a standing methodological correction, and a square-search screen
   about different objects (API routes, the SPA shell) and stand.
 - 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged. Standing
   process note: a second session's uncommitted notes sat outside the repo for a day.
+
+---
+
+## 2026-09-29 addendum 5: the `theseedisplanted` human-eye item closed from pixels (`R-STRIPGLYPH`)
+
+- All three disputed glyphs resolved without eyes or OCR, from the 8 strip PNGs on disk (md5s
+  verify against the evidence manifest; tiles are pure two-tone white-on-colour at 82x70).
+  `ca` = plain `C`, no circumflex. The disputed narrow run is a 1px vertical rule, not a
+  letter. `lock` is a padlock ICON with `LO` below it, not a glyph row, so `1ock` was never
+  available. `red_crypto_gic` re-confirmed as `CRYPTO` + `BIG` from pixels, reproducing
+  row 13406.
+- My first read was wrong and is logged: I read the padlock body as a block `L` from a cropped
+  region, and only dumping the whole tile showed the "foot" was a full-width band 28px across
+  against a 5px stroke. Cropping a tile to the question is how the wrong answer looks certain.
+- The checklist framed this as needing human eyes on a solver-made image. It needed neither eyes
+  nor a model - it needed the observation that the files were on disk and two-tone. "Needs a
+  human" is a claim about the question, not the data.
+- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged. ONE
+  human-eye item remains: the 14x14 FEFEFE cell at row 7, col 4.

@@ -18059,3 +18059,50 @@ NET: 0 oracle calls, 0 candidates, no lead promoted. The value is the zero-drift
 doc correction, and the standing reminder that a second session's uncommitted notes can sit
 outside the repo indefinitely. Open human-eye items 2 and 3 (`theseedisplanted` tile, 14x14
 FEFEFE cell at row 7 col 4) remain open and remain the only acknowledged gap.
+
+## R-STRIPGLYPH-2026-09-29: all three open `theseedisplanted` human-eye glyph disputes are closed from pixels; the checklist was asking a question the strip files can answer, and I mis-read one of them first
+
+The Lead 0 checklist has carried a human-eye item for days: "theseedisplanted tile: `lock` vs
+`1ock`, `ca` vs `ca` with circumflex, `in` vs `ln`". It was framed as needing eyes on a
+solver-made image. It does not. The eight individual strip PNGs are on disk at
+`~/storage/external/briefcase/gsmg-private/human-eyeball-2026-09-20/strips/`, all eight md5s
+verify against `evidence/gsmg-strips-2026-09-27/strip_md5.txt`, and the tiles are pure
+two-tone (white glyph on one solid colour: blue `rgb(63,72,204)`, red `rgb(237,28,36)`,
+counted). At 82x70 with a 5px stroke these are legible as bitmaps. N = 3 disputed glyphs,
+D = 0 tiles ambiguous, t = 0. No image modality, OCR, or human was used - only a threshold on
+the white channel and a printed bitmap. The lesson is the standing one: the "needs human eyes"
+framing is a claim about the question, not about the data, and it went unchallenged for days.
+
+  1. `ca` vs circumflex - RESOLVED, plain `C`. `blue_ca.png` rows 30-45, x22-33 is a C whose
+     rows above y=30 are empty field, so there is no circumflex. Rows 0-29 and 46-69 are solid
+     border. The `a` is a separate glyph at x36-48 with a bowl and a right stem.
+  2. `in` vs `ln` - RESOLVED, and the disputed glyph is not even a letter. In
+     `red_open_lock_n_ing.png` the narrow 9px run is a 1px-wide vertical rule at x39-40 running
+     the full tile height, i.e. layout furniture, not a glyph. The `n`-shaped forms are part of
+     a drawn open-padlock icon, matching `blue_lock_lo.png`, whose body is a rounded rectangle
+     with a keyhole.
+  3. `lock` vs `1ock` - RESOLVED, `L`, and the dispute was category error. `blue_lock_lo.png`
+     x23-50 y24-41 is not a glyph at all: it is a PADLOCK ICON (shackle arc y4-18, body
+     y19-41, keyhole centre) with the letters `LO` at y46-56 below it. There is no `L`/`1`
+     glyph to confuse. The filename supplies the word "lock"; the pixels supply an icon of a
+     lock. A `1ock` reading was never available from this tile.
+
+MY OWN ERROR, CAUGHT BEFORE IT REACHED THE LEDGER, AND IT IS THE SAME ERROR AS BEFORE. My
+first pass printed `blue_lock_lo` under a bright-pixel threshold and read the shape at y24-41 as
+a block `L` - a 5px vertical stroke with a 28px horizontal foot, which I took as a letterform
+and briefly recorded as "L confirmed". That is wrong: the "foot" is a full-width band (44 ink
+px of 82 at y37-41, extending to the tile edge), so it is a body edge, not a glyph stroke, and
+the shape above it is a shackle. I had the same polarity trap available to me and walked into a
+version of it. What caught it was dumping the WHOLE tile rather than a crop - the same move
+that corrected the `crypto_gic` reading at row 13406. Two more measurements would have caught
+it earlier: the foot is 28px wide, twice the 5px stroke width of every letter in the corpus.
+
+CONFIRMED UNCHANGED: `red_crypto_gic` line 1 reads `CRYPTO` and line 2 reads `BIG`, not `GIC`,
+reproducing row 13406 from pixels. The seed/plant split in the filenames is real and is the
+author's own construction; this row does not disturb it. Also confirmed: the 8 strips match
+their filenames as SETS, and `dig_i` shows a `T` after `DIG | I` as row 16740 recorded.
+
+0 oracle calls, 0 candidates, no lead promoted. X unsolved, both gates unchanged. The two
+remaining human-eye items are now ONE: the 14x14 FEFEFE cell at row 7 col 4. The
+`theseedisplanted` item is closed, and closed negatively for the puzzle - the tiles carry icons
+and fragments, not a hidden sentence.
