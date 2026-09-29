@@ -1109,3 +1109,27 @@ false positive, a standing methodological correction, and a square-search screen
 - Checker: CRITICAL 0 / STALE 18 / DUAL 10 / OK 62, down from 34 STALE / 44 OK. The 18
   remaining STALE tools are cited by no void row and no live claim rests on them.
 - X unsolved, 0 new candidates, 0 oracle MATCH, both gates unchanged. Nothing retracted.
+
+---
+
+## 2026-09-29 addendum 4: one unrecorded out-of-repo Lead 0 note found and adjudicated (`R-LEAD0-STAGED`)
+
+- `~/storage/external/briefcase/LEAD0_FINDINGS_2026-09-28.md` had zero coverage anywhere in
+  the repo. Re-measured instead of trusted: capture drift CONFIRMED (four captures, one sha256,
+  4536 bytes, zero drift 2020->2026, 2 textareas), its `anstoo` offset WRONG (the page has the
+  spaced `a n s t o o` at char 2139, not a contiguous `anstoo` at 2143), and its three binarized
+  renders are absent from disk so its pixel measurements are unconfirmed.
+- Useful consequence, which the note stated against itself: the below-fold 21% of textarea 1 is
+  NOT unrecoverable. The full bytes are in `data/live_salphaseion.html`, so the "read the tail"
+  human-eye item is answerable from text and needs no fresh screenshot. Two human-eye items
+  remain open: the `theseedisplanted` tile and the 14x14 FEFEFE cell at row 7 col 4.
+- **SECOND CORRECTION, larger than the first: `tested.md:330` asserted the page has "no archived
+  captures at all". That is FALSE.** `data/wb_dbbib-page_20201112.html` is a 2020-11-12 Wayback
+  capture of this exact page, byte-identical to the live copy. The sentence was written 2026-09-07
+  and the capture reached disk 2026-09-20, so it was true when written and the corpus has since
+  outgrown it. It mattered because that capture is what makes the zero-drift claim checkable and
+  it holds the below-fold 21% of the stream. Rule added: any "never archived" claim is re-tested
+  against `data/` before being repeated. The other three "no capture" mentions in the ledger are
+  about different objects (API routes, the SPA shell) and stand.
+- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged. Standing
+  process note: a second session's uncommitted notes sat outside the repo for a day.

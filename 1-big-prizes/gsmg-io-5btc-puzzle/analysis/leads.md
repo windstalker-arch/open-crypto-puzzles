@@ -2025,3 +2025,10 @@ combined with the even stream, which is what lead 8 now says on its own.
 
 Status 2026-09-27: closed as a standalone-message route. If a future pass wants to
 revive it, it has to say what reading order the three existing negatives did not cover.
+
+- `LEAD0_FINDINGS_2026-09-28.md` (briefcase root, 175 lines) was an unrecorded Lead 0 note
+  from a session that found the worktree busy. It is now in the ledger as `R-LEAD0-STAGED`. The
+  one durable fact: all four captures of the page are byte-identical, zero drift 2020->2026, so
+  the below-fold 21% of textarea 1 is already on disk in the HTML and the `anstoo` human-read
+  item needs no image. Its own `anstoo` character offset was wrong (spaced, not contiguous) and
+  its three CLEAN renders are absent from disk, so its measurements are probable, not certified.

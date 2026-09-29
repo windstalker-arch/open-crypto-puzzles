@@ -331,6 +331,17 @@ the puzzle's own vocabulary:
 pattern of the other preimages confirms the segmentation. The page behind it has no
 archived captures at all.
 
+> **CORRECTED 2026-09-29 by `R-LEAD0-STAGED`.** "No archived captures at all" is FALSE and is
+> struck. `data/wb_dbbib-page_20201112.html` is a Wayback capture of this exact page dated
+> 2020-11-12, 4536 bytes, and it is byte-identical to `data/live_salphaseion.html` and to two
+> further copies (sha256 `a83d3de7...`): four captures, one hash, zero drift 2020->2026. The
+> sentence was written on 2026-09-07, four days BEFORE that capture was fetched to disk
+> (mtime 2026-09-20), so it was true when written and the corpus has since outgrown it. The
+> capture is load-bearing, not incidental: it is what makes the zero-drift claim checkable, and
+> it holds the full 2149-char textarea 1 including the 21% of the stream that sits below the
+> fold of the PNG render. Any future claim of the form "this page/stream was never archived"
+> must be re-tested against `data/` before being repeated.
+
 Still open, listed so nobody re-tests them by accident:
 
     0b0f37ecaf7107f86ee2f477992f25bc7abe8f799d0dd713658c17d37496ee32
@@ -18006,3 +18017,45 @@ Date: 2026-09-29, local.
   the historical tools I only edited a load line in.
 
 Date: 2026-09-29, local.
+
+## R-LEAD0-STAGED-2026-09-29: an unmined out-of-repo Lead 0 findings file exists; its one durable claim is CONFIRMED, its `anstoo` offset is WRONG, and its two "missing" artifacts are missing
+
+Inventory pass, not a sweep. `~/storage/external/briefcase/LEAD0_FINDINGS_2026-09-28.md`
+(175 lines, 0 hits in `tested.md`, `leads.md` and `STATE_BRIEF.md`) is a previous session's
+Lead 0 visual-render report, staged outside the repo because that session found the worktree
+occupied. It is the only Lead 0 primary note found unrecorded. Re-measured against the repo's
+own data rather than trusted; three claims split 1 confirmed / 1 wrong / 2 unverifiable.
+
+CONFIRMED - the capture-drift claim, and it is the valuable one. All four captures of the page
+are byte-identical: `data/live_salphaseion.html`, `data/wb_dbbib-page_20201112.html` (Wayback
+2020-11-12), `briefcase/gsmg-puzzle/live/salphaseion.html` and
+`..._live_2026-09-06.html` all sha256 `a83d3de7810f26b19b4965339b76d403e44f6b6877e5d7de2555480ca1779d77`,
+4536 bytes, zero drift 2020->2026, exactly 2 textareas (2149 and 1820 chars). INDEPENDENT
+CONSEQUENCE the report did not draw: the below-fold 21% of textarea 1 is NOT lost and does NOT
+need a human screenshot, because the full bytes are already on disk in the HTML. The human-eye
+checklist item "does the tail read `anstoo`" is answerable from `live_salphaseion.html` and
+needs no image at all. The report's framing ("permanently unrecoverable from any artifact in
+hand", then "the bytes themselves are not lost, they are in the HTML") states both halves and
+resolves them the wrong way round; the recoverable reading is the correct one.
+
+WRONG - the `anstoo` character offset. The report states `anstoo` "sits at characters 2143 to
+2149, on line 17". Measured: textarea 1 chars 2143..2149 are `s t o o`, and neither the
+contiguous string `anstoo` nor `shabefanstoo` occurs anywhere in the textarea. What exists is
+the LETTER-SPACED form `a n s t o o` starting at char 2139; `anstoo` is a de-spacing
+convention applied downstream, matching `tested.md:330` where `anstoo` is defined as ending the
+token stream `shabefanstoo`. So the report measured a contiguous substring that the page does
+not contain. Its line-17 placement is right (131-char wrap, 17 lines, tail tokens
+`a n s t o o` on line 17); only the offset and the implicit contiguity are wrong. Nothing
+downstream depended on it, and no candidate was generated from it.
+
+UNVERIFIABLE - two claims that cannot be checked here, recorded so the file is not re-trusted
+blind: the three binarized `LEAD0_CLEAN_*.png` it says it wrote to the briefcase root do not
+exist there (absent from the whole briefcase tree), and its colour/pitch measurements
+(subpixel rendering, 9.98px char pitch, 131-char wrap) were made on renders in that same
+missing set. The wrap width 131 is independently consistent with 2149 chars / 17 lines, so it
+is probable but not certified by me.
+
+NET: 0 oracle calls, 0 candidates, no lead promoted. The value is the zero-drift fact plus a
+doc correction, and the standing reminder that a second session's uncommitted notes can sit
+outside the repo indefinitely. Open human-eye items 2 and 3 (`theseedisplanted` tile, 14x14
+FEFEFE cell at row 7 col 4) remain open and remain the only acknowledged gap.
