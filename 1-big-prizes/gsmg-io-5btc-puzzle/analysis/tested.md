@@ -18154,3 +18154,59 @@ being re-inherited.
 `visual-pack/README.md` note that the page background is `#FEFEFE` "may be deliberate" is
 SEPARATELY falsified by this file: the grid's field is `#F5F5F5`, not `#FEFEFE`, and its
 white glyph is `#FFFFFF`. Three distinct near-whites, none of them `#FEFEFE`.
+
+## R-POINTERS-2026-09-29: every `~/briefcase` pointer in the analysis docs resolves; and I reproduced a false alarm the ledger already documented, in the same message
+
+Follow-up to `R-LEAD0-STAGED`, which found an out-of-repo note with zero coverage. This pass
+audits the corpus POINTERS rather than content: can anything the ledger cites actually be
+re-read? Method: extract every `~/briefcase/<path>` from `analysis/*.md`, `os.path.exists` on
+the expanded path, with a deliberate positive control first. N = 33 unique pointers,
+D = 0 broken, t = 0.
+
+FINDING 1 - ALL 33 RESOLVE. The single apparent exception, `~/briefcase/gsmg_era/app_`, is the
+prefix of the glob `app_*.js` at row 3444, and `app_20190428.js` / `app_20201109.js` are both
+present, so it is not a broken pointer either. The `halfhalfbetter-tx.txt` dossier that
+`R-LEAD0-STAGED` could not find is present at `~/briefcase/halfhalfbetter-tx.txt`; the three
+`LEAD0_CLEAN_*.png` of the Lead 0 note remain the only genuinely absent artefacts in the
+corpus, already recorded there. No live negative in this project rests on a file that is not on
+disk.
+
+FINDING 2 - THE CORPUS HAS TWO ROOTS AND THEY ARE NOT THE SAME TREE. `~/briefcase` and
+`~/storage/external/briefcase` both exist and both hold puzzle material; they are NOT symlinks
+to each other and their contents differ. `~/briefcase` additionally holds
+`gsmg_issues_all.json`, `gsmg-community/`, `gsmg_era/`, `repo_assets/` and `MEMORY.md`, none of
+which are under `storage/external/briefcase`. So "is the corpus intact" has two different
+answers depending on which root a tool reaches for, and a search run against the wrong one
+returns a confident negative. The ledger's pointers all use `~/briefcase`, so that is the
+canonical root; `storage/external/briefcase` is where the solver-side and image material lives.
+This is the structural reason a naive `find` misses things, and it is worth stating once.
+
+FINDING 3 - I REPRODUCED, IN THIS VERY PASS, THE EXACT FALSE ALARM ROW 15207 ALREADY WARNS
+ABOUT, AND MY OWN "17 missing" CLAIM WAS 100% WRONG. My first pointer sweep tested
+`storage/external/briefcase/<path>` because I had been working in that directory all session.
+It reported 17 of 20 absent. Every one of them was present under `~/briefcase` except the
+three `LEAD0_CLEAN` files, which are genuinely gone. The bug is the documented one: the ledger
+says a `[ -e "$p" ]` absence report must be validated against something known-present before
+its negative is believed, and I had a positive control available and did not run it. When I
+added the control - `gsmg_issues_all.json`, `halfhalfbetter-tx.txt`, `gsmg-community/README.md`,
+all PRESENT under `~/briefcase` - the "missing" count went 17 -> 1 -> 0. Nothing was ever
+missing. Row 15207 also records this same mis-expansion for `gsmg_issues_all.json` itself, so
+this is the second time the identical trap fired on this exact file, and the third time the
+`LEAD0`-adjacent paths have been mis-resolved. The corrective that works: resolve pointers
+through `os.path.expanduser` in a single helper and assert a control inside the same function,
+rather than hand-assembling prefixes per check.
+
+THE DUST FILE IS A REFORMATTING, NOT A GAP. `~/storage/external/briefcase/gsmg-dusttransactions.txt`
+(0 filename hits in the ledger) inventories 41 546-sat OP_RETURNs across blocks 938164/938165/
+944086/949664. Extracting all 24 distinct message strings and searching the ledger with
+whitespace normalised gives 24/24 PRESENT, including `Turing Complete.` and `The answer is
+women`, both of which score 0 on a naive substring grep only because row 4572 wraps them across
+a line break. The campaign is already inventoried at rows 9024 and 4572, complete with the
+"post-publication solver artefacts" attribution and the two gate-side outliers. No new key
+material, no new lead, and the file adds no route to the funded gates. Recorded so nobody
+re-opens it on the strength of a zero grep count.
+
+0 oracle calls, 0 candidates, no lead promoted. X unsolved, both gates unchanged. The corpus is
+INTACT - which is the first all-clear on that question in the project, and the reason to believe
+the remaining Lead 0 blockage is the absence of a construction premise rather than the absence
+of evidence.

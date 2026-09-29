@@ -1175,3 +1175,30 @@ false positive, a standing methodological correction, and a square-search screen
 - **ZERO human-eye items remain open.** Two items, both filed as needing eyes on solver-made
   images, both fell to a threshold on the white channel. That closes the class the addendum
   called the one acknowledged gap, and it closes it without a human.
+
+---
+
+## 2026-09-29 addendum 7: corpus pointer audit - all 33 resolve, and I reproduced a documented false alarm doing it (`R-POINTERS`)
+
+- Every `~/briefcase/...` pointer in `analysis/*.md` resolves: 33 unique, 0 broken. The one
+  apparent exception is the glob prefix `gsmg_era/app_` from row 3444, whose `app_*.js` targets
+  both exist. The `halfhalfbetter-tx.txt` dossier I could not find earlier IS present. Only the
+  three `LEAD0_CLEAN_*.png` from the Lead 0 note are genuinely absent, already recorded there.
+- **This is the first all-clear on corpus integrity in the project.** No live negative rests on
+  a file that is not on disk, so the remaining Lead 0 blockage is the absence of a construction
+  premise, not the absence of evidence.
+- Two roots exist and are NOT the same tree: `~/briefcase` (canonical; `gsmg_issues_all.json`,
+  `gsmg-community/`, `gsmg_era/`, `repo_assets/`, `MEMORY.md`) and
+  `~/storage/external/briefcase` (solver-side and image material). Searching the wrong one
+  yields a confident false negative.
+- **My own "17 files missing" claim was entirely wrong and is retracted.** I swept
+  `storage/external/briefcase/` because that is where I had been working, and 17 of 20 looked
+  absent; all but the 3 `LEAD0_CLEAN` files are present under `~/briefcase`. This is the exact
+  trap row 15207 documents, it has now fired on `gsmg_issues_all.json` twice and on these paths
+  a third time, and I had the positive control available and skipped it. The fix that works is
+  one `expanduser` helper that asserts its own control, not a hand-assembled prefix per check.
+- `gsmg-dusttransactions.txt` is a reformatting, not a gap: 24/24 of its distinct OP_RETURN
+  strings are already in the ledger at rows 4572/9024, including `Turing Complete.` and
+  `The answer is women`, which score 0 on a naive grep only because row 4572 wraps them across a
+  line break. Whitespace-normalised search is required before believing any zero count here.
+- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged.

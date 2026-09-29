@@ -2044,3 +2044,9 @@ revive it, it has to say what reading order the three existing negatives did not
   45x45 `#FFFFFF` ring with a small field-coloured void, not a cell colour and not a letter. The
   grid field is `#F5F5F5` and the grey is image border, not a cell value. No human, no image
   modality. Zero human-eye items remain open; the "needs eyes" class is now empty.
+
+- The corpus is INTACT (`R-POINTERS`): all 33 `~/briefcase` pointers in the analysis docs
+  resolve, so no live negative rests on a missing file. Two roots exist (`~/briefcase` is
+  canonical, `storage/external/briefcase` holds solver-side and image material) and they are
+  NOT the same tree - searching the wrong one produces a confident false negative, which is
+  what I did and then caught with a positive control.
