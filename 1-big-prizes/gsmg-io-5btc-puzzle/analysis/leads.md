@@ -1807,7 +1807,7 @@ phase3.2.ipynb (ends exactly at the p32 inner AES `U2FsdGVkX1+0Wl49...`, "has no
 salphaseion.ipynb (agda/cfob z-section decode via a=1.. / o=0 hex; ends at "Remaining sections"
 = dbbib/faed, unsolved), decentraland.ipynb (audio inversal only). Nothing reaches past Lead 0.
 `unverified/` adds two items already covered here: the 23/16/7 "1141 slice" (research note 23)
-and a FEFEFE hex-digit parity reading (FEFEFE->101010->42, #FFF200->111000, #3F48CC->110000)
+ and a FEFEFE hex-digit parity reading (FEFEFE->101010->42, #FFF200->111000, #3F48CC->110000). [RULE NAMED, to remove an ambiguity that cost a wrong closure: these are the LOW BITS of each hex digit, NOT popcount parity -- the two disagree on every digit here (F: low bit 1 / parity 0; E: low bit 0 / parity 1), and all three recorded readings match low bit while matching popcount on none of the three. Confirmed and pinned by selftest in R-EFEFEFE-2026-09-30, which is also where the popcount reading was used by mistake.]
 which the author of that note himself tags as "thematically apt and nothing more"; the "104"
 half contradicts our note record (off-white cell sits at (7,4) spiral 163/177 by indexing).
 Conclusion: Lead 0 unchanged; spent nothing further. Date: 2026-09-14.
