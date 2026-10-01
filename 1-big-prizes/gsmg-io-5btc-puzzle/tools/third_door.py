@@ -23,7 +23,7 @@ THE CONSTRUCTIONS (all six, from the CSV's `key` column and README s.19b):
   hex ascii     key = sha256 of the lowercase hex rendering of the preimage
 
 Every candidate is turned into a compressed AND an uncompressed P2PKH address and
-compared against the whole planted list plus the two funded gates, because the
+compared against the whole planted list plus the both gate addresses, because the
 CSV's own rows show the creator used both forms (`causality` and
 `gsmg.io/theseedisplanted` are compressed, the gates' target pubkey is
 uncompressed).
@@ -272,7 +272,7 @@ def run() -> int:
               f" status {status})")
     if not hits:
         print("  0 MATCH against the 3rd door, the 8 other planted addresses,"
-              " and both funded gates")
+              " and both gate addresses")
     return 1 if hits else 0
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Apply the follow_white_rabbit 24-bit key as a columnar-transposition key over the
 a..i streams (dbbib=69=3x23, faed=570=15x38), then decode the transposed stream a few
-certified ways and oracle-test every resulting X candidate on both funded gates.
+certified ways and oracle-test every resulting X candidate on both gate addresses.
 
 The 24-bit key ones are at 0-based positions [1,7,8,9,11,13,17,18,21] (within 0..22,
 fits a width-23 dbbib layout). We generate many column-orderings from the key and read

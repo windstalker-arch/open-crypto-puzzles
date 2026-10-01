@@ -46,7 +46,7 @@ F4. But the columns are exchangeable WITHIN each track.  Restricting to the 17
 F5. The obvious non-alphabetic readings (the open item (i) in R-P32BLOB) are all
     negative: base26-as-integer (905 B, 37% printable), base26-as-decimal-text,
     5-bit packing, 8->5 unpacking, hex-nibble pairs.  Nothing exceeds 42%
-    printable, and nothing matches either funded gate.
+    printable, and nothing matches either gate address.
 
 WHAT THIS DOES NOT DO
 =====================

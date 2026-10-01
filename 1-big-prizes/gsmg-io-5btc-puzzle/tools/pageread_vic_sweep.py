@@ -11,7 +11,7 @@ end-to-end joined line, (b) the unique-in-order letters of the human word tokens
 (c) the unique-in-order letters of each stream separately; run each through the
 CERTIFIED straddling-checkerboard decoder (tools/certified_vic.py, which reproduces
 phase 3.2.2 verbatim) over dbbib/faed under the CANON/POS digit maps and the escape
-pairs 0..9; oracle-test every clean (?-free) decode on both funded gates.
+pairs 0.9; oracle-test every clean (?-free) decode on both gate addresses.
 
 Public/authorized puzzle only. A hit is an oracle MATCH.
 """

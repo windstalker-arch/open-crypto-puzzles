@@ -13,7 +13,7 @@ the decoded value) never applied to the XOR-chain derivation. This battery
 recomputes the XOR key for a small family of token-6 spellings (and order
 variants), decrypts the Dualite blob under each, reduces the plaintext with both
 the standard readings and the extended set from oracle_dualite.py, and compares
-P2PKH (comp+uncomp) to both funded gates.
+P2PKH (comp+uncomp) to both gate addresses.
 
 Witness: the canonical token list must reproduce XK a795de11... and plaintext
 sha256 4f7a1e4e... through the SAME code path.

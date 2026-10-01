@@ -55,7 +55,7 @@ reading (19 forms) reaches `1GSMG1JC9...` (tested.md ~9853).
 - `ourfirsthintisyourlastcommand` (29) is the `shabef...` stack's preimage slug family
   (different object from RAW_PW).
 
-## Test status of the RAW_PW family (oracle-certified, both funded gates)
+## Test status of the RAW_PW family (oracle-certified, both gate addresses)
 
 - Literal 5-token RAW_PW and case/space variants: NEGATIVE (earlier rows; token products
   row ~9853: 21 cands x extended oracle x both gates = 0 MATCH).

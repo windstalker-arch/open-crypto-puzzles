@@ -3,7 +3,7 @@
 
 The recovered word tokens from the SalPhaseIon page (z-separated / binary-decoded /
 flag tokens) are joined in every order and with simple separators, and tested as the
-password X against BOTH funded gates. "Joining all those words sequence" is the
+password X against BOTH gate addresses. "Joining all those words sequence" is the
 hypothesis: the answer is the concatentation of all the on-page words.
 
 Prior brush-force (sections 114-119) swept pairs/triples/bounded-token phrases but

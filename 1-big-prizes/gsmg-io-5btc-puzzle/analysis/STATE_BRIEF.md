@@ -5,7 +5,7 @@
 > `python3 tools/verify_ladder.py` (41 checks, exits 0). The whole ladder follows from **canonical
 > BLOB1 + RAW_PW** alone, including `WIF(K_C1)` being the BLOB2 password, so the chain closes on
 > itself. All five opened envelopes confirm by **exact re-encryption round-trip**. All four ladder
-> addresses re-derive and **all four differ from both funded gates**. No key recovered; both gates
+> addresses re-derive and **all four differ from both gate addresses**. No key recovered; both gates
 > open; that null is now verified rather than assumed.
 >
 > **One identifier was corrupted in a session summary and is corrected here:** `ADDR_C2` =
@@ -61,7 +61,7 @@ Ledger: `analysis/tested.md` (all rows below).
 
 gsmg.io (2019), 5 BTC split across two funded gate addresses. All *solved* stages were
 solved by 2021. We certify ORACLE-level negatives for every mechanical decode family; the
-single live crux is Lead 0 = the **interpreter-alphabet leap**. Both gates remain OPEN.
+single live crux is Lead 0 = the **interpreter-alphabet leap**. The funded gate remains OPEN.
 
 ## Gates (live-verified 2026-09-24)
 
@@ -359,7 +359,7 @@ inversion rule. Taijitu geometry is chance-level negative on all four decrypted 
 - **RETRACTED**: the earlier claim that "the next target is the digit-stream grid" is WRONG. That surface
   is certified-closed (tested.md:8842: visual-leap route closed with a human-eyes witness; late-138
   mechanical positional surface exhaustive; late-139 7-token weave space complete; "ALL
-  currently-specifiable reads of the crux are negative on both funded gates").
+  currently-specifiable reads of the crux are negative on both gate addresses").
 - **THE MECHANICAL SURFACE IS EXHAUSTED.** 43 "exhaustive", 10 "certified-closed", 15 of 24 R- sections
   with 0 candidates. The crux is UNSPECIFIABLE, not merely unsolved. Do not run another cipher sweep on
   dbbib_91 / faed_570; meet any such proposal with tested.md:8842.
@@ -773,7 +773,7 @@ labelled dictionary (that band's text is corpus `#5717`).
 
 ## ADDENDUM 2026-09-27 (e) - proposed dbbib sweep DECLINED: already certified-closed (`R-POSTER2`)
 - The dbbib_91 "Bifid all periods 1..91 x rotated keyed squares + non-Bifid variants" sweep I proposed after `R-POSTER` is **already done**:
-  `:8849` (rotation family exhausted, certified-negative on both funded gates), `:8845` (convention blocker already resolved), `:12254` F4
+  `:8849` (rotation family exhausted, certified-negative on both gate addresses), `:8845` (convention blocker already resolved), `:12254` F4
   (Bifid across 15+ keyed squares + full 25-letter rotation family + 9! token-cell permutations; crux "unspecifiable, not merely unsolved"),
   `:12258` (mechanical surface CLOSED; `AGENTS.md` bars a battery without an authorial unblocker).
 - The `a..i -> 8,1,5,0,6,3,7,4,2` digit stream I derived reproduces `:905` verbatim and is already swept at `:3613`, `:8084`, `:11673`, `:3687`, `:1302`, `:4223`.
@@ -1042,7 +1042,7 @@ false positive, a standing methodological correction, and a square-search screen
   the label is what gets trusted. Prose flags ("remaining stale readers flagged") failed here
   exactly the way a prose retraction once did - the flag has to be a checker.
 - Status: one tool load-line fixed, one optional `--emit` added, one new checker. No new key, no
-  new plaintext, 0 candidates, 0 oracle MATCH, `X` unsolved, both gates unchanged
+  new plaintext, 0 candidates, 0 oracle MATCH, `X` unsolved, the funded gate unchanged
   (125635374 partially-spent / 375055856 funded-unspent, both OK 2026-09-29).
 
 ---
@@ -1080,7 +1080,7 @@ false positive, a standing methodological correction, and a square-search screen
   against the tools it is supposed to clear, or it will clear a correct tool by accident.
 - NOT claimed: 12 rows remain void-but-unrepaired and 29 tools remain unrepaired. No
   blanket clearance, no positive altered, nothing retracted. X unsolved, 0 new candidates,
-  0 oracle MATCH, both gates unchanged.
+  0 oracle MATCH, the funded gate unchanged.
 
 ---
 
@@ -1108,7 +1108,7 @@ false positive, a standing methodological correction, and a square-search screen
   edit. A patch that silences a checker while breaking the instrument is worse than none.
 - Checker: CRITICAL 0 / STALE 18 / DUAL 10 / OK 62, down from 34 STALE / 44 OK. The 18
   remaining STALE tools are cited by no void row and no live claim rests on them.
-- X unsolved, 0 new candidates, 0 oracle MATCH, both gates unchanged. Nothing retracted.
+- X unsolved, 0 new candidates, 0 oracle MATCH, the funded gate unchanged. Nothing retracted.
 
 ---
 
@@ -1131,7 +1131,7 @@ false positive, a standing methodological correction, and a square-search screen
   it holds the below-fold 21% of the stream. Rule added: any "never archived" claim is re-tested
   against `data/` before being repeated. The other three "no capture" mentions in the ledger are
   about different objects (API routes, the SPA shell) and stand.
-- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged. Standing
+- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, the funded gate unchanged. Standing
   process note: a second session's uncommitted notes sat outside the repo for a day.
 
 ---
@@ -1150,7 +1150,7 @@ false positive, a standing methodological correction, and a square-search screen
 - The checklist framed this as needing human eyes on a solver-made image. It needed neither eyes
   nor a model - it needed the observation that the files were on disk and two-tone. "Needs a
   human" is a claim about the question, not the data.
-- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged. ONE
+- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, the funded gate unchanged. ONE
   human-eye item remains: the 14x14 FEFEFE cell at row 7, col 4.
 
 ---
@@ -1169,7 +1169,7 @@ false positive, a standing methodological correction, and a square-search screen
   not a cell value, and the field is `#F5F5F5`, not `#FEFEFE`. Three distinct near-whites are
   in play and none is FEFEFE, which separately falsifies the standing "the page background may
   be FEFEFE on purpose" note.
-- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged. The red cell
+- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, the funded gate unchanged. The red cell
   is 1-in-196 and the grid's colour channel is already swept 12 masks x 5 orders, so this is a
   closed item, not an opening.
 - **ZERO human-eye items remain open.** Two items, both filed as needing eyes on solver-made
@@ -1201,7 +1201,7 @@ false positive, a standing methodological correction, and a square-search screen
   strings are already in the ledger at rows 4572/9024, including `Turing Complete.` and
   `The answer is women`, which score 0 on a naive grep only because row 4572 wraps them across a
   line break. Whitespace-normalised search is required before believing any zero count here.
-- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged.
+- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, the funded gate unchanged.
 
 ---
 
@@ -1228,7 +1228,7 @@ false positive, a standing methodological correction, and a square-search screen
 - Method note carried: the "unmined" screen is a filename/stem test and produces false zeros
   (the `R-POINTERS` dust file scored 0 by name, 24/24 by content), so its 180-file zero set is a
   screening list, not a claim.
-- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged. First NEW
+- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, the funded gate unchanged. First NEW
   authorial object found this session, and both surviving items are semantics rather than
   ciphers - consistent with `R-SOLVERGRP-NEW`.
 
@@ -1324,7 +1324,7 @@ false positive, a standing methodological correction, and a square-search screen
   p-value, which is worse than reporting nothing. This is `R-GRPCHAT23`'s rabbit-hole lesson
   applied to me in reverse: there I documented a hole I could not name, here I nearly entered one
   that merely LOOKED quantitative.
-- **Part 3, oracle: 0/51 on the small gate AND 0/51 on the dualite gate.** Candidates = the
+- **Part 3, oracle: 0/51 on the small gate AND 0/51 on the `17ucy1K9...` halving address.** Candidates = the
   prop's printed form and 20 near spellings, 22 numeric forms (`01911`, `110901`, `11092001`,
   `20010911`, `09012001`, `110101`, `9112001`, `091101`, `911`, `101`, `1101`, `11`, `9`, `1`,
   `1109`, `0901`, ...), and 10 semantic forms (`neo`, `passport`, `expired`, `the matrix`,
@@ -1380,7 +1380,7 @@ false positive, a standing methodological correction, and a square-search screen
   Applied to this session's own work: the `R-DATEBATT` 51-candidate battery and the passport chase
   are both rabbit holes in the plain sense; recording them as negatives is the correct handling, but
   neither should be reported as progress.
-- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, both gates unchanged.
+- 0 oracle calls, 0 candidates, no lead promoted, X unsolved, the funded gate unchanged.
 
 ---
 
@@ -1388,7 +1388,7 @@ false positive, a standing methodological correction, and a square-search screen
 
 `R-VOIDROWS`, `R-GRPCHAT23-CORRECTION` and `R-RABBIT-HOLE-CORRECTION` in `tested.md`. This is an
 audit of committed claims, not new exploration: 0 oracle calls, 0 candidates, no lead promoted, no
-positive claimed, altered or retracted, X unsolved, both gates unchanged. It supersedes addenda 8
+positive claimed, altered or retracted, X unsolved, the funded gate unchanged. It supersedes addenda 8
 and 12 and corrects a figure in addendum 2. Four corrections, in descending order of consequence.
 
 **1. THE "COMPLIMENT" IS THE PROJECT'S OWN PHASE-1 BIT FIELD - `R-RABBIT-HOLE` FINDING 4 IS

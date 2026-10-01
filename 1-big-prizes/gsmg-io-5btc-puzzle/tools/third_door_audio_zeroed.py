@@ -291,7 +291,7 @@ def run() -> tuple[int, int, int, bool]:
               f"status {status})")
     if not real:
         print("  0 MATCH on the third door, the 8 other planted addresses and"
-              " both funded gates")
+              " both gate addresses")
     return len(cands), nderive, len(real), ok
 
 

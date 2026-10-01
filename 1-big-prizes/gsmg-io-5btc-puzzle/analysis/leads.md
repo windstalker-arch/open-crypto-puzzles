@@ -320,7 +320,7 @@ STATUS: the gating direction is now closed. Sections 178 (mask over first-29 of
 faed/dbbib) and 183 (2026-09-06: mask + DIRECT/CUM position-walk over
 even_stream/object_256/odd_pre_reduction/plaintext interleave, both bit orders,
 104 unique x 2 gates) -> NO MATCH. dropped_29 as a select-mask/gate on every open
-channel obiect is oracle-negative on both funded gates. See tested.md 178/183.
+channel obiect is oracle-negative on both gate addresses. See tested.md 178/183.
 
 ## Where the "Dualite" blob and the second address fit
 
@@ -471,7 +471,7 @@ seven token sha256 digests, producing the "Half / Better Half" keys. Section 21
 reproduces the XOR_KEY (`a795de11...`) and confirms the mechanism exactly, but the
 derived addresses (and the individual token keys) are not either funded escrow.
 What this changes: that branch is confirmed terminal relative to the published prize;
-the small-blob gate (`1GSMG1JC9`) and the Dualite gate (`17ucy...`) remain the only
+the small-blob gate (`1GSMG1JC9`) and the halving address `17ucy...` remain the only
 funded targets, and no lead here finds a password that reaches them.
 
 ## Research note 1 (2026-08-27): the unsolved core, verified against the community cryptanalysis
@@ -704,7 +704,7 @@ confirmations and acted on the one fresh data point.
    (`dbbi_91`->`dbbib`, etc.), leads.md, tested.md, README.md without corrupting the
    raw stream values. Content was never wrong; only the name. (See research note 9 for
    the follow-up length correction: 69, not 91, verified against the image.)
-2. **Blob identity (reconfirmed):** Cosmic Duality region = dualite gate
+2. **Blob identity (reconfirmed):** Cosmic Duality region = the `17ucy1K9...` halving address
    `U2FsdGVkX18tP2/gbclQ5t...` (salt `2d3f6fe06dc950e6`), DISTINCT from the funded final
    blob oracle.py checks (`U2FsdGVkX186tYU0hVJBXXUnBUO7C0+X4K...`, salt
    `3ab585348552415d`, gate `1GSMG1JC9`). Both share the `U2FsdGVkX18` = `Salted__`
@@ -761,7 +761,7 @@ address, balance 0)" and "BTC: 1Bxxxxxx (valid address, balance 0)". Assessed as
   the address halves and withholds the full values behind a donation ("We will give the
   above results to those who donated."). Not actionable.
 - The quoted addresses are stated to be balance-0 / unfunded, so they are NOT our two
-  funded gates (small-blob `1GSMG1JC9...` or Dualite `17ucy1K9...`).
+  funded gates (small-blob `1GSMG1JC9...` (the funded gate); `17ucy1K9...` is the creator's halving-withdrawal address).
 - Our own primary-source reproduction (tested.md section 12) already derived the real
   HALF/BETTER HALF addresses from the Cosmic Duality plaintext (Half
   `1JG648yaB7Wp2dpUfcZoRSD4q35oq47vCu`/`15E3pcDDXSKhvi3CLVhRTHEgd8dbVKvSZg`, Better half
@@ -940,7 +940,7 @@ closed in its joint form by `analysis/tested.md` section 185 (2026-09-07), whose
 line reads "Closes the two recurring 'unexploited numeric bridge' leads in their JOINT forms":
 dbbib 3x23 row/column sums used as a KEY over the 23-letter object alphabet, and the even
 B/C/D/E stream as a SHIFT over object_256, were the only untried combinations, and both are
-oracle-negative on both funded gates (15 small / 14 dualite candidates). Each 23 had already
+oracle-negative on both gate addresses (15 small / 14 dualite candidates). Each 23 had already
 been closed individually beforehand (sections 45/49/50/52 for the 3x23 sums, mod-9 and columnar
 forms; 184 for object_256 grid routes; 183 for even-stream 2-bit drives). This note's own
 softer reading -- research note 12 at line 707, "yields no mechanical combination" -- was
@@ -1072,7 +1072,7 @@ eyes" / "white rabbit" pointer under leads 62-79. Not yet swept: compare the rab
 alphabet, or its outline as a one-cell-per-pixel mask over the 14x14 matrix. No brute force
 run yet; recorded as the missing earlier structural element. Date: 2026-09-02.
 CLOSED (2026-09-10): the 9-best black components -> {a..i}->digit interpreter reading
-(tested.md 203) is certified negative on both funded gates (41 rank/value tables x 5
+(tested.md 203) is certified negative on both gate addresses (41 rank/value tables x 5
 streams x 47 alphabets = 20,424 candidates, escapes (1,4)). The remaining OPEN rabbit
 reading is the object_256 silhouette/glyph match and the matrix-cell mask above.
 
@@ -1404,7 +1404,7 @@ spiral language with the matrix's ccw-spiral read (sections 2748/3138)  -  the r
 
 VERDICT: the yin-yang-svgtiler is structurally, visually and attributionally NOT the
 phase-1 matrix generator nor a usable formula source for X. The "yin yang both equal"
-hint stays closed as the row==col total identity (section 65). Both funded gates remain
+hint stays closed as the row==col total identity (section 65). The funded gate remains
 open. (Full 14x14 extraction now pinned in this session's scratch:
 grid14x14 = the 14 strings in tested.md 3222 area / reproducible via note-31 script.)
 Date: 2026-09-06.
@@ -1584,7 +1584,7 @@ tool for any of the three layouts; that gap is now filled and certified.
   GF(p) mod N 2-point and 3-point Lagrange; additive/XOR/signed-diff 2-of-2 over all 32B
   pairs; 149-digit phase-3.2 sequence as bytes/sha/sums; sha256 of passphrase variants
   (tags, price-is-in-half, Matrix phrases, alpha, 3.2.2 output). 335 unique candidates,
-  ALL NO MATCH on both funded gates (670 submissions), oracle self-tests OK before run.
+  ALL NO MATCH on both gate addresses (670 submissions), oracle self-tests OK before run.
 - **Pubkey check:** JH body and BH slices are not secp256k1 curve points; the 64B/65B
   payloads are not (truncated) public keys.
 - **2026 community status (web, 2026-09-12):** prize 1GSMG1JC... remains unclaimed;
@@ -1600,7 +1600,7 @@ tool for any of the three layouts; that gap is now filled and certified.
   faed 570 VIC decode still needs the on-page keyed alphabet, the single unprovided
   input. The Beaufort 225B to E_B structural link (briefing vector 1) and the
   blocks[0..6]-as-AES-key idea (briefing vector 2) are now BOTH certified negatives on
-  both funded gates (late-40). None of the OP_RETURN material opens either gate.
+  both gate addresses (late-40). None of the OP_RETURN material opens either gate.
 
 ## Note 38  Beaufort 225B + blocks[0..6]-as-key vectors closed on both gates; full VtotheN fresh-vector family now certified on the Dualite gate (2026-09-12)
 
@@ -1619,7 +1619,7 @@ Brings the last two open briefing vectors of the 2026-05-26 brief to a certified
   sha256(concat blocks 0..7), raw blocks, and 40 AES-256-CBC/AES-128-CBC decryptions of
   the block-7..34 and chain4[255:] regions under 5 key families x 4 IVs all negative;
   no decrypt ever carried PKCS7 padding plus printable ASCII.
-- **Re-certification on the Dualite gate.** The VtotheN gsmg_fresh_vectors.py family
+- **Re-certification on the `17ucy1K9...` halving address.** The VtotheN gsmg_fresh_vectors.py family
   (2026-05-25 session, 218+ candidate checks) was originally tested against the small gate
   only. The rebuilt family (316 unique candidates) is now a clean 316 x NO MATCH on the
   small gate and 316 x NO MATCH on the Dualite gate; oracle self-tests OK before both
@@ -1677,8 +1677,8 @@ and executed on this device:
 3. Identification gap closed: briefcase/chunk_00..07 (8 x ~17.5MB) are rockyou-split
    passphrase dictionaries (14,283,386 lines total, first lines match rockyou). They are
    NOT the row-128 1,181,466-candidate sha3 phrase set and are NOT stored in any
-   dualite-enumerated form; at the dualite gate's measured ~353 cand/s any full rerun is
-   ~11h and is not scheduled. The dualite gate remains brute-force-incomplete for: (a) the
+   dualite-enumerated form; at that address's measured ~353 cand/s any full rerun is
+   ~11h and is not scheduled. That address's key space remains brute-force-incomplete for: (a) the
    #####-deleted/lost large phrase files (row 119-128 sets), and (b) any rockyou-level
    dictionary; every locally present, bounded candidate list is now dualite-certified.
    Date: 2026-09-12.
@@ -1847,7 +1847,7 @@ Date: 2026-09-14.
 The highest-ranked testable next move from Note 44 was realized: the Alician phrase joined
 with each of the 10 recovered stage passwords (both orders) as keyed-28 checkerboard
 alphabets over dbbib/faed, 504 alphabets x CANON/POS x 16 escape pairs = 24,353 clean decodes,
-ALL tested against both funded gates (counted 24,353 NO MATCH per gate; oracle selftests PASS
+ALL tested against both gate addresses (counted 24,353 NO MATCH per gate; oracle selftests PASS
 on both -- witness re-run this session). All top-English decodes are consonant-heavy noise.
 This was the first concrete act on Note 25d's "layered construction" premise using the phrase
 as one member of a join; it returns negative without shrinking the premise (a 2-keyword join

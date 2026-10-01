@@ -5,7 +5,7 @@ Why this exists: the ladder is recorded as facts in the ledger, but a ladder is
 only worth as much as its weakest link, and a long chain of recorded values can
 drift from the artifacts it claims to describe. This re-derives the entire chain
 from two inputs -- canonical BLOB1 and RAW_PW -- and checks it against the
-on-disk plaintexts, the recorded hashes, and the two funded gates.
+on-disk plaintexts, the recorded hashes, and the both gate addresses.
 
 The point is INDEPENDENCE. blob_inventory.py's evp()/dec() are used as a
 cross-check, but the primary implementation here is written separately, so a bug
@@ -288,7 +288,7 @@ def main():
     ck("E_C  == recorded", E_C.hex() == REC["E_C"], E_C.hex()[:16])
 
     # --- 3. addresses, and the gate comparison
-    print("\n[3] secp256k1 -> P2PKH addresses, vs both funded gates")
+    print("\n[3] secp256k1 -> P2PKH addresses, vs both gate addresses")
     for nm, k, want in (("K_C1", K_C1, REC["ADDR_C1"]), ("K_C2", K_C2, REC["ADDR_C2"])):
         a = addr(k)
         ck("addr(%s) == recorded" % nm, a == want, a)
@@ -376,7 +376,7 @@ def main():
     if fails:
         print("FAILURES: %s" % ", ".join(fails))
         return 1
-    print("LADDER VERIFIED. Neither funded gate is open; no key recovered.")
+    print("LADDER VERIFIED. Neither gate address is open; no key recovered.")
     print("=" * 78)
     return 0
 

@@ -261,7 +261,7 @@ def selftest() -> bool:
     p2b = decrypt_blob(PHASE2_BLOB_B64, "definitely the wrong password") is None
     print(f"wrong password -> no valid padding: {'OK' if p2b else 'FAIL'}")
     ok = ok and p2b
-    # 3) attempt() is wired to the dualite gate (17ucy1K9...), not the small gate.
+    # 3) attempt() is wired to the 17ucy1K9 halving address (17ucy1K9...), not the small gate.
     p3 = TARGET_ADDRESS.startswith("17ucy1K9") and raw[8:16].hex() == EXPECTED_SALT
     print(f"attempt() wired to dualite gate {TARGET_ADDRESS[:12]}...: {'OK' if p3 else 'FAIL'}")
     ok = ok and p3

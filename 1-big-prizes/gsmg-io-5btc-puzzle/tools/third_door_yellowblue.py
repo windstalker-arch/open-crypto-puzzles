@@ -21,7 +21,7 @@ the third door ONLY in the mask/count forms that section 19b ran before the
 color-prime was even established. The certified color-prime scalar itself
 (0x08c26d = 574061, PRIME), the sum-of-primes pair 17 / 41 (the -41/-17
 Decentraland coordinates), the colour word, its bit string, its run-lengths, and
-the hint SENTENCE were all carried to the two funded GATES by late-308 (16
+the hint SENTENCE were all carried to both gate addresses by late-308 (16
 candidates x 2 gates = 32 oracle attempts, 0 hits) but were never fed to the
 third door. And the audio hint is an INSTRUCTION ("hash the text"), so the whole
 family is naturally evaluated by the six keyed constructions of `third_door`
@@ -50,7 +50,7 @@ ledger's own quote of the author's hint):
 
 Every candidate goes through all six constructions of `third_door.constructions`
 in both pubkey forms, compared against the third door, the 8 other planted
-addresses and both funded gates (the same target set as `third_door`).
+addresses and both gate addresses (the same target set as `third_door`).
 
 WITNESS. `third_door.selftest()` (5 CSV rows re-derived) must pass rc=0 before
 and after the battery, and the audio family's two documented outputs
@@ -248,7 +248,7 @@ def run() -> tuple[int, int, list, bool]:
               f"{pre!r}  (funded {funded}, op_return {op!r}, status {status})")
     if not real:
         print("  0 MATCH on the third door, the 8 other planted addresses and"
-              " both funded gates")
+              " both gate addresses")
     return ncand, tried, len(real), ok
 
 

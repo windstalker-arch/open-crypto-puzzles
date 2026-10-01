@@ -74,7 +74,7 @@ THE RULES, one family per reading:
 
 Every candidate goes through all six constructions of `third_door.constructions`
 in both pubkey forms, against the third door, the other 8 planted addresses and
-both funded gates. A MATCH is printed with its preimage and derivation and the
+both gate addresses. A MATCH is printed with its preimage and derivation and the
 run exits 1.
 
 WITNESS. `third_door.selftest()` (5 CSV-verified rows re-derived) must pass rc=0
@@ -410,7 +410,7 @@ def run(include_matrix: bool) -> tuple[int, int, list]:
               f"{pre!r}  (funded {funded}, op_return {op!r}, status {status})")
     if not real:
         print("  0 MATCH on the third door, the 8 other planted addresses and "
-              "both funded gates")
+              "both gate addresses")
     return ncand, tried, hits, True
 
 

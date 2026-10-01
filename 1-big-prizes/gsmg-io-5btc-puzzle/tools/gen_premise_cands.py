@@ -11,7 +11,7 @@ This emits every ordering / repetition / joiner / case family over the page toke
 (and the known community 7-token superset), one candidate per line on stdout.
 Feed through bloomfast (incremental, skips already-swept strings), then the
 corrected oracle which tries each candidate as RAW X and as sha256(X) hex, under
-both digests, against both funded gates.
+both digests, against both gate addresses.
 
 N before dedup ~= 128k; D ~= 6.6k cand/s corrected oracle; t ~= 20s after bloom.
 """

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """xor_halfpair_sweep.py -- HALF-AND-BETTER-HALF (17/18) half-triangle XOR
-candidate sweep of the digit streams, oracle-fed on both funded gates.
+candidate sweep of the digit streams, oracle-fed on both gate addresses.
 
 Motive: a 35 = [1,2,3,4,5,6,7,7] unit splits as a 17-cell (1..5,2) and an
 18-cell (1..5,3) half-triangle.  For every 17/18 half-pair of the streams we

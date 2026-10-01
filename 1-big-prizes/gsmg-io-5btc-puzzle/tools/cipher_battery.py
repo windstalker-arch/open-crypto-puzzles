@@ -3,7 +3,7 @@
 
 One surface (a ciphertext stream, or the puzzle's built-in named streams) can
 be pumped through EVERY registered cipher cell at once, deduped, and verified
-against both funded gates. Each cell is a small function:
+against both gate addresses. Each cell is a small function:
 
     cell(surface: str, params: dict) -> iterable[str]
 

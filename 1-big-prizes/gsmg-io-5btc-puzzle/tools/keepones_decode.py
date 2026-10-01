@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Keep the 9 one-position subset (per the 24-bit white-rabbit key) of dbbib/faed, then
 run the certified Bifid(DBIFHCEG) decode and certified checkerboard decode on each subset,
-and oracle-test every resulting candidate on both funded gates.
+and oracle-test every resulting candidate on both gate addresses.
 
 The 24-bit key is applied cyclically (i%24) over the stream; symbols at key-bit=1 are kept.
 Subsets are then decoded with the certified Bifid(DBIFHCEG, width-5 square, full-period)

@@ -300,7 +300,7 @@ def main() -> int:
         for label, value, row_match in hits:
             print(f"  {label} = {value}  ->  {', '.join(row_match)}")
         return 1
-    print(f"RESULT: 0 of {len(cands)} scalars match either funded gate.")
+    print(f"RESULT: 0 of {len(cands)} scalars match either gate address.")
     print("Every test was a free HASH160 comparison; 0 funded-oracle calls made.")
     print("=" * 74)
     return 0

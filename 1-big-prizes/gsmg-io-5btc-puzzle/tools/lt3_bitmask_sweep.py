@@ -5,7 +5,7 @@ Premise (interpretive, NOT author-certified): the 2026-01-01 official hint ends
 "here's a 'tiny hint' <3." Reading "<3" literally as "strictly less than three",
 each digit stream is converted into a positional bitmask (1 = token value < 3,
 0 = otherwise), packed to bytes, and every packed form is submitted as a candidate
-answer X to BOTH funded gates' oracles. Also tested: the kept-letter subsequence
+answer X to BOTH gate addresses' oracles. Also tested: the kept-letter subsequence
 and its digit-string, and, for the length-256 object, the packed bytes as a direct
 private-key scalar.
 

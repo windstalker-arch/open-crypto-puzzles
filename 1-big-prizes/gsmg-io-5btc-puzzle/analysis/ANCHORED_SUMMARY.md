@@ -158,7 +158,7 @@ negative). Oracle line still void; effective certified candidates = 0.
    against blobs with known passwords ("causality"; raw+MD5 -> B1_79). Therefore every
    pos-ra-rebuild battery (lead-0 sweeps, mirror, island GCM, mod-n/scalar/2-of-3, ASL x2,
    braille, chardet, script-keyword, BaseN, whole-stream, Beaufort x2) is genuinely
-   certified-negative against BOTH funded gates. Ledger now spans 241 rows (late-208..226
+   certified-negative against BOTH gate addresses. Ledger now spans 241 rows (late-208..226
    added 2026-09-19/20), committed at 7a0cf2a.
 2. **Island re-certified offline (late-223):** puzzlepiece.mp3 (212,031 B) found locally
    at ~/briefcase/gsmg-private/; sha256 ef17a96d...; CIDv0 recomputes to the exact
@@ -171,7 +171,7 @@ negative). Oracle line still void; effective certified candidates = 0.
    margins/bottom. Page symbol census b167 a138 g127 e99 i91 h78 f77 c72 d71 o17 z4; the
    on-page "." is the certified 28-char alphabet's keying artifact, not a PDF symbol.
 4. **Escrow re-verified live (2026-09-20, mempool.space):** small gate 125,635,374 sat
-   (1.25635374 BTC, 120 UTXO); dualite gate 375,055,856 sat (3.75055856 BTC, 45 UTXO).
+   (1.25635374 BTC, 120 UTXO); 17ucy1K9 (halving withdrawal) 375,055,856 sat (3.75055856 BTC, 45 UTXO).
    Both targets intact; each shows a fresh ~block-964501 dust credit (864 / 546+555 sat).
 5. **Remaining input is external:** lead 0's interpreter alphabet is closed on every
    mechanical family (9!, keyed-28, Bifid periods 91/13/7/1, Beaufort x2, base-N charsets,

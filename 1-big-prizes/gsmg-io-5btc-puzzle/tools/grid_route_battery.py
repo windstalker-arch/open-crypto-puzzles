@@ -17,7 +17,7 @@ Families generated here:
         charset renders (hex, base58, base64, decimal, ascii-bin) as candidates.
 All digit streams are decoded under ALPHAS (47 keyed alphabets incl. the
 certified phase 3.2.2 literal) x escapes (1,4)/(4,1); clean decodes enter the
-candidate file raw/lower/upper/reversed. Candidates feed BOTH funded gates
+candidate file raw/lower/upper/reversed. Candidates feed BOTH gate addresses
 (oracle.py small 1.25 BTC, oracle_dualite.py Dualite 3.75 BTC).
 
 WITNESS (certified):

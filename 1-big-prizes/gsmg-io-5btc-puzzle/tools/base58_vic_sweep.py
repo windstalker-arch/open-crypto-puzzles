@@ -4,7 +4,7 @@
 User directive: read the streams (a..i = 9 symbols) through the Base58 / Bitcoin
 alphabet as the interpreter. The streams are natural base-9 digit strings; we
 re-encode / decode them through Base58 in several concrete ways and test as password
-X on BOTH funded gates, and where the bytes could be a private key, reduce directly
+X on BOTH gate addresses, and where the bytes could be a private key, reduce directly
 to the gate address.
 
 Public/authorized puzzle only. A hit is an oracle MATCH (or a direct address match).

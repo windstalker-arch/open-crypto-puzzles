@@ -22,7 +22,7 @@ Per-order candidates (all legs):
    (ks XOR cc[0:32]).hex, (ks XOR B1_79[0:32]).hex,
    (ks XOR matrix 24-bit color-word padded).hex,
 and the same set re-run over the REVERSED block window (blocks[34]..blocks[27])
-for the mirror leg.  Every output is fed to BOTH funded gates via
+for the mirror leg.  Every output is fed to BOTH gate addresses via
 oracle.py / oracle_dualite.py --stdin (raw-X + sha256-X hex legs).
 
 Certified path: oracle.py --selftest / oracle_dualite.py --selftest were PASS

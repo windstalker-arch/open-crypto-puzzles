@@ -13,7 +13,7 @@ For each candidate string, this battery:
      salphasion,matrixsumlistenter,yourlastcommand,secondanswer,firsttint,
      shabef,firsthint,ourfirsthintisyourlastcommand}, plus all 5 page-token
      concatenations.
-  4. Compares every derived P2PKH address against both funded gates:
+  4. Compares every derived P2PKH address against both gate addresses:
        G1 (small): 1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe
        G2 (dualite): 17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa
   5. Also checks sha256(candidate) as raw 32-byte privkey, and the candidate

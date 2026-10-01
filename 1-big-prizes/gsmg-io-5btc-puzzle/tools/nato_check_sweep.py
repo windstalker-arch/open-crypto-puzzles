@@ -2,7 +2,7 @@
 """nato_check_sweep.py -- user steer "check" inside the NATO-codeword frame:
 chess/check/checkerboard vocabulary NATO-translated (CharlieHotelEchoCharlieKilo...)
 as literal X candidates and as keyed-28 checkerboard alphabet keywords over
-dbbib(91)/faed(570), both funded gates.
+dbbib(91)/faed(570), both gate addresses.
 
 Complements the NATO phrase-translation sweep (tools/nato_vic_sweep.py, late-207):
 that batch translated the puzzle's own phrases; this one translates the

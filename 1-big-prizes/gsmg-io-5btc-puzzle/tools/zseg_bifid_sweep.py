@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """zseg_bifid_sweep.py -- decrypt the SalPhaseIon z-segment streams all-at-once
 through the certified Bifid decoder (keyed square DBIFHCEG, J dropped), then
-oracle-test the decodes on BOTH funded gates.
+oracle-test the decodes on BOTH gate addresses.
 
 Gap closed: tested.md sections 123/124 ran the ciphertools Bifid/(DBIFHCEG) over
 dbbib, faed, even, odd, object_256, dropped_29 -- but NOT the two z-segment streams

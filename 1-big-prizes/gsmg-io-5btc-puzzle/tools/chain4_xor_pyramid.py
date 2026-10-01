@@ -154,7 +154,7 @@ def main() -> int:
     # certified oracle path: --stdin, one candidate per line, exact match
     N = len(feed)
     print(f"candidate strings: {N} (x UPPER/lower via oracle case variants "
-          f"in subprocess) -> feeding both funded gates", flush=True)
+          f"in subprocess) -> feeding both gate addresses", flush=True)
     for script, gate in (("oracle.py", "1GSMG1JC9"),
                          ("oracle_dualite.py", "17ucy1K9")):
         txt = "\n".join(s for _, s in feed) + "\n"

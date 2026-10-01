@@ -10,7 +10,7 @@ checkerboard keyed-alphabet keywords.
 
 Method: build keyed-28 alphabets from each word, the sentence order, and the fused phrase;
 decode dbbib/faed under CANON/POS digit maps x escape pairs; oracle-test every clean
-(?-free) decode on both funded gates. A hit is an exact oracle MATCH only.
+(?-free) decode on both gate addresses. A hit is an exact oracle MATCH only.
 """
 import os
 import subprocess

@@ -2,7 +2,7 @@
 """
 cell_partition_battery.py -- libBMpp-faithful bitmap partition battery for the
 GSMG final-page cell graphic, sweeping the interpreter-alphabet (DBIFHCEG) value
-readings over the yellow/blue cell partitions of a 24-bit BMP, both funded gates.
+readings over the yellow/blue cell partitions of a 24-bit BMP, both gate addresses.
 Certified: synthetic-bitmap inject -> testify path -> both oracles; 0 fabricated MATCH.
 
 PURPOSE:

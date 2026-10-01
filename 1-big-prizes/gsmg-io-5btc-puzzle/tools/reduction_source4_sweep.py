@@ -129,7 +129,7 @@ def main():
             if h in (GATE1_H160, GATE2_H160):
                 hits.append((r16.hex(), bh.hex(), (name, key.hex())))
     if not hits:
-        print("0 MATCH on both funded gates (gate-h160 check); BH candidates:", n)
+        print("0 MATCH on both gate addresses (gate-h160 check); BH candidates:", n)
     else:
         for x in hits[:20]:
             print("HIT", x)

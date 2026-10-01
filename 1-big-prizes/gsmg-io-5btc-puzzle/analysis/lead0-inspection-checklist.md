@@ -83,7 +83,7 @@ From `repo/tools/`:
   sweep layers (lead0_layers.py, lead0_vicgap.py) can be pointed at new maps.
 
 Every run does a certified 3.2.2-vector selftest first, decodes both streams,
-and oracles all decoded plaintext candidates against BOTH funded gates
+and oracles all decoded plaintext candidates against BOTH gate addresses
 (1GSMG1JC9..., 17ucy1K9...). A MATCH prints immediately.
 
 Convenience wrapper: `tools/lead0_try.sh <alphabet|keyword>` (see next file).

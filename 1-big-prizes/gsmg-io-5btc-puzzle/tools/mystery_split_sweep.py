@@ -2,7 +2,7 @@
 """
 mystery_split_sweep.py -- drive the certified sealed-split reconstruction tool
 (shamir_combine.py) over the 36 x 32-byte "mystery" blocks of chain3[158:1327]
-and the two OP_RETURN halves, emitting oracle candidates for BOTH funded gates.
+and the two OP_RETURN halves, emitting oracle candidates for BOTH gate addresses.
 
 Purpose:
     The briefing's "Shamir GF(256) recovery from mystery blocks" and

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 R-ORDER (2026-09-27): candidate battery from the 8 theseedisplanted strips, in the
-certified PAGE ORDER, against both funded gates.
+certified PAGE ORDER, against both gate addresses.
 
 New this round (never established before):
   * the exact document order of the 8 <img> tags (from the 981-byte static page)

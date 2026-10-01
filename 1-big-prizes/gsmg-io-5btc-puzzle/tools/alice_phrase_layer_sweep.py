@@ -10,7 +10,7 @@ phrase with the recovered passwords) is that the KEYED ALPHABET of the final
 checkerboard is itself built by deduping a JOIN of the phrase and one of the
 recovered passwords, e.g. keyed26(phrase+pwd) or keyed26(pwd+phrase), possibly
 with the certified '.'/'/' splices. All clean decodes are English-scored and the
-top set is pushed through both funded gates.
+top set is pushed through both gate addresses.
 
 Recovered stage passwords (from leads.md:881 and tested.md rows 1544/1776/204):
   matrixsumlist, enter, lastwordsbeforearchichoice, thispassword, anstoo,

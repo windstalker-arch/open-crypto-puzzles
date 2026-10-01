@@ -18,7 +18,7 @@ CONSTRUCTIONS: exactly the two the lead singles out:
   raw       key = int.from_bytes(line-bytes)  (CPU pass; lead: valid for <=32 B)
 For each, the compressed AND uncompressed P2PKH address is derived (the CSV's own
 rows use both forms) and compared against the third door, all other planted
-addresses, and both funded gates.
+addresses, and both gate addresses.
 
 The selftest re-derives the sha256 witnesses (causality, jacquefresco-sentence,
 the 1GSMG1JC9 address) and the raw witness (gsmg.io/theseedisplanted) from the

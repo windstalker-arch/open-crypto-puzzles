@@ -8,7 +8,7 @@ authorial nouns of the Phase-3.2 sentence on the page itself:
      A fubcd-king & oracle-queen, thingky mvps, on a sad board but as wide as
      the first one seen."
 
-This generator builds the X-candidate family for BOTH funded gates from that
+This generator builds the X-candidate family for BOTH gate addresses from that
 sentence only.  Three seed groups, each expanded by the repo's standard
 7-form separator/case matrix (exact, lower, upper, strip, strip_lower, dash,
 underscore), so nothing depends on my guess of the author's spacing:

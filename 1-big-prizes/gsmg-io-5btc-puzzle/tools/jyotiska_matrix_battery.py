@@ -3,7 +3,7 @@
 
 Steer: github.com/jyotiska222/Custom-Cipher-Encryption-Decryption -- a 62-column
 keyword-matrix polyalphabetic cipher (Vigenere-family over A-Z a-z 0-9 built from
-a passkey keyword). Two passes against both funded gates:
+a passkey keyword). Two passes against both gate addresses:
 
   A. name-family candidates from the repo/author README (its own strings).
   B. the certified digit streams (dbbib69/91, faed570, zseg1/2) treated as cipher

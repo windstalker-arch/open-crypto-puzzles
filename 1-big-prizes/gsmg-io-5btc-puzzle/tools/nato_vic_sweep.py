@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """nato_vic_sweep.py -- NATO/ICAO phonetic codeword family as (A) literal X
 candidates and (B) keyed-28 checkerboard alphabet keywords over dbbib(91)/faed(570),
-certified VIC decoder, both funded gates.
+certified VIC decoder, both gate addresses.
 
 SOURCE REPO (user steer): https://github.com/justindmartin/NATO-ICAO-Alphabet-Translator
 - A PHP class translating phrases into the NATO(ICAO) phonetic alphabet.
