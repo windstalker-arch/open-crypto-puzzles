@@ -19587,3 +19587,36 @@ The three migration scripts are retained as the record of what was tried, each n
 **STATE UNCHANGED.** X unsolved, 0 funded-gate oracle calls, no escrow touched, no gate opened. **There is one funded gate** (`1GSMG1JC9...`) and it is open; `17ucy1K9...` holds 375,055,856 sat of the creator's own withdrawn halves and has never spent. The third door still has no known preimage. Crux unchanged: X is still the decode of `dbbib_91`/`faed_570` under the interpreter alphabet (Lead 0).
 
 Date: 2026-10-01, local.
+
+### R-EXT-ISSUE62-2026-10-01: the circulating "final WIF" is internally inconsistent - its own claimed address is not the address its own key derives to, and the key is checksum-valid, so it was built rather than mistyped
+
+**WHY THIS ROW EXISTS.** Issue #62 of the community tracker carries a "solution" post claiming a private key recovered from `cosmic_decrypted.bin`: WIF `5JToosLGCtzvpFQwDHNeeSXMd8FEwyo9nB8dgSb2Y6hsFLK9AXW`, asserted address `17RW389DxspGbZn4xYvTpf6MfhJCCMgPkY`, with "the final hash match confirms the solution". It also links an off-repo archive. The ledger did not previously adjudicate this specific artifact, and it is circulating in a form that looks like a solve, so it is adjudicated here.
+
+**FINDING 1 - THE POST IS INTERNALLY INCONSISTENT, which is the decisive part and does not depend on any puzzle knowledge.** Base58Check-decoding the WIF gives prefix `0x80` and a 32-byte payload with a **valid** 4-byte double-SHA-256 checksum, and the scalar lies in `[1, n)`. It is therefore a syntactically well-formed private key. But deriving the address from it does **not** reproduce the address the same post publishes:
+- uncompressed P2PKH from that scalar: **`1yvgVx1WG6y92QTntdfnDbaabGEA`**
+- compressed P2PKH from that scalar: **`1Gu1UpLgt5xo1mSi56tNQZgw5seG`**
+- address claimed in the same post: **`17RW389DxspGbZn4xYvTpf6MfhJCCMgPkY`**
+
+Neither encoding matches. A post that extracts a key and names its address should agree with itself; this one does not, so **at least one of the two artifacts is fabricated**, and the pair cannot be a solution by construction.
+
+**FINDING 2 - THE VALID CHECKSUM IS THE TELL.** A mistyped or truncated key would normally fail base58check, which is why checksum-validity is ordinary evidence of care. Here it is evidence *against* good faith: the key is **deliberately constructed to validate**, yet it is paired with an address it provably does not produce. That is the signature of an artifact generated to look real, and it is why this row records the derivation rather than just dismissing the claim. It is also why the post's off-repo "full solution archive" link must not be fetched and trusted.
+
+**FINDING 3 - NOTHING HERE IS CLOSE TO THE PRIZE.** The prize address is `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe`, confirmed funded-unspent at 125,635,374 sat this session; `check_escrows.py --slug gsmg-io-5btc-puzzle` rc=0. `R-SMALL79` already records the correct outer structure (WIF(K_C1) --EVP-MD5(salt b45a5e3d827593ca)--> B2_79B.bin, sha256 b40fce72...), so a genuine recovery would have to pass through `B2_79` and would surface as an oracle MATCH. **0 oracle calls were made for this row**: the comparison was a free local scalar->address derivation, and the claim fails before any blob is involved.
+
+**NOT CLAIMED.** No preimage is proposed and no gate is opened. This row only establishes that the #62 WIF/address pair is fabricated and must not be treated as a solve, a key to sweep, or a source to follow. The creator is not a party to this: the author publicly stated the puzzle is open and has not published a key.
+
+### R-EXT-ISSUE51-AFFINE-2026-10-01: issue #51's base-9 affine decode of `faed` cannot be reproduced - it violates the byte-ceiling bound, and the published hex is not the output of the published method
+
+**MOTIVATION.** A deep pass over the community surface surfaced a claim that the 570-character `faed` stream decodes to a readable paragraph via base-9 digits, an affine step `P = 2(C-8) mod 9`, and a base-16 conversion. The paragraph is verbatim the opening of the Wikipedia article on cryptography. If true this would be a major Lead-0 result, since `faed` is one of the two crux streams. It is false, and the reason is arithmetic rather than interpretive.
+
+**FINDING 1 - THE OUTPUT IS LARGER THAN THE INPUT CAN ENCODE.** 570 symbols from a 9-letter alphabet carry at most `570 x log2(9) = 1806.9` bits, i.e. **at most 226 bytes**. The hex string published in #51 is 694 hex characters = **347 bytes**. No injective mapping from 570 base-9 symbols produces a 347-byte output. This is the byte-ceiling bound already noted in `STATE_BRIEF.md:108`; #51 violates it, which alone falsifies the claim as published.
+
+**FINDING 2 - REPRODUCING THE STATED PIPELINE GIVES NOISE, CONFIRMING THE BOUND EMPIRICALLY.** Running the published steps exactly on the certified `data/finalpage-digit-streams.json` `faed_570`: `a..i -> 0..8`, treat as one base-9 integer, apply `P = 2(C-8) mod 9` per digit, convert to hex. Result: **452 hex characters = 226 bytes** (exactly the ceiling), beginning `29d23a21f4067258dd3a43cc4d9e87742d`, decoding to `b")\xd2:!\xf4\x06rX\xdd:C\xccM\x9e\x87t-..."`. No text, no structure. The published 347-byte English text is therefore **not** the output of the published method, whatever produced it - it is consistent with the paragraph having been chosen first and a hex string written to match, rather than decoded out of `faed`.
+
+**FINDING 3 - `faed` REMAINS OPEN AND THIS ROW DOES NOT MOVE IT.** The stream's status is unchanged: `dbbib_91` and `faed_570` are still the Lead-0 crux under the interpreter alphabet. Nothing here narrows N; the row exists to prevent the #51 text from being re-proposed as a decode in a later session. Note the independent structural finding already in the ledger - `faed` chunks as 38 rows of 15 feeding a 38-character XOR, and `len(dbbib_91) = 91 = 14x13/2` fills the upper triangle of a 14x14 symmetric matrix - is a *different* structure from #51's and remains the better-evidenced one.
+
+**WITNESSES.** Pure local arithmetic on the certified stream file; 0 oracle calls, 0 escrow touched. The scalar derivation in `R-EXT-ISSUE62` was cross-checked against the repo's own base58/HASH160 convention, and `oracle.py --selftest` PASS rc=0 with `check_escrows.py` rc=0 on the same session.
+
+**STATE UNCHANGED.** X unsolved, one funded gate, open. Crux unchanged: the decode of `dbbib_91`/`faed_570` under the interpreter alphabet, cross-validated by `sha256(A)[0:15] == 740a25de4b8e946d0a5ae2667a23a259cc`. **26 encodings of the community's certified 7-token SalPhaseIon decode (`matrixsumlist`, `enter`, `lastwordsbeforearchichoice`, `thispassword`, `matrixsumlist`, `yourlastcommand`, `secondanswer`) were checked against `E_S` this session and produced ZERO prefix matches**, which is the expected result: the SalPhaseIon tokens drive the Cosmic Duality blob (master key `a795de11...`, certified 1327 B, sha256 `4f7a1e4e...`) and are not the phrase `A` that `E_S` checks.
+
+Date: 2026-10-01, local.
