@@ -19423,3 +19423,35 @@ Date: 2026-10-01, local.
 **CRUX UNCHANGED.** X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet (lead 0). This row closes a false-negative mechanism in the matrix-solver family; it does not narrow the crux.
 
 Date: 2026-10-01, local.
+
+## R-145RUN-2026-10-01: ROW 145 (THE EXHAUSTIVE 9! INTERPRETER-PERMUTATION SWEEP) IS RUN AND STILL NEGATIVE ON dbbib_91 - AND THE 6.1-HOUR ESTIMATE THAT SUPPRESSED IT FOR 7 DAYS WAS A UNIT ERROR, NOT A REAL COMPUTE BARRIER
+
+- This is the single row `R-DBBIBFIELD3` declined to re-run, on 2026-09-24, by an explicit `N/D` argument. That argument is what this row overturns, so the arithmetic is re-derived first rather than asserted.
+
+**FINDING 1 - THE SKIP WAS CAUSED BY A UNITS ERROR, AND THE TRUE COST WAS ~8x LOWER.** `R-DBBIBFIELD3` wrote: N = 2,903,040 oracle lines PER GATE; D = 263.2 perms/s; t = 184 min per gate, 6.1 h for both. But D was measured in **perms/s** and N is a count of **lines**, and one perm emits 4 formats x 2 cases = 8 lines. Dividing a line count by a perms/s rate inflates t by exactly 8x:
+- as written: `2,903,040 / 263.2 = 11,030 s = 184 min` (wrong - mixes units)
+- correct: `2,903,040 / (263.2 * 8) = 1,379 s = 23 min per gate`
+Measured rates here were in fact better still: ~131 perms/s on the small gate and ~58-60 perms/s on the Dualite gate, giving 2,764 s and ~5,880 s respectively. AGENTS.md's rule is that a projection above two hours should be answered with a constraint that shrinks N, not with more compute - and there was no need for either, because the projection it was answering was never real. This is the second time in this file that a `t = N/D` figure has been the load-bearing element of a decision and has been wrong (cf. `R-VOIDROWS` Finding 4(a), a bookkeeping sentence that "does not add up"). The pattern worth naming: a rate is measured in whatever unit the measurement loop naturally produces, and N is counted in whatever unit the candidate file produces; if those differ, t is off by the ratio.
+
+**FINDING 2 - THE SWEEP RAN TO COMPLETION ON BOTH FUNDED GATES. 0 MATCH.**
+- Witnesses, certified immediately prior: `oracle.py --selftest` PASS, `oracle_dualite.py --selftest` PASS. `check_escrows.py --slug gsmg-io-5btc-puzzle` both gates OK (125,635,374 sats partially-spent; 375,055,856 sats funded-unspent).
+- `tools/interpreter_perm_sweep.py` verified to read the authoritative field: `DBBIB` is 91 tokens, `FAED` 570, format lengths `{dbbib: 91, faed: 570, dbbib+faed: 661, faed+dbbib: 661}`, `PERMS` = 362,880.
+- N = 362,880 perms x 4 formats x 2 cases = **2,903,040 oracle lines per gate**, x2 gates = **5,806,080 candidate-X lines total**. All consumed.
+- Four workers (one per script x case), each reporting progress to 362,880:
+  - `[oracle.py upper] DONE exit=1 (2764s) no match`
+  - `[oracle.py lower] DONE exit=1 (2762s) no match`
+  - `[oracle_dualite.py upper] DONE exit=1 (5894s) no match`
+  - `[oracle_dualite.py lower] DONE exit=1 (5862s) no match`
+  - `overall rc=1 (no match)`; `grep -c '^MATCH ' = 0`.
+- The three `dbbib`-bearing formats are the ones whose content changed when the crop was superseded (`dbbib` 69->91, and both concatenations). The `faed` format is byte-identical to the 2026-09-05 run and is re-covered incidentally.
+- Operational note: the sweep must be launched `setsid`-detached. Under plain `nohup ... &` it shares the invoking shell's process group and was killed at ~114 s when the parent tool call timed out; the re-run under `setsid nohup ... < /dev/null &` survived and completed. Progress was verified as genuinely advancing with a 45 s counter delta and CPU-time growth per worker, not inferred from a non-empty log.
+
+**FINDING 3 - THE CONCLUSION IS UNCHANGED AND IT IS THE CRUX. NO INTERPRETER ALPHABET IS A PURE BIJECTION INTO X.**
+- Reconfirmed on the authoritative stream: no token -> symbol bijection over all 9! = 362,880 permutations of the 9 symbols yields a recognized X on either funded gate, in any of the four stream formats, in either case. Every permutation becomes a 256-byte `bytes.translate` table, so coverage of the 9-symbol alphabet space is complete by construction.
+- This is the strongest single negative of the hunt, now certified against the correct 91-token object rather than the superseded crop. It constrains lead 0 sharply: the interpreter alphabet cannot be recovered by *reading the streams directly through a relabelling*. What survives is only the class lead 0 already names - the token VALUES feed a decode step (unknown-value-mapped Bifid/VIC through the certified pipeline), or X is built from a transform of the stream (windows/keystreams) rather than the whole stream. This row does not refute that; it is the measurement that makes that residual class the only one left standing.
+
+**CORRECTION TO THE LEDGER.** `R-DBBIBFIELD3`'s "NOT RUN, ON PURPOSE, WITH THE ARITHMETIC" and its "Its dbbib side remains void" are now superseded. Its load-line fix is kept and its arithmetic is withdrawn: the sweep was affordable and has been run. The 2026-09-05 row 145 text itself is left untouched, per the house rule of annotating superseded claims rather than rewriting them.
+
+**CRUX UNCHANGED, BUT NARROWED.** X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet. The alphabet is now certified NOT to be a direct relabelling of the raw streams, on the correct object, on both gates - which removes the simplest hypothesis for lead 0 and leaves the value-fed-decode and window/keystream readings as the survivors. Both funded gates remain open.
+
+Date: 2026-10-01, local.
