@@ -30,6 +30,16 @@ Z2 = FF["z_segment_2"]
 
 READINGS = {}
 
+# Value maps for the authoritative 91-token dbbib stream. "canon" is the Bifid
+# square DBIFHCEG (a=8,b=1,c=5,d=0,e=6,f=3,g=7,h=4,i=2), derived from puzzle
+# data rather than position, so it is the map worth spending a new geometry on.
+DBBIB_MAPS = {
+    "pos": {c: i for i, c in enumerate("abcdefghi")},          # a=0..i=8
+    "one": {c: i + 1 for i, c in enumerate("abcdefghi")},      # a=1..i=9
+    "canon": {"a": 8, "b": 1, "c": 5, "d": 0, "e": 6,
+              "f": 3, "g": 7, "h": 4, "i": 2},
+}
+
 
 def mapstream(s, mapping):
     return [mapping[c] for c in s]
@@ -135,7 +145,8 @@ def canonical(x):
     yield from sorted(out)
 
 
-def solve_all(name, values, rows, cols, mods, idx_map_name=None):
+def solve_all(name, values, rows, cols, mods, idx_map_name=None,
+              allow_truncate=False):
     if idx_map_name == "faed0":
         m = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7, "i": 8}
     elif idx_map_name == "faed1":
@@ -143,6 +154,18 @@ def solve_all(name, values, rows, cols, mods, idx_map_name=None):
     vals = mapstream(values, m) if idx_map_name else list(values)
     if len(vals) < rows * cols:
         return
+    # [SUPERSEDED 2026-10-01 - this slice used to happen WITHOUT warning]
+    # `A = reshape(vals[:rows * cols], ...)` sliced silently, so a 3x23
+    # geometry against the 91-token authoritative stream quietly tested
+    # dbbib_91[:69] -- a THIRD object that is neither the authoritative stream
+    # nor the 69-token crop. Diagnosed in R-DBBIBGEO-2026-10-01.
+    if len(vals) != rows * cols and not allow_truncate:
+        raise ValueError(
+            f"{name}: {len(vals)} tokens cannot fill a {rows}x{cols} geometry "
+            f"({rows * cols} cells). Refusing to silently truncate and test a "
+            f"third object. Pass allow_truncate=True only for a deliberate "
+            f"crop/prefix control."
+        )
     A = reshape(vals[:rows * cols], rows, cols)
     sq = [A[i][:rows] for i in range(rows)] if cols >= rows else None
     AA = matmul(A, trans(A))
@@ -169,14 +192,78 @@ def solve_all(name, values, rows, cols, mods, idx_map_name=None):
                 READINGS[(name, "sqxRS", "fracQ", cname)] = cand
 
 
+def selftest() -> int:
+    """Certify the two properties this tool's ledger rows depend on.
+
+    1. The truncation guard fires: a 3x23 request against the 91-token stream
+       is REJECTED, so no future edit can silently reintroduce the R-DBBIBGEO
+       defect.
+    2. The geometries that actually fit 91 run to completion without loss.
+    """
+    fails = []
+
+    def ck(cond, label):
+        print(f"  {'ok  ' if cond else 'FAIL'}  {label}")
+        if not cond:
+            fails.append(label)
+
+    print("selftest: stream and geometry arithmetic")
+    ck(len(DBBIB) == 91, "authoritative dbbib is 91 tokens")
+    ck(7 * 13 == 91 and 13 * 7 == 91,
+       "the only factorizations of 91 are 7x13 and 13x7")
+    ck(DBBIB[:45] + "bfdhbeffcdbbfcccgbfbee" + FF["dbbib"][45:] == DBBIB,
+       "91-token stream == crop with the 22-token run inserted at [:45]")
+    ck(DBBIB[:69] != FF["dbbib"],
+       "dbbib_91[:69] is NOT the crop (the third object R-DBBIBGEO named)")
+
+    print("selftest: the truncation guard is live")
+    try:
+        solve_all("GUARD_PROBE_3x23", list(DBBIB), 3, 23, [29],
+                  idx_map_name="faed0")
+        ck(False, "3x23 against 91 tokens raises instead of truncating")
+    except ValueError:
+        ck(True, "3x23 against 91 tokens raises instead of truncating")
+    READINGS.clear()
+
+    print("selftest: geometries that fit 91 complete without loss")
+    for mname, m in DBBIB_MAPS.items():
+        vals = [m[c] for c in DBBIB]
+        ck(len(vals) == 91, f"{mname} map yields 91 values")
+        before = len(READINGS)
+        solve_all(f"SELFTEST_{mname}_7x13", vals, 7, 13, [29, 13, 26, 23])
+        solve_all(f"SELFTEST_{mname}_13x7", vals, 13, 7, [29, 13, 26, 23])
+        ck(len(READINGS) > before,
+           f"{mname}: 7x13/13x7 produced readings (13x7 may be vacuous)")
+    READINGS.clear()
+
+    print(f"selftest: {len(fails)} failure(s)")
+    return 1 if fails else 0
+
+
 def main():
     sys.setrecursionlimit(10000)
     solve_all("FAED_r0_19x30", FAED, 19, 30, [29, 13, 26], idx_map_name="faed0")
     solve_all("FAED_r1_19x30", FAED, 19, 30, [29], idx_map_name="faed1")
     solve_all("FAED_r0_15x38", FAED, 15, 38, [29], idx_map_name="faed0")
     solve_all("FAED_r0_15x38r", FAED, 38, 15, [29], idx_map_name="faed0")
-    solve_all("DBBIB_r0_3x23", DBBIB, 3, 23, [29, 23], idx_map_name="faed0")
-    solve_all("DBBIB_r1_3x23", DBBIB, 3, 23, [29], idx_map_name="faed1")
+    # [SUPERSEDED 2026-10-01 - R-DBBIBGEO-2026-10-01] These two lines asked for a
+    # 3x23 geometry against the 91-token authoritative stream and relied on
+    # solve_all's silent truncation, so they tested dbbib_91[:69], which is
+    # neither the stream nor the crop. Kept ONLY as an explicitly-labelled
+    # prefix control so the historical readings stay reproducible; the geometry
+    # that actually fits 91 is 7x13 / 13x7 and is run below.
+    solve_all("DBBIB_r0_3x23_PREFIXCONTROL", DBBIB, 3, 23, [29, 23],
+              idx_map_name="faed0", allow_truncate=True)
+    solve_all("DBBIB_r1_3x23_PREFIXCONTROL", DBBIB, 3, 23, [29],
+              idx_map_name="faed1", allow_truncate=True)
+    # The only factorizations of 91 are 7x13 and 13x7. rows*cols == 91 exactly,
+    # so no token is dropped. 13x7 yields 0 readings by construction: A is 13x7,
+    # so AA = A A^T is 13x13 with rank <= 7, hence singular over every field
+    # gauss_mod is run on, and the solver correctly reports no unique solution.
+    for mname, m in DBBIB_MAPS.items():
+        vals = [m[c] for c in DBBIB]
+        solve_all(f"DBBIB_{mname}_7x13", vals, 7, 13, [29, 13, 26, 23])
+        solve_all(f"DBBIB_{mname}_13x7", vals, 13, 7, [29, 13, 26, 23])
     evmap = {k: i for i, k in enumerate(sorted(set(EVEN)))}
     solve_all("EVEN_r0_15x19", [evmap[c] for c in EVEN], 15, 19, [29])
     oddmap = {k: i for i, k in enumerate(sorted(set(ODD)))}
@@ -199,4 +286,6 @@ def main():
 
 
 if __name__ == "__main__":
+    if "--selftest" in sys.argv:
+        sys.exit(selftest())
     main()

@@ -19395,3 +19395,31 @@ Date: 2026-10-01, local.
 **CRUX UNCHANGED.** X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet (lead 0), and the keyed alphabet remains unreconstructed. All three re-runs are negative; what they remove is two false-negative mechanisms (the lattice reshape suppression, the never-executed XOR branch) and one ambiguity hazard (duplicate row numbers). Nothing here narrows the search space of the crux itself.
 
 Date: 2026-10-01, local.
+
+## R-DBBIBGEO-FIX-2026-10-01: THE TRUNCATION IS NOW A HARD ERROR IN `matrix_solver.py` ITSELF - THE ONLY TWO GEOMETRIES THAT FIT 91 RUN IN THE AUDITED TOOL, THE HISTORICAL 33 READINGS SURVIVE AS AN EXPLICITLY-LABELLED PREFIX CONTROL, AND THE TOOL CARRIES A SELF-TEST THAT CERTIFIES THE GUARD
+
+- Follows R-DBBIBGEO-2026-10-01, which diagnosed the live bug but deliberately repaired it in a side tool (`dbbib91_geofix.py`) rather than editing the audited one. This row closes that gap: the audited tool itself no longer contains the defect. Same house style as before - stale facts annotated IN PLACE rather than rewritten - but the code path is now guarded so the annotation cannot rot.
+
+**THE FIX, THREE PARTS.**
+1. `solve_all` gained `allow_truncate=False`. The silent `reshape(vals[:rows * cols], ...)` is now preceded by a check: if `len(vals) != rows * cols` and the caller has not opted in, it **raises `ValueError`** naming the token count, the requested geometry, and the fact that truncating would test a third object. Previously a mismatched geometry was indistinguishable from a valid one.
+2. The two `DBBIB_*_3x23` calls (old lines 178-179) are retained but renamed `DBBIB_r0_3x23_PREFIXCONTROL` / `DBBIB_r1_3x23_PREFIXCONTROL` and given `allow_truncate=True`, with an IN-PLACE `[SUPERSEDED 2026-10-01]` bracket explaining that they test `dbbib_91[:69]`. History stays reproducible; the name now says what it is.
+3. The geometries that actually fit 91 are now run in the audited tool: `7x13` and `13x7`, over all three value maps (`pos`, `one`, `canon`/Bifid `DBIFHCEG`) x mods `[29, 13, 26, 23]`.
+
+**13x7 IS STRUCTURALLY VACUOUS, AND NOW PROVEN IN THE TOOL.** With A 13x7, `AA = A A^T` is 13x13 with rank <= 7, hence singular over every field `gauss_mod` runs, and `gauss_mod` correctly returns `None` at the missing pivot. Measured: rank(A 13x7) = 7, rank(A A^T 13x13) = 7. Result: **0 readings for 13x7 on all three maps** - it is a no-op, not a negative. The informative geometry is `7x13`, where `sq` is a genuine 7x7 minor block.
+
+**SELFTEST ADDED (`--selftest`, 11 checks, all PASS).** Certifies the arithmetic (`len == 91`; the only factorizations are 7x13/13x7; the stream equals the crop with the 22-token run `bfdhbeffcdbbfcccgbfbee` inserted at `[:45]`; `dbbib_91[:69] != crop`, i.e. the third object is real and distinct), then **proves the guard is live** by asserting a 3x23 request against 91 tokens raises, then checks each map yields 91 values and each 7x13/13x7 run completes.
+
+**WITNESS / POSITIVE CONTROL.** The 33 labelled prefix-control readings are byte-identical to upstream's 33 defective DBBIB readings, and the fixed tool's 87 new `7x13` readings are **byte-identical to `dbbib91_geofix.py`'s 87** (verified by diff after normalising the name prefix). So the in-place fix is provably equivalent to the side-tool repair, and the side tool is now redundant rather than load-bearing.
+
+**FULL TOOL RE-RUN.** 220 readings / 152 unique candidates = 87 (`7x13`) + 33 (prefix control) + 100 (FAED/EVEN/ODD/OBJ256/Z1/Z2, all unchanged). Arithmetic checks out exactly.
+- Witness: `oracle.py --selftest` PASS and `oracle_dualite.py --selftest` PASS immediately prior.
+- 372 oracle lines -> **372x NO MATCH, 0 genuine MATCH** against `1GSMG1JC9`.
+- 372 oracle lines -> **372x NO MATCH, 0 genuine MATCH** against `17ucy1K9`.
+
+**AUDIT RECLASSIFICATION.** `stream_field_audit.py` moves `matrix_solver.py` from `OK 62` to `DUAL 13`. This is the intended classification, not a regression: the audit defines DUAL as "deliberately reads both (naming them, so the intent is legible)", and the tool now reads the crop only inside a selftest assertion that compares it against `dbbib_91`. `STALE 18` is unchanged, `CRITICAL` remains 0, exit 0.
+
+**WHY THIS MATTERS.** R-DBBIBGEO removed the defect from a side tool while leaving it live in the audited one - meaning the next person to run `matrix_solver.py` would still have silently tested `dbbib_91[:69]`. That trap is now closed at the source, and the self-test fails loudly if anyone reintroduces a mismatched geometry.
+
+**CRUX UNCHANGED.** X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet (lead 0). This row closes a false-negative mechanism in the matrix-solver family; it does not narrow the crux.
+
+Date: 2026-10-01, local.
