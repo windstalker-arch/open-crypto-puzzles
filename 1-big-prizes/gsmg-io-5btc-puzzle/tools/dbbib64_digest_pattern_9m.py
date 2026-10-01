@@ -64,6 +64,21 @@ def map_space(full):
                 assert len(set(v)) == 9
                 yield tuple(v)
 
+def perms_array(full, chunk=20000):
+    """(n, 9) int64 array of value vectors, built in chunks.
+
+    Materializing all 362,880 permutations as Python tuples costs hundreds of
+    MB; filling a preallocated array in chunks keeps peak memory at one chunk.
+    """
+    npers = 362880 if full else 60480
+    out = np.empty((npers, 9), dtype=np.int64)
+    i = 0
+    for vec in map_space(full):
+        out[i] = vec
+        i += 1
+    assert i == npers, f"built {i}, expected {npers}"
+    return out
+
 def run(full):
     _, _, TARGET_PAT, _ = target()
     print(f"target pattern: {TARGET_PAT}\n")
@@ -79,33 +94,37 @@ def run(full):
 
     npers = 362880 if full else 60480
     print(f"scope: {'FULL 9!' if full else 'prime-valued b,g (12 x 7!)'}  maps={npers}")
-    print(f"grids={len(grids)}\n")
+    print(f"grids={len(grids)}  chunk=20000\n")
 
+    vecs = perms_array(full)
     t0 = time.time()
     n, hits = 0, []
-    vecs = list(map_space(full))
+    CH = 20000
     for gname, g in grids:
         R = countmat(g)
         C = countmat([[g[r][c] for r in range(len(g))] for c in range(len(g[0]))])
         for sname, M in (("R", R), ("C", C), ("RC", np.vstack([R, C])), ("CR", np.vstack([C, R]))):
-            mv = np.asarray(vecs, dtype=np.int64)
-            sums2d = mv @ M.T                      # (maps, rows)
-            rows = sums2d.tolist()
-            for jname in ("j1", "j26", "j36", "jm9"):
-                for i, row in enumerate(rows):
-                    if jname == "j1":
-                        body = "".join(map(str, row))
-                    elif jname == "j26":
-                        body = "".join([chr(65 + (v - 1) % 26) for v in row])
-                    elif jname == "j36":
-                        body = "".join([A36[v % 36] for v in row])
-                    else:
-                        body = "".join([chr(48 + (v - 1) % 9) for v in row])
-                    for pfx in ("", "matrixsumlist"):
-                        n += 1
-                        if digest_pattern(pfx + body) == TARGET_PAT:
-                            hits.append((gname, sname, jname, vecs[i], pfx, body))
-                            print(f"MATCH {gname}/{sname}/{jname}/pfx={pfx!r} map={vecs[i]}\n  {pfx+body!r}")
+            for lo in range(0, npers, CH):
+                hi = min(lo + CH, npers)
+                sums2d = vecs[lo:hi] @ M.T            # (chunk, rows)
+                rows = sums2d.tolist()
+                for jname in ("j1", "j26", "j36", "jm9"):
+                    for k, row in enumerate(rows):
+                        if jname == "j1":
+                            body = "".join(map(str, row))
+                        elif jname == "j26":
+                            body = "".join([chr(65 + (v - 1) % 26) for v in row])
+                        elif jname == "j36":
+                            body = "".join([A36[v % 36] for v in row])
+                        else:
+                            body = "".join([chr(48 + (v - 1) % 9) for v in row])
+                        for pfx in ("", "matrixsumlist"):
+                            n += 1
+                            if digest_pattern(pfx + body) == TARGET_PAT:
+                                hits.append((gname, sname, jname, vecs[lo + k].tolist(), pfx, body))
+                                print(f"MATCH {gname}/{sname}/{jname}/pfx={pfx!r} "
+                                      f"map={vecs[lo+k].tolist()}\n  {pfx+body!r}", flush=True)
+                del rows, sums2d
             print(f"  {gname}/{sname}: N={n}  t={time.time()-t0:.0f}s", flush=True)
 
     dt = time.time() - t0
