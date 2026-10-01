@@ -19352,3 +19352,46 @@ Date: 2026-10-01, local.
 **CRUX UNCHANGED.** X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet (lead 0), and the keyed alphabet remains unreconstructed. This row removes one false-negative mechanism from that path; it does not advance the crux.
 
 Date: 2026-10-01, local.
+
+## R-VOIDRECHECK-2026-10-01: THE THREE `R-VOIDROWS` RE-RUNS (65, 146, 147) ALL REPRODUCE THEIR NEGATIVES ON THE AUTHORITATIVE 91-TOKEN STREAM - AND THE RE-RUN EXPOSES A SECOND SILENT STALE-CROP SUPPRESSION IN `lattice_probe.py`, PLUS A BRANCH OF ROW 147 THAT HAS NEVER ONCE EXECUTED
+- Scope: repair the three outstanding `R-VOIDROWS` entries. All three are re-run below against `dbbib_91` (not the superseded 69-token crop), with the two defects the re-runs uncovered recorded rather than quietly patched.
+
+**ROW 65 (§65, "Cosmic Duality base64-INDEX numerical key sweep") - RE-RUN, NEGATIVE CONFIRMED ON BOTH FUNDED GATES.**
+- Witness: `oracle.py --selftest` PASS and `oracle_dualite.py --selftest` PASS immediately prior (both re-certified, rc=0).
+- `tools/cosmicd_base64idx_sweep.py:31` loads `DATA["dbbib_91"]`, so re-running the tool IS the re-run. Its module docstring still says "dbbib 69" - stale prose only.
+- 164 distinct candidates regenerated. Composition: **47 dbbib-side candidates now exactly 91 chars** (historically 69 - this is the only changed content), 47 faed-side at 570, 70 stream-independent (phase-2 table-row forms, half/better-half key material, base64-index transpositions).
+- `oracle.py --stdin` over all 164 -> **164x NO MATCH, 0 genuine MATCH** against `1GSMG1JC9`.
+- `oracle_dualite.py --stdin` over all 164 -> **164x NO MATCH, 0 genuine MATCH** against `17ucy1K9`.
+- Verdict: §65's conclusion survives. The Cosmic Duality value applied as a numeric/base64-index interpreter key is negative against both funded gates on the authoritative stream. No dualite-gate extension is needed: the same 164 were already dualite-tested in §66.
+
+**ROW 146 (`lattice_probe.py`) - RE-RUN, CLAIM CONFIRMED, BUT ONLY AFTER FIXING A SILENT SUPPRESSION.**
+- `tools/lattice_probe.py:33` loads `DATA["dbbib_91"]`, but its section-A reshape fingerprint is gated by `lattice_probe.py:133`:
+  `if len(st) == 69 or len(st) == 570:`
+  `69` is the superseded crop length. On the authoritative stream `len(st)` is neither 69 nor 570, the gate is FALSE, and **the entire rank / gcd / row-col-sum fingerprint never runs for dbbib**.
+- This is the same defect class as `matrix_solver.py:146` (`R-DBBIBGEO`), and it is equally SILENT: section A prints a healthy-looking `dbbib/v0: n=91` plus valid GF(k) recurrence lines, so a token-count sanity check passes. Only the *absence* of `[dbbib/...]` reshape lines reveals it.
+- Consequence for this row: row 146's "every reshape full-rank with gcd 1" was measured on the crop's ONLY factor pair, **3x23**. The **7x13** geometry - the exact geometry that exposed the matrix-solver truncation - was never probed by this tool at all. Row 146's dbbib evidence was 1 reshape; on `dbbib_91` it was 0.
+- Repair + re-run, new tool `tools/lattice_probe_91.py` (positive control re-derives the crop's 3x23 readings first, reproducing the historical rowsums `(83,93,85)` / `(106,116,108)` / `(72,104,93)` exactly, proving the repair preserves history):
+  - **6 reshapes** = {7x13, 13x7} x {v0, v1, canon}. Both orientations are measured because `factors()` only returns `d <= sqrt(n)`; the transpose was never covered for any stream.
+  - All 6 **full-rank** with **gcd 1**. `s_min/s_max` = 0.062-0.096 across all six - nowhere near the 1e-2 near-low-rank threshold, so no rank-deficiency signal.
+  - Full row/col sums printed for every reshape; **no rowsums/colsums/rowsums+colsums equal RS or CS**, and no collision with the white-rabbit `0x41D464` one-set `{2,5,6,10,12,14,15,16,22}`.
+  - Recurrence side re-confirmed on `dbbib_91`: GF(2), GF(3), GF(13) linear complexity all **46**, against `n/2 = 45.5` - the random-stream fingerprint, so no LFSR. No rotation period `< n/2`.
+- Verdict: row 146's negative is CONFIRMED on the authoritative stream, and its previously-absent 7x13 coverage is now supplied. The structural "no low-rank signature in dbbib" claim is sound.
+
+**ROW 147 (`xor_pyramid_research.py`) - RE-RUN, NEGATIVE CONFIRMED; AND ONE OF ITS THREE BRANCHES HAS NEVER RUN.**
+- `tools/xor_pyramid_research.py:38` loads `dbbib_91`, so the re-run is genuine. Headers confirm `dbbib (91)` on all three encodings.
+- **1710 reduction sets** (vs the 1632 recorded in the row) - the count moves because the 35-tiling goes from 1 complete block on 69 tokens to 2 on 91. The delta is itself proof the historical number was measured on the crop.
+- **0 anchor HITs** across all 1710: nothing equals RS or CS (nor any ROW+COL concatenation), `apex` never exactly 35, no `K==76`, no apex in {17,18} above background rate, no white-rabbit key-bit collision.
+- **printable-ASCII stretch flags: EMPTY** (the tool prints the header and no entries).
+- **NEW DEFECT, MORE SEVERE THAN THE STALE CONSTANT.** `xor_pyramid_research.py:205` gates an "exact slices matching layout totals" branch on `sl = 69`. The stale constant is a no-op on its own (91 % 69 != 0), so nothing changes if corrected. But the branch is unreachable for **every** stream: the tool's layout totals are 35, 17, 18, 28, and none of them divides 69, 91, **or** 570 (remainders 34/21/10, 1/6/9, 15/1/12, 13/7/10 respectively). The branch header prints and then produces **zero** analysis lines - verified, 1 line between the two headers.
+- So row 147's coverage was 2 of 3 intended branches; the "exact slices" branch has contributed exactly 0 reduction sets, ever. Correcting `sl` to 91 would give false assurance that the branch runs. Making it live requires NEW layouts whose totals divide the stream (e.g. total 7 or 13, or a flat 91) - that is new research, not a repair, and is deliberately NOT claimed here.
+- The "17/18 alternating blocks" branch consumes 87 of 91 dbbib tokens, dropping the trailing partial block; this is pre-existing and unchanged by the re-run.
+
+**NAVIGABILITY DEFECT IN THE LEDGER ITSELF.**
+- Row numbers in this file are DUPLICATED across two numbering series. `## 65` exists twice: at line 1622 in the `§`-series (Cosmic Duality base64-INDEX sweep, `tools/cosmicd_base64idx_sweep.py` - **this is the row `R-VOIDROWS` cites**) and at line 2027 in the `.`-series (matrix-sumlist 9-turns-to-0 + yin-yang, which uses scratch generators under `usr/tmp/opencode/gsmg/`). Rows 1-4, 69-79, 120, 123-128 and 190 are likewise duplicated.
+- Consequence: `R-VOIDROWS`'s "row 65" and a naive "find row 65" resolve to different experiments. This row resolved by content, not number. Recommend future rows be cited by `line number + tool path` rather than by row number alone.
+
+**ARTIFACTS.** `tools/lattice_probe_91.py` (new). No data file changed; no audited tool was edited in place - both defects are recorded for repair rather than silently patched, matching the `dbbib91_geofix.py` precedent. All readings are regenerable from the tools; scratch copies under `usr/tmp/opencode/` were not kept.
+
+**CRUX UNCHANGED.** X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet (lead 0), and the keyed alphabet remains unreconstructed. All three re-runs are negative; what they remove is two false-negative mechanisms (the lattice reshape suppression, the never-executed XOR branch) and one ambiguity hazard (duplicate row numbers). Nothing here narrows the search space of the crux itself.
+
+Date: 2026-10-01, local.
