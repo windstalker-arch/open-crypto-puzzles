@@ -19528,4 +19528,33 @@ Date: 2026-10-01, local.
 
 **STANDING RECOMMENDATION UNCHANGED.** Per AGENTS.md §3 the next move should still shrink N rather than widen it further: with the map space exhausted, the productive next step is a *specific* proposed matrix-sum-list serialization to test, not another axis of the same sweep. Both funded gates remain open. No oracle call; no escrow touched.
 
+*(The "both funded gates" phrasing in the line above is RETRACTED by `R-DUALITEPROV-2026-10-01` immediately below: there is only one funded gate. The sweep result itself is unaffected.)*
+
+Date: 2026-10-01, local.
+
+## R-DUALITEPROV-2026-10-01: THE "SECOND FUNDED GATE" `17ucy1K9Z...` IS THE AUTHOR'S OWN HALVING-WITHDRAWAL ADDRESS - THE TWO-GATE PREMISE IS RETRACTED LEDGER-WIDE, AND THE PUZZLE IS *NOT* SOLVED
+
+**FINDING 1 - DIRECT ON-CHAIN PROVENANCE, AND IT IS DECISIVE.** `17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa` has 45 transactions and has **never spent a single satoshi** (`spent_txo_sum = 0`; balance 375,055,856 sat). Its entire principal arrived from the prize address itself, in two legs, on the two Bitcoin halving dates:
+
+| date | block | from | amount | txid |
+|---|---|---|---|---|
+| 2020-05-11 | 630001 | `1GSMG1JC9...` (prize) | **250,000,000 sat (2.5 BTC)** | `2aa9a4a90be819d5122d70c993280785a0508f163521e7b38cebb4db0b071b13` |
+| 2024-04-24 | 840725 | `1GSMG1JC9...` (prize) | **125,000,000 sat (1.25 BTC)** | `88cdb3cdca12b471551b1b26188508a14ca5fd8a415223ffb7c190381c9b9df3` |
+
+2.5 + 1.25 = **exactly 3.75 BTC**, matching the 375,000,000 sat principal byte-for-byte (the remaining 55,856 sat is unrelated third-party dust). This is the creator withdrawing the halved-off prize, exactly as advertised. It is **not** a second prize target, and it is not "Dualite" in any prize sense - the name refers only to the *Cosmic Duality blob*, which is a separate, already-swept object.
+
+**FINDING 2 - THIS OVERTURNS A COMMITTED POSITION, AND THE OVERTURNING EVIDENCE IS NOT CIRCULAR.** Commit `08858de` (R-B91PRIME) explicitly challenged the audit's claim that this address is not a prize target, holding both "live" on three grounds: the round 2.5-then-1.25 amounts, the halving-day block boundaries, and the single paired tx, read as "a deliberate partition". Those three observations all **reproduce exactly here** - but they are evidence *for* the audit, not against it. A deliberate partition of a prize between a prize address and the creator's withdrawal address is precisely what a halving looks like; it does not imply two prize targets. The audit's reasoning was dismissed as "circular" because our oracle was built only around G1 - but the provenance in FINDING 1 is **independent of any oracle** and settles the question outright. On the substance `08858de` is **wrong**; this row supersedes it.
+
+**FINDING 3 - THE TWO-GATE PREMISE IS RETRACTED LEDGER-WIDE.** Scope of the error: `17ucy1K9` appears **181** times and the phrase "both funded gates" **190** times in this ledger, across **232** references in the puzzle directory's `.md`/`.py` files - including the `R-DUALITEPROV`-adjacent rows 459, 1105, 1506, 1632-1642 (§66/§67) and `README.md`, `leads.md`, `STATE_BRIEF.md`, `ANCHORED_SUMMARY.md`, `lead0-inspection-checklist.md`. Every one of those inherits the wrong premise and is superseded **as to gate status** by this row. The mechanical phrase sweep is deliberately NOT done inline here: 190 scattered edits across committed rows is exactly the kind of change that should be a separate, separately-validated commit rather than buried in a finding.
+
+**WHAT IS *NOT* RETRACTED.** The negatives themselves stand. `tools/oracle_dualite.py` and the §66/§67 runs (387 candidates, then the matrix-sum reductions) remain *true* - X does not decrypt to the private key of that address. What changes is that they were testing a target that was never a prize, so they are **vacuous** rather than wrong, and the "gap closed: second funded gate is now oracle-testable" claim in §66 is withdrawn. `oracle.py` against `1GSMG1JC9...` is unaffected. **There is one funded gate, and it is open.**
+
+**FINDING 4 - INDEPENDENTLY, THE PUZZLE IS *NOT* SOLVED (site, prize and claim-sweep all checked 2026-10-01).** Verification of the "gsmg.io is now solved / open to AI agents" report:
+1. The SalPhaseIon page is **byte-identical** to our certified copy - 4,536 bytes, SHA-256 `a83d3de7810f26b19b4965339b76d403e44f6b6877e5d7de2555480ca1779d77`. No solve banner, no winner notice, no new markup.
+2. `/puzzle` serves a PNG whose SHA-256 `38125bbdf1ea58b9b30b075bc6bf71e4089d04bba37098317e47097e2f2a1830` is **byte-identical** to `clues/puzzle.png` and to the community-fork copy. The site has come back up (note `logo_GSMG_restored.png` and a 9-byte `Hello :-)` 404 handler on the dead `/help-center` and `/register` links), but the puzzle content is unchanged.
+3. **The prize is unclaimed**: `1GSMG1JC9...` still holds ~1.256 BTC, and its most recent transaction is **2026-09-25** - the site wind-down date already logged in `R-KAIBUZZ0`/`late-325`, with nothing since. Had the puzzle been solved and swept, this is where it would show.
+4. The circulating "SOLVED" posts are the **known-false set this ledger has already triaged**, not news: `kaibuzz0/Gsmg.io-solution` resolves to the well-known *public* WIF for Satoshi's genesis address `1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa` (`5Kb8kLf9zgWQnogidDA76MzPL6TsZZY36hWXMssSzNydYXYB9KF`) - a decoy, not a key - and puzzlehunt issues #69/#79/#80/#91/#97 are the same Phase-3 "Half and Better Half derived" claim from people who never produced the prize key. An independent third-party tracker records the puzzle as `unsolved`. Note the real tell in the 2026-02 activity: `1JG648yaB...` (Half) and `145ZQ9si...` (Better Half) are being **spent from**, because those two private keys are published in issue #79 - so dust sweeping of them is not evidence of a solve either.
+
+**DISPOSITION - ONE GATE, UNSOLVED, AND THE CRUX IS UNCHANGED.** Neither the site nor the prize nor the community record supports a solve. The substantive loss from this session is the loss of the second gate, which removes a target rather than adding a lead; nothing in Lead 0's value-map or matrix-sum work depends on it. `R-DBBIB64`/`ADDENDUM 1` stand, with only their "both funded gates" phrasing corrected above. Standing recommendation unchanged per AGENTS.md §3: shrink N, don't widen an axis. No oracle call; no escrow touched.
+
 Date: 2026-10-01, local.
