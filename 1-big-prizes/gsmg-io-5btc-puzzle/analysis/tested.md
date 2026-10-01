@@ -19455,3 +19455,41 @@ Measured rates here were in fact better still: ~131 perms/s on the small gate an
 **CRUX UNCHANGED, BUT NARROWED.** X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet. The alphabet is now certified NOT to be a direct relabelling of the raw streams, on the correct object, on both gates - which removes the simplest hypothesis for lead 0 and leaves the value-fed-decode and window/keystream readings as the survivors. Both funded gates remain open.
 
 Date: 2026-10-01, local.
+
+## R-PAGEINT-2026-10-01: THE SalPhaseIon STREAM IS STILL THE SAME 1053 TOKENS ON A NEWER WAYBACK CAPTURE (2026-09-26) - THE PAGE SURFACE IS EXHAUSTED AS A NEW-INFORMATION CLASS
+
+- This row answers `STATE_BRIEF.md` §4's standing requirement that a productive next step needs "a **new information class** -- a source surface not in `gsmg-web-archive` or either `gsmg-private` tree". The single largest untested candidate on that list was the authoritative page itself. It is now tested and is negative. No oracle was run: this is a provenance/integrity check, and N = 0 candidate-X lines.
+
+**FINDING 0 - A FALSE "THE STREAM IS MISSING FROM THE PAGE" ALARM, CAUSED BY WHITESPACE. RECORDED SO NOBODY RE-DERIVES IT.** The page's token stream lives in a `<textarea>` whose tokens are **space-separated** (`d b b i b f ...`), not concatenated. A naive `'dbbib_91 in html` substring test therefore returns **False on a page that contains the stream perfectly**. My first pass did exactly this, briefly looked like a provenance contradiction, and was wrong. The correct test tokenizes first: strip everything outside `[a-z]`, lowercase, then substring-match. Anyone auditing this page MUST tokenize before concluding absence - a raw `in html` test on a space-separated stream is guaranteed to lie. This is the same failure shape as the `t = N/D` units error in `R-145RUN`: a real measurement whose *unit* silently invalidated the conclusion drawn from it.
+
+**FINDING 1 - FULL TOKEN RECONCILIATION OF THE LIVE PAGE. ALL FOUR STORED STREAMS PRESENT; THE CROP IS ABSENT.** On the correct (tokenized) reading the live textarea is exactly **1053 tokens**, and every stored field is located exactly where `lead0-inspection-checklist.md` says it is:
+
+| field | stored len | offset | present |
+|---|---|---|---|
+| `dbbib_91` | 91 | 0 | yes |
+| binary run 1 | 104 | 91 | yes -> `matrixsumlist` |
+| `faed_570` | 571 (incl. trailing `z`) | 195 | yes |
+| `z_segment_1` | 63 | 766 | yes |
+| `z_segment_2` | 29 | 830 | yes |
+| tail | 194 | 859 | yes (already held, byte-exact) |
+
+Token-stream sha256 = `8f856486180372586fc8272cd4572c4ffcdb8fa84d650239bcab4de6d82e0a6a` for **all four sources tested** (stored `data/live_salphaseion.html`, live fetch, Wayback 2026-04-05, Wayback 2026-09-26).
+- The superseded 69-token `dbbib` crop is **NOT** on the live page, confirming it was an artifact of our own OCR and never authorial. The supersession is correct.
+- The two a/b runs decode to `matrixsumlist` (104 tokens @91) and `enter` (40 tokens), both already certified - no new text.
+
+**FINDING 2 - A WAYBACK CAPTURE NEWER THAN THE LEDGER'S KNOWN-NEWEST EXISTS, AND IT IS IDENTICAL.** A CDX query over `gsmg.io*` for `from=20260405` returned a capture at **20260926175850**, ~5.7 months newer than the 2026-04-05 capture the ledger had been treating as the newest evidence. Fetched and diffed:
+
+| source | bytes | page sha256 | token sha256 |
+|---|---|---|---|
+| stored `data/live_salphaseion.html` | 4536 | `a83d3de7810f26b19b4965339b76d403e44f6b6877e5d7de2555480ca1779d77` | `8f856486...` |
+| live fetch, HTTP 200 | 4536 | `a83d3de7...` (matches) | `8f856486...` |
+| Wayback 2026-09-26 | 4536 | `a83d3de7...` (matches) | `8f856486...` |
+| Wayback 2026-04-05 | 3029 | differs (Wayback injection) | `8f856486...` |
+
+**The live page's expected hash in `leads.md` reproduces exactly, and the newest available capture is token-identical to it.** The page has not changed since at least 2026-04-05. A second fetch artifact is also recorded: the 2026-04-05 capture first came back as **2865 bytes of compressed binary** which, grepped for `<textarea>` and for `dbbib_91`, likewise "proved" the streams absent. Refetching with `curl --compressed` returned the full 1053 identical tokens. **A negative provenance result from this page is worthless without checking for a compressed-response artifact.**
+
+**FINDING 3 - THE HUMAN-INSPECTION SURFACE IS CLOSED AND WAS NEVER A REQUEST FOR ONE.** `analysis/lead0-inspection-checklist.md` carries a `STATUS 2026-09-29` banner closing **every** item by pixel measurement rather than eye inspection: item 4 by `R-STRIPGLYPH` (plain `C` + 1px rule + padlock icon with `LO`; the 8 strip PNGs are two-tone and legible as bitmaps), the 14x14 `FEFEFE` cell by `R-GRID14` (it is the only red cell, with a white nest glyph drawn on it), item 5 by `R-LEAD0-STAGED` (page text byte-exact on disk, no screenshot needed), and items 1-3 superseded by `R-BOARD28B`/`R-BOARD28B-ADDENDUM` (there is no missing 28-char alphabet, and the colour/subpixel channel is certified closed at 1-3px against a 9.98px pitch). The file states it "is NOT a request for a human, and no item in it is outstanding". **This session reconfirmed the live page cannot contradict the stored copy, so the checklist's textual claims now rest on an additional byte-exactness witness.**
+
+**CONCLUSION - THE PAGE SURFACE IS EXHAUSTED. THIS IS A CERTIFIED NEGATIVE, NOT A LEAD.** The authoritative stream is unchanged, fully reconciled, and hash-pinned against three independent captures including one newer than any we had used. There is no unread token, no changed byte, no uncaptured region, and no human-inspection item left. Lead 0 therefore cannot be advanced by this surface at all, and per `STATE_BRIEF.md` §4 the only surviving productive directions remain (a) a genuinely new *semantic* hypothesis about the interpreter application, stated with its N, measured rate D, and t = N/D, or (b) a source surface genuinely outside `gsmg-web-archive` and both `gsmg-private` trees. Inventing a sweep premise and re-deriving one of the closed families would violate `AGENTS.md` §3 and is not done here. **Both funded gates remain open.** No oracle submission was made, so no escrow was touched.
+
+Date: 2026-10-01, local.
