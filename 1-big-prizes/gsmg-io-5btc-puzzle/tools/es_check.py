@@ -34,6 +34,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import sys
+from pathlib import Path
 
 B2_BLOB = "data/B2_79B.bin"
 B2_SHA256 = "b40fce72ef5638e4f79b3233e653f8a5dbdb0d4ae2009d2d3da2c98b70f4d004"
@@ -42,7 +43,12 @@ ES_HEX = "740a25de4b8e946d0a5ae2667a23a2"
 
 
 def load_es() -> bytes:
-    with open(B2_BLOB, "rb") as fh:
+    path = Path(B2_BLOB)
+    if not path.is_file():
+        path = Path(__file__).resolve().parent.parent / B2_BLOB
+    if not path.is_file():
+        raise SystemExit(f"FATAL: cannot locate {B2_BLOB} (run from the puzzle folder)")
+    with open(path, "rb") as fh:
         blob = fh.read()
     got = hashlib.sha256(blob).hexdigest()
     if got != B2_SHA256:
