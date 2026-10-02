@@ -111,10 +111,14 @@ def candidates():
     for oname, text in objects:
         base_txt = text
         m = len(base_txt)
-        pp1 = primes_upto(m)
-        pp0 = {i for i in range(m) if i in primes_upto(m + 1)}
-        for label, pset, base in (("1b", pp1, 1), ("0b", pp0, 0)):
-            comp = set(range(m)) - pset
+        for label, base in (("1b", 1), ("0b", 0)):
+            # Ranks are built in the SAME space the membership test uses. Building the
+            # complement over range(m) instead put the last character out of reach on
+            # 1-basing - rank m was never in the set - so the drop-only families
+            # silently dropped the final character. Caught by W-B, not by inspection.
+            ranks = {i + base for i in range(m)}
+            pset = {r for r in ranks if _is_prime(r)}
+            comp = ranks - pset
             # primes, keep-only and drop-only
             _add(out, seen, f"{oname}/primes-keep/{label}", _sel_rank(base_txt, pset, base))
             _add(out, seen, f"{oname}/primes-drop/{label}", _sel_rank(base_txt, comp, base))
@@ -128,17 +132,17 @@ def candidates():
                 _add(out, seen, f"{oname}/zeroed-prime-{fname}/{label}", kept2)
             # yb position rule, per channel and both, keep and drop
             for cname, num in (("yellow", YELLOW), ("blue", BLUE)):
-                ranks = {i for i in range(m) if (i + base) % num == 0 and (i + base) != 0}
+                yranks = {r for r in ranks if r % num == 0 and r != 0}
                 _add(out, seen, f"{oname}/yb-{cname}-drop/{label}",
-                     _sel_rank(base_txt, set(range(m)) - ranks, base))
+                     _sel_rank(base_txt, ranks - yranks, base))
                 for fill, fname in (("0", "zero"), ("\x00", "nul")):
                     _add(out, seen, f"{oname}/yb-{cname}-{fname}/{label}",
-                         "".join(fill if (i + base) in ranks else ch
+                         "".join(fill if (i + base) in yranks else ch
                                  for i, ch in enumerate(base_txt)))
-            both = {i for i in range(m)
-                    if ((i + base) % YELLOW == 0 or (i + base) % BLUE == 0) and (i + base) != 0}
+            bothr = {r for r in ranks
+                     if (r % YELLOW == 0 or r % BLUE == 0) and r != 0}
             _add(out, seen, f"{oname}/yb-both-drop/{label}",
-                 _sel_rank(base_txt, set(range(m)) - both, base))
+                 _sel_rank(base_txt, ranks - bothr, base))
 
     # selfnum - "Yellow has a number and so does Blue" read as a statement about the
     # POEM'S OWN ordinals. In the poem, Yellow is the 7th word and Blue is the 14th.
@@ -200,13 +204,143 @@ def structure_note() -> None:
     print()
 
 
+def _is_prime(k: int) -> bool:
+    return k > 1 and all(k % d for d in range(2, int(k ** 0.5) + 1))
+
+
+def _is_prime_sieve(k: int) -> bool:
+    """Primality by a SIEVE, deliberately not sharing code with `_is_prime`.
+
+    `_expected_from_poem()` has to be able to disagree with the generator. While it
+    called `_is_prime` as well, a wrong `_is_prime` moved both sides together and W-B
+    was blind to it - shown by fault injection, where stubbing `_is_prime` to a
+    constant did not trip the witness. Two implementations that must not agree by
+    construction.
+    """
+    if k < 2:
+        return False
+    sieve = [True] * (k + 1)
+    sieve[0] = sieve[1] = False
+    for p in range(2, int(k ** 0.5) + 1):
+        if sieve[p]:
+            for m in range(p * p, k + 1, p):
+                sieve[m] = False
+    return sieve[k]
+
+
+def _expected_from_poem() -> dict:
+    """Recompute this family's load-bearing facts straight from POEM, WITHOUT calling
+    the generator's helpers.
+
+    This exists because the first version of the witness in this file validated only
+    `third_door`, which layer 1 already covers, and therefore passed rc=0 with
+    `candidates()` returning an EMPTY list - proven by fault injection, both by
+    stubbing `candidates()` and by stubbing `_add`. A witness that cannot disagree with
+    the thing it is witnessing is decorative, so these values are derived a second,
+    independent way here and the witness asserts the generator agrees with them.
+    """
+    words = POEM.replace(".", " ").split()
+    wlow = [w.lower() for w in words]
+    return {
+        "yellow_word_rank": wlow.index("yellow") + 1,
+        "blue_word_rank": wlow.index("blue") + 1,
+        "primes_keep_1b": "".join(c for i, c in enumerate(POEM) if _is_prime_sieve(i + 1)),
+        "zeroed_nonprime_1b": "".join(c if _is_prime_sieve(i + 1) else "0"
+                                      for i, c in enumerate(POEM)),
+        "primes_drop_1b": "".join(c for i, c in enumerate(POEM) if not _is_prime_sieve(i + 1)),
+        "n_chars": len(POEM),
+        "n_words": len(words),
+    }
+
+
+def _witness_own_path() -> int:
+    """Witnesses that can FAIL when this tool's own generator is broken.
+
+    W-A INJECTION. A certified preimage is pushed through THIS file's `_add` and must
+    survive dedup and still derive its certified address, so the add/dedup path is
+    exercised rather than assumed.
+    W-B INDEPENDENT RECOMPUTATION. `_expected_from_poem()` derives the primes-keep,
+    primes-drop and zeroed-nonprime strings a second way, directly from the POEM
+    constant. The generator's output must CONTAIN all three, byte for byte. This is the
+    witness that a stubbed-out or inverted selector cannot pass.
+    W-C THE RULES MUST DO WORK. The rule outputs must differ from the object and from
+    each other; a selector that returned the input unchanged, or every family the same
+    string, would otherwise pass B and look like a sweep.
+    W-D STRUCTURE. The reachability claim `structure_note()` prints is asserted against
+    the poem, so the "blue=15 cannot fire on word ranks" finding cannot rot into a
+    comment that is no longer true of the text.
+    """
+    bad = 0
+    cands = candidates()
+    have = {v for _t, v in cands}
+    exp = _expected_from_poem()
+
+    # W-B0 the two primality implementations must agree over the whole rank range.
+    # Neither is assumed correct; a disagreement is reported rather than resolved by
+    # picking a winner, because "the witness and the tool agree" is not evidence.
+    disagree = [k for k in range(exp["n_chars"] + 1)
+                if _is_prime(k) != _is_prime_sieve(k)]
+    if disagree:
+        print(f"  [FAIL] W-B0 primality implementations disagree at {disagree}")
+        bad += 1
+
+    # W-A injection through this file's own add/dedup path.
+    probe = b"gsmg.io/theseedisplanted"
+    out, seen = [], set()
+    _add(out, seen, "witness/inject", probe)
+    _add(out, seen, "witness/inject-dupe", probe)      # must dedup away
+    if len(out) != 1:
+        print(f"  [FAIL] W-A dedup: 2 adds of one preimage yielded {len(out)} entries")
+        bad += 1
+    elif not any(a == "148XH2YBmLr4oAJXQcG84FpNYoBmqnVPHQ"
+                 for (_c, _k), a in TD.addresses_for(out[0][1]).items()):
+        print("  [FAIL] W-A injection: the certified address was not re-derived "
+              "through this file's _add path")
+        bad += 1
+
+    # W-B independent recomputation.
+    for key in ("primes_keep_1b", "primes_drop_1b", "zeroed_nonprime_1b"):
+        if exp[key].encode() not in have:
+            print(f"  [FAIL] W-B {key}: generator does not contain the independently "
+                  f"recomputed value {exp[key]!r}")
+            bad += 1
+    if not cands:
+        print("  [FAIL] W-B generator returned NO candidates - the search is empty")
+        bad += 1
+
+    # W-C the rules must actually change the object, and differently per family.
+    if exp["primes_keep_1b"].encode() == POEM.encode():
+        print("  [FAIL] W-C primes-keep returned the poem unchanged - selector inert")
+        bad += 1
+    for a, b in (("primes_keep_1b", "primes_drop_1b"),
+                 ("primes_keep_1b", "zeroed_nonprime_1b")):
+        if exp[a] == exp[b]:
+            print(f"  [FAIL] W-C {a} == {b} - families collapsed")
+            bad += 1
+
+    # W-D the structure claim, asserted rather than assumed.
+    if exp["n_words"] < BLUE:
+        print(f"  [PASS] W-D blue={BLUE} still cannot fire on word ranks "
+              f"(poem has {exp['n_words']} words)")
+    else:
+        print(f"  [WARN] W-D poem now has {exp['n_words']} words, so blue={BLUE} "
+              f"CAN fire on word ranks - structure_note() text is stale")
+
+    print(f"  [W-A..D] {len(cands)} candidates, {bad} failures, "
+          f"yellow={exp['yellow_word_rank']} blue={exp['blue_word_rank']} "
+          f"chars={exp['n_chars']} words={exp['n_words']}")
+    return bad
+
+
 def selftest() -> int:
-    """Two witness layers, and both must discriminate.
+    """Three witness layers, and every one of them must be able to fail.
 
     Layer 1 delegates to third_door's own 5 CSV witnesses. Layer 2 pushes the CSV
-    POSITIVE controls through THIS file's candidate path, and the audio negative
-    controls, which must STAY unmatched - a witness that could only agree would not
-    catch a candidate path that never sees a target.
+    POSITIVE controls through `TD.addresses_for` and the audio NEGATIVE controls, which
+    must STAY unmatched - a witness that could only agree would not catch a candidate
+    path that never sees a target. Layer 3 (`_witness_own_path`) is the one that makes
+    this file's selftest mean anything: the first two layers pass with an EMPTY
+    candidate generator, which is demonstrated by fault injection in the ledger row.
     """
     bad = 0
     bad += TD.selftest()
@@ -234,6 +368,7 @@ def selftest() -> int:
                     print(f"  [FAIL] audio negative control {tag} matched {addr}")
                     bad += 1
     print(f"negative controls stayed unmatched: {bad == 0}")
+    bad += _witness_own_path()
     print("SELFTEST PASS" if bad == 0 else f"SELFTEST FAIL: {bad}")
     return 0 if bad == 0 else 1
 
