@@ -353,6 +353,18 @@ def wordlist_run(path: str, shard: int, of: int, ckpt: str | None,
     t0 = time.time()
     last = t0
 
+    def owned_total(rd):
+        """Cumulative candidates this shard has derived, from the absolute line
+        index alone. The shard owns line idx iff (idx - 1) % of == shard, so the
+        count of owned lines in 1..rd is exact. Deriving it from the line index
+        rather than from a running counter is what makes it survive a resume: a
+        session-local counter starts at zero, so after any resume the reported
+        total silently drops to the post-resume work only and an eleven-hour
+        sweep's log claims to have covered almost nothing."""
+        if rd <= shard:
+            return 0
+        return (rd - 1 - shard) // of + 1
+
     def save(off, ln, rd):
         if not ckpt:
             return
@@ -360,7 +372,8 @@ def wordlist_run(path: str, shard: int, of: int, ckpt: str | None,
         with open(tmp, "w") as fh:
             json.dump({"path": path, "size": st.st_size,
                        "mtime": int(st.st_mtime), "offset": off,
-                       "lines": ln, "read": rd, "cands": derived,
+                       "lines": ln, "read": rd,
+                       "cands": owned_total(rd), "derived_run": derived,
                        "shard": shard, "of": of}, fh)
             fh.flush()
             os.fsync(fh.fileno())
@@ -373,6 +386,9 @@ def wordlist_run(path: str, shard: int, of: int, ckpt: str | None,
     # COMPLETED pass's accounting, the precise failure this mode exists to stop.
     off = start_off
     cands = 0
+    # Derivations per candidate line, so the cumulative derived figure is a
+    # product of two exact counts rather than a session-local tally.
+    per_cand = len(addresses_for(b"probe"))
     with open(path, "rb") as fh:
         if start_off:
             fh.seek(start_off)
@@ -409,16 +425,19 @@ def wordlist_run(path: str, shard: int, of: int, ckpt: str | None,
             if every and idx % every == 0:
                 now = time.time()
                 el = max(now - t0, 1e-9)
+                tot = owned_total(idx)
                 print(f"[shard {shard}/{of}] line {idx} offset {off} "
-                      f"cands {cands} {cands / el:.1f} cand/s "
-                      f"derived {derived} matches {found}", flush=True)
+                      f"total {tot} cands {cands} {cands / el:.1f} cand/s "
+                      f"derived {tot * per_cand} matches {found}", flush=True)
                 save(off, lines_done, idx)
                 last = now
         save(off, lines_done, idx)
 
     dt = max(time.time() - t0, 1e-9)
+    tot = owned_total(idx)
     print(f"DONE shard={shard}/{of} wordlist={os.path.basename(path)} "
-          f"last_line={lines_done} cands={cands} derived={derived} "
+          f"last_line={lines_done} total={tot} cands={cands} "
+          f"derived={tot * per_cand} "
           f"matches={found} {dt:.1f}s {cands / dt:.1f} cand/s "
           f"{derived / dt:.0f} deriv/s", flush=True)
     return 1 if found else 0
