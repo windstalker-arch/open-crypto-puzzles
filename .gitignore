@@ -64,3 +64,6 @@ sibling_index.json
 1-big-prizes/gsmg-io-5btc-puzzle/tools/bloom_dedup
 1-big-prizes/gsmg-io-5btc-puzzle/tools/experm_vic_deriv
 1-big-prizes/gsmg-io-5btc-puzzle/tools/experm_vic_trans
+
+# built binaries
+tools/kangaroo_pd

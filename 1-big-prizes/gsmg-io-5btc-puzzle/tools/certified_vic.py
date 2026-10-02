@@ -81,15 +81,72 @@ def decode(digits_str, ctol, e1, e2):
         out.append("?"); i += 1
     return "".join(out)
 
+_PHASE32_SRC = Path(ROOT, "data", "phase3.2-plaintext.b64")
+
+
+def phase32_digit_line():
+    """The 149-digit ciphertext, read from the CERTIFIED plaintext rather than a
+    copy pasted into this file.
+
+    It used to be a literal here, which meant the self-cert could not detect the
+    two drifting apart: if `data/phase3.2-plaintext.b64` were ever re-ingested
+    differently, this module would keep passing on its own stale copy while the
+    ledger claimed a certificate over the artifact. Same defect class as
+    `R-P32KEYVERIFY`, where four rows asserted against a hardcoded expectation.
+    """
+    import base64
+    b64 = _PHASE32_SRC.read_text()
+    blob = base64.b64decode("".join(
+        l for l in b64.splitlines() if not l.startswith("#")))
+    for line in blob.split(b"\r\n"):
+        if len(line) == 149 and line.isdigit():
+            return line.decode("ascii")
+    raise AssertionError("no 149-digit line in the certified phase-3.2 plaintext")
+
+
 def selfcert():
-    ct = ("151659431219724091691712137589518131415431314124281541913121812194"
-          "33121171617137149110916631213131281491109166131412199114371612126021664313711154112")
+    ct = phase32_digit_line()
     alpha = "FUBCDORA.LETHINGKYMVPS.JQZXW"
     ctol = build_grid(alpha, 1, 4)
     got = decode(ct, ctol, 1, 4)
     want = "INCASEYOUMANAGETOCRACKTHISTHEPRIVATEKEYSBELONGTOHALFANDBETTERHALFANDTHEYALSONEEDFUNDSTOLIVE"
     return got == want
 
+
+def drift_witness():
+    """Positive control for the fix above: prove the certifier now reads the file,
+    by pointing it at a plaintext whose digit line has been altered by one byte.
+    A certifier that cannot fail on drift is not a certifier. Uses a temp copy and
+    touches nothing on disk.
+    """
+    import base64
+    import shutil
+    import tempfile
+    real = Path(ROOT, "data", "phase3.2-plaintext.b64")
+    tmpdir = tempfile.mkdtemp()
+    try:
+        fake = Path(tmpdir) / "tampered.b64"
+        blob = base64.b64decode("".join(
+            l for l in real.read_text().splitlines() if not l.startswith("#")))
+        lines = blob.split(b"\r\n")
+        for i, l in enumerate(lines):
+            if len(l) == 149 and l.isdigit():
+                lines[i] = b"9" + l[1:]
+        fake.write_bytes(base64.b64encode(b"\r\n".join(lines)))
+        saved = globals()["_PHASE32_SRC"]
+        try:
+            globals()["_PHASE32_SRC"] = fake
+            return not selfcert()
+        finally:
+            globals()["_PHASE32_SRC"] = saved
+    finally:
+        shutil.rmtree(tmpdir, ignore_errors=True)
+
+
 if __name__ == "__main__":
     ok = selfcert()
     print("SELFCERT 3.2.2:", "PASS" if ok else "FAIL")
+    if ok:
+        w = drift_witness()
+        print("DRIFT WITNESS (tampered line must FAIL):", "PASS" if w else "FAIL")
+        raise SystemExit(0 if w else 1)

@@ -300,7 +300,29 @@ i.e. the puzzle's ANSWER. A FEN in a password is the post-move state. Pasting th
 string verbatim yields plausible-looking wrong answers, and both FENs are `Status.VALID`, so
 only the move count and check flag separate them.
 
-**Phase 3.2 (salt `eefc4c5befc1656a`, 2,448 B) is structurally blocked, not search-limited.**
+**Phase 3.2 is SOLVED (2026-10-01, `R-P32OPEN`).** ~~is structurally blocked, not search-limited.~~
+The passphrase is `jacquefrescogiveitjustonesecondheisenbergsuncertaintyprinciple` and it
+**does** open the envelope, byte-exactly. The blocker below was an artifact of a battery that
+could not have detected success: `tools/phase32_probe.py` never derived the IV, and its
+`padok` test is **IV-blind** (PKCS#7 validity depends on the key alone). Correct derivation:
+`EVP_BytesToKey(md=sha256)` with the password as the **hex-digest ASCII string**
+`250f3772...1ce4c`, **key = stream[0:32], IV = stream[32:48]**. Certifier
+`tools/p32_evp_verify.py` (selftest 4/4); plaintext promoted to `data/phase3.2-plaintext.b64`,
+2,422 B, sha256 `b82afeb8...`, byte-identical to the community fork. **The "2026
+re-encryption" inference is retracted - there is one era, not two.**
+
+**What is actually open now** is unchanged apart from this: Lead 0's 28-char alphabet, the
+`faed`/`dbbib` map-search application. **NOT** the 149-digit number line in the
+phase-3.2 prose: that is decoded and independently re-verified (`R-VIC149`,
+`tools/certified_vic.py`, 91-char message reproduced byte-exact). An earlier
+version of this sentence here said "150-digit" and left it open; the count is
+**149** and the item is closed.
+NOT the trailing `U2FsdGVkX1+0Wl49gnWTyiimluu7V3...` blob in that plaintext - I briefly wrote that
+as an unopened fifth envelope and it is wrong: it is byte-identical to the **already-solved** B2
+envelope (`salt b45a5e3d827593ca`, ct 80 B, `tools/rung2_b2.py`, password = derived
+`WIF(K_C1)`, plaintext `data/B2_79B.bin`; `ALL ANCHORS HOLD` re-verified).
+
+**Historical note (retracted, kept for provenance).** The reasoning that led here:
 The obvious derivation was already tried and is the *correct* one
 (`jacquefresco` + `giveitjustonesecond` + `heisenbergsuncertaintyprinciple` maps onto all
 three riddles) and it returned nothing, so the password is not recoverable from the visible
@@ -313,7 +335,11 @@ of a search. The bytes are now certified (`data/phase3.2-envelope-2026.b64`, blo
 `9d172dc0...`, ct sha256 `48a77592...`, 2,432 B = 152 blocks), with provenance proved by the
 fact that the same source's 1,792-char cosmic blob is **byte-identical** to ours
 (`b1895055...`) and its truncated 32-byte fork copy is an exact **prefix** of the ciphertext -
-one era only, no second version. Against that, the 2020 password under **13** key/IV
+one era only, no second version. **[SUPERSEDED 2026-10-01 by `R-P32OPEN` - the "13 key/IV
+derivations" listed here never include the IV that OpenSSL actually uses, and `padok` is
+IV-blind, so this battery was structurally incapable of detecting the correct derivation.
+The envelope is NOT a re-encryption and the password is NOT unrecovered. Text retained
+below as the record of the wrong turn.]** Against that, the 2020 password under **13** key/IV
 derivations (raw `sha256(pw)` at three IVs, `sha256(sha256(pw))`, the phase-3 key, and
 `EVP_BytesToKey` md5/sha1/sha256/sha512 with and without the salt) gives **0 valid pads** and
 printable 0.36-0.40. Since the 2020 copy opens under exactly that password, the envelope in
@@ -719,7 +745,8 @@ labelled dictionary (that band's text is corpus `#5717`).
 - Unchanged and not moved by anything above: both gates funded, no key recovered, Lead 0's keyed 28-char alphabet still the only
   live semantic crux, and (CORRECTED 2026-09-29, `R-BRIEFAUDIT`: this line was already stale when written - `R-P32BLOB` was SOLVED the previous day by `R-P32KEY`, key `amphtaclwmtbvfz`) the surviving mechanical direction is **none**. What changed is that **one whole family is now
   closed by measurement** (faed is not text) and the last "blocked because missing" object is **certified present and confirmed
-  re-encrypted**.
+  re-encrypted**. **[CORRECTED 2026-10-01, `R-P32OPEN`: "confirmed re-encrypted" is FALSE. The Phase-3.2 envelope decrypts
+  byte-exactly under the community passphrase via `EVP_BytesToKey` with IV = stream[32:48]; one era, not two.]**
 - **Both cheap next moves from this session are now spent or closed.** The live re-fetch is closed by robots + known 404s. The
   only untried item left is genuinely small: the **five new 5-bit-packed byte-objects** (`full570` -> 356 B `8d2f2f83...`,
   `odd285` -> 178 B `672d0f92...`, `object256` -> `fb347d36...`, `dbbib91` -> `56e74a8d...`, plus the faed substreams) have
@@ -1497,3 +1524,4 @@ unchanged: X is still the decode of dbbib_91/faed_570 under the interpreter alph
 - **Consequence for the frontier.** The brief's last named mechanical surface is spent, and the 103x103 layer takes **no** input from the `dbbi`/`faed` material - consistent with `R-BRIEFAUDIT` (faed is 356 B of measured-random seed material, not a decode). This is the second standing "untried" item in two sessions to rest on a premise that did not survive contact with the artefact (first: `R-P15NULL`).
 - **Not claimed:** no key material newly derived or written (witness cites only the two already-public addresses), no packing promoted to a lead, no existing row deleted, no negative re-opened, no oracle call, no positive.
 - Gates re-run 2026-09-29, green: `stream_field_audit --check` rc=0 (CRITICAL 0 / STALE 18 / DUAL 10 / OK 62); `oracle` and `oracle_dualite` `--selftest` rc=0; `validate.py` 14 pass / 1 warn (pre-existing) / 0 fail; escrow rc=0, both gates OK. **Crux unchanged: X is still the decode of dbbib_91/faed_570 under the interpreter alphabet.**
+

@@ -356,13 +356,51 @@ Architect Choice. It is published on the SalPhaseIon page,
 `gsmg.io/89727c598b9cd1cf8873f27cb7057f050645ddb6a7a157a110239ac0152f6a32`, reached by a
 different route: hashing the text of the first puzzle page. Verified by reassembling the
 blob from that page's own single-character token run, where the two 64-character halves sit
-at token positions 916 and 1020 with a 40-character run of a and b between them; reading
-that run as a=0, b=1 gives the five bytes `enter`.
+at token positions 895 and 999 with a 40-character run of a and b between them; reading
+that run as a=0, b=1 gives the five bytes `enter`. (Corrected 2026-10-01: the positions
+were previously recorded as 916 and 1020. Both are wrong. The first half is tokens 895-958
+inclusive, and the second is 999-1062 inclusive. The token at 958 looks like a `z` separator
+like the ones at 765, 829 and 859, but it is not one: it is the last base64 character of the
+first half, and dropping it leaves 127 characters and an "Incorrect padding" error. See
+`analysis/tested.md` row `R-PAGEANATOMY-2026-10-01`.)
 
 Why it matters as a lead, not just a correction: the password should be sought in the
-instructions on the page that carries the blob. That page decodes to exactly two
-directives, `lastwordsbeforearchichoice` and `thispassword`, which read together as a
-statement that the last words before the Architect Choice are this blob's password.
+instructions on the page that carries the blob. What that page actually carries, token by
+token, is the 91-token dbbib, the `matrixsumlist` run, the 570-token faed Bifid stream, two
+z-delimited middle-band groups, the literal letter run `shabefourfirsthintisyourlastcommand`
+at tokens 860-894, the two base64 halves, the `enter` run, and a final literal letter run
+`shabefanstoo` at tokens 1063-1074. The two z-segments do decode to directives, by the
+route `data/puzzle.cypher` records: map `a..i -> 1..9` and `o -> 0`, read the segment as a
+decimal integer, then take its hex and decode those bytes as ASCII. `z_segment_1`
+(`raw[766:829]`) is the integer 174161018595377387932283725836301293648834223172419022725145445,
+hex `6c617374776f7264736265666f7265617263686963686f696365` = `lastwordsbeforearchichoice`.
+`z_segment_2` (`raw[830:859]`) is 36026487402470099740341006948, hex
+`7468697370617373776f7264` = `thispassword`. Both reproduce exactly, and the four digits a
+decimal integer needs to land on even hex lengths is what makes the route work. So the
+earlier claim in this file that these two strings were community prose rather than page
+decoding was wrong, and is corrected in `analysis/tested.md` R-PAGEANATOMY-2026-10-01.) The
+one surviving thread is the phrase
+itself: `our first hint is your last command`, which points at the last command token on the
+page, which is `enter`. That is a reading to test, not a decoding.
+
+> **[TESTED AND NEGATIVE 2026-10-01, `R-ENTERKEY`. DO NOT RE-RUN.]** The reading resolves:
+> the page carries exactly two decoded command tokens, `matrixsumlist` (`raw[91:195]`) and
+> `enter` (`raw[959:999]`), so the **last** command is `enter` and the first hint is
+> `enter`, making the chain's decode key `sha256("enter") =
+> e08d706b3e4ce964b632746cf568913cb93f1ed36476fbb0494b80ed17c5975c`. That is a different
+> sha256 input from the slug key `tools/decodekey_vic.py` used in row 77, so it was a
+> genuinely untested preimage, and `tools/enterkey_vic.py` ran it: 2,016 decodes over 4
+> boards x 2 maps x 2 escape pairs x 2 streams x **six** key roles (including the key as the
+> transposition order at widths 13 and 38), 3,024 oracle submissions against BOTH funded
+> gates, **0 MATCH**. The row-77 slug key was carried as a control and still outscores the
+> `enter` family (37.0 vs 32.0), so the new preimage does not even tie the known-bad one.
+> Note the W=38 `dbbib_91` decode opens `FUND`, which is a **scorer artifact** - the
+> legibility proxy pays `5.0 + len(t)` for the token `fund` because the certified 3.2.2
+> message ends `FUNDSTOLIVE` - and not evidence for the reading (`R-SCORERCORPUS`).
+> **The "first hint" is no longer an open quantity**: it is `enter`, and the chain built on
+> it is closed negative. The remaining crux is unchanged and is NOT this: per `R-FAEDPATH`,
+> `dbbib_91` must be transformed *before* decoding, because the decoded words are consumed as
+> transposition-key LENGTHS, and no key content substitutes for that missing step.
 What would confirm it: a reading of those "last words" that matches.
 What would kill it: exhausting the candidate texts. Section 9's last-N-word sweeps are a
 first pass over the texts currently held and are negative; they do not exhaust the
@@ -495,6 +533,20 @@ Established facts:
    SalPhaselonCosmicDuality.png shows section 1 is 69 = 3x23 tokens (the 91-token
    community README value carried a 22-char middle run not present in the image), so
    dbbib does NOT match matrixsumlist=13.
+
+   > **[SUPERSEDED 2026-09-26 / re-confirmed 2026-10-01 - THE "FALSIFIED" CALL ABOVE IS
+   > WRONG. DO NOT ACT ON IT.** `dbbib_91` IS the authoritative stream; the 69 is a
+   > superseded shallow-OCR crop that dropped `dbbib_91[44:66]`, retained in
+   > `finalpage-digit-streams.json` only for tool back-compat. The image cannot
+   > falsify the 91 because it is a community render, not the author's page; the 91
+   > was confirmed against the LIVE textarea, Wayback 2023-06-01 + 2026-04-05, and
+   > community README line 371. Note this section's own header (item 0) already says
+   > "91 tokens", so the file contradicted itself here until now. Authority:
+   > `analysis/leads.md:779`, `R-STRUCT8-13-5-2026-09-26`, `R-VOIDROWS` FINDING 3,
+   > and `tools/stream_field_audit.py --check` (run it; it enforces this and flags
+   > 18 STALE tools still reading `d['dbbib']`). Consequence for tools: read
+   > `d['dbbib_91']`. See `R-CROSSCHECK` + `R-FMTINV` for a session that was misled
+   > by this line twice before catching it.]**
 4. The endgame reads `shabef our first hint is your last command` + `shabef ans too` as
    `sha256(first hint)` -> decode key for dbbib/faed -> ANSWER -> sha256(ANSWER) = AES key.
 5. THE VERIFICATION PROBLEM (community, reproduced): a full VIC decode needs FIVE
@@ -2134,3 +2186,28 @@ revive it, it has to say what reading order the three existing negatives did not
   agree on **15/15 blue and 9/9 yellow positions** - an exact cross-render check of one object.
   **Live risk flagged:** `R-GRID14`'s single-nest conclusion may be a partial read, and per this
   hint "found the nest" is exactly the rabbit-hole progress the creator warns against.
+
+## Correction to Research note 23 (2026-10-02, retrieval -- supersedes the interpretation, not the data)
+
+Note 23's numbers are all correct and stay. Its *reading* is demoted by `R-CREATORPARODY-2026-10-02`.
+
+Creator-audited provenance (cross-solver audits in
+`1-big-prizes/gsmgio-5btc-puzzle/usr/tmp/opencode/fork-audit/loginwashere/`):
+
+- The `23 ciphers / 16 encryptions / 7 passwords` clause is **creator-authored**, a parody of the real Architect screenplay's only numerical Matrix context, `23 individuals / 16 female / 7 male`. Note 23 already held both halves; it just read them as a cipher-count spec.
+- Audited verdict: `[23,16,7]` is a **structural selector checkpoint**, explicitly "not a license for sum, XOR, concatenation, BIP38, or another arithmetic transform"; neither the sum `46` nor any downstream consumer is creator-specified; no operation proposal received a creator reply.
+- So note 23's "REVERSING ~16 encryptions woven with ~7 passwords" and its item 3 ("23 primes select which of 23 ciphers each of the 16 layers uses") are unlicensed speculation and must not be treated as the leading construction.
+- The one structural mechanism that genuinely mirrors `23 = 16 + 7`: split the recovered guide's final `be` into `83=b, 84=e` and 23 guide endpoints fall as exactly 16 blue / 7 yellow. Corroborates the *structure* only, and its own source (Telegram 53997) is community-authored, not a creator clue.
+- `CIAO BELLA O` is the author's literal closing words (same quoted Phase 3.1/3.2.1 text as the clause, `leads.md:1056-1059`), not a password. New chain: forward-one-index `[23,16,7]` into the Architect text gives rails `BUT`/`HYE`; `mirror9` on `HYE` gives `BYE`, the only dictionary word in the 48-row control family; `BYE` bridges to `CIAO BELLA O`. The **complete** creator `ciao` (3 msgs) and `yinyang` (2 msgs) inventories are ordinary sign-offs and endorse none of it; 171,936 independent blob/KDF decryptions of the `ciao`/`bye` families returned zero hits.
+- Disposition: `CIAO BELLA O` is the strongest available **recognition target** after yin-yang, not an operation. Lead 0 (interpreter-alphabet leap on dbbib/faed) remains the crux; the funded gate remains open.
+
+## Correction to the BYE/CIAO chain (2026-10-02, `R-BUTEHYE-RAIL-FAIL-2026-10-02`)
+
+The `[23,16,7]` -> `BUT`/`HYE` -> `mirror9` -> `BYE` -> `CIAO BELLA O` chain noted above **fails at its foundation**, not just at its tail.
+
+- Corpus identified and confirmed: massassi.net's Architect conversation reproduces the audits' "exactly nine spoken `Matrix` occurrences" (9 in body, 10 with the title). Released-film transcripts give 7, so the count is a corpus fingerprint - and it pins the audits to massassi.
+- On that very corpus, `[23,16,7]` word-rails over all 6 orderings x 13 shifts x 4 rail types (312 readings) yield **0** `BUT`, **0** `HYE`. Same result on two independent released-film transcripts and on our own S1/S2/S3 quotes.
+- Decisive and choice-independent: `HYE` and `BYE` occur **zero** times in the massassi body and in both released-film transcripts. The claimed rails are not substrings of the source, so no indexing scheme can read them off it.
+- The one surviving step, `mirror9(HYE) = BYE`, is a true identity but evidentially empty: "only word among the six permutations" is 18 readings, and P(>=1 three-letter word in 18 draws) = 0.47-0.72. Finding exactly one word is the expected result.
+- `CIAO BELLA O` remains what it always was: the author's literal closing words and the strongest available recognition target after yin-yang. Not a password, not a selector, not an operation. No gate input.
+- Corrected 2026-10-02 (`R-ALPHABET23-RECANT-2026-10-02`): my note here originally claimed our `alphabet` stream has 23 distinct symbols. That was a miscount - `alphabet` is a human-readable note, not a stream, and its 23 "characters" are letters, spaces and parentheses. The real 23-symbol object is `object_256` (`ABCDEFGHKLMNPQRSTUVWXYZ`, A-Z less {I,J,O}, 256 symbols), already documented at leads.md:222/:1165 and tested.md:752/:977, with 23x3 = 69 = `dbbib`. So the point stands but it is pre-existing knowledge, not a new finding: 23 is structural as a POPULATION COUNT and still gives no support to the demoted cipher-layer reading.

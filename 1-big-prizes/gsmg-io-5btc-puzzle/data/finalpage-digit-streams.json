@@ -4,12 +4,14 @@
     "recovered": "2026-08-27",
     "status": "raw, undecoded",
     "note": "CORRECTION (2026-09-12, supersedes '_provenance' OCR claim below): the AUTHORITATIVE section-1 stream is the 91-token dbbib (tokens 0-90 of the live page), verified byte-identical on the live site (HTTP 200, gsmg.io/89727c...), Wayback Machine snapshots 2023-06-01 and 2026-04-05, and community README line 371; see analysis/tested.md rows 193-199. The 69-token value in 'dbbib' below is the superseded shallow-OCR crop of salphaseion_enhanced.png (its 22-char middle run bfdhbeffcdbbfcccgbfbeegg was dropped); the ORIGINAL 'image=69' provenance was itself the OCR artifact (rows 193/4701). Field 'dbbib_91' holds the authoritative stream; 'dbbib' is retained for tool back-compat.",
+    "page_anatomy_correction": "CORRECTION (2026-10-01): every field in page_anatomy is re-verified token-by-token against data/live_salphaseion.txt (1075 one-character tokens). The certified segments are UNCHANGED and were used as the witness: raw[0:91]==dbbib_91; raw[91:195] decodes to 'matrixsumlist'; raw[766:829]==z_segment_1; raw[830:859]==z_segment_2; raw[959:999] decodes to 'enter'; z separators at tokens 765, 829, 859, 958 all confirmed. FIVE boundary errors were corrected, all in the 860-1074 tail, none touching the certified streams: (1) the literal phrase is 860-894 (35 tokens), not 860-896; (2) the base64 half starts at 895, not 897 - raw[897:958] is 61 chars and is INVALID base64; (3) token 958 is not a word separator but the final base64 character of that half, since dropping it yields 'Incorrect padding'; (4) the assembled blob is 96 bytes Salted__, salt 3ab585348552415d, sha256 9e2831e1b34b5f34796df47ccaf6530d48d371c61a6bff84d60db1064fa7a258, and it is NOT the CosmicDuality blob with salt 2d3f6fe06dc950e6 that the old label named; (5) the base64 tail ends at 1062, and tokens 1063-1074 are the literal letters 'shabefanstoo', not base64. See analysis/tested.md R-PAGEANATOMY-2026-10-01.",
     "dbbib_authoritative_outcome": "SETTLED 2026-09-19: dbbib is the 91-token stream. Wayback CDX lists 8 captures of gsmg.io/89727c...; raw id_ fetches of 20230601222752 and 20260405154227 (HTTP 200) reproduce dbbib[0:91]=dbbib_91 AND binary[91:195]->'matrixsumlist', faed[195:765], z_seg1/z_seg2, 'shabef', binary[959:999]->'enter' byte-identically. The 69-token 'dbbib' field is the superseded shallow-OCR crop (dropped [44:66]); all *_vic69_* artifacts and any 69-stream sweep are VOID. Tools must read d['dbbib_91'] (as certified_vic.py does). See analysis/tested.md late-204."
   },
   "dbbib": "dbbibfbhccbegbihabebeihbeggegebebbgehhebhhfbaggecbedcibfbffgigbeeeabe",
   "dbbib_len": 69,
   "faed_570": "faedggeedfcbdabhhggcadcfeddgfdgbgigaaedggiafaecghggcdaihehahbahigceifgbfgefgaifabifagaegeacgbbeagfggeeggafbacgfcdbeiffaafcidahgdeefghhcggaegdebhhegeghcegadfbdiagefcicggifdcgaaggfbigaicfbhecaecbceiaicebgbgiecdeggfgegaedggfiiciiififhggcgfgdcdggefcbeeigefibgibggghhfbcgifdehedfdagicdbhicgaiedaehahghhcihdghfhbiicecbiichihiiigiddgehhdfdchcbafgfbhaheagegecafehgcfggggcagfhhghbaihidiehhfdeggdgcihggggghadahigigbgecgedfcdggaccdehiicigfbffhggaeidbbeibbeiifdgfdhieeeieeecifdgdahdiggfhegfiaffiggbcbcehceabfbedbiibfbfdedeehgigfaaiggagbeiichiedifbehgbccahhbiibibbibdcbahaidhfahiihicz",
-  "faed_570_len": 570,
+  "faed_570_len": 571,
+  "faed_570_len_note": "CORRECTED 2026-10-01: the field name is a misnomer, the 571 is right. 'faed_570' holds raw[195:766], i.e. the 570 faed letter tokens PLUS the z separator at token 765, which is why faed_570_counts shows z:1. Consumers already handle this: tools/ab_run_decode.py slices [:570] and the sweeps call .rstrip('z'). Do not 'fix' the stored value; correct the name in any new code.",
   "faed_trailing_z": true,
   "alphabet": "a b c d e f g h i (plus trailing z as a separator marker on faed)",
   "canonical_value_mapping": {
@@ -59,20 +61,30 @@
     "run_2_tokens_959_998_len_40": "enter"
   },
   "page_anatomy": {
-    "note": "token-position map of the 1075-token body (live_salphaseion.txt, recorded 2026-09-05)",
+    "note": "token-position map of the 1075-token body (live_salphaseion.txt, recorded 2026-09-05; boundaries CORRECTED 2026-10-01, see _provenance.page_anatomy_correction)",
     "dbbib_run_tokens_0_90": 91,
     "matrixsumlist_binary_run_tokens_91_194_len_104": "a/b -> 'matrixsumlist'",
     "faed_run_tokens_195_764_len_570": "Bifid(DBIFHCEG, full period) -> plaintext head 'BTCSEED...'",
-    "faed_trailing_z_token_765": "word separator",
+    "faed_trailing_z_token_765": "word separator; also the last char of field 'faed_570' (see faed_570_len)",
     "z_segment_1_tokens_766_828_len_63": "alphabet {a..i}+o",
     "z_token_829": "word separator",
     "z_segment_2_tokens_830_858_len_29": "alphabet {a..i}+o",
     "z_token_859": "word separator",
-    "literal_phrase_tokens_860_896": "'shabef our first hint is your last command' (letter tokens)",
-    "dualite_blob_base64_tokens_897_958": "U2FsdGVkX18tP2/gbcl... (CosmicDuality blob, salt 2d3f6fe06dc950e6)",
-    "z_token_958": "separator",
+    "literal_phrase_tokens_860_894_len_35": "'shabefourfirsthintisyourlastcommand' = 'shabef our first hint is your last command' (letter tokens). CORRECTED: 35 tokens, 860-894; the previous label said 860-896.",
+    "base64_blob_first_half_tokens_895_958_len_64": "'U2FsdGVkX186tYU0hVJBXXUnBUO7C0+X4KUWnWkCvoZSxbRD3wNsGWVHefvdrd9'. CORRECTED: starts at 895, not 897; and it is NOT the CosmicDuality blob.",
+    "z_token_958": "CORRECTED: not a separator. It is the final base64 character of the 64-char half above. Omitting it yields 'Incorrect padding'; including it makes the half valid.",
     "enter_binary_run_tokens_959_998_len_40": "a/b -> 'enter'",
-    "remaining_tokens_999_1074": "base64 'QvX0t8v3...' tail"
+    "base64_blob_second_half_tokens_999_1062_len_64": "'QvX0t8v3jPB4okpspxebRi6sE1BMl5HI8Rku+KejUqTvdWOX6nQjSpepXwGuN/jJ'. CORRECTED: the base64 tail ends at 1062, not 1074.",
+    "literal_tail_tokens_1063_1074_len_12": "'shabefanstoo' (literal letter tokens, not base64). CORRECTED: the previous label called 999-1074 a base64 tail."
+  },
+  "page_blob_reassembly": {
+    "note": "the two base64 halves span the 'enter' run; assembled they are one 96-byte OpenSSL 'Salted__' envelope",
+    "halves": "raw[895:959] + raw[999:1063] = 128 base64 chars",
+    "bytes": 96,
+    "magic": "Salted__",
+    "salt_hex": "3ab585348552415d",
+    "sha256": "9e2831e1b34b5f34796df47ccaf6530d48d371c61a6bff84d60db1064fa7a258",
+    "identity_correction": "the superseded page_anatomy label called this the CosmicDuality blob with salt 2d3f6fe06dc950e6. That is a different object. This salt is 3ab585348552415d."
   },
   "dbbib_91": "dbbibfbhccbegbihabebeihbeggegebebbgehhebhhfbabfdhbeffcdbbfcccgbfbeeggecbedcibfbffgigbeeeabe",
   "dbbib_91_len": "91",

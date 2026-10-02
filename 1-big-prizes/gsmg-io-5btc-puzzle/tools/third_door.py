@@ -31,6 +31,36 @@ uncompressed).
 Local only: every address being compared is already public in
 `data/planted-addresses.csv` or in the README gate table. No key is swept, no
 transaction is built, nothing is broadcast.
+
+WHY `--wordlist` EXISTS, and why it is built the way it is. `analysis/tested.md`
+records, at the section-9 cumulative note, that "a `rockyou.txt` pass on both
+locks and the third door was still running when that session closed and is not
+counted". So the single largest untried mechanical battery on the third door was
+started, abandoned, and never witnessed - and it is still not reproducible,
+because until this mode existed the shipped tool had no way to take a wordlist
+at all (`--selftest` and `--audio` only). Two separate process failures, both of
+the kind this repo has already been bitten by:
+
+  1. NO CHECKPOINTING. A long pass that dies with the session leaves no partial
+     result and no count, which is exactly the "not counted" outcome. Progress is
+     therefore checkpointed by BYTE OFFSET, written atomically, and `--resume`
+     refuses to run against a wordlist whose size or mtime has moved, so a stale
+     checkpoint can never silently certify a wrong slice of the file.
+  2. NO SHARDING. This is a pure CPU search with no shared state, and the
+     measured rate is ~1.1k address derivations/s on one core (`R-COLORDOOR`),
+     i.e. ~93 candidates/s for the twelve derivations a candidate costs. On 8
+     cores that is ~750 candidates/s, so the 14.3M-word rockyou corpus is about
+     5.3 hours instead of 42. `--shard I --of N` splits by line index, so shards
+     are disjoint and each carries its own checkpoint.
+
+Accounting is honest by construction: every run reports the exact line range it
+covered and how many candidates it derived, and a MATCH is printed immediately
+and loudly rather than at the end, because a pass that finds something after
+five hours and then gets killed must not lose the finding.
+
+The constructions are NOT re-implemented here. This mode calls the same
+`addresses_for()` that `selftest()` certifies against the CSV's verified rows, so
+a wordlist negative and a selftest witness cannot drift apart.
 """
 from __future__ import annotations
 
@@ -276,17 +306,151 @@ def run() -> int:
     return 1 if hits else 0
 
 
+def wordlist_run(path: str, shard: int, of: int, ckpt: str | None,
+                 resume: bool, every: int) -> int:
+    """Run every line of `path` through the certified constructions.
+
+    Progress is a byte offset into the file, so a resumed pass continues at
+    exactly the line it stopped on. The checkpoint records the wordlist's size
+    and mtime and refuses to resume if either moved.
+    """
+    import json
+    import time
+
+    st = os.stat(path)
+    start_off = 0
+    lines_done = 0
+    read_at_start = 0
+    if resume:
+        if not ckpt or not os.path.exists(ckpt):
+            print("RESUME-ERROR: no checkpoint to resume from", flush=True)
+            return 2
+        with open(ckpt) as fh:
+            c = json.load(fh)
+        if c["size"] != st.st_size or c["mtime"] != int(st.st_mtime):
+            print("RESUME-ERROR: wordlist changed since checkpoint "
+                  f"(size {c['size']}->{st.st_size}, "
+                  f"mtime {c['mtime']}->{int(st.st_mtime)}). Refusing: a stale "
+                  "checkpoint would certify the wrong slice.", flush=True)
+            return 2
+        start_off = c["offset"]
+        lines_done = c["lines"]
+        # The absolute line index is RECOMPUTED from the byte offset rather than
+        # trusted from the file. Shard membership is `(idx - 1) % of == shard`,
+        # so idx and the file position must agree exactly or a resumed shard
+        # silently processes the wrong lines - skipping some and duplicating
+        # others, which is a silently wrong negative rather than a crash. The
+        # checkpoint's own `lines` field is the count of candidates DERIVED, not
+        # the count of lines read, and a shard skips of-1 lines out of every of,
+        # so the two differ by up to of-1; deriving the index from the offset is
+        # immune to that, and also repairs checkpoints written before this fix.
+        with open(path, "rb") as fh:
+            read_at_start = fh.read(start_off).count(b"\n")
+
+    known = TARGETS
+    found = 0
+    derived = 0
+    t0 = time.time()
+    last = t0
+
+    def save(off, ln, rd):
+        if not ckpt:
+            return
+        tmp = ckpt + ".tmp"
+        with open(tmp, "w") as fh:
+            json.dump({"path": path, "size": st.st_size,
+                       "mtime": int(st.st_mtime), "offset": off,
+                       "lines": ln, "read": rd, "cands": derived,
+                       "shard": shard, "of": of}, fh)
+            fh.flush()
+            os.fsync(fh.fileno())
+        os.replace(tmp, ckpt)
+
+    save(start_off, lines_done, read_at_start)
+    # Seeded before the loop, not inside it: resuming a pass that already reached
+    # EOF runs the loop zero times, and an `off` bound only inside the body would
+    # make the final save() raise UnboundLocalError - which would lose a
+    # COMPLETED pass's accounting, the precise failure this mode exists to stop.
+    off = start_off
+    cands = 0
+    with open(path, "rb") as fh:
+        if start_off:
+            fh.seek(start_off)
+        idx = read_at_start
+        for raw in fh:
+            off = fh.tell()
+            idx += 1
+            # Membership is tested here, but the progress/checkpoint block below
+            # must run for EVERY line read, not only for lines this shard owns.
+            # Testing it the other way round - `continue` on a non-owned line
+            # before the progress block - makes the block unreachable for most
+            # shards: line idx is owned when (idx-1) % of == shard, so a progress
+            # test of `idx % every == 0` with every a multiple of `of` never
+            # coincides with ownership for shard 0 (idx=2000k gives
+            # (2000k-1) % 8 == 7). The symptom is a shard that runs for hours,
+            # prints nothing, never advances its checkpoint, and loses 100% of its
+            # work if killed - the exact "still running when the session closed
+            # and is not counted" outcome this mode was added to prevent.
+            if (idx - 1) % of == shard:
+                cand = raw.rstrip(b"\r\n")
+                if cand:
+                    lines_done = idx
+                    cands += 1
+                    for (cname, comp), addr in addresses_for(cand).items():
+                        derived += 1
+                        if addr in known:
+                            found += 1
+                            funded, op, status = TARGETS[addr]
+                            print(f"MATCH shard={shard}/{of} line={idx} "
+                                  f"construction={cname} compressed={comp} "
+                                  f"address={addr} funded={funded} "
+                                  f"op_return={op} status={status} "
+                                  f"preimage={cand!r}", flush=True)
+            if every and idx % every == 0:
+                now = time.time()
+                el = max(now - t0, 1e-9)
+                print(f"[shard {shard}/{of}] line {idx} offset {off} "
+                      f"cands {cands} {cands / el:.1f} cand/s "
+                      f"derived {derived} matches {found}", flush=True)
+                save(off, lines_done, idx)
+                last = now
+        save(off, lines_done, idx)
+
+    dt = max(time.time() - t0, 1e-9)
+    print(f"DONE shard={shard}/{of} wordlist={os.path.basename(path)} "
+          f"last_line={lines_done} cands={cands} derived={derived} "
+          f"matches={found} {dt:.1f}s {cands / dt:.1f} cand/s "
+          f"{derived / dt:.0f} deriv/s", flush=True)
+    return 1 if found else 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--audio", action="store_true",
                     help="run the audio / HASHTHETEXT battery")
+    ap.add_argument("--wordlist", metavar="FILE",
+                    help="run every line of FILE through the six constructions")
+    ap.add_argument("--shard", type=int, default=0, help="shard index, 0-based")
+    ap.add_argument("--of", type=int, default=1, help="total number of shards")
+    ap.add_argument("--checkpoint", metavar="FILE",
+                    help="write progress here, atomically")
+    ap.add_argument("--resume", action="store_true",
+                    help="continue from --checkpoint (refuses if wordlist moved)")
+    ap.add_argument("--every", type=int, default=0,
+                    help="print progress every N lines")
     a = ap.parse_args(argv)
     rc = 0
-    if a.selftest or not (a.selftest or a.audio):
+    if a.selftest or not (a.selftest or a.audio or a.wordlist):
         rc |= selftest()
     if a.audio and rc == 0:
         rc |= run()
+    if a.wordlist and rc == 0:
+        if not (0 <= a.shard < a.of):
+            print(f"bad shard {a.shard} of {a.of}", flush=True)
+            return 2
+        rc |= wordlist_run(a.wordlist, a.shard, a.of, a.checkpoint,
+                           a.resume, a.every)
     return rc
 
 

@@ -36,6 +36,12 @@ P = str(FOLDER)
 BLOB1 = ("U2FsdGVkX186tYU0hVJBXXUnBUO7C0+X4KUWnWkCvoZSxbRD3wNsGWVHefvdrd9z"
          "QvX0t8v3jPB4okpspxebRi6sE1BMl5HI8Rku+KejUqTvdWOX6nQjSpepXwGuN/jJ")
 RAW_PW = b"matrixsumlistenterlastwordsbeforearchichoicethispasswordmatrixsumlist"
+# Phase 3.2 (salt eefc4c5befc1656a). OPENED 2026-10-01 by R-P32OPEN / tools/p32_evp_verify.py,
+# but it was missing from this tool's candidate set, so the inventory kept reporting the
+# blob BLOCKED for a day after the fact. Both forms are needed: the EVP password is the
+# ASCII of the raw passphrase's sha256 digest, and the obvious raw form is the thing a
+# reader (or a future sweep) will try first, so carrying it also keeps the negative honest.
+P32_PASSPHRASE = b"jacquefrescogiveitjustonesecondheisenbergsuncertaintyprinciple"
 PHASE5 = "4447f552c0f76528be4df75028a3ecdb3878bccd46acb4b3fabe6442304fd9c4"
 DUALITE_XORKEY = bytes.fromhex(
     "a795de117e472590e572dc193130c763e3fb555ee5db9d34494e156152e50735")
@@ -45,6 +51,9 @@ sys.path.insert(0, P + "/tools")
 
 def sha256b(b):
     return hashlib.sha256(b).digest()
+
+
+P32_PW_HEXASCII = sha256b(P32_PASSPHRASE).hex().encode()
 
 
 def evp(pw, salt, dg):
@@ -85,6 +94,8 @@ def passwords(B1, B2, extra):
          "sha256(causality)_hex": sha256b(b"causality").hex().encode(),
          "PHASE5_hex_ascii": PHASE5.encode(),
          "PHASE5_hex_raw": bytes.fromhex(PHASE5),
+         "P32_hexascii": P32_PW_HEXASCII,
+         "P32_rawpass": P32_PASSPHRASE,
          "B1": B1, "B2": B2}
     for nm, k in (("K_C1", B1[:32]), ("K_C2", B1[32:64]),
                   ("K_S1", B2[:32]), ("K_S2", B2[32:64]),
@@ -230,6 +241,20 @@ def main():
              sha256b(B2).hex(): "B2_79 (79 B, CADEIA 2)"}
     for nm, a in extra.items():
         KNOWN.setdefault(sha256b(a).hex(), nm)
+    # Phase 3.2's plaintext (R-P32OPEN / data/phase3.2-plaintext.b64). Registered
+    # so the identification branch below can name it. Needed because that branch,
+    # not the printability one, is what recognises a valid decrypt of this blob:
+    # the p32 plaintext is only 59.8% printable, so it always failed the >85%
+    # `text_open` gate and this tool reported BLOCKED while decrypting it
+    # perfectly - a false negative produced by the detector, not by the KDF.
+    _p32 = P + "/data/phase3.2-plaintext.b64"
+    if os.path.exists(_p32):
+        try:
+            _pt = base64.b64decode("".join(
+                l for l in open(_p32).read().splitlines() if not l.startswith("#")))
+            KNOWN.setdefault(sha256b(_pt).hex(), "phase 3.2, 2422 B")
+        except Exception:
+            pass
     # blobs the ledger already certifies as open, whose password is a long
     # authorial string we do not keep in the repo - named so this tool does not
     # report them as unexplained

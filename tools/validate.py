@@ -177,6 +177,19 @@ def scannable_lines(lines):
 
 FRENCH_CHARS_PATTERN = re.compile(r"[àâçéèêëîïôûùüÿœ]", re.IGNORECASE)
 FRENCH_WORDS = ["dossier", "piste", "porte", "témoin", "épuisé", "réfuté"]
+# "dossier", "piste" and "porte" are naturalised English, so on their own they fire on
+# correct English prose ("the research dossier"). A naturalised word therefore only
+# warns when the line also shows French grammar - an accent, or a French function word
+# such as "le"/"la"/"les", which English sentences in this repo do not use. This is
+# what separates "Le dossier" (warn) from "the dossier" (silent). Verified against the
+# real French quotes in archive/dead-ends/objective-thune-licorne-0-21btc/README.md,
+# which still warn.
+FRENCH_NATURALISED = {"dossier", "piste", "porte"}
+FRENCH_FUNCTION_WORDS = re.compile(
+    r"\b(?:le|la|les|des|une|un|du|de|est|sont|dans|pour|avec|sur|qui|que|ne|pas|"
+    r"ce|cette|aux|et|ou)\b",
+    re.IGNORECASE,
+)
 
 FORBIDDEN_EXTENSIONS = {
     ".epub", ".mobi", ".azw", ".azw3", ".mp3", ".wav", ".m4a", ".flac",
@@ -262,8 +275,17 @@ def walk_pruned(root):
 
     Every check goes through this so that ignored scratch is invisible to all of
     them at once, rather than each walk growing its own exclusion list.
+
+    The root itself is tested too. Pruning only the children is not enough: naming
+    an ignored directory as the scope root - `validate.py --folder <ignored dir>` -
+    otherwise walks the entire tree, and a private fork export under usr/tmp/ then
+    fails the style checks on verbatim third-party text that is not part of the
+    repository. `1-big-prizes/gsmgio-5btc-puzzle` is such a directory: ignored as a
+    whole, and it failed 4 checks on chat transcripts and emoji before this test.
     """
     ignored = ignored_paths()
+    if rel(os.path.abspath(root)) in ignored:
+        return
     for dirpath, dirnames, filenames in os.walk(root):
         if ".git" in dirpath.split(os.sep):
             dirnames[:] = []
@@ -505,13 +527,24 @@ def check_french_leftovers(scope_root):
                 continue
             if in_fence or stripped.startswith(">"):
                 continue
-            if FRENCH_CHARS_PATTERN.search(line):
+            # Inline code spans are literal data rather than prose: a cipher-alphabet
+            # listing or a foreign-language repo name. Quoted spans are deliberately
+            # NOT stripped, because quoted French is precisely what this check exists
+            # to catch - masking quotes would silence the check's real case.
+            scanned = INLINE_CODE_PATTERN.sub(" ", stripped)
+            if FRENCH_CHARS_PATTERN.search(scanned):
                 warnings.append(f"{rel(path)}:{i}: possible French leftover (accented character): {stripped[:80]}")
                 continue
+            accented = bool(FRENCH_CHARS_PATTERN.search(scanned))
             for word in FRENCH_WORDS:
-                if re.search(r"\b" + re.escape(word) + r"\b", line, re.IGNORECASE):
-                    warnings.append(f"{rel(path)}:{i}: possible French leftover ('{word}'): {stripped[:80]}")
+                if not re.search(r"\b" + re.escape(word) + r"\b", scanned, re.IGNORECASE):
+                    continue
+                if word in FRENCH_NATURALISED and not (
+                    accented or FRENCH_FUNCTION_WORDS.search(scanned)
+                ):
                     break
+                warnings.append(f"{rel(path)}:{i}: possible French leftover ('{word}'): {stripped[:80]}")
+                break
     return warnings
 
 
