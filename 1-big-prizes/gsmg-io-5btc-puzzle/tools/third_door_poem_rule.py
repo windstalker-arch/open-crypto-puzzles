@@ -56,6 +56,14 @@ _sy = importlib.util.spec_from_file_location(
     "third_door_yellowblue", os.path.join(HERE, "third_door_yellowblue.py"))
 SY = importlib.util.module_from_spec(_sy)
 _sy.loader.exec_module(SY)
+
+# Imported, not re-derived: this file must not hold its own copy of the phase-3.2
+# plaintext, for the same reason it imports POEM above. `certified_vic` reads
+# data/phase3.2-plaintext.b64 and re-derives the 149-digit line from it.
+_cv = importlib.util.spec_from_file_location(
+    "certified_vic", os.path.join(HERE, "certified_vic.py"))
+CV = importlib.util.module_from_spec(_cv)
+_cv.loader.exec_module(CV)
 POEM = SY.POEM
 POEM_TAIL = SY.POEM + " Go back to the first puzzle piece"
 
@@ -346,21 +354,96 @@ def selftest() -> int:
     bad += TD.selftest()
     verified = [r for r in TD.PLANTED
                 if r.get("status", "").strip().lower() == "verified"]
+    # Rows whose CSV `preimage` column holds a DESCRIPTION of the preimage rather
+    # than the bytes. They are supplied here instead, so layer 2 does not silently
+    # skip two of eight verified addresses (which it did: the only gate was
+    # `if not found`, which accepts 1-of-8 as readily as 8-of-8).
+    extra_preimages = {
+        # 149-digit phase-3.2 plaintext, whole - derived from the b64 artifact, not retyped.
+        "18CchrjA3Uzfrzy4DFqao9ric6YfK4hjdc": CV.phase32_digit_line().encode(),
+    }
+    # Not supplied: 1M5ypvDbp124ZtKPbg3GJg1JqNs1x7TPoN's preimage is the 227-char
+    # concatenation of the 7 phase-3 parts. It is not in this repo, so it cannot be
+    # a required witness. Data gap, not a tool defect - reported as such below.
+    DATA_GAP = "1M5ypvDbp124ZtKPbg3GJg1JqNs1x7TPoN"
+
     pre_seen, found = set(), set()
+    required_found, missing, pre_to_addrs = set(), [], {}
     for r in verified:
-        pre = r["preimage"].encode() if r.get("preimage") else None
-        if not pre or pre in pre_seen:
+        addr_want = r["address"]
+        if addr_want == DATA_GAP:
             continue
-        pre_seen.add(pre)
-        for (cname, _c), addr in TD.addresses_for(pre).items():
-            if addr in TD.TARGETS:
-                found.add(addr)
-    print(f"  [layer2] {len(found)}/{len({r['address'] for r in verified})} distinct "
-          f"verified addresses re-found through TD.addresses_for over "
-          f"{len(pre_seen)} distinct preimages")
-    if not found:
-        print("  [FAIL] layer 2 re-found nothing - the target set is not being seen")
-        bad += 1
+        if addr_want in extra_preimages:
+            pre = extra_preimages[addr_want]
+        elif r.get("preimage"):
+            pre = r["preimage"].encode()
+        else:
+            print(f"  [FAIL] layer 2 has no preimage for required {addr_want}")
+            bad += 1
+            continue
+        if pre in pre_seen:
+            # Shared preimage (148XH2 and 13HGhj both derive from
+            # "gsmg.io/theseedisplanted"). Reuse the cached derivation instead of
+            # skipping the row: skipping it left this address unasserted, which is
+            # how 6/7 passed as "complete" in the first version of this fix.
+            addrs = pre_to_addrs[pre]
+        else:
+            pre_seen.add(pre)
+            addrs = {a for (_c, _x), a in TD.addresses_for(pre).items()}
+            pre_to_addrs[pre] = addrs
+            found.update(a for a in addrs if a in TD.TARGETS)
+        hit = addr_want in addrs
+        if hit:
+            required_found.add(addr_want)
+        else:
+            print(f"  [FAIL] layer 2 did not re-derive its own required "
+                  f"witness {addr_want}")
+            bad += 1
+    # `missing` must be the authoritative list: under fault H (shared-preimage
+    # rows skipped instead of cached) the per-row FAIL never fires, so missing
+    # came back empty while required_found was short. Anything absent from
+    # `found & required` is reported as missing regardless of which branch fired.
+    missing = sorted(({r["address"] for r in verified} - {DATA_GAP}) - required_found)
+    total = len({r["address"] for r in verified}) - 1  # less the declared data gap
+    # Numerator is `required_found`, not `found`: `found` counts anything that
+    # happened to land in TARGETS, so it could stay at 7 while every per-address
+    # assertion was removed - which is exactly fault E. This counter cannot.
+    print(f"  [layer2] {len(required_found)}/{total} required verified addresses "
+          f"re-found through TD.addresses_for over {len(pre_seen)} distinct "
+          f"preimages (+1 declared data gap: {DATA_GAP})")
+    assert len(required_found) == total, (
+        f"layer 2 re-derived {len(required_found)}/{total} required witnesses; "
+        f"missing: {sorted(missing)}")
+
+    # W-E: THE INDEPENDENT RE-DERIVATION. The assert above is TAUTOLOGICAL and I only
+    # found that out by trying to break it. `required_found` is filled inside the same
+    # loop that defines the universe `total` is counted over, so the comparison can only
+    # fail if set MEMBERSHIP changes -- never because a derivation failed. Fault
+    # injection proved it: deleting the `if hit:` branch (one `required_found.add`)
+    # leaves the selftest reporting 7/7 PASS while 18CchrjA3 is silently NOT derived,
+    # because every address is added unconditionally. So all the detection power sat in
+    # a single branch and the assert was decorative.
+    #
+    # This check does not route through `required_found` at all. `pre_to_addrs` holds
+    # the address set `TD.addresses_for` ACTUALLY produced for each preimage, computed
+    # before any per-row verdict; their union is ground truth about what the derivation
+    # can produce. Asserting the required addresses are a subset of that union survives
+    # the `if hit:` deletion, and so catches it.
+    derived_union = set().union(*pre_to_addrs.values()) if pre_to_addrs else set()
+    required_all = {r["address"] for r in verified} - {DATA_GAP}
+    unsubstantiated = sorted(required_all - derived_union)
+    print(f"  [W-E] independent re-derivation: {len(required_all) - len(unsubstantiated)}"
+          f"/{len(required_all)} required addresses present in the union of derived "
+          f"address sets (independent of the per-row verdict)")
+    assert not unsubstantiated, (
+        f"layer 2 asserts {len(unsubstantiated)} required addresses that "
+        f"TD.addresses_for never produced from any supplied preimage: {unsubstantiated}")
+    for gap in sorted({r["address"] for r in verified} & {DATA_GAP}):
+        print(f"  [W-E] declared data gap: {gap} has no preimage in this repo "
+              "(phase-3 227-char concatenation, named in tools/blob_inventory.py "
+              "KNOWN_OPEN); not asserted, and not counted as re-found")
+    # The old `if not found` gate is gone: each required address is asserted
+    # individually above, so 1-of-8 now fails where it used to pass.
     for name, stream in (("audio/HASHTHETEXT", TD.audio_candidates()),):
         for tag, pre in stream:
             for (_c, _k), addr in TD.addresses_for(pre).items():
