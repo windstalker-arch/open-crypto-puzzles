@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
-"""third_door.py -- a CERTIFIED oracle for the third door (the unmessaged
-planted address) and the other creator-funded planted addresses.
+"""third_door.py -- a CERTIFIED address-hash oracle for the creator-funded
+planted addresses. `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9` is included as a target
+but is NOT a planted oracle: it is the `Tips:` address in the source of
+`keyjoke/vs-kangaroo-hybrid` (`main.cpp:455`) and its one transaction is a
+1,050 sat tip, so it has no preimage to recover. See row `R-TDTIP`
+(2026-10-04) in `analysis/tested.md`. Negatives filed against it are valid
+computations about the wrong target.
 
 WHY THIS TOOL EXISTS. Every negative in `analysis/tested.md` for the third door
 (`1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9`, funded 2020-04-07, no OP_RETURN, no known
