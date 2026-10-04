@@ -96,10 +96,9 @@ struct DpTable {
 
   bool isDP(uint64_t x) const { return (x & dpMask()) == 0; }
 
-  // Returns: 0 = stored, 1 = collided with opposite herd (both refs set),
+  // Returns: 0 = stored, 1 = collided with opposite herd (*hitA set),
   //          2 = same-herd hit (ignore), 3 = probe window full (drop).
-  int insert(uint64_t hi, uint64_t lo, int tag, Int *dist,
-             Entry **hitA, Entry **hitB) {
+  int insert(uint64_t hi, uint64_t lo, int tag, Int *dist, Entry **hitA) {
     uint64_t h = hi ^ (lo * 0x9e3779b97f4a7c15ULL);
     h ^= h >> 29;
     h *= 0xbf58476d1ce4e5b9ULL;
@@ -115,12 +114,10 @@ struct DpTable {
         return 0;
       }
       if (en.hi == hi && en.lo == lo) {
+        // The caller owns the second side (it passes its own dist), so there is
+        // no second reference to hand back.
         *hitA = &en;
-        *hitB = NULL;
-        // Synthesize the second side by letting the caller pass its own dist;
-        // we only need to know there is an opposite-herd partner.
-        if ((int)en.tag != tag) return 1;
-        return 2;
+        return ((int)en.tag != tag) ? 1 : 2;
       }
     }
     return 3;
@@ -128,7 +125,12 @@ struct DpTable {
 };
 
 static DpTable dp;
-static unsigned long long g_same = 0, g_opp = 0, g_full = 0;
+
+// Distinguished-point policy. DP_BITS = leading zero bits required of the x
+// coordinate; DP_TABLE_BITS = log2 of the table size (must exceed 2*DP_BITS for
+// a healthy load factor).
+static const int DP_BITS = 8;
+static const int DP_TABLE_BITS = 20;
 
 // Build the jump table. NB_JUMP points at distances in [1, 2^jumpBits).
 // jumpBits = rangePower/2 + 1, and upstream draws jumpDistance[i].Rand(jumpBit)
@@ -268,9 +270,22 @@ static int checkKey(Int *Td, Int *Wd, uint8_t type, Point *keyToSearch,
 // ghMutex around AddToTable.
 struct Shared {
   Point keyToSearch;
+  // The ABSOLUTE target, i.e. the public key the operator actually asked for.
+  // keyToSearch is the range-shifted copy the herds collide on, so it cannot
+  // identify the search on its own: a checkpoint stores it, and a checkpoint
+  // written for a different key but the same range would be indistinguishable.
+  Point absTarget;
   Int rangeStart;
   int rangePower;
   int jumpBits;
+  int dpBits;          // 0 = no distinguished points; must match the load-time check
+
+  // Selftest budget. Without a cap the selftest cannot fail, only run forever,
+  // so "SELFTEST FAIL: exhausted the budget" would be unreachable and a broken
+  // port would report success by hanging. Both are read from the environment;
+  // the defaults sit orders of magnitude above the ~2^10 ops a solve needs.
+  unsigned long long maxOps;    // 0 = no op cap
+  double maxSeconds;            // 0 = no wall-clock cap
 
   pthread_mutex_t dpMut;
   volatile int stop;          // set once any thread solves
@@ -281,6 +296,11 @@ struct Shared {
   unsigned long long ops;
   unsigned long long collisions;
   unsigned long long dpsSeen;
+  // Insert outcomes other than a clean store. Guarded by statMut: a full probe
+  // window means the table is saturating and losing distinguished points.
+  unsigned long long sameHerd;
+  unsigned long long oppositeHerd;
+  unsigned long long probeFull;
   pthread_mutex_t statMut;
   Int kRelTarget;
 };
@@ -332,6 +352,74 @@ static void *workerMain(void *arg) {
     sh->ops += 2ULL * w->half;
     pthread_mutex_unlock(&sh->statMut);
 
+#ifdef KPD_PROBES
+    if (w->tid == 0 && getenv("KPD_POST")) {
+      static long long r = 0;
+      if ((r % 1000) == 0) {
+        // Are points still consistent with their distances AFTER stepping?
+        int bad = 0;
+        for (int g = 0; g < w->half; g++) {
+          Point chk2 = sec.ComputePublicKey(&w->th[g].dist, true);
+          if (!chk2.equals(w->th[g].p)) bad++;
+        }
+        // How many DISTINCT x do the 32 tame points have right now?
+        int ux = 0;
+        for (int i = 0; i < w->half; i++) {
+          bool nu = true;
+          for (int j = 0; j < i; j++) if (w->th[j].p.x.IsEqual(&w->th[i].p.x)) nu = false;
+          ux += nu;
+        }
+        // Are they still affine (z==1)?
+        int nonaff = 0;
+        for (int g = 0; g < w->half; g++) {
+          Int one; one.SetInt32(1);
+          if (!w->th[g].p.z.IsEqual(&one)) nonaff++;
+        }
+        printf("[post r%lld] tameInconsistent=%d distinctTameX=%d/%d nonAffine=%d\n",
+               r, bad, ux, w->half, nonaff);
+        printf("        b3[0]=0x%016llX b0[0]=0x%016llX z[0]=0x%016llX\n",
+               (unsigned long long)w->th[0].p.x.bits64[3],
+               (unsigned long long)w->th[0].p.x.bits64[0],
+               (unsigned long long)w->th[0].p.z.bits64[0]);
+        printf("        dist[0]=%s dist[1]=%s\n",
+               w->th[0].dist.GetBase16().c_str(), w->th[1].dist.GetBase16().c_str());
+        printf("        jmp[0]=%llu jmp[1]=%llu gjd[0]=%s gjd[1]=%s\n",
+               (unsigned long long)w->th[0].jmp, (unsigned long long)w->th[1].jmp,
+               g_jd[w->th[0].jmp].GetBase16().c_str(),
+               g_jd[w->th[1].jmp].GetBase16().c_str());
+        // Which indices share an x, and are their dists/jmps identical?
+        for (int i = 0; i < w->half; i++)
+          for (int j = i + 1; j < w->half; j++)
+            if (w->th[i].p.x.IsEqual(&w->th[j].p.x)) {
+              printf("        dup th[%d]/th[%d] distEq=%d jmp=%llu/%llu\n", i, j,
+                     w->th[i].dist.IsEqual(&w->th[j].dist),
+                     (unsigned long long)w->th[i].jmp,
+                     (unsigned long long)w->th[j].jmp);
+            }
+        fflush(stdout);
+      }
+      r++;
+    }
+#endif
+
+#ifdef KPD_PROBES
+    if (w->tid == 0 && getenv("KPD_DELTA")) {
+      static long long r = 0;
+      if (r < 12 || (r % 5000) == 0) {
+        Int k; k.Set(&sh->kRelTarget);
+        Int d; d.Set(&w->th[0].dist);
+        Int wdist; wdist.Set(&w->wh[0].dist);
+        Int delta; delta.ModSub(&w->th[0].dist, &w->wh[0].dist);
+        printf("[delta r%lld] tame0=%s wild0=%s delta=%s k=%s\n", r,
+               w->th[0].dist.GetBase16().c_str(),
+               w->wh[0].dist.GetBase16().c_str(),
+               delta.GetBase16().c_str(), k.GetBase16().c_str());
+        fflush(stdout);
+      }
+      r++;
+    }
+#endif
+
 
 
     for (int g = 0; g < w->half; g++) {
@@ -351,11 +439,13 @@ static void *workerMain(void *arg) {
         int r;
         pthread_mutex_lock(&sh->dpMut);
         r = dp.insert(hi, cand[c]->p.x.bits64[0], tags[c], &cand[c]->dist,
-                      &hitA, NULL);
-        if (r == 2) g_same++;
-        if (r == 3) g_full++;
+                      &hitA);
+        if (r == 2) { pthread_mutex_lock(&sh->statMut); sh->sameHerd++; pthread_mutex_unlock(&sh->statMut); }
+        if (r == 3) { pthread_mutex_lock(&sh->statMut); sh->probeFull++; pthread_mutex_unlock(&sh->statMut); }
         if (r == 1 && hitA) {
-          g_opp++;
+          pthread_mutex_lock(&sh->statMut);
+          sh->oppositeHerd++;
+          pthread_mutex_unlock(&sh->statMut);
           Int Td, Wd;
           if ((int)hitA->tag == 1) {
             Td.Set(&hitA->dist);
@@ -367,12 +457,15 @@ static void *workerMain(void *arg) {
           pthread_mutex_lock(&sh->statMut);
           sh->collisions++;
           pthread_mutex_unlock(&sh->statMut);
+          // Solve outside the table lock, then leave it released: every
+          // iteration re-acquires at the top, so re-locking here would
+          // self-deadlock on a non-recursive mutex.
           pthread_mutex_unlock(&sh->dpMut);
           trySolve(sh, &Td, &Wd, w->tid);
-          pthread_mutex_lock(&sh->dpMut);
         } else {
           pthread_mutex_unlock(&sh->dpMut);
         }
+        if (sh->stop) break;
       }
     }
   }
@@ -396,6 +489,13 @@ struct CkptHeader {
   uint32_t dpBits;
   uint64_t lo;
   uint64_t entries;      // number of occupied table entries
+  // v2: the absolute target point. A checkpoint belongs to ONE public key, and
+  // lo/bits/dpBits do not identify which: two different keys over the same
+  // range pass every other check. Without this the loader restores another
+  // key's table AND overwrites the target with it, so the run searches the
+  // wrong key and only notices at the very end, or never.
+  unsigned char absX[32];
+  unsigned char absY[32];
 };
 
 static void intToBytes(Int *v, unsigned char *out) {
@@ -422,12 +522,19 @@ static int saveCheckpoint(const char *path, Shared *sh) {
   if (!f) return -1;
 
   CkptHeader h;
-  memset(&h, 0, sizeof(h));
+  memset(&h, 0, sizeof(h));  // POD only: no members with constructors
   memcpy(h.magic, CKPT_MAGIC, 8);
-  h.version = 1;
+  h.version = 2;
   h.rangePower = (uint32_t)sh->rangePower;
   h.jumpBits = (uint32_t)sh->jumpBits;
+  h.dpBits = (uint32_t)sh->dpBits;
   h.lo = sh->rangeStart.bits64[0];
+  intToBytes(&sh->absTarget.x, h.absX);
+  intToBytes(&sh->absTarget.y, h.absY);
+  // Count first: the header must describe the records that follow it, so a
+  // reader can size the table instead of trusting a stale zero.
+  for (size_t i = 0; i < dp.e.size(); i++)
+    if (dp.e[i].tag) h.entries++;
   fwrite(&h, sizeof(h), 1, f);
 
   // Only the RELATIVE target and the occupied table entries are stored. Herd
@@ -446,7 +553,17 @@ static int saveCheckpoint(const char *path, Shared *sh) {
     fwrite(&dp.e[i].tag, 4, 1, f);
     intToBytes(&dp.e[i].dist, buf);
     fwrite(buf, 32, 1, f);
-    h.entries++;
+  }
+  const unsigned long long written = h.entries;
+  if (ferror(f)) { fclose(f); unlink(tmp); return -1; }
+  if (written) {
+    // Self-check: the header promised this many records, so confirm the body
+    // actually produced them. A short write here would otherwise poison the
+    // next resume with a table that silently disagrees with its own header.
+    long body = ftell(f) - (long)(sizeof(CkptHeader) + 64);
+    if (body < 0 || (unsigned long long)body != written * 52ULL) {
+      fclose(f); unlink(tmp); return -1;
+    }
   }
 
   fflush(f);
@@ -464,13 +581,46 @@ static int loadCheckpoint(const char *path, Shared *sh, int expectDpBits) {
     fclose(f);
     return -1;
   }
-  if (h.version != 1 || (int)h.rangePower != sh->rangePower ||
-      h.lo != sh->rangeStart.bits64[0]) {
-    printf("checkpoint mismatch: it was written for a different target/range\n");
+  if (h.version != 2) {
+    printf("checkpoint version %u, this build writes and reads 2 (a v1 file "
+           "cannot be checked against a target key, so it is not usable)\n",
+           h.version);
     fclose(f);
     return -1;
   }
-  dp.init(20, expectDpBits);
+  if ((int)h.rangePower != sh->rangePower || h.lo != sh->rangeStart.bits64[0]) {
+    printf("checkpoint mismatch: it was written for a different range\n");
+    fclose(f);
+    return -1;
+  }
+  // The target check comes FIRST among the semantic ones, because it is the one
+  // whose failure is otherwise invisible until the run ends. Compare the
+  // absolute point the operator supplied, not the range-shifted copy, so the
+  // check does not depend on the lo-shift (which is skipped when lo == 0).
+  {
+    unsigned char wantX[32], wantY[32];
+    intToBytes(&sh->absTarget.x, wantX);
+    intToBytes(&sh->absTarget.y, wantY);
+    if (memcmp(h.absX, wantX, 32) || memcmp(h.absY, wantY, 32)) {
+      printf("checkpoint mismatch: it was written for a DIFFERENT public key.\n");
+      printf("  refusing to resume: the stored table belongs to another "
+             "search, and resuming it would silently hunt the wrong key.\n");
+      printf("  use a different --checkpoint path, or drop --resume to start "
+             "this key's search from scratch.\n");
+      fclose(f);
+      return -2;
+    }
+  }
+  // The DP criterion is part of the search's meaning: restoring a table built
+  // with a different dpBits would compare points that were never flagged the
+  // same way, and the resume would silently miss every collision.
+  if ((int)h.dpBits != expectDpBits) {
+    printf("checkpoint mismatch: dpBits %u on disk, %d expected\n", h.dpBits,
+           expectDpBits);
+    fclose(f);
+    return -1;
+  }
+  dp.init(DP_TABLE_BITS, expectDpBits);
   unsigned char buf[32];
   Point k;
   if (fread(buf, 32, 1, f) != 1) { fclose(f); return -1; }
@@ -480,27 +630,43 @@ static int loadCheckpoint(const char *path, Shared *sh, int expectDpBits) {
   k.z.SetInt32(1);
   sh->keyToSearch = k;
 
+uint64_t stored = 0;
   for (uint64_t n = 0; n < h.entries; n++) {
     DpTable::Entry en;
-    memset(&en, 0, sizeof(en));
+    en.tag = 0;              // Int has a constructor: never memset it
+    en.dist.SetInt32(0);
     if (fread(&en.hi, 8, 1, f) != 1) { fclose(f); return -1; }
     if (fread(&en.lo, 8, 1, f) != 1) { fclose(f); return -1; }
     if (fread(&en.tag, 4, 1, f) != 1) { fclose(f); return -1; }
     if (fread(buf, 32, 1, f) != 1) { fclose(f); return -1; }
     bytesToInt(&en.dist, buf);
+    if (en.tag != 1 && en.tag != 2) {   // corrupt tag would poison the table
+      printf("checkpoint corrupt: entry %llu has tag %u\n",
+             (unsigned long long)n, en.tag);
+      fclose(f);
+      return -1;
+    }
     uint64_t hsh = en.hi ^ (en.lo * 0x9e3779b97f4a7c15ULL);
     hsh ^= hsh >> 29;
     hsh *= 0xbf58476d1ce4e5b9ULL;
     hsh ^= hsh >> 32;
     size_t idx = (size_t)(hsh & dp.mask);
+    bool placed = false;
     for (size_t p = 0; p < 64; p++) {
       DpTable::Entry &slot = dp.e[(idx + p) & dp.mask];
-      if (!slot.tag) { slot = en; break; }
+      if (!slot.tag) { slot = en; placed = true; break; }
     }
+    // A full probe window means the record is unrecoverable. Say so rather
+    // than pretending the resume restored the whole table.
+    if (placed) stored++;
   }
   fclose(f);
+  if (stored != h.entries)
+    printf("WARNING: checkpoint listed %llu entries but only %llu fit the "
+           "probe window; the rest were dropped\n",
+           (unsigned long long)h.entries, (unsigned long long)stored);
   printf("resumed from checkpoint: %llu table entries\n",
-         (unsigned long long)h.entries);
+         (unsigned long long)stored);
   return 0;
 }
 
@@ -556,13 +722,19 @@ static int selftest() {
   pthread_mutex_init(&sh.statMut, NULL);
   sh.stop = 0; sh.solved = 0;
   sh.ops = 0; sh.collisions = 0; sh.dpsSeen = 0;
+  sh.sameHerd = sh.oppositeHerd = sh.probeFull = 0;
   sh.rangePower = rangePower;
   sh.jumpBits = jumpBits;
+  sh.dpBits = DP_BITS;
   sh.keyToSearch = keyToSearch;
   sh.rangeStart = rangeStart;
   sh.kRelTarget.Set(&kRel);
+  sh.maxOps = 200000000ULL;
+  sh.maxSeconds = 120.0;
+  if (const char *e = getenv("KPD_MAXOPS")) sh.maxOps = strtoull(e, NULL, 10);
+  if (const char *e = getenv("KPD_MAXSECONDS")) sh.maxSeconds = atof(e);
 
-  dp.init(20, 8);
+  dp.init(DP_TABLE_BITS, DP_BITS);
 
   // Run the real search path (threads + shared table), not a special-cased
   // serial loop, so the self-test actually exercises the code that ships.
@@ -589,6 +761,7 @@ static int selftest() {
     createTame(w.th.data(), w.half, rangePower);
     createWild(w.wh.data(), w.half, &sh.keyToSearch, rangePower, &rangeWidthDiv2);
 
+#ifdef KPD_PROBES
     // [VERIFY] herd invariants, once, before any stepping:
     //   tame: p must equal dist*G
     //   wild: p must equal keyToSearch + dist*G
@@ -639,8 +812,17 @@ static int selftest() {
       printf("[VERIFY] distinct tame dist=%d wild dist=%d  distinct tame x=%d (of %d)\n",
              uniqT, uniqW, ux, w.half);
       printf("[VERIFY] jumpBits=%d NB_JUMP=%d rangePower=%d\n", jumpBits, NB_JUMP, rangePower);
+      // Wild distances MUST straddle zero, else delta cannot cross k.
+      int neg = 0, pos = 0;
+      for (int g = 0; g < w.half; g++) {
+        if (w.wh[g].dist.IsNegative()) neg++; else pos++;
+      }
+      printf("[VERIFY] wild dists: negative=%d positive=%d (need both)\n", neg, pos);
+      Int rwd; rwd.Set(&rangeWidthDiv2);
+      printf("[VERIFY] rangeWidthDiv2=%s  k=%s\n", rwd.GetBase16().c_str(), kk.GetBase16().c_str());
       fflush(stdout);
     }
+#endif
   }
 
   double t0 = Timer::get_tick();
@@ -656,6 +838,18 @@ static int selftest() {
     ops = sh.ops;
     pthread_mutex_unlock(&sh.statMut);
     double el = Timer::get_tick() - t0;
+    // Enforce the budget here, where the loop can be exited, rather than in
+    // the workers: stop is the only flag they observe.
+    if (sh.maxOps && ops >= sh.maxOps) {
+      printf("  [budget] op cap %llu reached\n", sh.maxOps);
+      sh.stop = 1;
+      break;
+    }
+    if (sh.maxSeconds && el >= sh.maxSeconds) {
+      printf("  [budget] wall-clock cap %.0fs reached\n", sh.maxSeconds);
+      sh.stop = 1;
+      break;
+    }
     double rate = el > 0 ? ops / el : 0;
     printf("  ops=%-12llu rate=%8.0f/s dps=%-10llu collisions=%llu\n", ops,
            rate, sh.dpsSeen, sh.collisions);
@@ -663,7 +857,8 @@ static int selftest() {
       static unsigned long long shown = 0;
       if (sh.ops - shown > 8000000ULL) { shown = sh.ops;
         printf("    [table] occupied=%llu/%llu same=%llu opp=%llu full=%llu\n", occ,
-               (unsigned long long)dp.e.size(), g_same, g_opp, g_full); } }
+               (unsigned long long)dp.e.size(), sh.sameHerd, sh.oppositeHerd,
+               sh.probeFull); } }
     fflush(stdout);
     if (ckpt && ops > lastOps) {
       pthread_mutex_lock(&sh.dpMut);
@@ -740,6 +935,13 @@ static int searchMain(int argc, char **argv) {
   sh.ops = 0; sh.collisions = 0; sh.dpsSeen = 0;
   sh.rangePower = rangePower;
   sh.jumpBits = rangePower / 2 + 1;
+  sh.dpBits = DP_BITS;
+  sh.sameHerd = sh.oppositeHerd = sh.probeFull = 0;
+  // A real search is meant to run until it solves or the operator kills it,
+  // so no budget here. Only the selftest gets one, because a selftest that
+  // cannot fail is not a selftest.
+  sh.maxOps = 0;
+  sh.maxSeconds = 0;
   setU64(&sh.rangeStart, lo);
 
   buildJumps(sh.jumpBits);
@@ -768,36 +970,47 @@ static int searchMain(int argc, char **argv) {
          rangePower, est);
   printf("(elapsed-time estimate deliberately omitted: it depends on device rate.)\n");
 
-  dp.init(20, 8);
-  int restored = 0;
-  if (ckpt && doResume && access(ckpt, F_OK) == 0) {
-    Point tmp;
+  dp.init(DP_TABLE_BITS, DP_BITS);
+  // The ABSOLUTE target, kept for the final witness. sh.keyToSearch is
+  // overwritten below with the relative target the herds actually collide on,
+  // so it cannot double as the witness.
+  Point absTarget;
+  {
     bool isComp = false;
-    if (sec.ParsePublicKeyHex((char *)pubkeyHex, tmp, isComp)) {
-      sh.keyToSearch = tmp;
-      restored = (loadCheckpoint(ckpt, &sh, 8) == 0);
-    }
-  }
-  if (!restored) {
-    Point target;
-    bool isComp = false;
-    if (!sec.ParsePublicKeyHex((char *)pubkeyHex, target, isComp)) {
+    if (!sec.ParsePublicKeyHex((char *)pubkeyHex, absTarget, isComp)) {
       printf("could not parse --pubkey\n");
       return 2;
     }
+  }
+  int restored = 0;
+  if (ckpt && doResume && access(ckpt, F_OK) == 0) {
+    sh.keyToSearch = absTarget;
+    sh.absTarget = absTarget;
+    int rc = loadCheckpoint(ckpt, &sh, DP_BITS);
+    if (rc == -2) return 4;   // checkpoint belongs to a different key: stop now
+    restored = (rc == 0);
+  }
+  if (!restored) {
+    Point target = absTarget;
     sh.keyToSearch = target;
     // The table is keyed on the RELATIVE target: shift the point back by
     // rangeStart so the collision condition is Td - Wd == k - rangeStart.
-    Int rs;
-    setU64(&rs, lo);
-    Int nrs;
-    nrs.Set(&rs);
-    nrs.ModNegK1order();
-    Int g;
-    setU64(&g, 0);
-    Point gs = sec.ComputePublicKey(&nrs, true);
-    Point rel = sec.AddDirect(sh.keyToSearch, gs);
-    setPoint(sh.keyToSearch, rel);
+    //
+    // The shift is the IDENTITY when rangeStart is 0, and must be skipped
+    // rather than computed: ComputePublicKey(0) is the point at infinity,
+    // which has no affine representation, and adding it silently corrupts the
+    // target into a point no key maps to. That made every --start 0 search run
+    // forever with collisions=0.
+    if (lo != 0) {
+      Int rs;
+      setU64(&rs, lo);
+      Int nrs;
+      nrs.Set(&rs);
+      nrs.ModNegK1order();
+      Point gs = sec.ComputePublicKey(&nrs, true);
+      Point rel = sec.AddDirect(sh.keyToSearch, gs);
+      setPoint(sh.keyToSearch, rel);
+    }
   }
 
   if (threads < 1) threads = 1;
@@ -848,11 +1061,75 @@ static int searchMain(int argc, char **argv) {
   for (int t = 0; t < threads; t++) pthread_join(th[t], NULL);
 
   if (sh.solved) {
-    // Report the ABSOLUTE key: relative + rangeStart.
-    Int abs;
-    abs.Set(&sh.solvedKey);
-    abs.ModAddK1order(&sh.rangeStart);
-    printf("SOLVED: privkey = %s\n", abs.GetBase16().c_str());
+    // checkKey already added rangeStart, so solvedKey is ABSOLUTE. Do not add
+    // it again here: doing so silently reports a key that is wrong by exactly
+    // rangeStart, which looks like a plausible answer to a human reader.
+    //
+    // Witness rather than trust: the recovered scalar must reproduce the
+    // supplied public key. This is what would have caught the double-add.
+    Point chk = sec.ComputePublicKey(&sh.solvedKey, true);
+    if (!chk.equals(absTarget)) {
+      printf("RECOVERED KEY DOES NOT REPRODUCE THE TARGET -- internal error, "
+             "reporting nothing\n");
+      return 1;
+    }
+    // The herds walk unbounded, so a collision can be found for a key OUTSIDE
+    // the requested interval. The key would still be correct for the pubkey,
+    // but reporting it as a solution to a range search is misleading, so say
+    // so rather than silently widening the search.
+    {
+      Int off;
+      off.Set(&sh.solvedKey);
+      off.ModSubK1order(&sh.rangeStart);
+      const uint64_t span = (rangePower >= 64) ? ~0ULL : ((1ULL << rangePower) - 1);
+      uint64_t offLo = off.bits64[0];
+      if (offLo > span) {
+        printf("SOLVED OUTSIDE THE REQUESTED RANGE: privkey = %s\n",
+               sh.solvedKey.GetBase16().c_str());
+        printf("  it is rangeStart + 0x%llX, but the range width is only 2^%d\n",
+               (unsigned long long)offLo, rangePower);
+        printf("SECURITY: do not paste this into a transcript or an issue.\n");
+        return 3;
+      }
+    }
+    // Final witness ON THE OUTPUT, not on the field. Verified a fault-injected
+    // build that printed C2468 for C1234 while solvedKey held the right value:
+    // checking the struct proved the field, not what the operator reads. So
+    // render the string, parse it back, and re-derive from THAT.
+    const std::string shown = sh.solvedKey.GetBase16();
+    // GetBase16 emits minimal-width uppercase hex with no 0x prefix, so parse
+    // it back by hand rather than through SetBase16 (which returns void).
+    // Accumulate straight into the limbs: value = value*16 + d, most
+    // significant nibble first, left aligned in bits64[0].
+    Int echoed;
+    echoed.SetInt32(0);
+    bool hexOk = !shown.empty() && shown.size() <= 64;
+    for (size_t z = 0; hexOk && z < shown.size(); z++) {
+      const char c = shown[z];
+      int d;
+      if (c >= '0' && c <= '9') d = c - '0';
+      else if (c >= 'A' && c <= 'F') d = c - 'A' + 10;
+      else { hexOk = false; break; }
+      uint64_t carry = (uint64_t)d;
+      for (int i = 0; i < NB64BLOCK; i++) {
+        const uint64_t nc = (echoed.bits64[i] >> 60) & 1;
+        echoed.bits64[i] = (echoed.bits64[i] << 4) | carry;
+        carry = nc;
+      }
+      if (carry) hexOk = false;   // overflowed 256 bits
+    }
+    if (!hexOk) {
+      printf("could not re-read the key I am about to print -- reporting "
+             "nothing\n");
+      return 1;
+    }
+    Point fromShown = sec.ComputePublicKey(&echoed, true);
+    if (!fromShown.equals(absTarget)) {
+      printf("THE KEY I WOULD PRINT DOES NOT REPRODUCE THE TARGET -- "
+             "internal error, reporting nothing\n");
+      return 1;
+    }
+    printf("SOLVED: privkey = %s\n", shown.c_str());
     printf("SECURITY: do not paste this into a transcript or an issue.\n");
     return 0;
   }

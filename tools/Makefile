@@ -25,11 +25,20 @@ all: kangaroo_pd
 kangaroo_pd: kangaroo_pd.cpp $(SECPK1)
 	$(CXX) $(CXXFLAGS) -o $@ $< $(SECPK1) $(LDLIBS)
 
+# Same solver plus the herd/table probes that wildkangaroo-diag.py parses.
+# Never search with this binary; it is for diagnosis only.
+kangaroo_pd_probes: kangaroo_pd.cpp $(SECPK1)
+	$(CXX) $(CXXFLAGS) -DKPD_PROBES -o $@ $< $(SECPK1) $(LDLIBS)
+
 # Known-answer test. MUST pass before the binary is trusted for any search.
 test: kangaroo_pd
 	./kangaroo_pd -t
 
-clean:
-	rm -f kangaroo_pd
+# Same KAT on the probe build, so the probes cannot silently break the solver.
+test-probes: kangaroo_pd_probes
+	./kangaroo_pd_probes -t
 
-.PHONY: all test clean
+clean:
+	rm -f kangaroo_pd kangaroo_pd_probes
+
+.PHONY: all test test-probes clean

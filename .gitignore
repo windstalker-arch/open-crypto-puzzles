@@ -67,3 +67,6 @@ sibling_index.json
 
 # built binaries
 tools/kangaroo_pd
+# the probe build of the same solver (`make kangaroo_pd_probes`, -DKPD_PROBES).
+# sources are tracked, this binary is not; verified with `git check-ignore`.
+tools/kangaroo_pd_probes
