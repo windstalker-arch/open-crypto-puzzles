@@ -98,19 +98,35 @@ Lead 0 rank unchanged.
 
 ## 1. Replay the dynamically-constructed candidates that a filter bug never reached
 
-## 1. The third door: the preimage of the unmessaged planted address
+## 1. The third door: the preimage of the unmessaged planted address [VOID AS A PREMISE 2026-10-04, row `R-TDTIP` -- the address is a tip address, not a planted oracle; the oracle tool is still sound and every battery already run against it stands as valid work]
+
+**RETIRED PREMISE, recorded here so a reader arriving at this heading first does not
+rebuild it.** `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9` is the `Tips:` address in the source of
+`keyjoke/vs-kangaroo-hybrid` (`main.cpp:455`), a GPU Kangaroo fork, and its single
+transaction is a 1,050 sat tip (1,200 in from `3GSMG24...` less a 150 sat fee, no
+`OP_RETURN`, 2020-04-07). It has **no preimage to recover**, so this lead is void as a
+premise, not as a computation: the batteries filed against it (`R-THIRDDOOR-AUDIO`,
+`R-COLORDOOR`, `R-TD-YINYANG-2026-10-03`, `R-BRAINWALLET-3D`, `R-YELLOWBLUE-HASH`, the
+`architect_twodoors` N=2232 sweep) keep their counts and witnesses, and
+`tools/third_door.py` is an exact, free, offline address-hash test that still passes its
+self-test. The December 2020 Telegram report that the creator named this address as a
+findings oracle is **UNVERIFIED and in conflict with the source banner**; it is kept
+below unretracted, because either it was a remark about a door metaphor or there is a
+second object not yet found. The 1,050 sat transfer, however, is not evidence of a stage
+hash, so this lead no longer offers a grindable oracle. Text retained below as written on
+2026-09-29, with that status attached.
 
 The creator funded, from the vanity wallet `3GSMG24TujqfMJG1kQoBX18DzJHQLeJYMK`, one
 address per stage answer with the SHA-256 of the answer as its private key, and two
 "Good job, Neo!" addresses whose keys are the raw and bit-reversed bytes of the image
 URL (README, "Planted addresses"; `data/planted-addresses.csv`). The one address funded
-without a message, on 2020-04-07, `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9`, has no known
-preimage. It was planted four days after the two door markers, between the January
-2020 poem and the April 2020 audio hint, and the creator named it in December 2020 as
-a verification address and a year later said that door was "still a thing"
-(Telegram, reported). It is an exact, free, offline oracle: a candidate is hashed (or
-padded, or bit-reversed) into a key and its compressed and uncompressed P2PKH
-addresses compared to the list, at about 176,000 keys/s per core.
+without a message, on 2020-04-07, `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9`, was planted four
+days after the two door markers, between the January 2020 poem and the April 2020 audio
+hint, and the creator named it in December 2020 as a verification address and a year later
+said that door was "still a thing" (Telegram, reported; **UNVERIFIED, now contradicted by
+`R-TDTIP`**). It is an exact, free, offline oracle: a candidate is hashed (or padded, or
+bit-reversed) into a key and its compressed and uncompressed P2PKH addresses compared to
+the list, at about 176,000 keys/s per core.
 
 RATE, CORRECTED 2026-09-29 (row R-COLORDOOR). The 176,000 keys/s figure is section 18's
 substring-sweep rate and is right for that engine, but it is not this oracle's rate: a

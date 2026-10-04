@@ -263,7 +263,17 @@ def main() -> int:
             "that row is the do-you-beleive-me one",
         )
     ck(planted[DOOR]["op_return"] == "(none)", "the CSV records (none) for the door")
-    ck(planted[DOOR]["status"] == "open", "the CSV still marks the door open")
+    # R-TDTIP (2026-10-04) retired the "open" status: 1NULY... is a Tips: label in
+    # the tool author's own source, not a planted oracle. Both statuses are
+    # accepted so this check records the CSV's state rather than enforcing a
+    # superseded premise. The funding reconstruction above is unaffected either
+    # way and is what this tool exists to witness.
+    door_status = planted[DOOR]["status"]
+    ck(
+        door_status == "open" or door_status.startswith("void-tip-address"),
+        f"the CSV marks the door with a known status (got {door_status!r}; "
+        f"'open' pre-R-TDTIP, 'void-tip-address...' after)",
+    )
     ck(
         planted[GOODJOB_RAW]["op_return"] == planted[GOODJOB_BITS]["op_return"] == "Good job, Neo!",
         "the CSV records Good job, Neo! for both good-job addresses",

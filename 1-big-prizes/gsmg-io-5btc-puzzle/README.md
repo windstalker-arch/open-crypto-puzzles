@@ -211,12 +211,26 @@ chars were correct"), the phase 3.2 answer ("GSMG.io: phase3.2 pass OK"), the
 string ("GSMG.io: do you beleive me you need it?"). Two more, both messaged "Good
 job, Neo!" on 2020-04-03, use the raw 24 bytes of `gsmg.io/theseedisplanted`,
 zero-padded on the left, and the same 192 bits reversed, which is the early hint
-"esrever" applied to the image's binary code. One address, funded on 2020-04-07 with
-no message, `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9`
-([explorer](https://mempool.space/address/1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9)), has
-no known preimage; the creator named it in December 2020 as one of the two addresses
-to check findings against instead of hitting the server, and a year later called the
-door it stands for "still a thing" (Telegram, reported). I read it as the third door.
+"esrever" applied to the image's binary code. One more address was funded from the same
+wallet on 2020-04-07, `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9`
+([explorer](https://mempool.space/address/1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9)), and it
+is **not** a planted address. **[CORRECTED 2026-10-04, row `R-TDTIP`; the paragraph below
+as it stood until then was wrong]** It is a brute-force tip address: it is the `Tips:`
+label in the source of `keyjoke/vs-kangaroo-hybrid`, the GPU Kangaroo fork that ships the
+line `[#  Tips: 1NULY7DhzuSvD...]` in `main.cpp:455` next to the author's GPU credits. It
+received exactly one transaction in its life, 1,050 sats on 2020-04-07
+(`d6ff3da13c67f8e784f3c8d57eaa05ce4456da3eebf67fa36a5e2cd9ca6f6b70`), which is its input
+of 1,200 sats from `3GSMG24...` less the 150 sat fee, with no `OP_RETURN` and nothing
+encoded -- a tip, not `sha256(stage_answer)`. So there is no preimage to recover, and the
+"no known preimage" wording below was measuring the wrong thing. I have kept the December
+2020 Telegram report, that the creator named this address as one of the two addresses to
+check findings against instead of hitting the server and called its door "still a thing",
+but marked it **[UNVERIFIED, AND IN CONFLICT with the source banner]** -- it is second-hand
+and it does not agree with a tip label; either it was a remark about a door metaphor, or
+there is a second object I have not found. That question is open. What is settled is that
+the 1,050 sat transfer is not evidence of a stage hash, so the third door is not an
+oracle. The batteries already run against this address stay in `analysis/tested.md` as
+valid computations about a key held by someone else.
 
 `data/planted-addresses.csv` lists the addresses, messages and preimages; I
 re-derived every listed preimage on 2026-09-03. The consequence is an oracle the

@@ -3,7 +3,12 @@
 # built from the preimage; "sha256" means sha256(preimage) as the key, "raw" means the ASCII
 # bytes zero-padded on the left, "bits reversed" means the 192-bit string of the raw bytes
 # read backwards. address = compressed P2PKH of that key. Every "verified" row was re-derived
-# on 2026-09-03; the unmessaged address of 2020-04-07 has no known preimage.
+# on 2026-09-03. The unmessaged address of 2020-04-07 is not in this family: it is a tip
+# address, so "no known preimage" was the wrong question (row R-TDTIP, 2026-10-04).
+# The final row is NOT a planted address: `1NULY...` is a brute-force tip address, so it has no
+# preimage and was never an oracle. The `1NULY` prefix is the miner's vanity choice, not the
+# creator's. Source: keyjoke/vs-kangaroo-hybrid main.cpp:455 `[# Tips: 1NULY... #]`; sole tx
+# d6ff3da1...6b70 (2020-04-07) is 1200 sats in less a 150 sat fee, with no OP_RETURN. See R-TDTIP.
 address,funded,op_return,key,preimage,status
 1AD2wfwXukZ1kUAy848hTQQ72aSBZPB75r,2020-03-24,GSMG.io: are you sure?,sha256,theflowerblossomsthroughwhatseemstobeaconcretesurface,verified
 1Jqq37KkZEt4F3Dt6qXdtyiMEFBBdawbkJ,2020-03-24,"GSMG.io: Right, this is causality",sha256,causality,verified
@@ -13,4 +18,4 @@ address,funded,op_return,key,preimage,status
 1GyT5WrLYpwFkuiVoPDJZa1Q6jtjbjuBff,2020-03-24,GSMG.io: do you beleive me you need it?,sha256,1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe,verified
 148XH2YBmLr4oAJXQcG84FpNYoBmqnVPHQ,2020-04-03,"Good job, Neo!",raw,gsmg.io/theseedisplanted,verified
 13HGhjkmKUkP8sk9k63BLmhkxRjy7uK4Rp,2020-04-03,"Good job, Neo!",bits reversed,gsmg.io/theseedisplanted,verified
-1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9,2020-04-07,(none),unknown,unknown: the third door,open
+1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9,2020-04-07,(none),not applicable,not applicable: tip address of the brute-force fork author,void-tip-address (not planted; R-TDTIP 2026-10-04)
