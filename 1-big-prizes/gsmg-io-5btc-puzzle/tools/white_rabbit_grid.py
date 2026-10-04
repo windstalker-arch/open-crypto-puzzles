@@ -43,12 +43,45 @@ def classify(px):
 
 
 def extract(path, cell, x0=0, y0=0):
-    a = np.asarray(Image.open(path).convert("RGB"), dtype=np.uint8)
-    return [
-        "".join(classify(a[y0 + cell * r + cell // 2, x0 + cell * c + cell // 2])
-                for c in range(N))
-        for r in range(N)
-    ]
+    """Classify each cell by its DOMINANT colour, not by its centre pixel.
+
+    R-GRID76 (2026-10-04): the centre-pixel rule this function used to apply
+    misread exactly one cell, (r=7, c=6). That cell is 76% white / 24% black,
+    because a drawn outline stroke passes through its middle; sampling the
+    centre therefore returned black for a white cell. It is spiral bit 193,
+    which lies in the 4-bit tail BEYOND the 24-byte seed slug (bits 0..191), so
+    the `gsmg.io/theseedisplanted` witness cannot see it and the error passed
+    unnoticed into data/phase1-matrix-14x14-full.json.
+
+    Dominant colour is the correct rule, and it is the rule the seed itself
+    certifies: of the 7 cells the drawn figure crosses, the 3 that fall inside
+    the seed-covered range (spiral 172, 184, 187) are ALL white under dominant
+    colour, and flipping any of them to black breaks the slug. The figure is
+    decoration drawn over a white background, not part of the encoding.
+
+    Both renderings agree exactly on the disputed cell -- 475/625 and 4275/5625
+    white, a perfectly scale-invariant 3x stroke -- so this is not an artefact
+    of one image. Near-white (254,254,254) still classifies as W, which is what
+    the (r=7, c=4) nest cell requires.
+    """
+    im = Image.open(path).convert("RGB")
+    a = np.asarray(im, dtype=np.uint8)
+    H, W = a.shape[:2]
+    grid = []
+    for r in range(N):
+        row = []
+        for c in range(N):
+            y0c, y1c = y0 + cell * r, min(y0 + cell * r + cell, H)
+            x0c, x1c = x0 + cell * c, min(x0 + cell * c + cell, W)
+            block = a[y0c:y1c, x0c:x1c].reshape(-1, 3)
+            if block.size == 0:
+                row.append("?")
+                continue
+            # most frequent exact RGB triple in the cell wins
+            vals, counts = np.unique(block, axis=0, return_counts=True)
+            row.append(classify(vals[int(counts.argmax())]))
+        grid.append("".join(row))
+    return grid
 
 
 def ccw_spiral():
@@ -161,7 +194,7 @@ def main():
         grid = grids.get(name) or next(iter(grids.values()))
         dest = os.path.join(REPO, "data", "phase1-matrix-14x14-full.json")
         payload = {
-            "_row": "R-WRGRID (2026-09-27)",
+            "_row": "R-WRGRID (2026-09-27); CORRECTED at (7,6) by R-GRID76 (2026-10-04)",
             "_note": ("COMPLETE 196-cell colour map. follow-white-rabbit-grid.json is LOSSY: "
                       "it stores only blue+yellow, but the bit assignment is B/K=1 W/Y=0, so the "
                       "black cells carry 85%% of the 1-bits. Use this file to reproduce the read."),
@@ -169,6 +202,19 @@ def main():
             "_seed": SEED.decode(),
             "_provenance": ("identical in all 196 cells to clues/puzzle.png (cell=75) and to the "
                             "recovered img/follow_the_white_rabbit.png (cell=25)"),
+            "_correction_R_GRID76": (
+                "The 2026-09-27 version of this file had K=87 W=85 (dark total 102) because "
+                "extract() sampled each cell's CENTRE PIXEL. Cell (7,6) is 76% white / 24% black "
+                "-- a drawn outline stroke crosses its centre -- so it was misread as black. "
+                "extract() now uses the DOMINANT colour. Effect: exactly one cell changes, "
+                "(7,6) K->W; counts become K=86 W=86 (a perfect black/white balance, which is "
+                "what community issue #106 reported), the B/K=1 dark total becomes 101, and the "
+                "row/col sum lists become 610876654997879 / 8108108736759668, matching #106 "
+                "exactly on all 28 values. The gsmg.io/theseedisplanted witness does NOT "
+                "discriminate: (7,6) is spiral bit 193, inside the 4-bit tail beyond the 24-byte "
+                "slug (bits 0..191). Those 4 previously-unchecked bits are now 0000. The same "
+                "centre-pixel error is present in the archived official grid "
+                "follow_the_white_rabbit_grid_14x14.json, so that file is wrong at this cell too."),
             "legend": {"B": "blue 63,72,204", "K": "black 0,0,0", "W": "white 255,255,255",
                        "Y": "yellow 255,242,0"},
             "rows": grid,
