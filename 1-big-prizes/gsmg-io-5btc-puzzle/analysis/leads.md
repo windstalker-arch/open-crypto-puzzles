@@ -109,12 +109,18 @@ premise, not as a computation: the batteries filed against it (`R-THIRDDOOR-AUDI
 `R-COLORDOOR`, `R-TD-YINYANG-2026-10-03`, `R-BRAINWALLET-3D`, `R-YELLOWBLUE-HASH`, the
 `architect_twodoors` N=2232 sweep) keep their counts and witnesses, and
 `tools/third_door.py` is an exact, free, offline address-hash test that still passes its
-self-test. The December 2020 Telegram report that the creator named this address as a
-findings oracle is **UNVERIFIED and in conflict with the source banner**; it is kept
-below unretracted, because either it was a remark about a door metaphor or there is a
-second object not yet found. The 1,050 sat transfer, however, is not evidence of a stage
-hash, so this lead no longer offers a grindable oracle. Text retained below as written on
-2026-09-29, with that status attached.
+self-test. **[ROW `R-DOORATTRIB-2026-10-04` SETTLED THE REST: the December 2020 report was
+never the creator's.** It is verbatim at `Msgs.txt:11984-11991`, dated 2020-12-19, spoken by
+solver `Saber (@PversosZomBeeez)`, 672 messages in that file, coaching another solver:
+"check what you found against these two address instead of attacking server". The creator
+is `Jrk Bgrt (@SoWut)` and his only December 2020 message is the word "Thanks". **The
+address has 4 mentions in 97,639 lines of that transcript and zero of them are his.** The
+six-month persistence of the premise is also explained: Saber's *other* address,
+`13HGhjkm...`, is a genuine verified planted oracle, and credibility transferred by
+adjacency to a working oracle is a far better mechanism than the three coincidences
+`R-TDTIP` FINDING 3 offered. Retraction is **as authorial only** -- see the row for the
+residual open question.]** Text retained below as written on 2026-09-29, with that status
+attached.
 
 The creator funded, from the vanity wallet `3GSMG24TujqfMJG1kQoBX18DzJHQLeJYMK`, one
 address per stage answer with the SHA-256 of the answer as its private key, and two
@@ -123,8 +129,11 @@ URL (README, "Planted addresses"; `data/planted-addresses.csv`). The one address
 without a message, on 2020-04-07, `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9`, was planted four
 days after the two door markers, between the January 2020 poem and the April 2020 audio
 hint, and the creator named it in December 2020 as a verification address and a year later
-said that door was "still a thing" (Telegram, reported; **UNVERIFIED, now contradicted by
-`R-TDTIP`**). It is an exact, free, offline oracle: a candidate is hashed (or padded, or
+said that door was "still a thing" (Telegram, reported; **BOTH CLAIMS NOW RETRACTED** --
+the December 2020 statement is `Saber (@PversosZomBeeez)`, not the author, per
+`R-DOORATTRIB`; and the 2021-12-25 "still a thing" sentence is the author talking about *a
+hint*, not this address, so "the door it stands for" was my own glue). It is an exact,
+free, offline oracle: a candidate is hashed (or padded, or
 bit-reversed) into a key and its compressed and uncompressed P2PKH addresses compared to
 the list, at about 176,000 keys/s per core.
 

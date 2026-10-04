@@ -222,14 +222,36 @@ received exactly one transaction in its life, 1,050 sats on 2020-04-07
 (`d6ff3da13c67f8e784f3c8d57eaa05ce4456da3eebf67fa36a5e2cd9ca6f6b70`), which is its input
 of 1,200 sats from `3GSMG24...` less the 150 sat fee, with no `OP_RETURN` and nothing
 encoded -- a tip, not `sha256(stage_answer)`. So there is no preimage to recover, and the
-"no known preimage" wording below was measuring the wrong thing. I have kept the December
-2020 Telegram report, that the creator named this address as one of the two addresses to
-check findings against instead of hitting the server and called its door "still a thing",
-but marked it **[UNVERIFIED, AND IN CONFLICT with the source banner]** -- it is second-hand
-and it does not agree with a tip label; either it was a remark about a door metaphor, or
-there is a second object I have not found. That question is open. What is settled is that
-the 1,050 sat transfer is not evidence of a stage hash, so the third door is not an
-oracle. The batteries already run against this address stay in `analysis/tested.md` as
+"no known preimage" wording below was measuring the wrong thing.
+
+**[CORRECTED AGAIN 2026-10-04, row `R-DOORATTRIB`: the December 2020 Telegram quote is
+real, and it is NOT the creator's]** The report that this address was one of "the two
+addresses to check findings against instead of attacking the server" is verbatim at
+`Msgs.txt:11984-11991` of the group transcript, dated 2020-12-19 -- but the speaker is
+**`Saber ^:)> (---}> ¡×( ;) <>< (@PversosZomBeeez)`**, a solver with 672 messages in that
+file, replying to another solver's "Did you manage to solve ?" with "You extremly smart
+and creative human... check what you found against these two address instead of attacking
+server". **[RETRACTED AS AUTHORIAL.]** The creator's handle there is `Jrk Bgrt (@SoWut)`,
+and his entire December 2020 output is the single word "Thanks". The address appears
+**4 times in 97,639 lines of that transcript and never once from him**. So the `(Telegram,
+reported)` attribution was a community message read as an authorial one -- the same error
+`R-DOORGlyph` already caught three times in September, when `2nd door`, `extra door` and
+`3rd door` all turned out to be community too.
+
+What actually kept this looking like an oracle for six months is the **pairing**: Saber's
+other address, `13HGhjkmKUkP8sk9k63BLmhkxRjy7uK4Rp`, **is** a genuine planted oracle, the
+bit-reversal of `gsmg.io/theseedisplanted`, verified. Listing an unknown address beside a
+working oracle transfers credibility by adjacency, and that is where the premise came from
+-- not from the author.
+
+The one genuinely authorial door sentence nearby does not mention any address. From his
+2021-12-25 message: "The previous 'there is another door hint' **is still a thing**. We're
+not sure if anyone has found another door so far, and we carit check that..." That is the
+author saying a **hint** is still in force. So my earlier phrasing, that he "called the
+door it stands for 'still a thing'", welded a real quote onto an address the quote does
+not mention, and it is withdrawn. What is settled: the 1,050 sat transfer is not evidence
+of a stage hash, and the third door is not an oracle. The batteries already run against
+this address stay in `analysis/tested.md` as
 valid computations about a key held by someone else.
 
 `data/planted-addresses.csv` lists the addresses, messages and preimages; I
