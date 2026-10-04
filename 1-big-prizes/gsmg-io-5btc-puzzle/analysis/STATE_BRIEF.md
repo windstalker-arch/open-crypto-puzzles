@@ -360,6 +360,24 @@ inversion rule. Taijitu geometry is chance-level negative on all four decrypted 
 28-char alphabet is unchanged and remains the real open item.
 
 > **SUPERSEDED 2026-09-28: see the note under "The crux (Lead 0)" above.** The sentence above is
+>
+> **RE-VERIFIED 2026-10-04 (`R-REVERIFY-CLOSURES-2026-10-04`) -- the closure stands, two cited
+> hashes do not.** The three load-bearing positives under this heading were re-derived from the
+> artefacts rather than trusted from the rows that assert them, and all three hold: the spiral
+> convention still turns the grid into `gsmg.io/theseedisplanted` byte-exact; the 24 YELLOW/BLUE
+> byte-boundary markers still land on exactly the 24 byte starts and nowhere else (p = 2.6e-31);
+> and the `aBa` enf/not-enf bracket is present verbatim in the preserved mirror, is still the sole
+> dual-polarity token over the author-source files on device (D = 4 pairs), and its polarity axis is
+> confirmed with python-chess -- published `w`/`6R1`, 14 legal, not in check; after `Rg6-c6+`,
+> `2R5`/`b`, check, exactly one reply `b7h7`. So the bracket remains a one-off, already consumed, and
+> **no battery is owed**. Annotated `[UNVERIFIED]` in place on `R-YINYANG-MARKER` FINDING 4: the
+> bracket-region hash `83241c25147f` does not reproduce under any of eight boundary conventions
+> (the region hashes to `7ef1116285a3`), and only 1 of the 4 named copies is present on this device,
+> so cross-copy byte-identity is untested here. Both are provenance conveniences -- the artifact is
+> confirmed independently -- and neither is refuted, only unverifiable as recorded. A related lesson
+> is recorded in that row: a `grep -rl ~` that TIMED OUT inside node_modules read as a certified
+> negative for the bracket token, so any negative derived from a search here must record that the
+> search completed rather than timed out.
 > wrong on the "missing 28-char alphabet" point, per `R-BOARD28B` / `R-BOARD28B-ADDENDUM`
 > (2026-09-26). The letters are the author's and were never missing; the open quantity is the
 > application. Retained for history only.

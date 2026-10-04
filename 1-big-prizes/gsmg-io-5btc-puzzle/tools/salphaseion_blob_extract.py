@@ -173,9 +173,12 @@ def main():
         return 3
 
     # ---------- REAL ----------
-    t = re.sub(r"\s+", "", pathlib.Path(
-        "/data/data/com.termux/files/home/open-crypto-puzzles/1-big-prizes/"
-        "gsmg-io-5btc-puzzle/data/live_salphaseion.txt").read_text())
+    # Resolved from __file__ rather than hardcoded: an absolute home path pins the
+    # tool to one machine. `validate.py` check 11 greps for both "/home/" and the
+    # Termux spelling, so the Termux form fails the gate just the same.
+    t = re.sub(r"\s+", "", (
+        pathlib.Path(__file__).resolve().parents[1]
+        / "data" / "live_salphaseion.txt").read_text())
     seg3 = t[860:958]
     post = t[959:1075]
     # EXTRACTION, third attempt, and the rule is now ANCHORED rather than
