@@ -22051,3 +22051,64 @@ Addendum to `R-GRID76-2026-10-04`, answering the "no claim about what the drawn 
 Date: 2026-10-04, local.
 
 | R-GRID76-ADDENDUM-2026-10-04 | 2026-10-04 | STRUCTURAL (read-only, no candidate, no oracle call) | **THE DRAWN FIGURE SITS EXACTLY WHERE THE CERTIFIED READING ORDER ENDS.** A: the 7 impure (non-flat) cells (6,6) (6,7) (7,6) (7,7) (7,8) (7,9) (8,6) occupy spiral positions **{172,184,187,192,193,194,195}** -- all inside the **last 24 of 196** positions, i.e. the **inner 5x5 (rows 4-8, cols 5-9) minus (8,9)**; under uniform placement `P = C(24,7)/C(196,7) = **1.75e-07**`, so the figure is packed into the terminal ring of the traversal rather than scattered. B: **`ccw_spiral()` ends on cells (6,6),(7,6),(7,7),(6,7) -- the four CENTRAL cells of the 14x14 -- and R-GRID76 certified all four white, so the traversal terminates in `0000`.** The certified reading order runs inward through all 196 cells and ends in white at the centre of the matrix. C: **honest limits** -- (i) the figure's extent is a **lower bound only**: no black cell contains any white pixel, so strokes crossing black cells are invisible to every purity method; (ii) **the shape is not identified**, because masking the encoding cells truncates the outline wherever it runs into a black cell, and I am not naming a shape I cannot see whole; (iii) the inner 5x5 holds exactly **9** ones against the certified **Y=9**, recorded as a **coincidence and explicitly not evidence**. D: **no new attack surface** -- the corrected sum list is already closed in three roles by `late-207` (literal X, keyed-28 alphabet) and `late-208` (digit-level columnar transpose), and **all three ran against the correct 101 numbers**, so R-GRID76's arithmetic fix changes nothing about them and re-running would be waste; per `R-BOARD28B-ADDENDUM` F5 a closed negative is not a licence to keep enumerating readings of a 196-cell grid. | Records the one determinate fact about the drawn figure that `R-GRID76` explicitly left open -- **where** it is, quantitatively -- while stating plainly that **what it is remains unresolved**. Its practical value is that finding B is only visible *because* the extraction rule was repaired: the centre-pixel rule produced the same `0000` at the centre but a total of 102, so the correction is what makes the "the reading order ends in white, in the middle of the matrix" observation trustworthy rather than coincidental. It also closes the loop on R-GRID76's open clause without inventing a reading. | 100% A and B -- both are exact counts over the certified spiral and grid, and B is a direct property of `ccw_spiral()` re-run after the correction. **90% C(i)** -- the absence of white pixels in black cells is measured, but "the figure may be larger" is an inference from that absence, not a sighting of the missing strokes. **0% / not claimed** for any identification of the shape: the outline is genuinely clipped by the encoding and I decline to guess at it. The 9-vs-9 is **explicitly labelled a coincidence** and carries no weight. | Unchanged and not advanced. This row adds a location fact and an honest "shape unknown"; it opens nothing. The only live question it creates is visual and non-mechanical -- is there a figure at the centre of the matrix -- and answering it needs a view of the shape that the encoding itself occludes, so it cannot be settled from the bit data. `X` UNSOLVED; crux unchanged and still semantic. |
+| R-ORDSTRUCT-2026-10-04 | 2026-10-04 | NEGATIVE (read-only, no candidate, no oracle call) | **THE TWO PAGE STREAMS CARRY NO POSITIONAL OR SEQUENTIAL STRUCTURE; THE ONLY SIGNAL IN THEM IS THEIR MARGINAL DISTRIBUTION, AND THE TWO STREAMS' MARGINALS ARE DEFINITIVELY DIFFERENT FROM EACH OTHER.** Closes the whole class of "find structure in the ORDER of `dbbib_91`/`faed_570`" attacks, and records that `faed` carries one very strong marginal feature (`g`, +5.8 sigma) that is not explained by anything found so far. |
+
+**METHOD NOTE FIRST, because the obvious test is the wrong test.** Asked "does the
+letter depend on the position?", I first ran a contingency chi-square against a
+UNIFORM-RANDOM null. It rejected at every k from 2 to 12, z = +2.35 to +7.57. That
+looks like a spectacular result and it is worthless: `faed`'s marginal is already
+badly skewed, so under a uniform null the skew leaks unevenly into the k position
+bins and manufactures dependence that is not there. The correct null PRESERVES the
+observed letter counts and only permutes their order. Re-run against that null
+(400 shuffles), every z collapses: k=2 +1.52, k=3 -0.29, k=4 +0.36, k=5 -0.19,
+k=6 +0.12 for `faed`; k=2 -1.32, k=3 -0.18, k=4 -2.11, k=5 -1.13, k=6 -1.02 for
+`dbbib_91`. **VERDICT: no position-dependence in either stream.** The uniform-null
+scan is recorded here as a worked example of the R-SCORERCORPUS failure mode in
+miniature -- the instrument looked fine, validated fine against uniform random
+(null mean 16.1 at k=2 against df=16, exactly right), and still gave the wrong
+answer, because validating an instrument against the wrong null does not
+validate it.
+
+**WHAT IS ACTUALLY THERE, three solid items.**
+(1) Both marginals are significantly non-uniform. Multinomial chi-square against
+uniform over a-i: `dbbib_91` chi2 = 40.24, `faed_570` chi2 = 43.74, both df=8,
+critical 18.5 at alpha=0.05. Reject.
+(2) Neither stream has autocorrelation. `faed_570` tested at every lag 1..285:
+one lag reaches |z|>4 (lag 253, z=+4.1) where the uniform-random expectation is
+0.02 hits over 285 tests; with that many tests it is not significant. `dbbib_91`
+lags 1-60: 2 hits, expected 0.16, also not significant after correction. Index of
+coincidence: `dbbib_91` 0.15092, `faed_570` 0.11809, both consistent with uniform
+noise over 9 symbols.
+(3) THE TWO STREAMS ARE FROM DIFFERENT DISTRIBUTIONS. Homogeneity chi-square on
+the 2x9 table `dbbib_91` vs `faed_570`: **chi2 = 504.06, df = 8.** Not close. This
+is the one large effect in the whole analysis and it is not subtle. Exact counts:
+`dbbib_91` = a3 b25 c8 d4 e18 f10 g10 h8 i5 (n=91); `faed_570` = a54 b49 c52 d49
+e69 f57 g107 h58 i75 (n=570).
+
+**THE UNEXPLAINED FEATURE, stated as observation only.** Standardising each letter
+against its own multinomial expectation, `dbbib_91`'s standout is **b = 25/91
+(27.5%), z = +4.97**, and `faed_570`'s is **g = 107/570 (18.8%), z = +5.82**. Two
+tokens, in the two streams, each dominant in its own stream, and under the
+certified square they sit at b = (0,1) and g = (1,2). The split of `faed` by
+parity is visible (even: f21 i44 g59 ...; odd: a33 f36 g48 ...) and by half (first
+285 carries h19, second 285 carries h39 and i46). I am recording these as
+UNEXPLAINED, not as a pattern. `b` and `g` being 5 apart in the alphabet is a
+coincidence I noticed while writing this row, not a finding.
+
+**HARD LIMITS, so the next reader does not over-read any of it.**
+(i) i.i.d.-from-a-skewed-distribution is EXACTLY what a correct Bifid ciphertext
+of English plaintext looks like. Every number in this row is therefore consistent
+with "these are genuine cipher outputs of real messages under the certified
+square", and I am not claiming they are noise, filler, or decoys. This row says
+what is NOT there (order structure), not what the streams are.
+(ii) The +5.82 sigma on `g` is a real marginal fact and has no explanation yet.
+It is not connected to the 2020 window (yellow 9 / blue 15 = certified Y=9 / B=15)
+by anything other than the letter `g` being in a-i; do not treat it as that.
+(iii) n=91 gives this row almost no power about `dbbib_91`'s own marginal beyond
+the single `b`. Do not quote the +4.97 as if it were a well-estimated quantity.
+NOT CLAIMED: any candidate, password, oracle call, funded-gate contact, or that
+either stream is decoy material. X UNSOLVED. CRUX UNCHANGED: X is still the decode
+of `dbbib_91` / `faed_570` under the now-certified interpreter alphabet, and the
+obstacle remains semantic rather than algebraic. The method note above is the only
+reusable thing here; the counts are already in
+`data/finalpage-digit-streams.json` for anyone who wants to re-derive them.
