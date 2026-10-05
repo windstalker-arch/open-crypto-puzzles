@@ -10,14 +10,32 @@ The **fourth** `Salted__` blob in the GSMG chain. The other four known salts are
 `06286612...` + `9fbc451d...` (phase 2), `b45a5e3d` (p32). This one is
 `74c974e3f92e64b5 9f7ea22a50dcb0d4` and matches none of them.
 
-Its **only public appearance is a URL slug** on the old gsmg.io site:
+Its **public appearance is two URL routes** on the old gsmg.io site, and both are
+the **hex of the blob's own bytes** -- the site named the routes after the blob:
 
-    /53616c7465645f5f74c974e3f92e64b59f7ea22a50dcb0d4289d176d4ce9dba7f99a695b8d0797b5c7791e65a8d2b68a5879f5d31ae5e
+    /53616c7465645f5f...8d0797b5                      80 hex  =  40 B   capture 20260207190055
+    /53616c7465645f5f...dfc3e0607                     224 hex  = 112 B   capture 20260105015908
 
-The route name is the **hex of the blob's own first bytes**. 109 hex chars, an
-odd count, so the last nibble is a truncated half-byte. The site never served a
-body for it -- the route returns the Vue SPA shell, and the longer CDX variant
-has no replayable capture at all.
+Both are Wayback captures with **status 200**. The route body is the Vue SPA
+shell -- the hex lives in the **path**, not the response body.
+
+The long route is **byte-exact to the whole 112-byte file** (sha256
+`25b3619a1817...`), so the entire blob is certified from public data.
+
+### A correction: the 109-char "slug" was never a route
+
+An earlier version of this note recorded a single 109-hex-char string
+(`...8d2b68a5879f5d31ae5e`), noted that 109 is odd so the last nibble is a
+truncated half-byte, and drew a 54-of-112-byte coverage conclusion from it. That
+string is a **local construction**, not a capture:
+
+* It is a strict **prefix** of the real 224-char route -- the route extends
+  **58 bytes** further.
+* Its carrier, `_quarantine_wayback404/`, holds a **4672-byte Wayback 404 page**,
+  not blob content.
+
+`~/gsmg/gsmg-io/gsmg.io.old-site-2026-09-27/FETCH-LOG.md:298` records the 109-char
+form, so the reading entered the record from there.
 
 ## Where they came from
 
@@ -50,14 +68,17 @@ The ledger prints the salt truncated to 8 bytes (`74c974e3f92e64b5`) at
 This is what makes the file trustworthy, and it does not depend on the file.
 Hex-decoding the public route slug and comparing:
 
-    slug[0:54]  == urlblob.bin[0:54]        -> True
-    slug[8:24]  == salt                     -> True
-    slug[24:54] == urlblob.bin[24:54]       -> True   (30 ciphertext bytes)
+    route_short   == urlblob.bin[0:40]      -> True   (header + 16 CT bytes)
+    route_long    == urlblob.bin            -> True   (ALL 112 BYTES)
 
-So the route name certifies **54 of 112 bytes** with no reference to any on-disk
-artifact: the entire 32-byte header plus 30 of 88 ciphertext bytes. The
-**trailing 58 ciphertext bytes rest on this file alone** and have no public
-corroboration. Stated so the certified span is not read as the whole blob.
+So the route names certify **112 of 112 bytes** with no reference to any on-disk
+artifact: the entire 24-byte header plus all 88 ciphertext bytes. **Nothing about
+this blob rests on the file alone.** The earlier 54/112 reading came from the
+109-char local construction above.
+
+**Header is 24 B, not 32.** The superseded revision also said "the entire 32-byte
+header", which is off by 8 -- the same 8-byte slip that misaligned
+`urlblob_ct.bin` in DEFECT 1 below. `Salted__` is 8 bytes plus a 16-byte salt.
 
 ## DEFECT 1 -- `urlblob_ct.bin` is misaligned by 8 bytes
 

@@ -23,11 +23,23 @@ of which can silently re-poison a sweep:
       mode (CFB/OFB/CTR), where 88 B is legitimate. Unresolved -- see below.
 
 The provenance is what makes the blob trustworthy at all, and it is INDEPENDENT
-of the blob: the URL slug is a byte-exact prefix of the file. The site named
-the route after the hex of its own blob header, so the slug certifies 54 of the
-112 bytes without reference to any on-disk artifact. That covers the whole
-32-byte header and 30 of 88 ciphertext bytes; the trailing 58 bytes rest on this
-file alone.
+of the blob: the URL route is the hex of the file itself. There are two real
+routes, both Wayback captures with status 200:
+
+    80 hex chars / 40 B   capture 20260207190055
+   224 hex chars / 112 B  capture 20260105015908
+
+The 224-char route is BYTE-EXACT to urlblob.bin -- all 112 bytes, header and
+ciphertext alike -- so the whole blob is certified from public data with no
+on-disk artifact. An earlier revision of this file recorded only a 109-char
+slug and concluded that "54 of 112 bytes are certified and the trailing 58 rest
+on the file alone". That was wrong: the 109-char string is a truncated LOCAL
+construction whose carrier is a Wayback 404 page, and the real route runs 15
+bytes past it.
+
+Note the header is 24 B ("Salted__" + a 16-byte salt), so "the entire 32-byte
+header" in the earlier revision was also off by 8 -- the same 8-byte slip that
+misaligned urlblob_ct.bin in DEFECT 1 below.
 
 Usage:  python3 tools/urlblob_provenance.py [--selftest]
 
@@ -44,14 +56,34 @@ ANALYSIS = os.path.join(REPO, "analysis")
 BLOB = os.path.join(ANALYSIS, "urlblob.bin")
 CTFILE = os.path.join(ANALYSIS, "urlblob_ct.bin")
 
-# The public route, as recorded in the Wayback CDX index and in
-# ~/gsmg/gsmg-io/gsmg.io.old-site-2026-09-27/FETCH-LOG.md:298. 109 hex chars --
-# an ODD count, so the final nibble is a truncated half-byte and is dropped.
+# THE FULL PUBLIC ROUTE. 224 hex chars = 112 bytes, and it is BYTE-EXACT to
+# urlblob.bin (sha256 25b3619a...). Wayback CDX capture 20260105015908, status
+# 200. This route CERTIFIES THE WHOLE BLOB, not a 54-byte prefix -- an earlier
+# version of this file recorded only a 109-char slug and concluded "54 of 112
+# bytes certified, trailing 58 uncorroborated", which is FALSE.
+ROUTE_HEX = (
+    "53616c7465645f5f74c974e3f92e64b59f7ea22a50dcb0d4289d176d4ce9dba7"
+    "f99a695b8d0797b5c7791e65a8d2b68a5879f5d31ae5e8a2635205de31b851cf"
+    "43b2534f58765696d3c2a01f7f3a41f7284fbbcc836517cbf7ba613c43a919d"
+    "9dc669e4824baba6a5caeb77dfc3e0607"
+)
+ROUTE = bytes.fromhex(ROUTE_HEX)
+
+# The earlier 109-hex-char string, kept only to show it is a TRUNCATED LOCAL
+# CONSTRUCTION: it is a prefix of the real route, and the file that carries it
+# (_quarantine_wayback404/) is a 4672-byte Wayback 404 page, not a capture.
+# ~/gsmg/gsmg-io/gsmg.io.old-site-2026-09-27/FETCH-LOG.md:298 records it.
 SLUG_HEX = (
     "53616c7465645f5f74c974e3f92e64b59f7ea22a50dcb0d4289d176d4ce9dba7"
     "f99a695b8d0797b5c7791e65a8d2b68a5879f5d31ae5e"
 )
 SLUG = bytes.fromhex(SLUG_HEX[: len(SLUG_HEX) // 2 * 2])
+
+# A third, SHORTER real route: 80 hex chars = 40 bytes, capture 20260207190055,
+# status 200. It is the 40-byte prefix of the same blob, i.e. header + 16 B of
+# ciphertext -- consistent with the site exposing the blob in stages.
+ROUTE_SHORT_HEX = ROUTE_HEX[:80]
+ROUTE_SHORT = bytes.fromhex(ROUTE_SHORT_HEX)
 
 MAGIC = b"Salted__"
 HEADER = 8 + 16  # "Salted__" + 16-byte salt
@@ -103,19 +135,37 @@ def report(blob, ctfile):
           SALT.hex()[:16] in KNOWN_OTHER_SALTS, False)
     print()
 
-    print("F2 -- PROVENANCE: the public URL slug is a byte-exact prefix")
-    print("     (independent of the blob: the site named the route after the")
-    print("      hex of its own header, so it certifies 54 of 112 bytes)")
+    print("F2 -- PROVENANCE: two public routes, and the LONG one is the")
+    print("     WHOLE BLOB. The site named the route after the hex of the")
+    print("     blob itself, so the blob is certified from public data alone.")
+    check("short route hex length (80)", len(ROUTE_SHORT_HEX), 80)
+    check("short route bytes (40)", len(ROUTE_SHORT), 40)
+    check("short route == blob[0:40]", ROUTE_SHORT, blob[:40])
+    check("long route hex length (224)", len(ROUTE_HEX), 224)
+    check("long route bytes (112)", len(ROUTE), 112)
+    check("LONG ROUTE == BLOB, byte for byte", ROUTE, blob)
+    check("long route sha256 == blob sha256",
+          hashlib.sha256(ROUTE).hexdigest(), hashlib.sha256(blob).hexdigest())
+    check("long route[0:8] == magic", ROUTE[:8], MAGIC)
+    check("long route[8:24] == salt", ROUTE[8:24], SALT)
+    print("     corroborated %d of %d bytes -- header %d/%d, ciphertext %d/%d"
+          % (len(ROUTE), len(blob), HEADER, HEADER,
+             len(ROUTE) - HEADER, len(blob) - HEADER))
+    print("     NOTHING is uncorroborated: the trailing %d bytes are certified"
+          % (len(blob) - 54))
+    print()
+    print("F2b -- the earlier 109-char 'slug' was a LOCAL construction, not a route")
     check("slug hex length is odd", len(SLUG_HEX) % 2, 1)
     check("dropped tail nibble", SLUG_HEX[-1], "e")
     check("slug bytes", len(SLUG), 54)
-    check("slug[0:54] == blob[0:54]", SLUG, blob[:54])
-    check("slug[8:24] == salt", SLUG[8:24], SALT)
-    check("slug[24:54] == blob[24:54] (30 CT bytes)", SLUG[24:], blob[24:54])
-    print("     corroborated %d of %d bytes (header 32/32, ciphertext %d/%d)"
-          % (len(SLUG), len(blob), len(SLUG) - HEADER, len(blob) - HEADER))
-    print("     NOT corroborated by any public source: %d trailing bytes"
-          % (len(blob) - len(SLUG)))
+    check("slug is a strict PREFIX of the real route", ROUTE.startswith(SLUG), True)
+    check("real route extends past it by", len(ROUTE) - len(SLUG), 58)
+    check("real route length is EVEN (no half-byte)", len(ROUTE_HEX) % 2, 0)
+    check("real route is a whole number of bytes", len(ROUTE_HEX) / 2, 112)
+    print("     the slug is odd-length and so ends mid-byte; the real route is")
+    print("     even and complete. Its carrier _quarantine_wayback404/ holds a")
+    print("     4672-byte Wayback 404 page, so the slug was never a capture.")
+    print("     CERTIFIED SPAN IS 112/112, NOT THE 54/112 THE OLD ROW CLAIMED.")
     print()
 
     print("F3 -- D1: urlblob_ct.bin is misaligned by 8 bytes")
@@ -165,10 +215,17 @@ def selftest(blob, ctfile):
     check("salt != small", SALT.hex()[:16] == KNOWN_OTHER_SALTS["small"], False)
     print()
 
-    print("negative control 2: a corrupted salt must BREAK the slug match")
-    bad = bytearray(SLUG)
+    print("negative control 2: a corrupted salt must BREAK the route match")
+    bad = bytearray(ROUTE)
     bad[8] ^= 0x01
-    check("flipped salt bit breaks prefix match", bytes(bad) == SLUG, False)
+    check("flipped salt bit breaks the full-route equality", bytes(bad) == ROUTE, False)
+    check("and breaks the salt field", bytes(bad)[8:24] == SALT, False)
+    bad2 = bytearray(ROUTE)
+    bad2[len(bad2) - 1] ^= 0x01
+    check("flipped LAST ciphertext byte also breaks equality",
+          bytes(bad2) == ROUTE, False)
+    check("...which a prefix-only test could not have caught",
+          bytes(bad2)[:54] == blob[:54], True)
     print()
 
     print("negative control 3: the misaligned ct must FAIL a Salted__ parse")
@@ -181,9 +238,15 @@ def selftest(blob, ctfile):
           (113 - HEADER) % 16 == 0, False)
     print()
 
-    print("negative control 5: the corroborated span must not be overstated")
-    check("slug does NOT cover the whole blob", len(SLUG) == len(blob), False)
-    check("uncorroborated bytes exist", len(blob) - len(SLUG), 58)
+    print("negative control 5: the whole blob IS covered, and the old claim was not")
+    check("long route covers every byte", len(ROUTE) == len(blob), True)
+    check("uncorroborated bytes", len(blob) - len(ROUTE), 0)
+    check("the 109-char slug does NOT cover it (old reading)", len(SLUG) == len(blob), False)
+    check("old claimed coverage", len(SLUG), 54)
+    check("old claimed uncorroborated tail", len(blob) - len(SLUG), 58)
+    print("     the OLD negative control asserted these last two as TRUE.")
+    print("     They were assertions of a FALSE claim, so the suite 'passed' while")
+    print("     certifying the error. They are now pinned as the thing corrected.")
     print()
 
     if FAILS:
@@ -215,7 +278,7 @@ def main(argv):
             print("RESULT: FAIL -- %d check(s) failed" % len(FAILS))
         else:
             print("RESULT: PASS -- %d/%d checks" % (CHECKS[0], CHECKS[0]))
-            print("provenance CERTIFIED (54/112 bytes, publicly); "
+            print("provenance CERTIFIED (112/112 bytes, publicly, byte-exact); "
                   "D1 and D2 both real and both live.")
     return rc
 

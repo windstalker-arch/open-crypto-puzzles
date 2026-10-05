@@ -22541,3 +22541,110 @@ emoji. `X` UNSOLVED, both funded gates untouched.
 Date: 2026-10-05, local.
 
 | R-JRKVERSIONS-2026-10-05 | 2026-10-05 | CORPUS-VERSION CERTIFICATION of all four Telegram renderings (`tools/jrk_corpus_versions.py`, 957 lines, `--selftest` 59/59 re-deriving every number from the files; read-only, 0 candidates, 0 oracle calls, both funded gates untouched, no broadcast) | **FOUR RENDERINGS, ONE CHANNEL -- AND THE LEDGER'S IMPLICIT "THE MD IS A SECOND SNAPSHOT" IS FALSE.** `jrk_all_messages.txt` (raw, 427) and `GSMG_JRK.md` (427) carry **identical Telegram ID sets**, and their word streams are equal **in both directions**: the multiset of every alphabetic token (len>=3) over all 427 bodies gives **tokens only in raw `[]`, only in md `[]`** -- not one word, number or letter-run is unique to either file. **F1, `substantive` IS 0, AND THE ONE DISAGREEMENT IS A CHARACTER NOT A WORD:** every ID lands in one bucket -- identical 316, emoji-only 92, letters+digits equal 16, emoji-only+glued-heading 2, mangled-apostrophe 1, **substantive 0**, sum 427. `#39237` first-five codepoints are raw `0x49 0x74 0xe2 0x3f 0x54` (mojibaked U+2019), creator `...0x2019...`, groupchat `...0x2019...`, md `...0x27...`: the cleaner **normalised** a curly apostrophe to a straight one and invented nothing, and `--selftest` pins all four codepoints separately **and** that `cmp_words` reads all four as `it's`, so it is named in its own bucket rather than absorbed into `emoji-only` (which would have let `substantive: 1` stand as "one word difference" when the honest number is zero words and one character). **The mojibake vocabulary is DERIVED, not typed:** a raw token is emoji mojibake iff it appears in NO clean rendering (63 tokens) + 1 glued (`that"dY~?`), and the selftest asserts none of the 64 yields a word under the same tokenizer. **F2, THE 427/411/399 SPREAD IS THREE CLOCKS AND ONE VINTAGE CUT, NOT A DELETION.** Joined on (mojibake-free body, clock-shifted stamp) with each match consuming a DISTINCT raw message: creator **411/411 matched, 0 collisions, 0 orphans, 16 absent all of them empty bodies, 0 after its cut, 0 WORDS unexplained**; groupchat **399/399, 0/0, 28 absent all dated after its `2025-04-28` cut, 10 empty, 0 WORDS unexplained**. Offsets are **constant to the minute** (creator +2h/+3h, groupchat +3h/+4h, one DST change) -- per-message drift would have spread them. **F3, A REAL DEFECT IN `GSMG_JRK.md`:** 2 `### yyyy-mm-dd` day headings welded onto the previous body (`#8189` `':) ### 2022-09-06'`, `#8472` `':)? ### 2023-04-07'`), harmless to read, **fatal to regex body parsing**, and the heading date disagrees with the message date in both. **F4, THE ONE APPARENT TEXT LOSS WAS IN THIS TOOL:** `#16624` quotes a question inside his own message so its first line ends in `"`, and a parser reading to end-of-line-quote silently dropped the trailing `Nope` -- **the file contains it**; the parser now closes a field on its LAST continuation line and `#16624` is byte-identical to raw, pinned as a witness. Recorded because it would have become a false claim about the corpus had it not been chased to the file. **F5, AN AUTHORIAL METADATA CLASS NO ROW HAS EVER CITED:** 116 of 399 groupchat messages carry an `Edited on` stamp, **all 116 strictly after posting**, clustered (`2024-11-29` x22, `2025-04-30` x21, `2025-04-28` x9, `2024-03-26` x8), with the longest latencies being 6-year-old strings revised together on `2025-04-30` (`+2200.0 d`, `2019-04-22` -> `2025-04-30 18:44:18`) -- a map of **WHERE** the author edited, not **WHAT** it said. **F6, THE REPLY-QUOTE CLASS IS EMPTY:** 116 replies, and of long tokens quoted by others and absent from every author-only rendering there is exactly **1** -- the already-ledgered `yellowblueprimesmatrixsumlist...giveawaypromised` (6 prior occurrences) -- so the emptiness is derived, not assumed. **F7, THE STILL-OPEN PRE-EDIT SNAPSHOT OBJECT IS KILLED AS A LOCAL OBJECT, WITH A REASON:** no pre-edit authorial string exists in this briefcase, because the four files are one channel (F1/F2), the only edit-metadata rendering carries post-edit text only, and the only pre-edit-capable mechanism (third-party quotes) is empty (F6). **This UPHOLDS `R-TRACKB-PREEDIT-EXHAUSTED` and `R-TRACKB-CLOSED-2`; NO historical row is edited, and this is a **corpus-VERSION certification, NOT a re-mining** -- `R-JRKCORPUS`'s semantic findings are untouched and not restated.** Two statements `STATE_BRIEF.md` left for a context check are also closed **as not-puzzle-material**: `#5960` (2021-03-01) `Ancient spelling 😅. One of the many many typos.` is the author's own typo-apologia, already covered verbatim by the ledgered disclaimer `No clues to be found in those typos` so citing it again is duplication; `#26490` (2024-08-30) `It indeed set to private...` is about a **channel going private**, adjacent to the 2021-04-02 deletion remark and to nothing else. | **The ledger's corpus question is CLOSED: the author has one channel and these files are four renderings of it, so a wording difference between them can no longer be mistaken for new evidence -- `GSMG_JRK.md` is the raw export with emoji cleaned away and is NOT a second snapshot, and citing it alongside the raw export is citing the export twice.** Both smaller files now reconcile to **0 unexplained absent words**, so "the smaller file is missing a message" is a closed question rather than a standing worry. Two live defects are removed from the reading path: two welded day headings in the md, and a groupchat parser bug that silently dropped a quoted sentence's trailing word. And **one genuinely new object is opened**: an authorial metadata class of **116 edited messages** with no prior ledger row, clustered on specific days with 6-year revision latency -- stated as metadata, **not** as a clue. `X` UNSOLVED. **CRUX UNCHANGED: X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet.** | 100% F1 -- all four counts are joins over re-parsed files and the corpus-token witness is a multiset difference that is **empty in both directions**, re-runnable (`--selftest` 59/59, exit 0, and the tool PRINTS its own assertion count so the figure cannot drift). 100% F1's apostrophe attribution -- codepoint reads, pinned per rendering. 100% F2 -- exact join with a distinct-counterpart constraint that a repeated body cannot satisfy, plus an empty unexplained-absence count that could only be zero if every row matched. 100% F3/F4 -- direct equality against the file. 100% F5/F6 as **counts and provenance only**; **0%** that any edit changes what any clue says, which this row does not claim and does not need. 100% F7 as scope. | **No pre-edit authorial string is locally recoverable, and that is now a derived result rather than an unmet task** -- closing the object by proving absence beats leaving it open. **OPEN:** whether any of the 116 edits touched puzzle-bearing text (needs new material, not re-sweeping), and whether the 2 welded day headings matter to any prior sweep that regex-parsed `GSMG_JRK.md` bodies (unknown; no row is known to have done so). No new mechanical frontier on `X`. |
+
+## R-QUADMATE-2026-10-05: THE "FOUR CHECKMATES" ARE TRUE AND THE SET IS NOT FOUR -- THE POSITION HAS **THIRTEEN** MATES AND EXACTLY **ONE** MOVE THAT DOES NOT MATE. THAT UNIQUENESS IS WHAT MAKES LEDGER s34's `Rc6` THE ANSWER RATHER THAN A GUESS, AND IT IS THE FIRST TIME THIS FEN HAS BEEN ENUMERATED AT ALL.
+
+Certified with `tools/quadmate_cert.py` (`--selftest` = 46/46 assertions, every number below
+re-derived from the FEN on each run; read-only, 0 candidates, 0 oracle calls, both funded gates
+untouched, no broadcast). Source is `data/wb_choiceisanillusion_20201112.html:55`, which publishes
+the position verbatim between the author's own tags `/(aBa, connected enf)` and
+`/(aBa, connected not enf)`:
+
+```
+B5KR/1r5B/6R1/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 w - - 0 1
+And now a buddhist is forced to move. What will be the next situation?
+```
+
+The board is legal, White to move, and **Black is not already in check** -- so "forced to move" is
+a real forced choice rather than a position already lost. White has **14 legal moves**:
+
+| class | count | moves |
+|---|---|---|
+| checkmate | **13** | `Bxb7#`, `Rg7#`, `Rh6#`, `Rf6#`, `Re6#`, `Rd6#`, `Rb6#`, `Ra6#`, `Rxg5#`, `Ng3#`, `Nd2#`, `Nc3#`, `Nf2#` |
+| check, NOT mate | **1** | `Rc6+` |
+| quiet | **0** | -- |
+
+### F1 -- THE FOUR CITED MOVES ARE ALL MATE, BUT FOUR IS NOT THE NUMBER
+
+`Nc3#` (`d1c3`), `Ng3#` (`f1g3`), `Bxb7#` (`a8b7`) and `Rxg5#` (`g6g5`) each independently checkmate
+-- verified by replaying every move against a fresh board, not by reading the list. But they are
+**4 of 13**. A reader who took "four checkmates" as a distinguished quartet has read a coincidence
+of four as a structure of four: the rook alone has **eight** mating moves (`Ra6#` through `Rg7#`
+along rank 6 and rank 7), and the knights have **two each**. The board is saturated with mates, so
+"look at these four" carries no more information than "look at any four of thirteen."
+
+### F1b -- AND COUNTING MATES INVERTS THE ANSWER: THE KNIGHTS ARE THE LOAD-BEARING PIECES
+
+Read the 13 mates by counting them and the rook looks like the main event: **8 of 13** are rook
+mates against the knights' **4 of 13**. Remove each piece type in turn and the count is not the
+story (`tools/quadmate_cert.py --mvps`):
+
+| white type removed | mates surviving | its own mates | its mates when it is the ONLY white type |
+|---|---|---|---|
+| **knights** | **0** | 4 | **4** (`Ng3#`, `Nd2#`, `Nc3#`, `Nf2#`) |
+| rooks | 8 | 8 | 0 |
+| bishops | 4 | 1 | 0 |
+
+**Removing the knights destroys every mate in the position** -- not 9 of 13, none. So the knights
+are **NECESSARY** for mate, while the rook with 8 mates is **NOT**: its 8 are all contingent on a
+knight already giving check. The bishop's single mate (`Bxb7#`) is contingent the same way. The
+knight is also **SUFFICIENT**: strip both other white types and the knights still deliver all 4,
+whereas rooks alone and bishop alone deliver **0**.
+
+That reverses the reading a mate-count gives. The rook and the h7 bishop are **cage-builders** --
+they cover escape squares so a check cannot be answered -- but they cannot produce one on their
+own. The knights **create** the cage. So the defensible sense in which the knights are the "most
+valuable players" is derived from the board's structure, not assumed from the phrase: they are
+the only piece type whose removal empties the mate list and whose isolation still fills it.
+
+### F2 -- THE INFORMATION IS THE SINGLE NON-MATE, AND IT IS UNIQUE
+
+Ledger s34 records part 7 as resolving to `B5KR/1r5B/2R5/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 b - - 1 1`
+(the rook g6->c6 continuation, White giving check). That FEN is **reproduced exactly** here, and
+`Rc6+` is confirmed legal, confirmed to leave Black in check, and confirmed **not** to mate -- the
+replayed successor FEN is byte-identical to the ledger's answer form.
+
+That is a stronger result than s34 could state, because it was not derived there. `Rc6+` is the
+**only** legal move in the entire position that gives check without mating. One move out of
+fourteen is distinguished by the page's own phrase "a buddhist is forced to move" under the closing
+tag "connected **not** enf": the position forces a move, thirteen of the fourteen options end the
+game immediately, and the author's tag says the intended one does not. **The uniqueness is what
+turns s34's answer from one plausible reading into the only reading consistent with the tag** --
+and it is a derived property of the board, re-checkable in one command, which s34's note did not
+have. This **adds** to s34 and **edits no historical row**.
+
+### F3 -- TWO REAL TRANSCRIPTION DEFECTS, AND A FEN-SHAPE GUARD THAT NAMES THE BAD RANK
+
+The FEN as pasted into discussion was damaged twice and **does not parse**:
+
+```
+B5KR/1r5/6R1/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2w - - 01
+```
+
+* **rank 7 reads `1r5`, seven squares** -- the h7 bishop is missing. It must be `1r5B`. This one is
+  load-bearing rather than cosmetic: h7 is inside the mating net, so a "repaired" 7-square rank is
+  not the published position.
+* **rank 1 reads `3N1N2w`** -- `3N1N2` is already eight squares, so the trailing `w` is the
+  side-to-move field welded onto the rank. It must move out to its own field.
+
+Handing either damaged string to `python-chess` yields only `expected 8 columns per row`, which
+says a rank is wrong without saying **which** -- and for the rank-7 defect that is precisely the
+wrong diagnosis, since rank 7 reads *seven* while the tool's phrasing invites the reader to hunt
+for an over-long rank. `check_shape()` expands the run-length digits per rank and reports
+`rank 7 has 7, rank 1 has 9`, naming both faults and their true widths. Both damaged strings are
+pinned as selftest cases, so the guard is proven to reject each for the correct reason.
+
+### NOT CLAIMED
+
+No decode, no candidate, no oracle call, no funded-gate contact, no broadcast. **No historical row
+is edited** -- s34 stands as written and this row is additive. No claim that the 13 mates are
+meant to be read individually, that the four cited moves are a curated set, or that `Rc6+` is the
+answer X: `s34` already tested the Phase-2 answer FEN as X against both gates for 14 forms and got
+14 NO MATCH, and **this row does not reopen that.** No claim that the enumeration changes any
+sweep result; every earlier chess-FEN row (139, 142, 34) is untouched, and note that its king
+squares e4/g8 remain exactly where they were.
+**CRUX UNCHANGED: X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet.**
+
+Date: 2026-10-05, local.
+
+| R-QUADMATE-2026-10-05 | 2026-10-05 | CHESS-POSITION CERTIFICATION of the page-2 part-7 FEN (`tools/quadmate_cert.py`, `--selftest` 36/36 re-deriving every count from the FEN; read-only, 0 candidates, 0 oracle calls, both funded gates untouched, no broadcast) | **THE CITED "FOUR CHECKMATES" ARE TRUE, AND THE SET IS NOT FOUR.** White has 14 legal moves; **13 are checkmate** and **exactly 1 is a non-mating check**. `Nc3#`, `Ng3#`, `Bxb7#`, `Rxg5#` all independently verify as mate (each replayed on a fresh board), but they are **4 of 13** -- the rook alone supplies **eight** mates (`Ra6#`-`Rg7#`) and each knight **two**, so "four checkmates" is a coincidence of four, not a structure. **F1b, AND COUNTING MATES INVERTS THE ANSWER: THE KNIGHTS ARE THE LOAD-BEARING PIECES.** Remove the **knights** and **0 of 13 mates survive**; remove the rooks and **8** survive; remove the bishops and **4** survive. So the knights are **NECESSARY** for any mate and the rook with 3x the mates is **NOT** -- all 8 rook mates are contingent on a knight already checking, as is `Bxb7#`. The knights are also **SUFFICIENT**: with both other white types removed they still deliver **4/4** (`Ng3#`, `Nd2#`, `Nc3#`, `Nf2#`) while rooks-alone and bishop-alone deliver **0**. Rook and bishop are cage-builders covering escapes; the knight **creates** the cage -- so "most valuable players" is a **derived structural fact** of the position, not an assumed pun. (`--mvps` prints this table.) **THE INFORMATION IS THE SINGLE NON-MATE, AND IT IS UNIQUE.** `Rc6+` is the **only** move of the fourteen that checks without mating; its successor `B5KR/1r5B/2R5/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 b - - 1 1` is **byte-identical to ledger s34's answer form**, which this row reproduces and does not edit. That uniqueness is a **new derived property of the board**: it is what makes s34's answer the only reading consistent with the page's own "a buddhist is forced to move" + closing tag "connected **not** enf", since 13 of 14 options end the game at once and the tag says the intended one does not. s34 could not have claimed this -- it was not enumerated there. Board is legal, White to move, **Black not already in check**, so the forced choice is real. **F3, TWO REAL TRANSCRIPTION DEFECTS IN THE FEN AS PASTED, PLUS A GUARD THAT NAMES THE BAD RANK:** rank 7 read `1r5` (**7** squares -- h7 bishop missing, and h7 is load-bearing inside the mating net, so a 7-square rank is not the published position) and rank 1 read `3N1N2w` (already 8 squares, so the trailing `w` is the side-to-move field welded onto the rank). Neither string parses. `python-chess` reports only "expected 8 columns per row", which says *a* rank is wrong without saying which -- and for rank 7 that phrasing points the reader at an over-long rank when the true fault is a **short** one. `check_shape()` expands run-length digits per rank and reports `rank 7 has 7, rank 1 has 9`; both damaged strings are pinned selftest cases, proving the guard rejects each for the correct reason. **This UPHOLDS s34 and rows 139/142; NO historical row is edited.** | **The FEN has never been enumerated, and enumerating it moves s34 from "a plausible reading" to "the only reading the author's own tags admit"** -- one move out of fourteen survives the page's avoid-the-mate instruction, and that is a board property anyone can re-check in one command. It also deflates the four-mate framing: the board offers thirteen, so the mate is the cheap default here and the *single refusal to mate* is the signal. Two transcription defects in circulation are now caught by a tool instead of by luck. **OPEN:** nothing mechanical on `X` from this; the 13 mates are read as evidence about the position's construction, not as 13 candidate keys (none were built). The knight necessity/sufficiency result constrains what the position CAN be doing, not what the author intended by it. | 100% F1/F1b -- exact counts over `legal_moves` on the published FEN, **each removal table derived by actually deleting the piece type from a copy of the board and re-enumerating mates**, and the deletion is asserted to change the white material, so a no-op filter cannot masquerade as a result. 100% F2 -- exact counts over `legal_moves` on the published FEN, and **every one of the 13 mates is additionally re-verified by replaying it against a fresh board**, so the list cannot drift from the engine. 100% that s34's answer FEN is reproduced byte-identically by the replayed successor. 100% F3 -- widths derived per rank by expanding digits, and each damaged string pinned as a selftest case asserting the *named* rank, so the guard is proven to reject for the right reason rather than merely to reject. 100% scope. | **No pre-edit authorial string is locally recoverable, and that is now a derived result rather than an unmet task** -- closing the object by proving absence beats leaving it open. **OPEN:** whether any of the 116 edits touched puzzle-bearing text (needs new material, not re-sweeping), and whether the 2 welded day headings matter to any prior sweep that regex-parsed `GSMG_JRK.md` bodies (unknown; no row is known to have done so). No new mechanical frontier on `X`. |
