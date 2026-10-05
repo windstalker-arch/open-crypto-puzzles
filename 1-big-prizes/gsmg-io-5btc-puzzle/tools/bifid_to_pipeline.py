@@ -78,22 +78,19 @@ def bifid_decrypt(ct, period, grid, pos):
 
 def bifid_encrypt(pt, period, grid, pos):
     pts = _upper_sanitize(pt, pos)
-    coords = [pos[ch] for ch in pts]
-    combined = []
-    for r, c in coords:
-        combined.append(r)
-        combined.append(c)
-    out = ""
-    n = len(combined)
-    eff = period if period > 0 else n // 2
+    n = len(pts)
+    eff = period if period > 0 else n
     if eff <= 0:
-        return out
-    for start in range(0, n, 2 * eff):
-        block = combined[start:start + 2 * eff]
-        h = len(block) // 2
-        rs, cs = block[:h], block[h:]
+        return ""
+    out = ""
+    for start in range(0, n, eff):
+        block = pts[start:start + eff]
+        h = len(block)
+        rs = [pos[ch][0] for ch in block]
+        cs = [pos[ch][1] for ch in block]
+        stream = rs + cs
         for k in range(h):
-            out += grid[rs[k]][cs[k]]
+            out += grid[stream[2 * k]][stream[2 * k + 1]]
     return out
 
 

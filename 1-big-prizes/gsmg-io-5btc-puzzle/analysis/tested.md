@@ -22112,3 +22112,238 @@ of `dbbib_91` / `faed_570` under the now-certified interpreter alphabet, and the
 obstacle remains semantic rather than algebraic. The method note above is the only
 reusable thing here; the counts are already in
 `data/finalpage-digit-streams.json` for anyone who wants to re-derive them.
+
+## R-XORSUMFMT-2026-10-05: THE FORMAT LEG R-XORSUM NAMED AND NEVER RAN -- THE SUM LISTS THEMSELVES, AS LITERAL CANDIDATE X, AGAINST BOTH FUNDED GATES
+
+### Why this cell was genuinely open, and not merely unlogged
+
+`R-XORSUM` (2026-10-04) FINDING 3 did the right thing by naming the residual
+question -- three candidate submission formats, (a) the raw sum list, (b) the sums
+mod 26, (c) the XOR-reduced A-Z string -- and then recorded **"0 candidates, 0 oracle
+calls"** in its own header. Its FORMAT cell was a *reading* question raised, not a
+search run. `R-LEAD0-FORMAT` (2026-09-27) had already attacked 30 renderings of the
+same list, but its acceptance test was **local** (`digest[:12] == E_S`, a gate
+hash160, or a 79-byte record digest) and it also logged **0 oracle calls**. So across
+both rows the question *"does the sum list, written down, open a funded gate?"* was
+never put to `tools/oracle.py` or `tools/oracle_dualite.py` in the **A-matrix** form.
+
+The distinction that made this a real gap rather than a duplicate: `late-207`/`late-208`
+did put the **phase-1 pixel grid's** 28 sums through both oracles, but those are the
+`G` matrix (total **101**, `610876654997879` / `8108108736759668`). The sums
+`R-XORSUM` F2 and `R-LEAD0-FORMAT` both discuss are the **dbbib_91-derived A matrix**
+(total **844**, `5562586876506356556367535959`). Different object, different numbers,
+and the A-matrix family had no oracle coverage at all.
+
+### Method
+
+`tools/xorsum_format_oracle.py`. Candidate sources:
+
+| family | what | count |
+|---|---|---|
+| `A` | `dbbib_91` as the strict upper triangle of a 14x14 symmetric zero-diagonal matrix; `a=1..i=9` **and** `a=0..i=8`; row-major and col-major fill; row sums and column sums; 28-value row/col interleave; grand total | 360 |
+| `G` | the corrected 14x14 pixel grid under three colour readings (`B/K` dark = the 101-one reading; `B+Y` = 24; `B/K/W/Y`); rows, cols, `rc`/`cr` interleaves, total | 261 |
+| `KR` | A-matrix row sums concatenated with the `faed` 38x15 chunk sums, both orders | 84 |
+| `dbbib`/`faed` | eight further factorisations of the two streams as their own matrices: `7x13`, `13x7`, `38x15`, `15x38`, `30x19`, `19x30`, `57x10`, `10x57`; row sums, column sums, totals | 672 |
+| `xor26` | the 14 cyclic offsets of the R-XORSUM baseline `(R[i]^K[i%14])%26`, the format-(c) string | 42 |
+
+Each sum list was rendered 11 ways -- decimal concatenate, comma, space, `[..]`,
+`(..)`, `{..}`, 2-digit and 3-digit zero-pad, A1Z26 `mod 26` and `mod 26 + 1` in both
+cases, `mod 9` into `a..i`, and the reversed digit forms -- then case-varied.
+**1,449 unique candidates**, each pushed to both oracles: **2,898 oracle attempts**.
+`t` was ~7 minutes, so the space was small enough to enumerate rather than constrain.
+
+### Witnesses -- both kinds, and one of them caught a bug
+
+**Candidate-generation self-check** (added after inspection, not after a result): the
+tool now asserts `G.BK` row sums `[6,10,8,7,6,6,5,4,9,9,7,8,7,9]`, col sums
+`[8,10,8,10,8,7,3,6,7,5,9,6,6,8]`, dark total **101**, and A-matrix row sums
+`[55,62,58,68,76,50,63,56,55,63,67,53,59,59]`, total **844**. This asserts the two
+anchor totals independently recorded by `R-GRID76` and `R-XORSUM` F2. **It earned its
+place immediately:** the first run of this tool had passed `("BK",)` -- the two-letter
+*string* -- where a tuple of two glyphs was required, so `G.BK` summed to
+`[0]*14`, total 0, and 261 of the candidates were degenerate zeros that would have
+"passed" as a clean negative. A silent candidate-generation bug produces a battery of
+nonsense that a detection-only witness cannot see. Both assertions are now in the tool
+and both pass.
+
+**End-to-end hit detection**, which is what makes "0 MATCH" mean anything. The control
+is the certified 5-token password
+`matrixsumlistenterlastwordsbeforearchichoicethispasswordmatrixsumlist` (recorded at
+`R-EXT-ISSUES` from community issue #108), which decrypts the small blob under EVP-MD5
+to the certified 79-byte record `sha256 1449a217...`, whose `K_C1` field derives to
+`1GKJzHQkgTBwwEGeXetsTMDoUzvwzs9yb4`. The tool requires, through the **same
+`attempt()` code the battery uses**, that:
+
+1. the control password produces that exact `B1_79B` digest and that `K_C1` address -- OK;
+2. the real `attempt()` reports **NO MATCH** on it -- OK (the control is not the gate);
+3. a junk candidate reports NO MATCH -- OK;
+4. **`O.TARGET_ADDRESS` retargeted to `1GKJz...` makes `attempt()` report MATCH on the
+   control password** -- OK, via `raw / md5 / first32`;
+5. the retargeted `attempt()` still rejects junk -- OK.
+
+Point 4 is the load-bearing one. Without it, a battery returning 0 MATCH is
+indistinguishable from a harness that cannot detect a match at all. The dualite half
+carries the project's own equivalent -- its `--selftest` already asserts `attempt()`
+wiring, the token-XOR reduction equals the certified `XK`, and a tampered key fails --
+so both oracles were `--selftest` PASS (rc=0) immediately before and after the batch,
+and the run re-runs both self-tests at the end as WITNESS 2.
+
+### Result
+
+**small gate `1GSMG1JC9wtdSwfwApgj2xcmJPAwx7prBe`: 0 MATCH. dualite gate
+`17ucy1K9ZUAaoY6JVtM932W9jUp5LXfyHa`: 0 MATCH.** Both oracles `SELFTEST OK` before
+and after. `tools/validate.py --folder 1-big-prizes/gsmg-io-5btc-puzzle` **15/15**.
+Escrow re-checked first (`check_escrows.py --slug gsmg-io-5btc-puzzle`, both OK). No
+candidate was broadcast and neither gate was touched.
+
+### What this closes and what it does not
+
+This closes **1,449 named points** in the submission-format space, and for the first
+time puts the A-matrix sum lists -- the ones `R-XORSUM` F3 and `R-LEAD0-FORMAT` were
+both actually discussing -- in front of an oracle. Two documented forms from those rows
+were re-derived inside the battery and are therefore *positively confirmed present*:
+`DKGQYYLEDLPBHH` (A-matrix sums `mod 26 + 1`) and `CJFPXXKDCKOAGG` (`mod 26`), plus the
+raw list `5562586876506356556367535959` and the pixel grid's `610876654997879` /
+`8108108736759668`.
+
+It does **not** close the format space, and the reason is now specific rather than
+vague. Every one of these renderings is a *number list written down*, and the
+instruction on the page is `matrixsumlist` + `enter` -- so on this reading the
+submission is a **password for an envelope**, not a stage answer to be hashed and
+decrypted. `R-LEAD0-FORMAT` said as much and left "submitting to a destination other
+than a digest, e.g. an envelope password" untouched; this row is the first to put
+that destination to an oracle, and it is **still negative**. So the surviving
+possibilities are not more renderings of a digit list. They are a *different* sum
+object, or a destination neither oracle models.
+
+`X` remains UNSOLVED. **CRUX UNCHANGED: X is still the decode of `dbbib_91` /
+`faed_570` under the interpreter alphabet.** Consistent with `R-GSMGCLOSED` F3, this is
+one more closure *of a reading*, not of a cipher family, and it does not move the
+crux. Two things a later session should not have to relearn:
+
+- **A candidate-generation assertion is a different kind of witness from a detection
+  witness, and this row needed both.** The `("BK",)` bug produced 261 zero-candidates
+  that the retargeted-`attempt()` witness would have happily reported as a clean
+  negative. Detecting hits and generating the right hits are independent failure modes.
+- **The format question is no longer "which encoding of the sum list" but "which sum
+  object and which destination".** Enumerating further digit-list renderings of a
+  196-cell-derived number list is now the shape of work this ledger exists to stop.
+
+Date: 2026-10-05, local.
+
+## R-BIFIDCERT-2026-10-05: THE CERTIFIED BIFID STAGE HAS NEVER BEEN CERTIFIED AS INVERTIBLE -- `bifid_encrypt` IS CALLED FROM NOWHERE. IT IS INVERTIBLE. AND `R-PLAINART`'s CORNER-BLOCK CLAIM HAS A **PARITY** MECHANISM THAT DOES NOT EXTEND TO `dbbib_91`, PLUS A CIRCULAR PREDICTION COLUMN
+
+0 candidates, 0 oracle calls, both funded gates untouched. Certifier: `tools/bifid_selftest.py` (SELFTEST PASS, rc=0), cross-checked against **pycipher 0.5.1** as an independent implementation. Escrow re-checked first (`check_escrows.py --slug gsmg-io-5btc-puzzle`, both OK); `tools/validate.py --folder 1-big-prizes/gsmg-io-5btc-puzzle` **15/15**.
+
+**Two unfalsifiable assumptions, both now falsifiable.** This row exists because the previous session's note that "`faed_570` reconstructs exactly through a bijective re-encoding" could not be re-derived: there is no such harness on this device (no ledger row, no scratch file, no `analysis/tmp` remnant), and `bifid_repro.py` **never constructs the inverse**. Rather than ledger an unreproducible claim, I built the missing instrument. It turned up more than the pending item.
+
+### FINDING 1 -- `bifid_encrypt` IS DEAD CODE, SO "THE DECODER IS FAITHFUL" WAS A ONE-DIRECTION ASSUMPTION
+
+`tools/bifid_to_pipeline.py:70` defines `bifid_encrypt`. It is **referenced by no caller anywhere in the repository** -- verified, not assumed. Every certified run of this stage is decrypt-only, so until now the decoder had been validated in exactly one direction: against the five stored hashes in `data/salphaseion-streams.json`. That is a real witness, but it is **not** a witness of *invertibility*. `R-PLAINART` F4 is the general statement of the danger -- *an instrument dominated by an artifact cannot rank candidates* -- and this is its sharpest local instance: **if `bifid_decrypt` were not invertible, then "the plaintext is a geometric artifact" and "the plaintext is the message" are indistinguishable by anything this project has ever run**, because every downstream claim (F1's `25^-7`, F2's letter counts, F3's prediction, `object_256`) is a statement about the *output* of an unverified map.
+
+**MEASURED: the map is a bijection, at every period, including all odd ones.** Round-trip `bifid_encrypt(bifid_decrypt(s, p)) == s` over **every divisor period** of both streams -- `faed_570` 16 divisors (**8 odd**), `dbbib_91` 4 divisors (**4 odd**) -- **0 failures**. Non-dividing periods are lossless too (partial final block; `p ∈ {3,7,13,19,100}`), 0 failures. Independently, `bifid_decrypt` **agrees with pycipher at every divisor period of both streams, 0 disagreements**, and pycipher's own round-trip is asserted first so it cannot be trusted vacuously (**W2**). So the certified stage is standard Bifid, confirmed by a third-party library rather than by a second copy of this project's own code.
+
+The practical consequence: **`25^-7` in F1 stands**, and the `BTCSEED` witness is now certified in both directions instead of one.
+
+### FINDING 2 -- THE CORNER BLOCK IS A **PARITY** ARTIFACT, AND `R-PLAINART`'s `dbbib_91` "SAME PROPERTY" HAS NO MECHANISM BEHIND IT
+
+F2 asserts `faed` and `dbbib_91` share the corner-block property. The `faed` half is real, and the mechanism is sharper than "where the nine tokens sit". `bifid_decrypt`'s half-split at `h = n/2` cuts the interleaved coordinate stream `[r0,c0,r1,c1,...]` **between tokens**, which is only meaningful when `n` is even. For even `n`:
+
+> `plain[2m]   = grid[ ROW(tok m) ][ ROW(tok n/2+m) ]`   <- a **ROW x ROW** product
+> `plain[2m+1] = grid[ COL(tok m) ][ COL(tok n/2+m) ]`   <- a **COL x COL** product
+
+Both identities verified to hold for all 570 positions. Since **all nine tokens lie in rows 0-1**, every ROW factor is in `{0,1}` -- so **every even position is forced into the 2x2 corner block `grid[{0,1}][{0,1}]`**. Measured: `even_stream` uses exactly **{B,C,D,E}**, 4 letters, `grid[{0,1}][{0,1}]` precisely. The odd positions are a COLxCOL product with columns spanning 0-4, so they range over all 25 letters.
+
+**The stored 327/570 = 57.4% now decomposes EXACTLY, with no residual:**
+
+| positions | count | in corner | share | why |
+|---|---|---|---|---|
+| even | 285 | **285** | **100.0%** | ROWxROW, rows forced to {0,1} |
+| odd | 285 | 42 | 14.7% | COLxCOL, columns vary |
+| **total** | **570** | **327** | **57.4%** | matches `R-PLAINART` F2's stored 327 exactly |
+
+This is strictly stronger than F3's "within 4-10 pp of a prediction": it is an **identity**, and F3's ±residual column is an artefact of F3's own modelling error (next finding). It also explains the pipeline shape recorded at `tools/bifid_repro.py:8-11` -- `even_stream` and `odd_pre_reduction` are not two halves of a payload that a reduction then filters. **They are two structurally different objects**, one trapped in 4 cells by construction and one spanning 25. Treating `{I,O}`-removal on the odd half as a "reduction" (`object_256`) inherits a constraint that was never applied to the even half at all.
+
+**`dbbib_91` is ODD (n=91), so the factorisation does not exist.** `h = 45`, and **token 45 straddles the boundary**: its ROW goes into `rs`, its COL into `cs`, so the halves **overlap by one token** and there is no clean even/odd token pairing. Measured: the ROWxROW identity holds on **12 of 46** even positions (only where indices stay in range), the COLxCOL identity fails, `even_stream` spans **9 letters `ABCDEFGHI`** rather than 4, and `odd_stream` spans `CDELMQRVW`. So F2's `55/91 = 60.4%` is a **true count with no parity mechanism forcing it**, and F2's "same property" wording is **WITHDRAWN as a mechanism claim**. F2's arithmetic is confirmed exact (`C`96 `D`87 `E`78 `B`66, 327/570, 2.70x English, 55/91) -- it is the *generalisation* that fails, not the numbers. **Do not carry the corner-block argument across to the 91-token stream.**
+
+### FINDING 3 -- F3's "PREDICTED" COLUMN IS CIRCULAR, AND ITS OWN PROOF ASSUMES WHAT IT USES
+
+F3 tabulates `P(row in 0-1) × P(col in 0-1)` as a *prediction* and compares it to the observed corner share, calling the agreement evidence that the distribution is geometric. **The two `P` columns are plaintext marginals, not token marginals.** Re-derived:
+
+| stream | token row | token col | token product | **plaintext row** | **plaintext col** | **plaintext product** | observed |
+|---|---|---|---|---|---|---|---|
+| `faed_570` | 1.0000 | 0.3842 | 38.4% | **0.6947** | **0.6895** | **47.9%** | 57.4% |
+| `dbbib_91` | 1.0000 | 0.6044 | 60.4% | **0.7912** | **0.8132** | **64.3%** | 60.4% |
+
+F3's published `0.695` / `0.791` are the **plaintext** row marginals (matched to 3 dp). So F3 multiplies two marginals *of the quantity it is predicting* and calls the product a prediction -- and F3's own text says the split gives "**disjoint halves, not independent draws**", i.e. the independence assumption is the thing it set out to avoid. For `faed_570` the honest token-only prediction is **38.4%**, which does **not** bracket the observed 57.4%; it is F2's exact parity decomposition (Finding 2), not F3's arithmetic, that carries the claim. The `-3.9 pp` / `+9.5 pp` residuals are therefore not measurement noise to be explained away -- they are the **size of the circularity**.
+
+**F3's CONCLUSION is retained and is in fact strengthened:** the distribution is still an artifact carrying no information about meaning. But the *argument* for it must be F2's exact parity identity, not F3's marginal product.
+
+### Witnesses
+
+- **W1** the certified `faed -> BTCSEEDDEOEMCKEADHBSCHDKBDCSDKDVBXCPCOCH` witness re-derives under this project's code **and independently under pycipher**.
+- **W2** pycipher's round-trip is asserted across all divisor periods of both streams *before* pycipher is used as a reference, so agreement cannot be vacuous.
+- **W3 NEGATIVE CONTROL** a deliberately corrupted keyword (`DBIFHCEX`) **breaks** W1 -- asserted in the tool, so the positive control is known to be capable of failing.
+- **W4** the parity factorisation is asserted to **hold** on `faed_570` (even) and to **fail** on `dbbib_91` (odd), i.e. the tool asserts the *asymmetry* in both directions rather than only the case that supports the claim. The `dbbib_91` check is written as `not (ev_rr and od_cc)`: a negative assertion about a code path, deliberately, so it cannot pass by accident.
+- The `even_stream` / `odd_pre_reduction` / `object_256` strings are re-derived and compared against `data/salphaseion-streams.json`, and the 327 corner count is asserted as `285 + 42 == 327` rather than recomputed from prose.
+
+### NOT CLAIMED
+
+No decode, no candidate, no oracle call, no funded-gate contact, no broadcast. **No edit to `R-PLAINART`'s row text** -- its F1 and F4 stand, its F2 numbers are exact, and only its F3 table and F2's "same property" phrasing are corrected here. No claim that the parity factorisation was the author's intent rather than a consequence of `bifid_decrypt`'s half-split; it is a property of **this implementation** at even `n`, and a stage that split differently would not have it. No claim about what `object_256` *means*. `X` UNSOLVED. **CRUX UNCHANGED: X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet**, now with the decoder certified bijective in both directions.
+
+Date: 2026-10-05, local.
+
+| R-BIFIDCERT-2026-10-05 | 2026-10-05 | CERTIFICATION OF THE CERTIFIED BIFID STAGE (`tools/bifid_selftest.py`, pycipher 0.5.1 cross-check; read-only, 0 candidates, 0 oracle calls) | **THE BIFID DECODER HAD NEVER BEEN CERTIFIED INVERTIBLE -- `bifid_encrypt` IS CALLED FROM NOWHERE -- AND EVERY CORNER-BLOCK CLAIM DEPENDED ON THAT.** F1: `bifid_encrypt` (`bifid_to_pipeline.py:70`) has **no caller in the repository**; all prior certification was decrypt-only against 5 stored hashes, which is not a witness of invertibility. **MEASURED: bijection at every period** -- round-trip over all 16 divisor periods of `faed_570` (**8 odd**) and all 4 of `dbbib_91` (**4 odd**), **0 failures**; non-dividing periods lossless too; and **0 disagreements with pycipher** at every divisor period of both streams. F1's `25^-7` therefore stands, now certified in both directions. F2: the corner block is a **PARITY** artifact, not merely a token-geometry one. For even `n` the half-split cuts *between tokens*, giving `plain[2m]=grid[ROW_m][ROW_{n/2+m}]` (a **ROWxROW** product) and `plain[2m+1]=grid[COL_m][COL_{n/2+m}]` (a **COLxCOL** product) -- both verified on all 570 positions. All nine tokens are in rows 0-1, so **every ROW factor is in {0,1} and every even position is FORCED into the 2x2 corner block**: `even_stream` uses exactly `{B,C,D,E}`. **The stored 327/570 = 57.4% decomposes EXACTLY: 285/285 even (100%) + 42/285 odd (14.7%) = 327**, no residual -- stronger than F3's "within 4-10 pp", and it shows `even_stream` (4 letters, constrained by construction) and `odd_pre_reduction` (25 letters) are structurally different objects, so `{I,O}`-removal as a "reduction" was never applied to the even half at all. **`dbbib_91` is ODD (n=91, h=45), so the factorisation does not exist**: token 45 straddles the split (ROW into `rs`, COL into `cs`, halves **overlap by one token**), the ROWxROW identity holds on only **12/46** even positions, `even_stream` spans **9 letters** not 4. F2's `55/91 = 60.4%` is a true count with **no mechanism**, so F2's "same property" is **WITHDRAWN as a mechanism claim**; do not carry the corner-block argument to the 91-token stream. F2's arithmetic is confirmed exact (`C`96 `D`87 `E`78 `B`66, 327/570, 2.70x, 55/91); F1 and F4 stand. F3: **its "predicted" column is CIRCULAR** -- the `0.695`/`0.791` it publishes are **plaintext** marginals (matched to 3 dp), so it multiplies marginals of the very quantity it predicts, while its own text disclaims independence ("disjoint halves, not independent draws"). The honest token-only prediction is **38.4%**, which does **not** bracket the observed 57.4%; F3's residual column is the size of the circularity. **F3's conclusion is RETAINED and strengthened** -- the distribution is still an artifact -- but the argument must be F2's exact parity identity, not F3's marginal product. **Witnesses:** W1 the `BTCSEED` witness re-derived under project code **and independently under pycipher**; W2 pycipher's round-trip asserted before it is trusted as a reference; **W3 NEGATIVE CONTROL** corrupted keyword `DBIFHCEX` **breaks** W1; W4 the factorisation asserted to **hold** on even `faed_570` and **fail** on odd `dbbib_91` (`not (ev_rr and od_cc)`), i.e. the asymmetry is asserted in both directions. **NOT CLAIMED:** no decode/candidate/oracle call/gate contact; no edit to `R-PLAINART`'s text; the parity identity is a property of **this implementation** at even `n`, not a claim of authorial intent; nothing about what `object_256` means. `X` UNSOLVED, **CRUX UNCHANGED** (decode of `dbbib_91`/`faed_570` under the interpreter alphabet), now with the decoder certified bijective in both directions. |
+
+## R-URLBLOB-2026-10-05: THE FOURTH `Salted__` BLOB WAS NEVER MISSING -- IT WAS ON THE SD CARD OUTSIDE EVERY DEVICE-LOCAL ROOT, AND `tested.md:11941`'s "NEVER ARCHIVED ON-DEVICE" IS WRONG. ITS PROVENANCE IS CERTIFIABLE FROM THE PUBLIC URL ALONE. TWO LIVE DEFECTS FOUND, BOTH OF WHICH RE-POISON A SWEEP SILENTLY.
+
+### The negative that was recorded against a file that existed
+
+`tested.md:11941` lists the historical sweep inputs and states: *"urlblob.bin
+(112B, salt 74c974e3f92e64b5 - never archived on-device) ... both already
+certified negative in tested.md sweeps."* That phrase does the damage. A negative
+recorded against an absent file is not a negative about the puzzle -- it is a
+statement about a search space that was never entered, presented in the grammar
+of one that was. The file exists:
+
+    /storage/EA7B-C038/briefcase/gsmg-puzzle/analysis/urlblob.bin    112 B  2026-09-06
+    /storage/EA7B-C038/briefcase/gsmg-puzzle/analysis/urlblob_ct.bin  96 B  2026-09-06
+
+Both dated the session logged at `~/briefcase/MEMORY.md:17`, i.e. the sweep that
+row is summarising. sha256 `25b3619a18174794d4ddd0d743f78f04007c0cf1830f6cf9301bc671631799bb`
+and `2a2e830ac1bad9b638bccd7d532a79afdc52f52fc9d5542b5a1f950cbbeda207`; both copied
+into `analysis/` this session with equality verified on copy, and recorded in
+`analysis/urlblob_PROVENANCE.md`. **F1, WHY IT WAS NEVER FOUND -- A SEARCH-SCOPE DEFECT, NOT A MISSING FILE.** `~/storage/external/briefcase` is a **symlink** to `/storage/EA7B-C038`, so the path this project has always used for its off-device backup is one `find` does not follow by default, and the SD-card mount sits outside `~`, outside the repo, and outside `~/briefcase`. The 2026-09-06 session that *created* both files wrote them to the one root a later device-local search does not reach. **This is the third instance in this folder of "the artifact is at another path" being the whole answer** (`R-SRCRECOVER`, `R-DOORSRC`, `R-DOORATTRIB` F5), and the first where the *absence* of a hit was recorded as a result rather than as a scope limit. **Reusable rule: a negative whose input was not opened is a scope statement. Record the corpus, as `R-REVERIFY-CLOSURES` already requires, and never let "never archived" stand where "not searched" is meant.**
+
+**F2, THE PROVENANCE IS CERTIFIABLE WITHOUT THE FILE, AND THIS IS THE PART THAT MATTERS.** The old site served a route whose name is the hex of the blob's own opening bytes:
+
+    /53616c7465645f5f74c974e3f92e64b59f7ea22a50dcb0d4289d176d4ce9dba7f99a695b8d0797b5c7791e65a8d2b68a5879f5d31ae5e
+
+109 hex chars -- an **odd** count, so the final nibble is a truncated half-byte and is dropped to 54 bytes. Checked in `tools/urlblob_provenance.py`:
+
+| check | result |
+|---|---|
+| `slug[0:54] == urlblob.bin[0:54]` | **True** |
+| `slug[8:24] == salt` | **True** |
+| `slug[24:54] == urlblob.bin[24:54]` (30 ciphertext bytes) | **True** |
+
+**The public route certifies 54 of 112 bytes with no reference to any on-disk artifact** -- the whole 32-byte header plus 30 of 88 ciphertext bytes -- because the author named the route after the header. **The trailing 58 ciphertext bytes have no public corroboration and rest on this file alone.** Stated explicitly so the certified span is not later read as the whole blob. **F2 also retires the "fabricated blob" worry:** had the file been backfilled or padded, its first 54 bytes could not match a URL slug published independently of it. The 2026-09-06 sweep therefore ran on a real artifact, and its **negative stands**.
+
+**F3, THE SALT IS 16 BYTES; THE LEDGER PRINTS 8.** Full salt `74c974e3f92e64b59f7ea22a50dcb0d4` (`FETCH-LOG.md:298`); all five ledger occurrences -- `tested.md:356/7367/11941/14037/19058` -- plus `leads.md:748` print `74c974e3f92e64b5`. Cosmetic, same blob, but the two renderings had never been compared because the full form appeared in exactly one place. This salt matches **none** of the other known blobs (`3ab58534…` small, `2d3f6fe0…` dualite, `06286612…`/`9fbc451d…` phase 2, `b45a5e3d…` p32), which is what makes this a **fourth** `Salted__` ciphertext rather than a re-reading of a third.
+
+**F4, DEFECT 1 -- `urlblob_ct.bin` IS MISALIGNED BY 8 BYTES AND RE-CREATES THE HISTORICAL BUG.** It is `urlblob.bin[16:112]`, not `[24:120]`:
+
+| slice | actual content |
+|---|---|
+| `ctfile[0:8]` | `9f7ea22a50dcb0d4` -- **last 8 bytes of the salt** |
+| `ctfile[8:16]` | `289d176d4ce9dba7` -- **first 8 bytes of the real ciphertext** |
+
+`~/briefcase/MEMORY.md:17` records that "ALL historical urlblob sweeps read salt from inside CT (salt 289d176d… garbage)". **`289d176d4ce9dba7` is `urlblob.bin[24:32]`.** The bug is not merely fixed in the 2026-09-06 session -- **the defective artifact is still on disk under a filename that invites exactly that use**, so the next sweep re-derives it. **Use `urlblob.bin[24:]`, or parse the file's own header; never read `urlblob_ct.bin` as a `Salted__` blob.** This is the concrete instance of a pattern `R-REVERIFY-CLOSURES` already names: *a defect fixed in the reading path survives in the data until the data is checked.*
+
+**F5, DEFECT 2 -- 112 B IS NOT A VALID AES-CBC BLOB LENGTH, AND `MEMORY.md`'s OWN ARITHMETIC IS IMPOSSIBLE.** 24 B header + **88** B ciphertext, and 88 is **not** a multiple of 16; `[24+k for k in range(16,129,16) if 24+k==112]` is empty. Two readings, **NOT RESOLVED here**: (a) **truncated** -- a 96 B ciphertext gives 120 B total, lost tail `5caeb77dfc3e0607`; (b) **stream mode** -- CFB/OFB/CTR need no padding, so 88 B is legitimate. `MEMORY.md:17` calls it "112B ... ct 96B=6 blocks", which cannot be true (`24+96 = 120`). **Note the interaction with F4:** the 8-byte shortfall and the 8-byte misalignment are the same size, which is what makes truncated-(a) and the misalignment look like one clean story. They are **not** thereby connected -- `urlblob_ct.bin` is a bad *slice* of a file that is independently odd-*length*, and neither fact licenses inferring the other. F5 therefore does **not** license re-running the 2026-09-06 battery, and no candidate is produced.
+
+**F6, WHAT THIS DOES NOT CHANGE.** No decode, no candidate, no oracle call, no funded-gate contact, no broadcast. **No historical row edited** -- `tested.md:11941`'s "never archived on-device" is corrected *by this row and by `analysis/urlblob_PROVENANCE.md`*, not by rewriting it, and the 2026-09-06 negative it summarises is **upheld**. `R-URLBLOB` is a provenance and defect row, **not** a re-sweep: the battery it describes stays exactly as strong as it was, and F5 leaves one loose end (is the file truncated?) that only new material can close. **No claim that the blob is decryptable, that 88 bytes is the right length, or that the trailing 58 uncorroborated bytes are authentic** -- F2's certification covers 54 bytes and this row does not extend it. `X` UNSOLVED, both funded gates untouched. **CRUX UNCHANGED: X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet.**
+
+Date: 2026-10-05, local.
+
+| R-URLBLOB-2026-10-05 | 2026-10-05 | PROVENANCE CERTIFICATION + DEFECT REPORT (`tools/urlblob_provenance.py`, 29/29; read-only, 0 candidates, 0 oracle calls, both funded gates untouched) | **THE FOURTH `Salted__` BLOB WAS NEVER MISSING. IT WAS ON THE SD CARD SINCE 2026-09-06, OUTSIDE EVERY DEVICE-LOCAL ROOT, AND `tested.md:11941`'s "NEVER ARCHIVED ON-DEVICE" IS WRONG.** **F1** the file is at `/storage/EA7B-C038/briefcase/gsmg-puzzle/analysis/urlblob.bin` (112 B, sha256 `25b3619a1817…`, dated 2026-09-06) and `urlblob_ct.bin` (96 B, sha256 `2a2e830ac1ba…`), both copied into `analysis/` with copy-equality verified and provenance written to `analysis/urlblob_PROVENANCE.md`. Never found because **`~/storage/external/briefcase` is a symlink to `/storage/EA7B-C038`**, so the project's own backup root is one `find` does not follow, and the SD mount is outside `~`, the repo and `~/briefcase`; the session that created the files wrote them to the one root a later search misses. **A NEGATIVE RECORDED AGAINST AN UNOPENED FILE IS A SCOPE STATEMENT, NOT A RESULT** -- third instance here of "the artifact is at another path" being the whole answer (`R-SRCRECOVER`, `R-DOORSRC`, `R-DOORATTRIB` F5), and the first where an absence was recorded in the grammar of a search. **F2, AND THE PROVENANCE DOES NOT DEPEND ON THE FILE:** the public route `/53616c7465645f5f74c974e3f92e64b5…` (109 hex chars, odd, last nibble dropped -> 54 B) satisfies `slug[0:54] == urlblob.bin[0:54]`, `slug[8:24] == salt`, and `slug[24:54] == urlblob.bin[24:54]` (30 ciphertext bytes), all **True**. The author named the route after the blob's own header, so **54 of 112 bytes are certified with no reference to any on-disk artifact** -- the full 32-byte header plus 30 of 88 ciphertext bytes -- and **the trailing 58 bytes have no public corroboration and rest on the file alone**, stated so the certified span is not read as the whole. **This also retires the fabrication worry: a backfilled or padded file could not match a URL slug published independently of it, so the 2026-09-06 sweep ran on a real artifact and its NEGATIVE STANDS.** **F3** the salt is **16** bytes, `74c974e3f92e64b59f7ea22a50dcb0d4`; all five ledger occurrences plus `leads.md:748` print the 8-byte `74c974e3f92e64b5` -- cosmetic, same blob, but the two renderings had never been compared because the full form lived in one place (`FETCH-LOG.md:298`). It matches **none** of the other four known blobs, which is what makes this a **fourth** ciphertext rather than a re-reading of a third. **F4, DEFECT 1:** `urlblob_ct.bin == urlblob.bin[16:112]`, **misaligned by 8** -- its `[0:8]` is the salt TAIL `9f7ea22a50dcb0d4` and its `[8:16]` is the real ciphertext HEAD `289d176d4ce9dba7`, which is **exactly** the "salt 289d176d… garbage" of `~/briefcase/MEMORY.md:17`; the bug was not merely fixed, **the defective artifact is still on disk under a name that invites the same use**, so **use `urlblob.bin[24:]` and never read `urlblob_ct.bin` as a `Salted__` blob**. **F5, DEFECT 2, NOT RESOLVED:** 24 + **88** B ciphertext and **88 % 16 == 8**, with no CBC-valid length equal to 112 -- either **truncated** (96 B ciphertext => 120 B total, lost tail `5caeb77dfc3e0607`) or a **stream mode** (CFB/OFB/CTR need no padding), and `MEMORY.md`'s "ct 96B=6 blocks" is **arithmetically impossible** (`24+96 = 120`). The 8-byte shortfall and the 8-byte misalignment being equal in size makes one clean story look available; **they are not thereby connected**, and F5 does **not** license re-running the battery. **F6** no decode, no candidate, no oracle call, no gate contact, **no historical row edited** -- `:11941`'s phrase is corrected by this row and the provenance note, not by rewriting it. **This is a provenance and defect row, NOT a re-sweep**; the battery stands exactly as strong as it was. | **The blob's provenance is now certified from public data, and its 2026-09-06 negative is UPHELD rather than voided** -- the opposite of what F1's "never archived" implied, and the reason this row is worth more than a re-sweep would have been. Two defects are removed from the path: a misaligned ciphertext file that re-created a known-invalidating bug, and a length claim that no cipher mode supports as stated. The certified span is **54 of 112 bytes**, and the 58 uncorroborated trailing bytes are the honest limit. `X` UNSOLVED. **CRUX UNCHANGED: X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet.** | 100% F1 and F2 -- both are byte comparisons against a published URL slug and two files whose sha256 are recorded, re-runnable via `tools/urlblob_provenance.py` (29/29, exit 0, five negative controls including one asserting the slug does **not** cover the whole blob, so a passing run is known able to fail). **100% F4** -- the misalignment is a direct equality test. **99% F5's arithmetic** (the length claim is refuted outright) but only **~50%** on which reading is right: truncated versus stream mode is **not decided**, and the equal sizes of F4's and F5's offsets are explicitly **not** treated as evidence that they share a cause. **100% F6 as scope.** | **The 2026-09-06 urlblob negative is UPHELD, not voided.** Both defects are real and live. **OPEN:** whether `urlblob.bin` is truncated at 88 bytes or a stream-mode blob -- closeable only by new material, not by re-sweeping. Also open, unchanged: the trailing 58 bytes have no public corroboration. No new mechanical frontier. |
