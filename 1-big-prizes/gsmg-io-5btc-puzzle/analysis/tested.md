@@ -22347,3 +22347,197 @@ into `analysis/` this session with equality verified on copy, and recorded in
 Date: 2026-10-05, local.
 
 | R-URLBLOB-2026-10-05 | 2026-10-05 | PROVENANCE CERTIFICATION + DEFECT REPORT (`tools/urlblob_provenance.py`, 29/29; read-only, 0 candidates, 0 oracle calls, both funded gates untouched) | **THE FOURTH `Salted__` BLOB WAS NEVER MISSING. IT WAS ON THE SD CARD SINCE 2026-09-06, OUTSIDE EVERY DEVICE-LOCAL ROOT, AND `tested.md:11941`'s "NEVER ARCHIVED ON-DEVICE" IS WRONG.** **F1** the file is at `/storage/EA7B-C038/briefcase/gsmg-puzzle/analysis/urlblob.bin` (112 B, sha256 `25b3619a1817…`, dated 2026-09-06) and `urlblob_ct.bin` (96 B, sha256 `2a2e830ac1ba…`), both copied into `analysis/` with copy-equality verified and provenance written to `analysis/urlblob_PROVENANCE.md`. Never found because **`~/storage/external/briefcase` is a symlink to `/storage/EA7B-C038`**, so the project's own backup root is one `find` does not follow, and the SD mount is outside `~`, the repo and `~/briefcase`; the session that created the files wrote them to the one root a later search misses. **A NEGATIVE RECORDED AGAINST AN UNOPENED FILE IS A SCOPE STATEMENT, NOT A RESULT** -- third instance here of "the artifact is at another path" being the whole answer (`R-SRCRECOVER`, `R-DOORSRC`, `R-DOORATTRIB` F5), and the first where an absence was recorded in the grammar of a search. **F2, AND THE PROVENANCE DOES NOT DEPEND ON THE FILE:** the public route `/53616c7465645f5f74c974e3f92e64b5…` (109 hex chars, odd, last nibble dropped -> 54 B) satisfies `slug[0:54] == urlblob.bin[0:54]`, `slug[8:24] == salt`, and `slug[24:54] == urlblob.bin[24:54]` (30 ciphertext bytes), all **True**. The author named the route after the blob's own header, so **54 of 112 bytes are certified with no reference to any on-disk artifact** -- the full 32-byte header plus 30 of 88 ciphertext bytes -- and **the trailing 58 bytes have no public corroboration and rest on the file alone**, stated so the certified span is not read as the whole. **This also retires the fabrication worry: a backfilled or padded file could not match a URL slug published independently of it, so the 2026-09-06 sweep ran on a real artifact and its NEGATIVE STANDS.** **F3** the salt is **16** bytes, `74c974e3f92e64b59f7ea22a50dcb0d4`; all five ledger occurrences plus `leads.md:748` print the 8-byte `74c974e3f92e64b5` -- cosmetic, same blob, but the two renderings had never been compared because the full form lived in one place (`FETCH-LOG.md:298`). It matches **none** of the other four known blobs, which is what makes this a **fourth** ciphertext rather than a re-reading of a third. **F4, DEFECT 1:** `urlblob_ct.bin == urlblob.bin[16:112]`, **misaligned by 8** -- its `[0:8]` is the salt TAIL `9f7ea22a50dcb0d4` and its `[8:16]` is the real ciphertext HEAD `289d176d4ce9dba7`, which is **exactly** the "salt 289d176d… garbage" of `~/briefcase/MEMORY.md:17`; the bug was not merely fixed, **the defective artifact is still on disk under a name that invites the same use**, so **use `urlblob.bin[24:]` and never read `urlblob_ct.bin` as a `Salted__` blob**. **F5, DEFECT 2, NOT RESOLVED:** 24 + **88** B ciphertext and **88 % 16 == 8**, with no CBC-valid length equal to 112 -- either **truncated** (96 B ciphertext => 120 B total, lost tail `5caeb77dfc3e0607`) or a **stream mode** (CFB/OFB/CTR need no padding), and `MEMORY.md`'s "ct 96B=6 blocks" is **arithmetically impossible** (`24+96 = 120`). The 8-byte shortfall and the 8-byte misalignment being equal in size makes one clean story look available; **they are not thereby connected**, and F5 does **not** license re-running the battery. **F6** no decode, no candidate, no oracle call, no gate contact, **no historical row edited** -- `:11941`'s phrase is corrected by this row and the provenance note, not by rewriting it. **This is a provenance and defect row, NOT a re-sweep**; the battery stands exactly as strong as it was. | **The blob's provenance is now certified from public data, and its 2026-09-06 negative is UPHELD rather than voided** -- the opposite of what F1's "never archived" implied, and the reason this row is worth more than a re-sweep would have been. Two defects are removed from the path: a misaligned ciphertext file that re-created a known-invalidating bug, and a length claim that no cipher mode supports as stated. The certified span is **54 of 112 bytes**, and the 58 uncorroborated trailing bytes are the honest limit. `X` UNSOLVED. **CRUX UNCHANGED: X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet.** | 100% F1 and F2 -- both are byte comparisons against a published URL slug and two files whose sha256 are recorded, re-runnable via `tools/urlblob_provenance.py` (29/29, exit 0, five negative controls including one asserting the slug does **not** cover the whole blob, so a passing run is known able to fail). **100% F4** -- the misalignment is a direct equality test. **99% F5's arithmetic** (the length claim is refuted outright) but only **~50%** on which reading is right: truncated versus stream mode is **not decided**, and the equal sizes of F4's and F5's offsets are explicitly **not** treated as evidence that they share a cause. **100% F6 as scope.** | **The 2026-09-06 urlblob negative is UPHELD, not voided.** Both defects are real and live. **OPEN:** whether `urlblob.bin` is truncated at 88 bytes or a stream-mode blob -- closeable only by new material, not by re-sweeping. Also open, unchanged: the trailing 58 bytes have no public corroboration. No new mechanical frontier. |
+
+## R-JRKVERSIONS-2026-10-05: FOUR RENDERINGS OF THE AUTHOR'S TELEGRAM CHANNEL, CERTIFIED AS ONE CHANNEL. `raw` AND `GSMG_JRK.md` ARE THE SAME 427 MESSAGES WITH **ZERO** WORDS DIFFERING IN EITHER DIRECTION -- THE LEDGER'S IMPLICIT "THE MD IS A SECOND SNAPSHOT" IS FALSE, AND THE STILL-OPEN PRE-EDIT SNAPSHOT OBJECT IS KILLED **AS A LOCAL OBJECT** WITH A STATED REASON. TWO REAL DEFECTS FOUND (ONE IN `GSMG_JRK.md`, ONE THAT WAS IN THIS TOOL), AND ONE AUTHORIAL METADATA CLASS OF 116 MESSAGES FOUND THAT NO ROW HAS EVER CITED.
+
+Checked with `tools/jrk_corpus_versions.py` (957 lines, `--selftest` = 59/59 assertions, all
+re-derived from the files on every run; read-only, 0 candidates, 0 oracle calls, both funded
+gates untouched, no broadcast). Four files, and the ledger's own corpus has been treating two of
+them as independent evidence:
+
+| rendering | rows | span | Telegram IDs | emoji | edit stamps | reply quotes |
+|---|---|---|---|---|---|---|
+| `jrk_all_messages.txt` (raw) | 427 | 2019-04-20 -> 2026-05-28 | yes | mojibake | no | no |
+| `GSMG_JRK.md` (cleaned) | 427 | 2019-04-20 -> 2026-05-28 | yes | lost to `':)'`/`"''"` | no | no |
+| `creator_jrk.txt` | 411 | 2019-04-20 -> 2026-05-28 | no | intact | no | no |
+| `Jrk_Bgrt_Groupchat_History.txt` | 399 | 2019-04-20 -> **2025-04-28** | no | intact | **116** | **116** |
+
+`raw` and `md` carry 427 Telegram message IDs each and **the ID sets are identical** -- so the
+comparison is per-message, not per-line, and no message can be silently added or dropped.
+
+### FINDING 1 -- THE ONLY WORD-LEVEL DIFFERENCE IN 427 MESSAGES IS A CHARACTER, AND `substantive` IS ZERO
+
+Every one of the 427 shared IDs lands in exactly one bucket:
+
+| bucket | count | what differs |
+|---|---|---|
+| identical | 316 | nothing -- bodies byte-identical |
+| emoji-only | 92 | mojibake vocabulary vs the cleaner's `':)'` / `"''"` stand-ins |
+| letters+digits equal | 16 | punctuation/emoji only |
+| emoji-only + glued day-heading | 2 | as above, plus a `### yyyy-mm-dd` heading welded on |
+| mangled apostrophe, cleaner normalised it | 1 | a CHARACTER (`#39237`) |
+| **substantive** | **0** | a word, a number, or a letter-run |
+| SUM | 427 | |
+
+**The corpus-level witness is the strong form, and it is empty in BOTH directions:**
+
+    multiset of every alphabetic token (len>=3) over all 427 bodies
+      tokens only in raw: []
+      tokens only in md : []
+
+Not one token exists in one rendering and not the other. `X` UNSOLVED, and no reader of this row
+may cite `GSMG_JRK.md` as a *second* snapshot or treat a wording difference between the two files
+as a lead -- there is none to find.
+
+**The single disagreement is `#39237`, and it is a character, not a word.** Codepoints of the
+first five characters of one and the same word:
+
+| rendering | first five codepoints | spelling |
+|---|---|---|
+| raw | `0x49 0x74 0xe2 0x3f 0x54` | `It` + mojibake + `Ts` |
+| `creator_jrk.txt` | `0x49 0x74 0x2019 0x54 0x73` | `It's` (U+2019, intact) |
+| groupchat export | `0x49 0x74 0x2019 0x54 0x73` | `It's` (U+2019, intact) |
+| `GSMG_JRK.md` | `0x49 0x74 0x27 0x54 0x73` | `It's` (U+0027) |
+
+The raw export mojibakes the author's U+2019; the cleaner **normalised** a curly apostrophe to a
+straight one and invented nothing. The word is `it's` in all four files, and `--selftest` pins the
+codepoint of each rendering separately *and* pins that `cmp_words` reads all four as `it's` -- so
+the agreement cannot be an accident of the comparison. It is reported in its own bucket rather
+than absorbed into `emoji-only` precisely because it is the only place two renderings disagree
+about a character; absorbing it would have let `substantive: 1` stand as "one word difference" when
+the honest number is zero words and one character.
+
+**Why the mojibake vocabulary is derived rather than typed in.** A raw whitespace-delimited token
+is emoji mojibake iff it appears in NO clean rendering -- **63** tokens -- plus **1** glued to a
+word with no space to cut at (`that"dY~?`). `--selftest` asserts that none of the 64 yields a
+single word under the same tokenizer, so deleting them provably cannot delete a word from the
+author's stream. A hand-typed list would have been a claim about mojibake that no artifact backs.
+
+### FINDING 2 -- THE 427/411/399 SPREAD IS THREE EXPORT CLOCKS AND ONE VINTAGE CUT. IT IS **NOT** ONE DELETION, AND BOTH SMALLER FILES RECONCILE TO ZERO UNEXPLAINED ABSENCES
+
+`creator_jrk.txt` and `Jrk_Bgrt_Groupchat_History.txt` carry no IDs, so they are joined to the raw
+export on (mojibake-free body, clock-shifted stamp), and each match must consume a **distinct** raw
+message so that a repeated body cannot pad the count:
+
+| | `creator_jrk.txt` | groupchat export |
+|---|---|---|
+| rows | 411 | 399 |
+| matched to a **distinct** raw message | **411** | **399** |
+| duplicate-body collisions | 0 | 0 |
+| rows with NO raw counterpart | 0 | 0 |
+| raw messages it does not carry | 16 | 28 |
+| ...of those, dated after its own export cut | 0 | **28** |
+| ...of those, empty bodies (no words to lose) | **16** | 10 |
+| **WORDS absent, unexplained by either** | **0** | **0** |
+
+So `creator_jrk.txt` is *literally* the raw export minus its 16 empty bodies -- **no word of
+authorial text exists only in the raw export** -- and the groupchat export stops at `2025-04-28`,
+its 28 unmatched raw messages all being dated after that date. Both are export vintage and clock,
+not deletion, and the difference is now a derived per-file accounting instead of an assumption.
+
+The clock offsets are **constant to the minute**, which is what makes the joins trustworthy:
+
+    raw - creator:    -2.00 h x184, -3.00 h x118, -2.13 h x1
+    raw - groupchat:  -3.00 h x297, -4.00 h x2, -3.13 h x1
+
+A fixed UTC offset with one DST change inside the span, not per-message drift. Per-message drift
+would have produced a spread of offsets, and it did not.
+
+### FINDING 3 -- A REAL DEFECT IN `GSMG_JRK.md`: TWO `### yyyy-mm-dd` DAY HEADINGS ARE WELDED ONTO THE PREVIOUS BODY
+
+| msg | timestamp | body as exported |
+|---|---|---|
+| `#8189` | 2022-06-01 09:56:24 | `':) ### 2022-09-06'` |
+| `#8472` | 2023-03-03 01:47:19 | `':)? ### 2023-04-07'` |
+
+Harmless to read, **fatal to anything that parses bodies by regex**: the heading text becomes part
+of the author's message, and note the heading date disagrees with the message date in both cases.
+This is the cost of the cleaner and belongs to `GSMG_JRK.md`, not to the author's wording -- which
+is why it is a bucket of its own and not `substantive`.
+
+### FINDING 4 -- THE ONE APPARENT TEXT LOSS WAS **IN THIS TOOL**, NOT IN THE FILE, AND IT IS NOW PINNED
+
+`#16624` reads *"There's a question multiple people have asked me. \"Given the available
+knowledge, is internet still required to solve it?\" Nope"* -- the author **quotes a question
+inside his own message**, so the first line ends in `"`. A parser that reads a field until a line
+ends in a quote stops there and silently drops the trailing `Nope`. **The file contains it.** The
+parser now closes a field on the LAST continuation line, by indentation, and `#16624` parses
+byte-identical to the raw export; `--selftest` pins the full string so the regression cannot return
+unnoticed. Recorded here because it looked exactly like a rendering defect and **would have become
+a false claim about the corpus had it not been chased to the file.**
+
+### FINDING 5 -- AN AUTHORIAL METADATA CLASS OF 116 MESSAGES THAT NO ROW HAS EVER CITED
+
+The groupchat export is the only rendering carrying `Edited on` stamps: **116 of 399** authorial
+messages carry one, **all 116** stamped **strictly after** posting (a live edit; 0 edited in
+place). The author says this class is load-bearing:
+
+    [2021-04-02 13:18:22] I haven't deleted it. Not sure who, but I noticed some more messages are deleted from time to time.
+    [2020-04-08 13:27:08] Quite some typos have been changed already. The biggest blunder so far in the mainline of the puzzle was
+
+Edits **cluster into a few days** rather than spreading across the channel -- `2024-11-29` (22),
+`2025-04-30` (21), `2025-04-28` (9), `2024-03-26` (8), `2024-04-19` (4), `2025-01-31` (3),
+`2024-04-17` (3), `2024-10-26` (3) -- and the longest latencies are 6-year-old strings revised
+together on `2025-04-30` (`+2200.0 d`, `2019-04-22` -> `2025-04-30 18:44:18`, and the `2019-04-23`
+/ `2019-04-29` / `2019-05-14` / `2019-05-17` cluster on the same afternoon). **This is a map of
+WHERE the author edited, not of WHAT the text was before.** It is stated as metadata, **not** as a
+clue, and no message is claimed to have been a typo fix.
+
+### FINDING 6 -- THE REPLY-QUOTE CLASS: THE ONLY LOCAL MECHANISM THAT COULD PRESERVE PRE-EDIT BYTES, AND IT IS EMPTY
+
+116 authorial messages are recorded as **replies**, so the export preserves what *another user* had
+written -- a third-party snapshot of the channel at a known instant, and the only local mechanism
+that could in principle hold authorial bytes as they once stood. Of the long tokens
+(hex>=24 / digits>=8 / b64>=20) quoted by others and absent from every author-only rendering,
+there is exactly **1**:
+
+    [2023-04-07 22:53:03] yellowblueprimesmatrixsumlistlastwordsbeforearchichoiceyinyang
+    wewontgiveawaythepassworditsinfrontofyoureyesbutyourenotseeingitverylaststep
+    isatruegiveawaypromised
+
+Already in the ledger 6 times and already attributed to the source it belongs to, so it yields
+nothing new -- **but the emptiness is now a derived result rather than an assumption.**
+
+### FINDING 7 -- VERDICT ON THE STILL-OPEN OBJECT: THE PRE-EDIT TELEGRAM SNAPSHOT IS KILLED **AS A LOCAL OBJECT**
+
+`STATE_BRIEF.md` has carried *"pre-edit snapshot, not recoverable from local data"* as an open
+object. The honest disposition is stronger than that, and is now stated with a reason:
+
+* `raw` and `GSMG_JRK.md` are the **same 427 messages**: identical ID sets, and word streams equal
+  in both directions. The md is an emoji-cleaned rendering of the raw export, **not a separate
+  snapshot**, so citing it as corroboration of the raw export is citing the export twice.
+* `creator_jrk.txt` and the groupchat export are the same channel on different clocks at different
+  vintages; every row of both matched a distinct raw message, and every raw message they lack is
+  either dated after their own export or has an empty body.
+* The only rendering carrying edit metadata carries **post**-edit text only.
+* The only mechanism that could carry pre-edit bytes -- third-party reply quotes -- contains no
+  token absent from the author corpus.
+* `GSMG_JRK.md`'s own two defects (F3) are cleaner artefacts, not authorial differences.
+
+**=> No pre-edit authorial string exists in this briefcase.** Recovering one needs an external
+pre-`2025-04-28` snapshot of the channel, which this device does not hold and which Telegram does
+not expose for another user's history. This **upholds** `R-TRACKB-PREEDIT-EXHAUSTED`'s hard bound
+and **upholds** the 39237/39233 post-edit-fidelity recovery in `R-TRACKB-CLOSED-2`; **no historical
+row is edited**, and this row is a **corpus-version certification, NOT a re-mining** -- it does not
+touch `R-JRKCORPUS`'s semantic findings and does not restate them.
+
+**Also closed here, as ledger-context checks rather than new leads.** Two uncited statements that
+`STATE_BRIEF.md` had left for a context check are **not** puzzle material: `#5960` (2021-03-01)
+*"Ancient spelling 😅. One of the many many typos."* is the author's own typo-apologia -- the
+disclaimer that **is** already ledgered as *"No clues to be found in those typos"* covers it
+verbatim, so citing it again is duplication; and `#26490` (2024-08-30) *"It indeed set to private.
+I haven't opened tg for a while..."* is about a **channel going private**, adjacent to the
+2021-04-02 deletion remark and to nothing else. Both now have a reason on file instead of a shrug.
+
+### NOT CLAIMED
+
+No decode, no candidate, no oracle call, no funded-gate contact, no broadcast. **No historical row
+edited.** No claim that the edit stamps reveal *what* any message said before it was edited; no
+claim that any of the 116 edits was a typo fix; no claim that `GSMG_JRK.md` is more or less
+authoritative than the raw export -- they are the same 427 messages and the raw one keeps the
+emoji. `X` UNSOLVED, both funded gates untouched.
+**CRUX UNCHANGED: X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet.**
+
+Date: 2026-10-05, local.
+
+| R-JRKVERSIONS-2026-10-05 | 2026-10-05 | CORPUS-VERSION CERTIFICATION of all four Telegram renderings (`tools/jrk_corpus_versions.py`, 957 lines, `--selftest` 59/59 re-deriving every number from the files; read-only, 0 candidates, 0 oracle calls, both funded gates untouched, no broadcast) | **FOUR RENDERINGS, ONE CHANNEL -- AND THE LEDGER'S IMPLICIT "THE MD IS A SECOND SNAPSHOT" IS FALSE.** `jrk_all_messages.txt` (raw, 427) and `GSMG_JRK.md` (427) carry **identical Telegram ID sets**, and their word streams are equal **in both directions**: the multiset of every alphabetic token (len>=3) over all 427 bodies gives **tokens only in raw `[]`, only in md `[]`** -- not one word, number or letter-run is unique to either file. **F1, `substantive` IS 0, AND THE ONE DISAGREEMENT IS A CHARACTER NOT A WORD:** every ID lands in one bucket -- identical 316, emoji-only 92, letters+digits equal 16, emoji-only+glued-heading 2, mangled-apostrophe 1, **substantive 0**, sum 427. `#39237` first-five codepoints are raw `0x49 0x74 0xe2 0x3f 0x54` (mojibaked U+2019), creator `...0x2019...`, groupchat `...0x2019...`, md `...0x27...`: the cleaner **normalised** a curly apostrophe to a straight one and invented nothing, and `--selftest` pins all four codepoints separately **and** that `cmp_words` reads all four as `it's`, so it is named in its own bucket rather than absorbed into `emoji-only` (which would have let `substantive: 1` stand as "one word difference" when the honest number is zero words and one character). **The mojibake vocabulary is DERIVED, not typed:** a raw token is emoji mojibake iff it appears in NO clean rendering (63 tokens) + 1 glued (`that"dY~?`), and the selftest asserts none of the 64 yields a word under the same tokenizer. **F2, THE 427/411/399 SPREAD IS THREE CLOCKS AND ONE VINTAGE CUT, NOT A DELETION.** Joined on (mojibake-free body, clock-shifted stamp) with each match consuming a DISTINCT raw message: creator **411/411 matched, 0 collisions, 0 orphans, 16 absent all of them empty bodies, 0 after its cut, 0 WORDS unexplained**; groupchat **399/399, 0/0, 28 absent all dated after its `2025-04-28` cut, 10 empty, 0 WORDS unexplained**. Offsets are **constant to the minute** (creator +2h/+3h, groupchat +3h/+4h, one DST change) -- per-message drift would have spread them. **F3, A REAL DEFECT IN `GSMG_JRK.md`:** 2 `### yyyy-mm-dd` day headings welded onto the previous body (`#8189` `':) ### 2022-09-06'`, `#8472` `':)? ### 2023-04-07'`), harmless to read, **fatal to regex body parsing**, and the heading date disagrees with the message date in both. **F4, THE ONE APPARENT TEXT LOSS WAS IN THIS TOOL:** `#16624` quotes a question inside his own message so its first line ends in `"`, and a parser reading to end-of-line-quote silently dropped the trailing `Nope` -- **the file contains it**; the parser now closes a field on its LAST continuation line and `#16624` is byte-identical to raw, pinned as a witness. Recorded because it would have become a false claim about the corpus had it not been chased to the file. **F5, AN AUTHORIAL METADATA CLASS NO ROW HAS EVER CITED:** 116 of 399 groupchat messages carry an `Edited on` stamp, **all 116 strictly after posting**, clustered (`2024-11-29` x22, `2025-04-30` x21, `2025-04-28` x9, `2024-03-26` x8), with the longest latencies being 6-year-old strings revised together on `2025-04-30` (`+2200.0 d`, `2019-04-22` -> `2025-04-30 18:44:18`) -- a map of **WHERE** the author edited, not **WHAT** it said. **F6, THE REPLY-QUOTE CLASS IS EMPTY:** 116 replies, and of long tokens quoted by others and absent from every author-only rendering there is exactly **1** -- the already-ledgered `yellowblueprimesmatrixsumlist...giveawaypromised` (6 prior occurrences) -- so the emptiness is derived, not assumed. **F7, THE STILL-OPEN PRE-EDIT SNAPSHOT OBJECT IS KILLED AS A LOCAL OBJECT, WITH A REASON:** no pre-edit authorial string exists in this briefcase, because the four files are one channel (F1/F2), the only edit-metadata rendering carries post-edit text only, and the only pre-edit-capable mechanism (third-party quotes) is empty (F6). **This UPHOLDS `R-TRACKB-PREEDIT-EXHAUSTED` and `R-TRACKB-CLOSED-2`; NO historical row is edited, and this is a **corpus-VERSION certification, NOT a re-mining** -- `R-JRKCORPUS`'s semantic findings are untouched and not restated.** Two statements `STATE_BRIEF.md` left for a context check are also closed **as not-puzzle-material**: `#5960` (2021-03-01) `Ancient spelling 😅. One of the many many typos.` is the author's own typo-apologia, already covered verbatim by the ledgered disclaimer `No clues to be found in those typos` so citing it again is duplication; `#26490` (2024-08-30) `It indeed set to private...` is about a **channel going private**, adjacent to the 2021-04-02 deletion remark and to nothing else. | **The ledger's corpus question is CLOSED: the author has one channel and these files are four renderings of it, so a wording difference between them can no longer be mistaken for new evidence -- `GSMG_JRK.md` is the raw export with emoji cleaned away and is NOT a second snapshot, and citing it alongside the raw export is citing the export twice.** Both smaller files now reconcile to **0 unexplained absent words**, so "the smaller file is missing a message" is a closed question rather than a standing worry. Two live defects are removed from the reading path: two welded day headings in the md, and a groupchat parser bug that silently dropped a quoted sentence's trailing word. And **one genuinely new object is opened**: an authorial metadata class of **116 edited messages** with no prior ledger row, clustered on specific days with 6-year revision latency -- stated as metadata, **not** as a clue. `X` UNSOLVED. **CRUX UNCHANGED: X is still the decode of `dbbib_91` / `faed_570` under the interpreter alphabet.** | 100% F1 -- all four counts are joins over re-parsed files and the corpus-token witness is a multiset difference that is **empty in both directions**, re-runnable (`--selftest` 59/59, exit 0, and the tool PRINTS its own assertion count so the figure cannot drift). 100% F1's apostrophe attribution -- codepoint reads, pinned per rendering. 100% F2 -- exact join with a distinct-counterpart constraint that a repeated body cannot satisfy, plus an empty unexplained-absence count that could only be zero if every row matched. 100% F3/F4 -- direct equality against the file. 100% F5/F6 as **counts and provenance only**; **0%** that any edit changes what any clue says, which this row does not claim and does not need. 100% F7 as scope. | **No pre-edit authorial string is locally recoverable, and that is now a derived result rather than an unmet task** -- closing the object by proving absence beats leaving it open. **OPEN:** whether any of the 116 edits touched puzzle-bearing text (needs new material, not re-sweeping), and whether the 2 welded day headings matter to any prior sweep that regex-parsed `GSMG_JRK.md` bodies (unknown; no row is known to have done so). No new mechanical frontier on `X`. |

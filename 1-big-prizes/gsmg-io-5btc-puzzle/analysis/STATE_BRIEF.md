@@ -139,7 +139,10 @@ to what this line used to say, both from 2026-09-27:
     not new data; /puzzle poster unchanged; site wind-down confirmed (register/help-center
     404, beta/help DNS dead, robots Disallow /).
 11. **Community/external**: issues #2..#111, both Bitcointalk threads, SolvingGSMG/puzzle,
-    Track-B (39237 post-edit text verified; pre-edit unrecoverable), Jrk Telegram histogram,
+    Track-B (39237 post-edit text verified; pre-edit unrecoverable and now PROVEN ABSENT LOCALLY
+    by `R-JRKVERSIONS`, not merely unlooked-for), Jrk Telegram histogram certified to one channel
+    by `R-JRKVERSIONS` (raw/`GSMG_JRK.md` are the same 427 messages, zero words differing in
+    either direction; creator 411/411 and groupchat 399/399 matched, 0 unexplained absent words),
     2025-2026 "solution" claims (all fabrication-class). No bankable artifact. CLOSED.
     Issue #78's two pasted signatures ARE the puzzle key's (their only shared consistent
     pubkey is exactly Q) but they yield no `d`: the "140 bits of nonce bias" claim needs
@@ -176,11 +179,18 @@ SalPhaseIon page.
 
 1. **A new authorial string or artifact** - the only class that has ever produced a result. Per
    FINDING 5, the productive work is reading the author's own pages, transcript, images and groupchat
-   *for semantics*, never decoding the streams. Still-open objects: the pre-edit Telegram snapshot
-   (2025-04-28 20:01-20:20), the restated "ca" formula text, and any post-2026-09-24
-   hint or statement. Note that the two best-looking files have already been mined: `GSMG_JRK.md`
-   (427 creator messages) is closed by `R-JRKCORPUS`, and the solver-group image surface is closed
-   by `R-SOLVERGRP-STR` and `R-MATRIX69`.
+   *for semantics*, never decoding the streams. Still-open objects: the restated "ca" formula
+   text, any post-2026-09-24 hint or statement, and whether any of the **116 edited** groupchat
+   messages (`R-JRKVERSIONS` F5 -- an authorial metadata class with no prior row) touched
+   puzzle-bearing text; that last one needs new material, not a re-sweep. **CLOSED, not open:
+   the pre-edit Telegram snapshot (2025-04-28 20:01-20:20)** -- `R-JRKVERSIONS` F7 kills it as a
+   LOCAL object by derivation rather than by shrug: the four renderings are one channel (identical
+   ID sets, word streams equal in both directions), the only edit-metadata file carries post-edit
+   text only, and the only pre-edit-capable mechanism (third-party reply quotes) is empty.
+   Note that the two best-looking files have already been mined: `GSMG_JRK.md`
+   (427 creator messages) is closed by `R-JRKCORPUS` -- and `R-JRKVERSIONS` adds that it is not
+   even independent of the raw export, being an emoji-cleaned rendering of it -- and the
+   solver-group image surface is closed by `R-SOLVERGRP-STR` and `R-MATRIX69`.
 2. **A human visual read** - the one acknowledged gap, and the only item here that is not a
    speculative guess. `analysis/lead0-inspection-checklist.md` still applies, but its three "live
    micro-items" are closed and must not be re-offered:
