@@ -1,4 +1,4 @@
-> **HEADER CORRECTED 2026-10-06 — see `blob_family_mod16.md` CORRECTION and
+> **HEADER CORRECTED 2026-10-06 - see `blob_family_mod16.md` CORRECTION and
 > `STATE_BRIEF.md` ADDENDUM `R-BLOBHEADER16-2026-10-06`.** This file's header
 > arithmetic (`24-byte header`, `Salted__ is 8 bytes plus a 16-byte salt`,
 > "all 88 ciphertext bytes") is wrong. The author's container is `Salted__` (8)

@@ -1,4 +1,4 @@
-> **SUPERSEDED 2026-10-06 — do not cite the headline.** The 24-byte-header
+> **SUPERSEDED 2026-10-06 - do not cite the headline.** The 24-byte-header
 > premise in this document is wrong: the author's container is `Salted__` (8) +
 > salt (8) = a **16-byte** header, which is how this project opens every blob it
 > has ever opened. Read the **CORRECTION** at the bottom first; the conclusion
@@ -8,7 +8,7 @@
 
 # The `Salted__` family is not CBC: a structural fact about all five real blobs
 
-Date: 2026-10-05 (corrected 2026-10-06 — see CORRECTION at the end)
+Date: 2026-10-05 (corrected 2026-10-06 - see CORRECTION at the end)
 Tool: `tools/urlblob_stream_modes.py` (`--selftest` 140/140)
 Scope: local file reads and local arithmetic. No oracle call, no funded-gate
 contact, no network.
@@ -169,7 +169,7 @@ The one thing this document does establish without any further assumption: for
 all five blobs, the AES-CBC framing used across 30 tools is the wrong framing.
 ---
 
-# CORRECTION 2026-10-06 — the header is 16 bytes, and the finding inverts
+# CORRECTION 2026-10-06 - the header is 16 bytes, and the finding inverts
 
 **The premise of this document is false, and the ledger's own certified rows say
 so.** Line 28 asserts `Salted__` (8) + salt (16) = a 24-byte header. This
@@ -195,7 +195,7 @@ this folder is judged against: `tools/oracle.py:134`
 `tools/ladder_census.py:160` (`salt, ct = d[8:16], d[16:]`, with `:138`
 asserting `len(d) - 16 == 80`), and `tools/p32_evp_verify.py:80`
 (`salt, ct = blob[8:16], blob[16:]`), whose run re-derives phase 3's 4090-byte
-plaintext as `sha256 c4ad94559a44a927…` and reports **MATCH True** against the
+plaintext as `sha256 c4ad94559a44a927...` and reports **MATCH True** against the
 fork's `phase3.txt`. None of the three could have produced that match on a
 24-byte header. The claim was never unverified -- it was simply not read back
 into this document.
@@ -257,7 +257,7 @@ CBC requires.**
 - **F3** (*"the salt is 16 bytes, `74c974e3f92e64b59f7ea22a50dcb0d4`"*) -- the
   salt is 8 bytes, `74c974e3f92e64b5`; bytes 16..24 of the file are the first
   block of ciphertext. The 16-byte rendering is the same artifact.
-- **F5** (*"112 B is not a valid AES-CBC blob length … no CBC-valid length equal
+- **F5** (*"112 B is not a valid AES-CBC blob length ... no CBC-valid length equal
   to 112"*) -- refuted: 112 = 16 + 96 and 96 = 6 AES blocks. The "truncated"
   reading (which needed a 120-byte file and a lost tail `5caeb77dfc3e0607`) and
   the "stream mode" escape were both consequences of subtracting 24. The blob is
@@ -275,7 +275,7 @@ Framing (d) is now the swept framing, on the one unopened blob:
 | battery | cells | result |
 |---|---|---|
 | (d) AES-CBC, 5 KDFs × 3 key lengths, 1,670,540 candidates | 25,058,100 | 0 survivors (95 s) |
-| (d) 8-byte-block CBC (`--bs 8`: DES/3DES/BF/CAST5 = 7 key lengths), 5 KDFs, evp KDFs take 2 IV readings at ivlen 8 and raw KDFs 1 | 93,550,240 | 0 survivors (5,731 s; D = 16,325 cells/s wall) |
+| (d) 8-byte-block CBC (`--bs 8`: DES/3DES/BF/CAST5 = 7 key lengths), 5 KDFs, evp KDFs take 2 IV readings at ivlen 8 and raw KDFs 1 | 93,550,240 | 0 survivors (5,731 s; D = 16,325 cells/s) |
 | (d) stream modes (CTR/CFB/CFB8/CFB64/OFB), 3 EVP KDFs × 2 key lengths | 50,116,200 | see `analysis/tmp/wl/logs/d_stream_urlblob.log` |
 
 Candidate set: `analysis/tmp/wl/gsmg_formed_raw+sha256hex.txt`, 1,670,540 unique
@@ -285,7 +285,7 @@ conventions (literal for phase 3.2, hex for phases 1-3 and the gate).
 
 A survivor of the printability screen is a lead for human reading, never a solve.
 
-# CORRECTION 2026-10-06 (b) — the stream row's "five modes" were four distinct ciphers
+# CORRECTION 2026-10-06 (b) - the stream row's "five modes" were four distinct ciphers
 
 See `R-STREAMMODEDUP-2026-10-06` in `analysis/tested.md`. The table row above
 `(d) stream modes (CTR/CFB/CFB8/CFB64/OFB) ... 50,116,200 ... see
@@ -298,7 +298,7 @@ analysis/tmp/wl/logs/d_stream_urlblob.log` is corrected, appended not edited:
 - The named `d_stream_urlblob.log` is an empty dead run (`R-STREAMSWEEPDONE`'s liveness gap); the real
   shard logs are `d_stream_{md5,sha1,sha256}.log`.
 - `CFB` was `AES.new(key, AES.MODE_CFB, iv=iv)` with no `segment_size`, and PyCryptodome defaults it to
-  **8** — byte-for-byte the `CFB8` cell. Full-block CFB was swept **zero** times. Fixed: `CFB` →
+  **8** - byte-for-byte the `CFB8` cell. Full-block CFB was swept **zero** times. Fixed: `CFB` ->
   `segment_size=128`. `--selftest` is now **143/143** (was 140/140), the extra check a
   mode-distinctness witness that fails under the old default.
 - The 16-byte printability screen (`d[0:16]`, floor 0.95) is mode-blind for CTR / full-CFB / OFB: all
