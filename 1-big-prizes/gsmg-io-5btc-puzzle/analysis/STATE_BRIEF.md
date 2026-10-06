@@ -167,7 +167,10 @@ SalPhaseIon page.
 > **application** (digit map / escapes / transposition) on `dbbib_91 + faed_570`.
 > `R-BOARD28B-ADDENDUM` goes further: the mechanical surface is EXHAUSTED and the crux is
 > **unspecifiable, not merely unsolved**, so do not run another cipher sweep on
-> `dbbib_91` / `faed_570`; meet any such proposal with `tested.md:8842`. The paragraph above is
+> `dbbib_91` / `faed_570`; meet any such proposal with row **`late-140`** in `analysis/tested.md`
+> (the `CLOSURE` line under its heading - cited by line number as `tested.md:8842` until
+> 2026-10-06, when that line had drifted onto an unrelated steer batch; cite the ROW ID, which
+> does not drift). The paragraph above is
 > retained for history only.
 
 ## What unblocks (pick any)
@@ -411,12 +414,14 @@ inversion rule. Taijitu geometry is chance-level negative on all four decrypted 
 ## RETRACTION + STRATEGY (R-BOARD28B-ADDENDUM, 2026-09-26) - READ BEFORE PROPOSING ANY SWEEP
 
 - **RETRACTED**: the earlier claim that "the next target is the digit-stream grid" is WRONG. That surface
-  is certified-closed (tested.md:8842: visual-leap route closed with a human-eyes witness; late-138
+  is certified-closed (tested.md row **`late-140`**: visual-leap route closed with a human-eyes witness;
+  late-138
   mechanical positional surface exhaustive; late-139 7-token weave space complete; "ALL
   currently-specifiable reads of the crux are negative on both gate addresses").
 - **THE MECHANICAL SURFACE IS EXHAUSTED.** 43 "exhaustive", 10 "certified-closed", 15 of 24 R- sections
   with 0 candidates. The crux is UNSPECIFIABLE, not merely unsolved. Do not run another cipher sweep on
-  dbbib_91 / faed_570; meet any such proposal with tested.md:8842.
+  dbbib_91 / faed_570; meet any such proposal with tested.md row `late-140` (cited by line number as
+  8842 until 2026-10-06, when that line had drifted onto an unrelated steer batch).
 - **Rule: never re-implement a decoder that has a certified witness - run the witness.** A hand-rolled
   decoder that is wrong yields a confident negative. Use `tools/bifid_repro.py` (currently SELFCERT PASS,
   all 5 artifacts hash-match), `tools/certified_vic.py` (SELFCERT 3.2.2 PASS), `tools/oracle.py --selftest`.

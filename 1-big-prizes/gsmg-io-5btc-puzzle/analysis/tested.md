@@ -16490,7 +16490,7 @@ function of (raw faed, period, square)**. A candidate square can therefore be re
 `plaintext_head` comparison; none of the expensive downstream reduction needs to be re-run per
 candidate. Cost per candidate square is O(1), not O(570) plus reduction.
 
-### APPEND 2026-10-06 — the scope of the confinement is exactly the parity of the period, and this was predictable
+### APPEND 2026-10-06 - the scope of the confinement is exactly the parity of the period, and this was predictable
 
 This row stated the row-row/col-col split for `period == len(input)`. I re-derived the mechanism
 independently (rebuilt the square, re-decoded, re-split, no stored values reused; the certified
@@ -16498,7 +16498,7 @@ independently (rebuilt the square, re-decoded, re-split, no stored values reused
 `33fc727b5a9d1d11`) and then measured where the confinement actually stops holding. It is not a
 full-length-period special case.
 
-**FINDING 1 — THE CONFINEMENT HOLDS AT EVERY EVEN PERIOD AND FAILS AT EVERY ODD ONE.** An EVEN
+**FINDING 1 - THE CONFINEMENT HOLDS AT EVERY EVEN PERIOD AND FAILS AT EVERY ODD ONE.** An EVEN
 period places every block on an even stream offset, so slot parity inside a block equals slot parity
 in the whole stream and the split survives; an ODD period flips the parity on alternate blocks, so
 it does not. Control = random 9-letter ciphertexts over `{A..I}`, so this is a property of the
@@ -16514,12 +16514,12 @@ for any ciphertext letter set spanning `r` rows and `c` columns, decoded at any 
 even-slot plaintext alphabet is exactly `r^2` letters and the odd-slot alphabet is exactly `c^2`
 letters.** Quote a stream's CONTENT. Never cite its alphabet size as evidence.
 
-**FINDING 2 — THIS ONE FACT EXPLAINS THE `dbbib_91` ASYMMETRY THAT WAS LOGGED SEPARATELY, SO THE
+**FINDING 2 - THIS ONE FACT EXPLAINS THE `dbbib_91` ASYMMETRY THAT WAS LOGGED SEPARATELY, SO THE
 TWO OBSERVATIONS ARE ONE.** `R-BIFIDCERT-2026-10-05` recorded that the split factorises on
 `faed_570` (even length) and does **not** on `dbbib_91` (odd length 91, `h = 45`, token 45 straddles
 the boundary so the two halves overlap by one token). That is the odd-period column of the table
 above. It was filed as a puzzle-specific quirk of one 91-letter stream; it is the same parity fact,
-which is why it showed up as an asymmetry in the first place. Nothing about `dbbib_91` is special —
+which is why it showed up as an asymmetry in the first place. Nothing about `dbbib_91` is special -
 it is simply odd.
 
 **WHAT THIS DOES NOT CHANGE.** Still 0 new gate input, 0 candidates, 0 oracle calls, 0 funded-gate
@@ -16531,11 +16531,11 @@ corrected the README accordingly: read the CONTENT of the even stream, never its
 
 **ONE MEASUREMENT THAT ADDED NOTHING, RECORDED SO IT IS NOT RE-RUN.** A vocabulary scan of the
 570-character `faed` plaintext (runtime system corpus, 64,039 words of length 5-10, no wordlist
-stored) finds **2** incidental hits — `PEGEN` at 293 and `ERERE` at 346 — against a Monte-Carlo
+stored) finds **2** incidental hits - `PEGEN` at 293 and `ERERE` at 346 - against a Monte-Carlo
 null of **0.91** for parity-constrained random streams over the same even alphabet `{B,C,D,E}` and
 odd alphabet of 25 letters (20,000 draws). `z = +1.14`, i.e. not significant, and `ERERE` at an even
 position is 2-of-4 by construction rather than by meaning. The head `BTCSEED...` is **not** in the
-scan, because the scan vocabulary is the system corpus and `btcseed` is a puzzle-specific term — so
+scan, because the scan vocabulary is the system corpus and `btcseed` is a puzzle-specific term - so
 this is a lower bound on hits and the honest reading is that the plaintext contains no vocabulary at
 all beyond noise, which agrees with the `late-303` disposition rather than overturning it. Note the
 vocabulary is device-dependent, so unlike the period table this part is not certified; it is
@@ -22699,3 +22699,85 @@ squares e4/g8 remain exactly where they were.
 Date: 2026-10-05, local.
 
 | R-QUADMATE-2026-10-05 | 2026-10-05 | CHESS-POSITION CERTIFICATION of the page-2 part-7 FEN (`tools/quadmate_cert.py`, `--selftest` 36/36 re-deriving every count from the FEN; read-only, 0 candidates, 0 oracle calls, both funded gates untouched, no broadcast) | **THE CITED "FOUR CHECKMATES" ARE TRUE, AND THE SET IS NOT FOUR.** White has 14 legal moves; **13 are checkmate** and **exactly 1 is a non-mating check**. `Nc3#`, `Ng3#`, `Bxb7#`, `Rxg5#` all independently verify as mate (each replayed on a fresh board), but they are **4 of 13** -- the rook alone supplies **eight** mates (`Ra6#`-`Rg7#`) and each knight **two**, so "four checkmates" is a coincidence of four, not a structure. **F1b, AND COUNTING MATES INVERTS THE ANSWER: THE KNIGHTS ARE THE LOAD-BEARING PIECES.** Remove the **knights** and **0 of 13 mates survive**; remove the rooks and **8** survive; remove the bishops and **4** survive. So the knights are **NECESSARY** for any mate and the rook with 3x the mates is **NOT** -- all 8 rook mates are contingent on a knight already checking, as is `Bxb7#`. The knights are also **SUFFICIENT**: with both other white types removed they still deliver **4/4** (`Ng3#`, `Nd2#`, `Nc3#`, `Nf2#`) while rooks-alone and bishop-alone deliver **0**. Rook and bishop are cage-builders covering escapes; the knight **creates** the cage -- so "most valuable players" is a **derived structural fact** of the position, not an assumed pun. (`--mvps` prints this table.) **THE INFORMATION IS THE SINGLE NON-MATE, AND IT IS UNIQUE.** `Rc6+` is the **only** move of the fourteen that checks without mating; its successor `B5KR/1r5B/2R5/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 b - - 1 1` is **byte-identical to ledger s34's answer form**, which this row reproduces and does not edit. That uniqueness is a **new derived property of the board**: it is what makes s34's answer the only reading consistent with the page's own "a buddhist is forced to move" + closing tag "connected **not** enf", since 13 of 14 options end the game at once and the tag says the intended one does not. s34 could not have claimed this -- it was not enumerated there. Board is legal, White to move, **Black not already in check**, so the forced choice is real. **F3, TWO REAL TRANSCRIPTION DEFECTS IN THE FEN AS PASTED, PLUS A GUARD THAT NAMES THE BAD RANK:** rank 7 read `1r5` (**7** squares -- h7 bishop missing, and h7 is load-bearing inside the mating net, so a 7-square rank is not the published position) and rank 1 read `3N1N2w` (already 8 squares, so the trailing `w` is the side-to-move field welded onto the rank). Neither string parses. `python-chess` reports only "expected 8 columns per row", which says *a* rank is wrong without saying which -- and for rank 7 that phrasing points the reader at an over-long rank when the true fault is a **short** one. `check_shape()` expands run-length digits per rank and reports `rank 7 has 7, rank 1 has 9`; both damaged strings are pinned selftest cases, proving the guard rejects each for the correct reason. **This UPHOLDS s34 and rows 139/142; NO historical row is edited.** | **The FEN has never been enumerated, and enumerating it moves s34 from "a plausible reading" to "the only reading the author's own tags admit"** -- one move out of fourteen survives the page's avoid-the-mate instruction, and that is a board property anyone can re-check in one command. It also deflates the four-mate framing: the board offers thirteen, so the mate is the cheap default here and the *single refusal to mate* is the signal. Two transcription defects in circulation are now caught by a tool instead of by luck. **OPEN:** nothing mechanical on `X` from this; the 13 mates are read as evidence about the position's construction, not as 13 candidate keys (none were built). The knight necessity/sufficiency result constrains what the position CAN be doing, not what the author intended by it. | 100% F1/F1b -- exact counts over `legal_moves` on the published FEN, **each removal table derived by actually deleting the piece type from a copy of the board and re-enumerating mates**, and the deletion is asserted to change the white material, so a no-op filter cannot masquerade as a result. 100% F2 -- exact counts over `legal_moves` on the published FEN, and **every one of the 13 mates is additionally re-verified by replaying it against a fresh board**, so the list cannot drift from the engine. 100% that s34's answer FEN is reproduced byte-identically by the replayed successor. 100% F3 -- widths derived per rank by expanding digits, and each damaged string pinned as a selftest case asserting the *named* rank, so the guard is proven to reject for the right reason rather than merely to reject. 100% scope. | **No pre-edit authorial string is locally recoverable, and that is now a derived result rather than an unmet task** -- closing the object by proving absence beats leaving it open. **OPEN:** whether any of the 116 edits touched puzzle-bearing text (needs new material, not re-sweeping), and whether the 2 welded day headings matter to any prior sweep that regex-parsed `GSMG_JRK.md` bodies (unknown; no row is known to have done so). No new mechanical frontier on `X`. |
+
+## R-CROSSREF-2026-10-06: the citation that is supposed to STOP a sweep had drifted onto an unrelated row -- four repointed, and the post-sweep inventory that found it is a zero
+
+0 candidates, 0 oracle calls, both funded gates untouched, no broadcast. Two parts, the second one
+an honest zero. Trigger: asked to proceed to the live crux, which surfaced that my own previous
+turn's advice was wrong before any work started (see FINDING 2).
+
+### FINDING 1 - THE GUARD RAIL WAS POINTING AT NOTHING
+
+`R-BOARD28B-ADDENDUM`'s standing instruction is that any proposal to run another cipher sweep on
+`dbbib_91` / `faed_570` is to be met with a specific existing closure. Four places said to meet it
+with `` `tested.md:8842` ``. **Line 8842 no longer holds that text.** It is now the `CONTEXT` line
+of `late-109`, a 2026-09-17 "frank sinatra my way" steer batch. The actual rebuttal is the `CLOSURE`
+line under the `## late-140` heading ("Human visual inspection of SalPhaseIonCosmicDuality
+(scd_x4.png)"), quoted verbatim in `R-BOARD28B-ADDENDUM` FINDING 1.
+
+This is worse than a stale cross-reference in the ordinary sense, because of *which* reference it is.
+The citation exists to stop a future session from spending hours re-sweeping a closed surface -- the
+one failure mode this ledger's own disposition says is worse than having no pointer at all. A guard
+rail that resolves to an unrelated steer batch is a guard rail that fails open: a session following it
+lands on plausible-looking text about a different subject and has no way to notice the mismatch.
+
+**Fixed at all four sites**, and fixed by **ROW ID (`late-140`) rather than line number**, because
+the defect *is* line-number drift -- repointing to a fresh line number would re-create the same
+bug on the next append. `R-BOARD28B-ADDENDUM` FINDING 1 keeps its original `8842` reference, which is
+correct as a historical statement of what was cited on 2026-09-26. Same class as
+`R-LEAD15-RECONCILE` (a NEXT list closed 8 weeks earlier still presented as open) and
+`R-CERAUDIT`.
+
+### FINDING 2 - I RECOMMENDED A RETRACTED FRAMING, AND THE LEDGER SAYS SO IN THE FIRST PARAGRAPH
+
+My previous turn ended by recommending "Lead 0's keyed 28-char alphabet against `R-P32BLOB`" as the
+next real move. **That framing was retracted two months before I offered it.** `R-BOARD28B` (line
+12398) proves 28 is VIC arithmetic and not an authorial clue -- 10 digits - 2 escapes = 8 plain
+cells, + 10 + 10 escape-row cells = 28 -- and `R-BOARD28B-ADDENDUM` retires "the missing alphabet"
+as the open quantity, leaving only the *application*. `STATE_BRIEF.md`'s crux section carries a
+`SUPERSEDED 2026-09-28` banner saying so, in its second paragraph.
+
+So the advice was wrong in the exact direction the addendum warns about twice in one row, and the
+correction was visible without leaving the folder. Recorded here rather than quietly fixed, because
+the generalisable failure is the interesting part: **I had read that crux section earlier in the same
+session** (it is how I found `tested.md:8842`) and still reproduced the pre-supersession framing from
+memory. Reading a section is not the same as holding its supersession.
+
+### FINDING 3 - POST-SWEEP INVENTORY: ZERO NEW AUTHORIAL MATERIAL, AND THE ONE INTERESTING FILE IS CORRECTLY OUT OF SCOPE
+
+`R-BOARD28B-ADDENDUM` names the only two productive classes: new authorial strings/artifacts, and
+human visual input. Item 1 is the only one machine-actionable, so I inventoried every file modified
+since the 2026-09-26 authorial sweep across the three local research trees (`~/briefcase` 4075 files,
+`~/storage/external/briefcase` 1477, `~/gsmg` 1204).
+
+**Every hit is research tooling or already-ledgered material.** Nothing new is authorial:
+`chain-scratch/*.py`, `td_sweep/*` (shard logs, ckpt, `sweep.out`), `libbtc-verify/*`,
+`third_door_funding_template.py`, `corpus/english/*` (Project Gutenberg + `words_alpha` for the
+scorers), and the 2026-10-05 handoff note are all mine or tooling. `gsmg-document.txt`,
+`scribd_754741483_Salphaseion-Copy.txt` are covered by `R-DMGSRC`/`R-DMGREC` (3 and 4 ledger
+mentions). `salphaseion_plain_79.bin` has 10 mentions, `CosmicHush.py` 4.
+
+**The one file that looks like a lead is a trap the ledger already closed.** The inventory surfaced
+`~/storage/external/briefcase/gsmg-private/wallet.dat`, 1,089,536 B -- byte-size identical to the
+`/storage/emulated/0/Download/wallet.dat` that `tested.md:14160` records as "DELIBERATELY NOT
+TOUCHED... a Monero wallet file belonging to someone else... Not opened, not parsed, not hashed, no
+attempt of any kind." It is the same artifact, now inside the briefcase tree. **I did not open,
+hash, or attempt it**, and the earlier decision stands: recovering a third party's wallet is out of
+scope regardless of where the file happens to sit. Flagged only so the next session does not
+re-raise it as new because the path changed.
+
+**Per-witness honesty:** this is an inventory, not a search. It establishes that the post-sweep
+window contains no new authorial string, which is the honest zero `R-JRKCORPUS` also recorded. It
+does **not** establish that the author's prose and imagery are exhausted -- `R-BOARD28B-ADDENDUM`
+FINDING 5 calls that the productive class, and "no new files appeared" is not the same claim as
+"nothing new is readable". Per `R-LIVEFETCH`, re-sweeping these surfaces before a surface is
+*observed* to have changed is itself the waste the rule warns about, so the standing position is
+unchanged: wait for new material, or a human visual read.
+
+### Disposition
+Net effect: **zero candidates, zero oracle calls, four corrected cross-references, one retracted
+recommendation of my own, and one closed trap.** No historical row's text was altered; the two
+repointed sites are the active instruction and its quotation, and FINDING 1 of the row that made the
+original citation keeps its historical reference. X UNSOLVED. Crux unchanged: X is still the decode
+of `dbbib_91` / `faed_570` under the interpreter alphabet, and the mechanical surface remains CLOSED
+per `R-BOARD28B-ADDENDUM`.
