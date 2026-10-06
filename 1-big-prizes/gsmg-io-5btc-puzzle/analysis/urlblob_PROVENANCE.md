@@ -1,3 +1,15 @@
+> **HEADER CORRECTED 2026-10-06 — see `blob_family_mod16.md` CORRECTION and
+> `STATE_BRIEF.md` ADDENDUM `R-BLOBHEADER16-2026-10-06`.** This file's header
+> arithmetic (`24-byte header`, `Salted__ is 8 bytes plus a 16-byte salt`,
+> "all 88 ciphertext bytes") is wrong. The author's container is `Salted__` (8)
+> + salt (**8**) = a **16-byte** header, which is how every blob this project has
+> opened is opened. For `urlblob.bin` that makes the ciphertext `urlblob.bin[16:]`
+> = **96 B = 6 AES blocks**, i.e. `urlblob_ct.bin` itself, correctly aligned --
+> so the "88 bytes / truncation / stream mode" reading below does not hold and the
+> 16-byte salt rendering `74c974e3f92e64b59f7ea22a50dcb0d4` is salt(8) + first
+> ciphertext block(8). The provenance chain in this file is unaffected: the
+> 224-hex Wayback route still certifies all 112 bytes byte-for-byte.
+
 # urlblob.bin / urlblob_ct.bin -- provenance
 
 Added 2026-10-05 by row `R-URLBLOB-2026-10-05`. Read-only; never an oracle input

@@ -12426,7 +12426,7 @@ FINDING 4 - THE STRATEGIC FINDING, WHICH IS THE REAL CONTENT OF THIS ADDENDUM: T
 
 FINDING 5 - SO THE ONLY CLASS OF WORK THAT HAS YIELDED ANYTHING IS PRIMARY-SOURCE SEMANTICS, and this session is a clean controlled comparison of the two classes. Mechanical direction: I proposed a digit-stream lead, hit a closed wall, and produced a retraction - zero yield, one cycle wasted. Semantic direction: I read the author's own Phase 2/3 page instead of running a cipher, and found a real authored artifact nobody had identified (the `aBa` enf/not-enf polarity bracket, `R-YINYANG-MARKER`), plus a wrong row in our own MEMORY.md, plus the 28 = 8+10+10 arithmetic that had never been stated in 12,225 lines. Same session, same author, same hour - the semantic pass produced everything, the mechanical pass produced nothing. That is not a coincidence and it is the single most actionable thing in this row.
 
-DISPOSITION: the mechanical surface is closed and should be treated as CLOSED - no further cipher sweeps on dbbib/faed, and any proposal to run one should be met with `tested.md:8842` plus this row. The two productive classes that remain are (a) NEW AUTHORIAL STRINGS AND ARTIFACTS, found by reading the author's pages, transcript, images and groupchat for semantics rather than by decoding anything - the yin-yang marker is the template, and the unmined surface is the author's prose and imagery, not the streams; and (b) HUMAN VISUAL INPUT, the one acknowledged gap, without which the image-bearing surfaces stay shut. Retracted: the digit-stream-grid pointer in `R-BOARD28B` DISPOSITION and in `STATE_BRIEF.md`. Retained: all of `R-BOARD28B`'s findings, which stand.
+DISPOSITION: the mechanical surface is closed and should be treated as CLOSED - no further cipher sweeps on dbbib/faed, and any proposal to run one should be met with row `late-140` (its `CLOSURE` line) plus this row. [CITATION REPOINTED 2026-10-06: this row and three others cited the rebuttal by the line number `tested.md:8842`, which is correct as written at the time. The ledger has been appended to many times since and that line number now lands on an unrelated `late-109` steer batch; the rebuttal text is the `CLOSURE` line under the `## late-140` heading, which carries the same text quoted in FINDING 1 below. Cite the ROW ID, not the line number.] The two productive classes that remain are (a) NEW AUTHORIAL STRINGS AND ARTIFACTS, found by reading the author's pages, transcript, images and groupchat for semantics rather than by decoding anything - the yin-yang marker is the template, and the unmined surface is the author's prose and imagery, not the streams; and (b) HUMAN VISUAL INPUT, the one acknowledged gap, without which the image-bearing surfaces stay shut. Retracted: the digit-stream-grid pointer in `R-BOARD28B` DISPOSITION and in `STATE_BRIEF.md`. Retained: all of `R-BOARD28B`'s findings, which stand.
 
 
 ## R-SOLVERGRP-IMG-2026-09-26: an unexamined 1048x1556 PNG carrying the GSMG banner text; bottom 478 rows never looked at by anyone; plus a firmware JPEG of its top 1078 rows. 0 candidates, 0 oracle calls. String NOT transcribed - do not guess it.
@@ -12910,7 +12910,7 @@ The interpreter-alphabet decode of `dbbi`(91) / `faed`(570) -> **ANSWER X** is s
   - `tested.md:12254` F4 - `dbbib_91`/`faed_570` have been through "**Bifid across 15+ keyed squares plus the full 25-letter square-rotation family
     plus 9! token-cell permutations**" plus every single-classical reading in the toolbook. Verdict: the crux is "**UNSPECIFIABLE, not merely
     unsolved**", and `AGENTS.md` forbids running a battery without an authorial unblocker.
-  - `tested.md:12258` DISPOSITION - mechanical surface **CLOSED**; "any proposal to run one should be met with `tested.md:8842` plus this row."
+  - `tested.md:12258` DISPOSITION - mechanical surface **CLOSED**; "any proposal to run one should be met with row `late-140` plus this row" (the original text read `tested.md:8842`; that line number has since drifted, see the citation note in R-BOARD28B-ADDENDUM's DISPOSITION).
 - **The `a..i -> 8,1,5,0,6,3,7,4,2` value-map digit stream I derived this session is NOT new either.** I hand-derived the inverse of
   `canonical_value_mapping` (D=0..K=9 row-major over `DBIFHCEG`) and got `dbbib_91 -> 0112131455167124816162416776761611764461443181304163350113555713166776516052131337271666816`
   and `faed_570 -> 386077660351081447...`. **These reproduce `tested.md:905` verbatim** (`dbbib`->`0112131455...`, `faed`->`3860776603...`).
@@ -22700,6 +22700,8 @@ Date: 2026-10-05, local.
 
 | R-QUADMATE-2026-10-05 | 2026-10-05 | CHESS-POSITION CERTIFICATION of the page-2 part-7 FEN (`tools/quadmate_cert.py`, `--selftest` 36/36 re-deriving every count from the FEN; read-only, 0 candidates, 0 oracle calls, both funded gates untouched, no broadcast) | **THE CITED "FOUR CHECKMATES" ARE TRUE, AND THE SET IS NOT FOUR.** White has 14 legal moves; **13 are checkmate** and **exactly 1 is a non-mating check**. `Nc3#`, `Ng3#`, `Bxb7#`, `Rxg5#` all independently verify as mate (each replayed on a fresh board), but they are **4 of 13** -- the rook alone supplies **eight** mates (`Ra6#`-`Rg7#`) and each knight **two**, so "four checkmates" is a coincidence of four, not a structure. **F1b, AND COUNTING MATES INVERTS THE ANSWER: THE KNIGHTS ARE THE LOAD-BEARING PIECES.** Remove the **knights** and **0 of 13 mates survive**; remove the rooks and **8** survive; remove the bishops and **4** survive. So the knights are **NECESSARY** for any mate and the rook with 3x the mates is **NOT** -- all 8 rook mates are contingent on a knight already checking, as is `Bxb7#`. The knights are also **SUFFICIENT**: with both other white types removed they still deliver **4/4** (`Ng3#`, `Nd2#`, `Nc3#`, `Nf2#`) while rooks-alone and bishop-alone deliver **0**. Rook and bishop are cage-builders covering escapes; the knight **creates** the cage -- so "most valuable players" is a **derived structural fact** of the position, not an assumed pun. (`--mvps` prints this table.) **THE INFORMATION IS THE SINGLE NON-MATE, AND IT IS UNIQUE.** `Rc6+` is the **only** move of the fourteen that checks without mating; its successor `B5KR/1r5B/2R5/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 b - - 1 1` is **byte-identical to ledger s34's answer form**, which this row reproduces and does not edit. That uniqueness is a **new derived property of the board**: it is what makes s34's answer the only reading consistent with the page's own "a buddhist is forced to move" + closing tag "connected **not** enf", since 13 of 14 options end the game at once and the tag says the intended one does not. s34 could not have claimed this -- it was not enumerated there. Board is legal, White to move, **Black not already in check**, so the forced choice is real. **F3, TWO REAL TRANSCRIPTION DEFECTS IN THE FEN AS PASTED, PLUS A GUARD THAT NAMES THE BAD RANK:** rank 7 read `1r5` (**7** squares -- h7 bishop missing, and h7 is load-bearing inside the mating net, so a 7-square rank is not the published position) and rank 1 read `3N1N2w` (already 8 squares, so the trailing `w` is the side-to-move field welded onto the rank). Neither string parses. `python-chess` reports only "expected 8 columns per row", which says *a* rank is wrong without saying which -- and for rank 7 that phrasing points the reader at an over-long rank when the true fault is a **short** one. `check_shape()` expands run-length digits per rank and reports `rank 7 has 7, rank 1 has 9`; both damaged strings are pinned selftest cases, proving the guard rejects each for the correct reason. **This UPHOLDS s34 and rows 139/142; NO historical row is edited.** | **The FEN has never been enumerated, and enumerating it moves s34 from "a plausible reading" to "the only reading the author's own tags admit"** -- one move out of fourteen survives the page's avoid-the-mate instruction, and that is a board property anyone can re-check in one command. It also deflates the four-mate framing: the board offers thirteen, so the mate is the cheap default here and the *single refusal to mate* is the signal. Two transcription defects in circulation are now caught by a tool instead of by luck. **OPEN:** nothing mechanical on `X` from this; the 13 mates are read as evidence about the position's construction, not as 13 candidate keys (none were built). The knight necessity/sufficiency result constrains what the position CAN be doing, not what the author intended by it. | 100% F1/F1b -- exact counts over `legal_moves` on the published FEN, **each removal table derived by actually deleting the piece type from a copy of the board and re-enumerating mates**, and the deletion is asserted to change the white material, so a no-op filter cannot masquerade as a result. 100% F2 -- exact counts over `legal_moves` on the published FEN, and **every one of the 13 mates is additionally re-verified by replaying it against a fresh board**, so the list cannot drift from the engine. 100% that s34's answer FEN is reproduced byte-identically by the replayed successor. 100% F3 -- widths derived per rank by expanding digits, and each damaged string pinned as a selftest case asserting the *named* rank, so the guard is proven to reject for the right reason rather than merely to reject. 100% scope. | **No pre-edit authorial string is locally recoverable, and that is now a derived result rather than an unmet task** -- closing the object by proving absence beats leaving it open. **OPEN:** whether any of the 116 edits touched puzzle-bearing text (needs new material, not re-sweeping), and whether the 2 welded day headings matter to any prior sweep that regex-parsed `GSMG_JRK.md` bodies (unknown; no row is known to have done so). No new mechanical frontier on `X`. |
 
+| R-AUTHORPAGES-2026-10-05 | 2026-10-05 | EXTERNAL AUTHOR-SURFACE SWEEP (8 surfaces, post-2026-09-24) + INDEPENDENT GRID WITNESS. Read-only, 0 candidates, 0 oracle calls, both funded gates untouched, no broadcast, no contact | **VERDICT FIRST: SEVEN SURFACES RETURN BYTE-IDENTICAL OR DEAD, ONE RETURNS A WITNESS.** Zero new authorial strings, and that is now a *derived* result rather than an unmet task. The user asked to "proceed" on the archival author-surface sweep; this row is the whole sweep, every surface dated so a future session can skip it without re-fetching. **(1) `gsmg.io` LIVE IS UNCHANGED TO THE BYTE.** `/` = 200, 35,785 B, sha256 `2f896807a859e2f71a2f6e1e8277986af73b80dc0dd79a685a67c7f7f8c3303b` -- **byte-identical to the hash already recorded in this ledger**, so the site has not been touched since. `/puzzle` 200/29,931 B, `/theseedisplanted` 200/832 B, `/robots.txt` 200/1,379 B. **(2) WAYBACK CDX `from=20260924` RETURNS 25 ROWS, ALL KNOWN CLASSES.** Ten `/img/*` assets, the five content pages already held, the 404 shell captures (`/help-center`, `/register`, and three malformed `\t`-mangled URLs from the `agntn` mirror crawl), plus fresh **2026-10-01** captures of `/`, `font/vt323-regular.ttf`, `img/logo_GSMG.png`, `img/logo_GSMG_restored.png`, `img/follow_the_white_rabbit.png`. **No new page path exists.** The `agntn/puzzles` raw mirror is already certified a six-for-six duplicate (`R-FUBCD`), so its reappearance here is not new information. **(3) THE NADDISEO FORK HAS 27 COMMITS, TOP `9e616934` 2026-09-29T20:14:44Z.** Exactly three new since the last ledgered commit: `03bc4b71` (visual explainer), `375c7893` (`unverified/11110.md`), `9e616934` (one README table row). `375c7893` is **already mined** by `R-RABBITLSB-2026-10-02`; `9e616934` is a one-line pointer at it and is transitively covered; `03bc4b71`'s `index.html` (679,377 B, sha256 `4e767cc4...`) is **already closed** by `R-VISHTML-2026-09-27`, and this session re-confirmed the identity that makes that row valid -- the fork's `index.html` is **byte-identical** to the live `naddiseo.github.io/gsmgio-5btc-puzzle/index.html` (same sha256), so there is one artifact, not two. **(4) `SolvingGSMG/puzzle` IS UNCHANGED AT 6 COMMITS**, top `4681dcf7cb` 2025-08-27T15:46:55Z. **(5) BITCOINTALK IS DEAD, WITH DATES.** Topic 5151725 "Anyone working on this new 5 BTC puzzle ?" = 11 posts, latest **2025-11-30 13:01:12**; topic 5532424 "Need help Puzzle GSMG.IO 5BTC" = 2 posts, latest **2025-02-18 00:44:56**; both single-page. The *only* post-cutoff date in either fetch is the board's own clock chrome (`October 05, 2026, 10:10:37 AM`), which is not a post -- and that distinction is exactly the kind of false positive that would have manufactured a fake "new activity" finding here. **(6) PUZZLEHUNT ISSUES: 2 NEW + 5 NEW COMMENTS, ALL COMMUNITY.** New: **#112 "im stuck"** (Mohamed-nsr, 2026-10-01, 0 comments), **#113 "weeoooo"** (Mohamed-nsr, 2026-10-01, 1 comment). New comments: **#113** Naddiseo `No one knows yet. that's one of the big remaining question.`; **#109** Naddiseo denying `keyinfo.txt` as puzzle data; **#110** @Kewe63 `There isn't just one path. Many paths have been added... whoever made them leaves you stranded halfway and tries to toy with you. So there are definitely deliberately fake paths.`; **#97** @Maher75017 `Le puzzle EST encore intact`; **#69** @jokerkid890 another `#SOLUTION` claim re-quoting the same Master-XOR-Key fabrication; **#79** @Denokimutai (2026-10-05, today) asking how to get past a `1GSMG` prefix that yields `no match`. **`keyinfo.txt` IS NOW CLOSED AS NON-PUZZLE WITH A PROVENANCE CHAIN.** It appears nowhere in this ledger and no such file is held on disk; the **only** `keyinfo` in the entire corpus is `Msgs.txt:77380`, inside a **2024-10-30 quoted tutorial** on split-key vanity-address generation (`VanitySearch.exe -sp 03FC71AE... -o keyinfo.txt 1ALice`) -- i.e. the corpus occurrence is itself a quoted third-party how-to, which is precisely what Naddiseo says in #109. Three independent facts, one conclusion. **THE WITNESS, AND IT IS WORTH HAVING: THE EXPLAINER'S EMBEDDED `GRID` ARRAY IS A THIRD-PARTY CELL-LEVEL TRANSCRIPTION OF THE 14x14, AND IT MATCHES OURS EXACTLY.** I extracted the page's own `GRID`, `BITV`, `spiral()`, `ORDER`, `BYTES`, `URL` and ran them against `data/phase1-matrix-14x14-full.json`: **14/14 rows identical, 0 differing cells**, counts **K=86 W=86 B=15 Y=9**, dark total **101**. Re-deriving the page's own spiral (CCW from top-left, down the left column first -- the identical `_read` string our own data file records) reproduces **`gsmg.io/theseedisplanted`** exactly, and the last four spiral cells are the four central cells `(6,6) (7,6) (7,7) (6,7)`, with `(7,6)` being the known 76%-white outline-stroke cell. **So an outside reader typed the board by hand, got the perfect 86/86 balance, and independently read out the seed URL -- without our `R-GRID76` correction in hand.** That upgrades issue #106 from a numeric assertion ("Black=86, White=86") to a **full transcription agreement**, and it is the strongest external corroboration this project has of any single object. **ONE UNRESOLVED TENSION, RECORDED AND NOT RESOLVED.** Naddiseo in #109 asserts `only two addresses that matter are 1GSMG and 17ucy`. This ledger carries the **third door** `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9` (funded 2020-04-07 from the vanity wallet, no OP_RETURN, no known preimage) across **43 rows**. Naddiseo is a community maintainer and **not established as the author** -- issue #111 states the author does not read or respond to these GitHub repos, which this ledger already holds -- so **his address count is an opinion, not a retraction, and it does NOT downgrade the third door.** It is logged as a claim to weigh, not an edit. | **The archive route is now exhausted for this cycle, and the reason is worth stating plainly: the site is byte-frozen, both Bitcointalk threads are dead by a year, the fork and `SolvingGSMG` are unchanged, and every post-cutoff artifact is community-authored.** The `R-IMGSCOPE`/`R-VISHTML` lesson generalises to a rule -- **a fresh URL is not a new information class**, and community restatement of our own conclusions is a *zero* that costs eight greps and should not be re-paid. But this sweep bought one real thing: the grid is no longer merely certified by our own pixel pass, it is now **corroborated cell-for-cell by an independent human transcription** that also reproduces the seed URL. That matters because `R-GRID76` was a one-cell correction that flipped 87/85 to 86/86, i.e. the grid is exactly the object where a transcription error would have been invisible and consequential. It is now double-sourced. **OPEN:** the third-door address-count tension above is the only live disagreement this sweep produced, and it is not resolvable from community sources -- it needs an authorial statement, which per #111 will not come from GitHub. Whether any of the 116 creator edits touched puzzle-bearing text also stays open; re-sweeping these eight surfaces cannot answer it. No new mechanical frontier on `X`. | 100% on the byte identities and hashes, all recomputed this session: live `/` sha256 equals the value already in this ledger; fork `index.html` sha256 equals the live GitHub-Pages copy; `GRID` comparison is an exact string comparison over all 14x14 cells with per-column diff indices printed (**zero** printed); the spiral re-derivation is independent code from the page's own JavaScript, not a transcription of its output. 100% on the liveness/date negatives -- each carries the concrete latest-post date rather than a bare "nothing found", and the Bitcointalk board-chrome date is explicitly separated from post dates so the negative cannot be faked by chrome. 100% that `keyinfo.txt`'s only corpus occurrence is at `Msgs.txt:77380` and is inside a dated third-party tutorial quote (`[2024-10-30 04:48 UTC] Deleted Account` follows it). **DAMPED:** every authorial-adjacent claim in this row is from a maintainer, not the author, and is labelled as such; #113's `No one knows yet` is treated as *insider-aligned but non-authorial*, exactly like `R-IMGSCOPE` and `R-VISHTML` before it. The `0 oracle calls` is stated per AGENTS discipline. | **OPEN:** (a) third-door `1NULY7D...` vs Naddiseo's two-address claim -- unresolved, and deliberately NOT reconciled, because reconciling it would mean letting a community maintainer edit a 43-row finding on his say-so. (b) Whether any of the 116 creator edits touched puzzle-bearing text. (c) The layered visual surfaces that still need human eyes. **No pre-edit authorial string is locally recoverable, and that is now a derived result rather than an unmet task** -- proving absence beats leaving it open. Per `R-LIVEFETCH`, the sanctioned routes remain the Wayback/`gsmg-archive` captures already in hand plus a primary authorial artifact; with eight surfaces now witnessed dead or frozen, the correct answer is a primary artifact, and no further external re-sweep is warranted until a surface is *observed* to have changed. |
+
 ## R-CROSSREF-2026-10-06: the citation that is supposed to STOP a sweep had drifted onto an unrelated row -- four repointed, and the post-sweep inventory that found it is a zero
 
 0 candidates, 0 oracle calls, both funded gates untouched, no broadcast. Two parts, the second one
@@ -22781,3 +22783,1193 @@ repointed sites are the active instruction and its quotation, and FINDING 1 of t
 original citation keeps its historical reference. X UNSOLVED. Crux unchanged: X is still the decode
 of `dbbib_91` / `faed_570` under the interpreter alphabet, and the mechanical surface remains CLOSED
 per `R-BOARD28B-ADDENDUM`.
+
+---
+
+## R-CREADZERO-2026-10-06: PRIMARY-SOURCE SEMANTICS RE-RUN ON THE THREE STILL-OPEN AUTHORIAL SURFACES -- AN HONEST ZERO, AND THE PRODUCTIVE CLASS IS BOTTLENECKED ON VISION, NOT ON READING
+
+**Verdict: zero candidates, zero oracle calls, both funded gates untouched, no broadcast.** This is
+the class `R-BOARD28B-ADDENDUM` FINDING 5 names as the only one that has ever yielded anything, run
+as a genuine semantic read against the three objects `analysis/STATE_BRIEF.md:186` lists as still
+open. It returned nothing. Recorded as a zero because FINDING 5's own authority is that this class
+works, so a null result here is information about the class, not a failure of method.
+
+FINDING 5's case for the semantic class rests on a specific artifact: the `aBa` enf/not-enf polarity
+bracket (`R-YINYANG-MARKER`), "a real authored artifact nobody had identified". That artifact turns
+out to fix the priority for every future pass, because **it cannot have come from the authorial page
+text.** `data/live_salphaseion.txt` is 2,149 B and contains no prose at all: `dbbib_91`, then
+`faed_570` at offset 390, then the `z` injection beginning `eddezcfobfdhgdoobdgooiigdocdaoo` and
+carrying `U2FsdGVkX1` (base64 of OpenSSL's `Salted__`), closing `...shabefansto`.
+`data/live_salphaseion.html` is 4,536 B and is the title `GSMG Puzzle / SalPhaseIon / Cosmic
+Duality` plus a single base64 blob. Masking every data-shaped run and stripping tags leaves exactly
+three strings: the title, `SalPhaseIon`, `Cosmic Duality`. So the surface FINDING 5 mined is an
+**image**, and the productive class is gated on a human visual read rather than on more reading.
+
+**The `ca` operand has no authorial definition anywhere in the corpus.** The corpus hits for `ca[`,
+`cc[` and `XOR` resolve entirely to `briefcase/gsmg_i88_comments.json` and `briefcase/
+gsmg_issues_all.json`. Those are community restatements, and community restatement is a zero by
+`R-IMGSCOPE`, so the formula `k_new = cc[833:865] XOR ca[280:312]` has never been stated by the
+author in any surface we hold. I also tested the obvious unblocking hypothesis directly: `cosmic_A`
+is published only as the SHA256 prefix `cd3fea3d`, so if any held file hashed to it the formula
+would become evaluable. None does. `B1_79B.bin` is `1449a217...`, `B2_79B.bin` is `b40fce72...`,
+`cosmic_duality_blob_2020.bin` is `b1895055...`, its `.b64` is `92f9dddf...`, and
+`phase3.2-plaintext.b64` is `c4d950a5...`. Confirms `tested.md:3284` rather than extending it.
+
+**The creator quote block is already exhausted, and I checked it the right way this time.**
+`briefcase/gsmg-community/creator-farewell-quotes.txt` is 75 lines and is logged as a battery by
+`R-CREATORQ` (2026-09-23). Reading it as falsifiable **claims** rather than as candidate strings --
+which is the distinction the earlier pass blurred -- every concrete claim in it is already tested:
+"ASCII 127" (2 ledger hits), "last number of pi" (2), "At least higher than sqrt(-1)" (2), and
+`planetIguess` under its spaced form "planet I guess" (1). What remains is `I don't know` / `I
+haven't` / `I take all the blame` chatter. That shape is itself consistent with the enf/not-enf
+polarity motif rather than an addition to it, but I am not promoting a vibe to a finding.
+
+**One still-open object is BLOCKED, not closed, and I am not going to infer it.** STATE_BRIEF also
+asks whether any of the 116 edited groupchat messages carry new material. No raw Telegram export
+carrying edit metadata exists locally -- the only `results.json` in the briefcase tree is
+`rsz_scan_2026-08-31/results.json`, which is a solver scan, not an export. The edit history is
+simply not in our material, so that question stays open rather than being answered by assumption.
+
+### Disposition
+Net effect: **zero candidates, zero oracle calls, two confirmations of existing rows, one blocked
+item correctly left open.** No historical row altered, this row is purely additive. The standing
+position after this row is narrower and firmer than before: the mechanical surface is CLOSED
+(`R-BOARD28B-ADDENDUM`), the post-sweep window holds no new authorial string (R-CROSSREF), the
+authorial text surfaces are exhausted for semantic purposes (this row), and the edit-history item
+cannot be settled without a raw export. **The next input that can move this puzzle is a human visual
+read of the authorial images**, which is precisely the class neither a cipher nor more reading can
+substitute for. X UNSOLVED; crux unchanged.
+
+---
+
+## R-PHOTOCOORD-2026-10-06: FIRST HUMAN VISUAL READ OF AN AUTHORIAL IMAGE -- THE UNCITED PHOTO YIELDS ONE ALREADY-BATTERIED COORDINATE AND NOTHING ELSE (HONEST ZERO)
+
+**Verdict: zero candidates, zero new forms, zero oracle calls, both funded gates untouched, no
+broadcast.** This is the first human visual read of an authorial image recorded in this ledger, and
+it is a zero. Recording it because R-CROSSREF's inventory flagged this file as *unclassified*, and
+because "unclassified" is exactly the state that invites a future session to re-raise it.
+
+**The file was uncited, and that was the whole reason to open it.**
+`briefcase/gsmg-community/photo_2020-04-26_09-24-30.jpg`, 90,957 B, sha256 `312dfc1898cb0a45...`,
+sitting in the Aug 27 community-repo checkout. **Zero mentions across `tested.md`, `leads.md` and
+`STATE_BRIEF.md`** -- an author-produced, puzzle-era artifact that no row had ever referenced. Now
+copied to `~/storage/external/briefcase/` (sha256 verified identical, original untouched), the same
+directory as the `wallet.dat` trap, which is noted only so the copy is not later mistaken for new
+material.
+
+**The read: one element, and it is not new.** Human visual read, 2026-10-06. The frame contains the
+Decentraland coordinate **-41,-17** and nothing else -- no text, no caption, no URL, no username, no
+date overlay, no second parcel, no map or UI chrome, no chat window, no people. I asked specifically
+whether -41,-16 also appears (the estate is size-2) and it does not.
+
+**That coordinate is the oldest covered item in the corpus, not a new one.** `late-313`
+(2026-09-19) found Decentraland ESTATE 955, name `gsmg.io magic puzzle piece`, desc `White Rabbits
+everywhere`, parcels (-41,-16)/(-41,-17), owner `0x5d801b2b...`, metadata timestamp 2018-11-08 =
+author-era. `late-317` then ran `estate_final_uniq.txt`, **240 unique forms** including the
+coordinate joins and the digits `41 17 41 16`, and closed at **0 gates, 0 E_S**. So the photo's one
+content element was battied to exhaustion five weeks ago. Crucially, `late-313` did **not** come from
+this photo -- it came from a user-steered Marketplace URL -- which is why the file sat uncited while
+its content was already spent.
+
+**Correction to my own framing, one turn earlier.** I wrote that the claim at `tested.md:12123`
+("there is no author door image to read") had never been checked against this file, and I implied it
+might contradict the claim. Having now read it: **it does not.** A Decentraland coordinate is not a
+door. The claim stands, and it is now very slightly better supported than before, because the one
+uncited authorial image has actually been looked at. What is *not* established is anything about the
+other images; OCR (see `late-57`) is not a human visual read and I am not treating it as one.
+
+**The generalisable lesson, and it is the opposite of the useful one.** R-CROSSREF's inventory found
+this file in the post-sweep window and correctly declined to call it authorial content, because it is
+a binary. An uncited file in a research tree is not automatically unmined material; this one carried a
+marker that had been battied to zero in September. A future session should treat "no ledger mention"
+as a *reason to check provenance*, never as evidence of a lead.
+
+### Disposition
+Net effect: **zero candidates, zero new forms, one uncited authorial artifact now read and
+classified, one overstatement of mine corrected.** No historical row altered; this row is purely
+additive. The post-sweep inventory's only unclassified artifact is now classified, so R-CROSSREF's
+standing zero survives contact with an actual look. The authorial images remain the only untried
+class, and by ledger citation density the thinnest are `phase2.png` (6 mentions) and `phase3.png`
+(4) -- both from the same Aug 27 checkout as this photo, and both needing the same human read.
+X UNSOLVED; crux unchanged.
+
+---
+
+## R-ESTATEQMARK-2026-10-06: THE AUTHOR'S DECENTRALAND ESTATE CARRIES A BIG "?" THAT NO ROW HAS EVER RECORDED -- AND THE REASON IS A SPECIFIC, FIXABLE GAP: WE CATALOGUED THE ESTATE'S METADATA AND ITS SCENE POINTER, BUT NEVER ITS VISUAL CONTENTS
+
+**Verdict: one genuinely new author-placed observation, zero candidates, zero oracle calls, both
+funded gates untouched, no broadcast.** This is the first substantive new artifact content found in
+this session, and it is not a decode. Recording it as an OPEN QUESTION with a ledger-grounded
+hypothesis, not as a finding, because the decisive detail is not yet characterised.
+
+**The observation.** Human visual read, 2026-10-06: at the author's Decentraland estate 955,
+coordinate **-41,-17**, there stands a **big question mark**. **`"question mark"`, `"big question"`
+and `"questionmark"` have ZERO occurrences across `tested.md`, `leads.md` and `STATE_BRIEF.md`.**
+An author-owned, author-placed visual marker, on the single on-chain parcel that
+`late-313` certified as independently confirming our whole reading chain, and it is absent from the
+entire ledger.
+
+**Why the gap existed, and this is the transferable part.** Three rows covered estate 955 and each
+covered a different layer, none of them the one that matters for a visual marker:
+- `late-266` (2026-09-20) recorded the DEPLOYED SCENE and its audio: a single deployment
+  (entity pointer recorded at -41,-16; `late-313`'s audio verdict says the deployment is at -41,-17 --
+  **an unresolved pointer discrepancy between two rows, flagged here, not resolved**), carrying
+  `puzzlepiece.mp3`, sha256 `ef17a96d...`, content ID
+  `QmeRy5MjmEZ2W6J3DwhQfht5HKBKXBFpoGzSkzmjeGKiDK`, "White Rabbits everywhere". Its audio verdict was
+  negative: 0 candidates, pure DSP.
+- `late-313` / `late-316` recorded the ON-CHAIN METADATA: category estate (not LAND), name
+  `gsmg.io magic puzzle piece`, desc `White Rabbits everywhere`, size 2, parcels
+  (-41,-16)/(-41,-17), owner `0x5d801b2b0b216790a49898b322246282547b546b`, metadata timestamp
+  2018-11-08 = author-era, plus the estate `map.png` geometry.
+- `late-317` ran the 240-form battery: 0 gates, 0 E_S.
+
+Every one of those is a metadata or pointer read. **Nobody ever recorded what is standing on the
+parcel.** A Decentraland estate renders actual scene content, and a "?" is precisely the kind of
+thing that exists only in the render -- it is not in the token metadata, not in the scene pointer,
+and not in the audio, so all three existing rows would pass straight over it. The generalisable
+error: *on-chain provenance was mistaken for scene contents.* Those are different claims, and only
+the second one can ever be a visual clue.
+
+**Why it is interesting rather than decorative, hedged appropriately.** `late-313` established that
+these coordinates are our own `late-308` outputs: x = -41 == Sum(primes<15) = 41, y = -16/-17 ==
+Sum(primes<9) = 17. So the parcel is an author-placed confirmation of our colour-prime reading, and
+the author put a "?" on the parcel that equals our certified result. There is a specific thread this
+touches: the author's own 2021-12-25 hint, OCR'd and ledgered at `R-HINTS`, says **"some characters
+need to be 'zeroed out'"**, which has 35 rows against it. A large "?" is the ordinary visual idiom
+for exactly that state -- an unknown or blanked character. This is recorded as an OPEN QUESTION
+because I cannot currently connect it to anything: a "?" is not in the `a..i` stream alphabet, and
+the grid readouts at `late-314` were all negative. **No sweep is proposed.** Per
+`R-BOARD28B-ADDENDUM`, `dbbib_91` / `faed_570` remain CLOSED, and this row does not reopen them;
+this is a semantic observation about an artifact, which is the class FINDING 5 endorses.
+
+**Explicitly NOT claimed, correcting my own recurring failure mode.** This does **not** refute
+`tested.md:12123` ("there is no author door image to read, so the 'second door' cannot be pursued
+visually"). A "?" is not a door image, and I am not going to inflate a marker into a door to make a
+row look productive -- that is the same error I made with `photo_2020-04-26` earlier in this
+session. What the "?" legitimately does is reopen the narrower question of whether the second-door
+thread has *any* author visual component, which no row had asked because the estate's contents were
+never catalogued.
+
+### Open questions, for the human visual read
+1. What **form** is the "?" -- a 3D build/NFT, a flat billboard or decal, a hologram, or terrain?
+2. Is it the **only** object on the parcel, or does anything else stand there?
+3. Does it **point**, tilt, or animate? Does it appear on -41,-16 as well as -41,-17?
+4. Is there any **text** on or near it (the same frame that yielded -41,-17 also being checked for
+   a second coordinate, which was absent)? **ANSWERED 2026-10-06: YES -- see `R-ESTATETEXT`.**
+
+### Disposition
+Net effect: **one new author-placed observation, zero candidates, zero oracle calls, one unresolved
+pointer discrepancy surfaced, one coverage gap identified and explained.** No historical row altered;
+this row is purely additive. The estate's visual layer is now a known unknown rather than an
+unexamined assumption, which is the first time that has been true. X UNSOLVED; crux unchanged.
+
+---
+
+## R-ESTATETEXT-2026-10-06: THE ESTATE SCENE ALSO CARRIES THE TITLE TEXT "GSMG.IO 5BTC PUZZLE CHALLANGE" [sic] -- THE SPELLING IS THE ONLY UNSPENT PART, AND IN THIS PUZZLE A TYPO HAS BEEN A REAL CLUE BEFORE
+
+**Verdict: one new author-placed observation with exactly one unspent component, zero candidates,
+zero oracle calls, both funded gates untouched, no broadcast.** This answers open question 4 of
+`R-ESTATEQMARK` and is recorded as its own row rather than as an edit to that row, per the additive
+convention.
+
+**The read.** Human visual read, 2026-10-06, same frame as the "?" at estate 955 / -41,-17: the
+scene carries the text **"GSMG.IO 5BTC PUZZLE CHALLANGE"**, rendered on or near the "?". The
+author's spelling is **CHALLANGE**, not CHALLENGE, and I have preserved the misspelling rather than
+silently correcting it, since correcting it would destroy the only novel part of the observation.
+
+**Novelty is narrow, and stating it precisely is the whole point.** `"CHALLANGE"` has **ZERO**
+occurrences across `tested.md`, `leads.md` and `STATE_BRIEF.md`. But `"CHALLENGE"` has 53,
+`"5BTC"` has 108, and `"GSMG.IO 5BTC"` has 2. The correctly-spelled string is among the
+best-covered strings in the entire corpus and has therefore almost certainly been battied already.
+**So the value of this observation is entirely contained in the single wrong letter, and nothing
+else in the text is new.** Recording it the other way round -- as a new title string -- would
+overstate it by exactly the amount that matters.
+
+**Why the typo is worth anything at all, rather than being noise.** This puzzle has a precedent
+where a misspelling *was* the clue. `late-320` records, as CONFIRMED NO-DRIFT against existing
+records, a 2019-05-17 correction **`giveit = givetit`** in phase III, which sits inside the author
+string `jacquefrescogiveitjustonesecondheisenbergsuncertaintyprinciple`. Separately the creator has
+said "I can't even write without typo's" (`R-CREATORQ`). So the author both demonstrably treats his
+own typos as live material and has explicitly disclaimed careful writing. On an **author-owned,
+author-placed, on-chain** parcel, a misspelling is therefore a legitimate thing to record. I am
+recording it; I am **not** claiming it is a clue.
+
+**One factual observation, offered as observation only.** Both spellings are composed **entirely of
+letters from the stream alphabet `a..i`**: C H A L L E N G E and C H A L L A N G E use no letter
+above `i`. That is true of the string regardless of intent, and it is not by itself evidence of
+anything. The single substitution is `E` -> `A`, i.e. position 9 of the word. I note that the
+author's own "some characters need to be 'zeroed out'" directive (`R-HINTS`, 2021-12-25) is the only
+place in this corpus where a character-level change of this kind is treated as operative, and that
+moving to `A` is a move toward the head of that alphabet. That is a coincidence of shape, not a
+derivation, and I am flagging it so a future session does not have to rediscover it -- **not**
+asserting it.
+
+**Explicitly NOT claimed, and no sweep is proposed.** `CHALLENGE` / `5BTC` being well covered means
+the obvious move -- "try the title string as a candidate" -- is precisely the re-sweep that
+`R-BOARD28B-ADDENDUM` forbids on `dbbib_91` / `faed_570`, and the surface remains CLOSED. This row
+does not reopen it and proposes no decode. What this row establishes is bounded and real: the
+estate's scene layer carries author-placed text whose **misspelling** has never been recorded, on
+the one parcel whose coordinates equal our certified `late-308` output.
+
+### Disposition
+Net effect: **one new author-placed text observation, one precise novelty boundary drawn (the typo
+only), zero candidates, zero oracle calls.** No historical row altered; this row is purely additive
+and answers `R-ESTATEQMARK`'s open question 4 by reference. Open questions 1-3 from that row (the
+form of the "?", whether anything else stands on the parcel, and whether the mark appears on
+-41,-16) remain unanswered. X UNSOLVED; crux unchanged.
+
+---
+
+## R-PHASE2ZERO-2026-10-06: HUMAN READ OF phase2.png -- COMPLETE ZERO, THE TEXT IS ALREADY TRANSCRIBED AND VERIFIED, AND CITATION DENSITY PREDICTS NOTHING ABOUT NOVELTY
+
+**Verdict: zero candidates, zero new content, zero oracle calls, both funded gates untouched, no
+broadcast.** Second human visual read of an authorial image in this session, and the second
+honest zero. Recorded for the methodological result, which is sharper than the null.
+
+**The read and its coverage.** Human visual read, 2026-10-06, `briefcase/gsmg-community/
+phase2.png` (56,258 B, sha256 `c5526b205cac47c5...`, Aug 27 checkout). Transcribed by the user as
+roughly: "1... are you looking for the private keymaker? you come to me, without it. come to me
+with it and you'll have the power to continue. it'll grant the first part /(aaa, connected enf)
+ciphered with aes-256-cbc with base64 sha-256(password)".
+
+**Every element of that is already in this ledger, verbatim.**
+`tested.md:13939-13941` records, from a re-read of the archived primary source rather than from
+anyone's memory: the page carries PHASE 2 and PHASE 3 **`aes-256-cbc /w base64 sha-256(password)`**
+blocks, the stream markers **`/(aaa, connected enf)`**, **`/(aBa, connected enf)`**,
+**`/(aBa, connected not enf)`**, the Thevenin/Norton riddle, and the instruction
+**`--> parts 1..7 --> sha-256 -> dgst is the password to enter Phase 3.`** The user's marker matches
+the recorded one character-for-character. On "keymaker": that word is not an authorial persona but
+the **decrypted phase-2 blob plaintext** -- the blob (len 648) decrypts under `sha256("causality")`
+to `keymakers`, and the EVP/AES/hash/EC/H160 chain is certified end to end on that vector
+(`tested.md:2854`, `:2878`, `:3451`). The AES spec is not merely recorded, it is **implemented**:
+`tools/oracle_dualite.py` is precisely this pipeline (`password = sha256(X)` hex -> `EVP_BytesToKey`
+-> AES-256-CBC -> sha256+md5 digests, `tested.md:1634`), and the 2026-09-24 live-site snapshot
+`R-SITE-SNAPSHOT` independently confirms the blocks on the live surface. The downstream pipeline is
+also present: `--> parts 1..7 --> sha-256 -> dgst` is the phase-3 password instruction the oracle
+consumes. So this read lands entirely inside closed, already-executed work.
+
+**THE METHODOLOGICAL RESULT, WHICH IS WHAT ACTUALLY MATTERS HERE.** `R-PHOTOCOORD` taught that
+"no ledger mention" is a reason to check provenance, never evidence of a lead. This row supplies
+the converse and less obvious half: **citation density is not a novelty proxy either.** `phase2.png`
+carried only **6** ledger mentions against `theseedisplanted.png`'s 154, so by my own framing two
+turns ago it was one of the "thinnest, therefore most promising" images. In fact its full text was
+already transcribed and primary-source-verified, because a page with that wording was re-read
+directly and the image was a capture of the same content. Thin citations meant *nobody had needed
+to name the file*, not *nobody had read what is on it*. The two available signals -- citation count
+and file presence -- are both properties of the *filing*, not of the *content*, and neither one
+orders anything by expected yield. A future session should treat both as noise.
+
+**Correction to my own framing, recorded because it is the same error twice.** On being shown this
+read I opened by calling it "possibly the authorial formula restatement `R-CREADZERO` said didn't
+exist", before running the novelty grep. It was already covered. `R-CREADZERO` itself is NOT
+implicated and needs no correction: its claim was specifically that no authorial surface defines
+the `ca` / `cc` XOR formula (`k_new = cc[833:865] XOR ca[280:312]`), which is a *different* formula
+from this AES layer and remains true. I reached for a bigger conclusion than the evidence allowed,
+which is the same failure `R-CROSSREF` recorded for this session's earlier drift fix. Grep first,
+then characterise.
+
+**One transcription detail left open, because a solver's paraphrase is not a primary source.** The
+user rendered the marker as `/(aaa, connected enf)`, which matches the ledger exactly and so is
+corroborated. The surrounding phrasing ("are you looking for the private keymaker?... come to me
+with it and you'll have the power to continue") I have **not** matched against any recorded text,
+because the ledger holds `keymakers` as blob plaintext rather than as this sentence. It is most
+likely the author's framing of the same fact, but "most likely" is not a verification and I am not
+recording it as one.
+
+### Disposition
+Net effect: **zero candidates, zero new content, one methodological correction to my own
+prior framing, one transcription detail correctly left open.** No historical row altered; this row
+is purely additive. `R-CREADZERO` stands unamended. `phase3.png` (4 mentions, 127,044 B) is the last
+image in this batch and is now the only untested one, though this row is a poor predictor of its
+value: expect a zero with the same reason. X UNSOLVED; crux unchanged.
+
+---
+
+## R-PHASE3ZERO-2026-10-06: HUMAN READ OF phase3.png -- THIRD CONSECUTIVE ZERO, AND THE STRICTEST YET: THE AUTHOR'S QUESTION IS ALREADY ANSWERED AND CERTIFIED IN THIS LEDGER
+
+**Verdict: zero candidates, zero new content, zero oracle calls, both funded gates untouched, no
+broadcast.** Third human visual read of an authorial image in this session and the third honest
+zero. Completes the batch: `phase2.png`, `phase3.png` and the uncited 2020-04-26 photo are all now
+read and all classified.
+
+**The read.** Human visual read, 2026-10-06, `briefcase/gsmg-community/phase3.png` (127,044 B,
+sha256 `c8637fc3ff532dcd...`, Aug 27 checkout). Transcribed as: the marker `/(aBa, connected enf)`;
+the FEN **`B5KR/1r5B/6R1/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 w - - 0 1`**; and the question
+**"And now a buddhist is forced to move. What will be the next situation?"**
+
+**Every element is already recorded, and the FEN matches character-for-character.**
+`tested.md:13944-13948` records that the page prints exactly
+`B5KR/1r5B/6R1/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 w - - 0 1` -- the rook on **g6**, White to move.
+The marker is one of the three already in the `R-YINYANG-MARKER` polarity set. The question is
+recorded **verbatim, twice**, at `tested.md:12370` and `:21581`: *"And now a buddhist is forced to
+move. What will be the next situation?"*
+
+**What makes this zero stricter than the other two: the question is already ANSWERED.** The ledger
+does not merely record the author's prompt, it records the certified resolution. `tested.md:13946`
+gives the certified part-7 FEN as
+`B5KR/1r5B/2R5/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 b - - 0 1` -- the same position with the rook
+moved **g6 -> c6** and the side to move flipped to **black** -- and records that the page's own `w`
+version is already among the tested candidates. The method is certified independently at
+`tested.md:19250` FINDING 1: *"THE ANSWER IS THE UNIQUE NON-MATING MOVE, AND THAT IS ONLY VISIBLE BY
+ENUMERATING ALL 14"* legal White moves. So the author publishes the question, the ledger holds the
+answer, and this read re-derives the question. There is nothing left to extract from this image.
+
+**The methodological result is now a three-point pattern, and it is consistent.** Three reads, three
+zeros, and the citation counts did not predict any of them: `photo_2020-04-26` had **0** mentions and
+yielded one already-battied coordinate; `phase2.png` had **6** and yielded a fully transcribed text;
+`phase3.png` had **4** and yielded a question with a certified answer. Ordering these by citation
+count would have ranked them 0, 4, 6 and produced exactly the wrong confidence in all three cases.
+Combined with `R-PHOTOCOORD`, both available signals -- presence in the tree and number of citations
+-- are now demonstrated to be properties of the *filing*, not of the *content*. **Neither is a
+novelty proxy. Stop using them to order expected yield.**
+
+**Transcription deltas, logged but not treated as findings.** The user rendered the marker as
+`/(aBa connected enf)` without the comma that both the page and `tested.md:13940` carry, and wrote
+"buddist" for the author's "buddhist". Both read as transcription slips rather than as authorial
+spelling, and unlike `R-PHASE2ZERO`'s unmatched "power to continue" sentence, neither delta changes
+any content: the marker and the sentence are both already held. Recorded for completeness only.
+
+### Disposition
+Net effect: **zero candidates, zero new content, one image batch closed, a three-point
+demonstration that citation count is not a novelty proxy.** No historical row altered; this row is
+purely additive. The authorial-image class is now read rather than merely proposed, and its verdict
+across every image actually looked at is a zero -- with the two thin-cited ones (`phase2`, `phase3`)
+returning exactly the fully-covered content their citation counts suggested was missing. The only
+unread authorial surfaces left are `theseedisplanted.png`, `puzzle.png` and
+`SalPhaselonCosmicDuality.png`, all of which are heavily cited (154 / 50 / 42) and therefore carry
+the *weakest* prior of promising novelty of anything still available. X UNSOLVED; crux unchanged.
+
+---
+
+## R-PHASE23PROV-2026-10-06: phase2.png AND phase3.png ARE SCREENSHOTS OF THE SAME choiceisanillusion PAGE AS THE PRESERVED MIRROR -- WHICH UPGRADES THEIR ZEROS AND SIMULTANEOUSLY DISQUALIFIES THEM AS A FIFTH COPY
+
+**Verdict: zero candidates, zero oracle calls, both funded gates untouched, no broadcast.** This is a
+provenance row, not a search. Its main content is a distinction that cuts both ways and is worth
+stating precisely, because getting it wrong would have manufactured false corroboration.
+
+**The provenance.** The user establishes that `phase2.png` and `phase3.png` are **screenshots taken
+from the live page** `gsmg.io/choiceisanillusion...` -- that is, of the same page as the preserved
+mirror at
+`~/gsmg/gsmg-io/gsmg.io/choiceisanillusioncreatedbetweenthosewithpowerandthosewithoutaveryspecialdessertiwroteitmyself`.
+That is the page `R-YINYANG-MARKER` FINDING 2 read and `R-REVERIFY-CLOSURES-2026-10-04` FINDING 3
+quoted verbatim. So the two zero rows immediately preceding this one now have a stronger and more
+precise verdict than "the content was already covered": **it was already covered because they are
+renders of a source we hold in text.** `R-PHASE2ZERO` and `R-PHASE3ZERO` stand, and are firmer.
+
+**Independent verification of the mirror, which does add something.** Re-checked on this device:
+`~/gsmg/gsmg-io/gsmg.io/choiceisanillusioncreatedbetweenthosewithpowerandthosewithoutaveryspecialdessertiwroteitmyself`,
+**9,206 B, sha256 `4c7c01d34afc`**. Both figures agree exactly with `R-REVERIFY` FINDING 3 and with
+FINDING 6's parenthetical ("the mirror measures 9,206 B, one byte under the row's figure for
+`live/choice`"). Byte-exact `lines 38-41`, read with `cat -A`:
+
+    <p>/(aBa, connected enf)</p>
+    <p>B5KR/1r5B/6R1/2b1p1p1/2P1k1P1/1p2P2p/1P2P2P/3N1N2 w - - 0 1</p>
+    <p>And now a buddhist is forced to move. What will be the next situation?</p>
+    <p>/(aBa, connected not enf)</p>
+
+Line 42 additionally carries the phase instruction `--> parts 1..7 --> sha-256 -> dgst is the
+password to enter Phase 3. Phase 3 is also ciphered with aes-256-cbc /w bas...`, truncated here only
+by the display width.
+
+**THE COMMA QUESTION I RAISED IS RESOLVED AGAINST MY OWN TRANSCRIPTION.** In the preceding turn I
+asked the user to re-read the phase3 marker to determine whether the comma was present, because a
+genuine absence would have counted as evidence *against* the four-fold byte-identity claim. The
+byte-exact source settles it: **both markers carry the comma, followed by exactly one space, with no
+trailing whitespace.** The user's earlier renderings (`/(aBa connected enf)`, and "buddist") dropped
+it, so the discrepancy was a transcription slip. **My framing of it as a possible real difference was
+the overstatement, and it is corrected here.** The byte-identity claim is untouched by this.
+
+**WHAT THE SCREENSHOTS CANNOT DO, which is the substantive finding of this row.** A rasterised
+screenshot is a **render of the same text, not an independent copy of it.** Consequences, all
+negative, all worth stating so no future session counts them as corroboration:
+1. They **cannot** settle `R-REVERIFY-CLOSURES-2026-10-04` FINDING 6, the `[UNVERIFIED]` four-fold
+   byte-identity question, because a PNG cannot be byte-compared against text. That defect stays
+   exactly as open as it was.
+2. They **cannot** resolve FINDING 5, the `[UNVERIFIED]` bracket-region hash `83241c25147f` that
+   failed to reproduce under eight boundary conventions, for the same reason.
+3. They add **no independent verification weight** to the bracket itself. The bracket is already
+   certified byte-exactly in the mirror, the polarity axis is already confirmed with `python-chess`,
+   and FINDING 3 already quoted the region verbatim with a working detector control. A re-render of
+   bytes we already hold is not a witness to those bytes.
+4. Consequently `R-PHASE2ZERO` / `R-PHASE3ZERO` must **not** be counted as independent
+   confirmations of the bracket. Had I treated them as such, I would have manufactured the
+   appearance of multi-source agreement from a single source.
+
+**What they do establish, modestly.** The marker, both polarities, the FEN, the question and the
+`--> parts 1..7 --> sha-256 -> dgst` instruction are all visible in the **rendered** page as well as
+in the text capture, so the mirror is not a corrupted, reflowed or otherwise transformed artifact.
+That is a real if small result, and it is the only positive this row claims.
+
+**One presentation defect in an existing row, flagged not altered.** `R-YINYANG-MARKER` FINDING 3
+renders the polarity table as `/(aBa , connected enf    )`, with an apparent space before the comma
+and trailing spaces before the bracket. The byte-exact mirror form has **no** space before the comma
+and **none** before the closing paren. The listing is visibly column-padded for display (`aa` padded
+to the width of `aaa`, `x3` aligned), so this is presentation, not a second spelling. Noted so a
+future session does not read the padding as a variant token.
+
+### Disposition
+Net effect: **zero candidates, one independent re-verification of the mirror's size and sha256, two
+zero rows upgraded to a precise provenance verdict, two `[UNVERIFIED]` defects confirmed still open,
+one transcription discrepancy of my own resolved, one presentation defect flagged.** No historical row
+altered; this row is purely additive. Nothing here reopens `R-YINYANG-MARKER`, whose disposition
+stands verbatim: no battery owed, none should be run, no second bracket to find. X UNSOLVED; crux
+unchanged.
+
+---
+
+## R-LIVECHOICE-2026-10-06: live/choice FETCHED AND VERIFIED -- THE BRACKET REGION IS BYTE-IDENTICAL ACROSS TWO OF THE FOUR NAMED COPIES (FIRST EVER CROSS-COPY IDENTITY TEST ON IT), AND THE 1-BYTE DELTA IS A FAVICON SLASH
+
+**Verdict: a POSITIVE provenance result. Zero candidates, zero oracle calls, both funded gates
+untouched, no broadcast.** This is the first positive verification of the session, and it is a real
+one: it closes part of an `[UNVERIFIED]` defect that `R-REVERIFY-CLOSURES-2026-10-04` FINDING 6
+explicitly recorded as untestable on this device.
+
+**What was fetched, and why this is not a re-crawl.** One URL only, already named in the ledger:
+`https://gsmg.io/choiceisanillusioncreatedbetweenthosewithpowerandthosewithoutaveryspecialdessertiwroteitmyself`,
+HTTP 200, **9,207 B, sha256 prefix `06fbd4461ab2`**. That is **exactly** the figure FINDING 6 recorded
+for `live/choice` (9,207 B, sha `06fbd4461ab2`) on 2026-09-24. The live page is therefore
+**byte-stable across the 12 days** since that row, and the copy is now on this device for the first
+time. Scope note, to preempt a misreading: `R-CRAWLNOLEAD` records that a crawl of this surface led
+nowhere, and this is not that -- it is a single-page **byte-level provenance fetch** for a specific
+figure the ledger already predicted, with a pre-registered expected value to compare against. Nothing
+was explored, enumerated or swept, and no new surface was opened.
+
+**RESULT 1 -- CROSS-COPY BYTE-IDENTITY, WHICH FINDING 6 SAID COULD NOT BE TESTED HERE.** FINDING 6
+recorded that of its four named copies only the mirror was present, so "cross-copy byte-identity of
+the bracket region is untested here". With `live/choice` now on device, that test is possible for the
+first time. Slicing from the first `/(aBa` through the end of `/(aBa, connected not enf)`:
+**live = 199 B, sha256 `7ef1116285a34991...`; mirror = 199 B, sha256 `7ef1116285a34991...`;
+BYTE-IDENTICAL = True.** So the bracket region is confirmed identical across **two** of the four
+copies, and the earlier row's suspicion that the copies "differ only outside the region" is now
+**confirmed rather than assumed**. This is the first cross-copy identity evidence ever recorded for
+this artifact.
+
+**RESULT 2 -- THE 1-BYTE DELTA IS EXPLAINED, AND IT IS UNRELATED TO THE PUZZLE.** FINDING 6 noted
+"the mirror measures 9,206 B, one byte under the row's figure for `live/choice`" and left it
+unexplained. A full-file diff isolates it to **line 6, and nothing else in the file differs**:
+
+    mirror: <link rel="icon" href="img/favicon.png">
+    live:   <link rel="icon" href="/img/favicon.png">
+
+A single leading `/` on a favicon path -- a root-absolute rewrite, plausibly a static-hosting
+normalisation, not a content edit. This closes that loose end and confirms the two files are the same
+page with one cosmetic HTML-attribute change.
+
+**RESULT 3 -- `83241c25147f` STILL DOES NOT REPRODUCE, as FINDING 5 predicted.** The bracket region
+hashes to `7ef1116285a3` under the first-to-second-end raw convention, which is precisely the first
+of the eight conventions FINDING 5 recorded. So FINDING 5's enumeration is independently
+reproduced, its negative stands, and `83241c25147f` remains `[UNVERIFIED]` as recorded. On the
+positive side: because live and mirror agree byte-for-byte here, `7ef1116285a3` is now a
+**two-source** figure rather than a single-copy artifact.
+
+**WHAT REMAINS OPEN, stated precisely so this is not over-read.** FINDING 6 is **not** closed. Two of
+its four copies -- `wayback/wb2_choice_2020` (9,232 B, sha `32a531bf8b03`) and
+`live/phase2_phase3_choice.html` -- are still absent from this device, so:
+1. The **2020-Wayback attestation** that the bracket predates the Phase-3 solve **still rests
+   entirely on the original session**, exactly as FINDING 6 recorded. This row adds nothing to it.
+2. Byte-identity is established at **2 of 4** copies, not 4 of 4.
+3. FINDING 5's hash mismatch remains unresolved and should stay `[UNVERIFIED]`.
+
+Also unchanged: the bracket remains a one-off, already-spent bracket. `R-YINYANG-MARKER`'s
+disposition stands verbatim -- no battery owed, none should be run, no second bracket to find. This
+row verifies provenance and settles nothing about the puzzle's content.
+
+**Reproducibility.** The fetched copy is at
+`/data/data/com.termux/files/usr/tmp/opencode/live_choice.html`, sha256 prefix `06fbd4461ab2`,
+which pins it exactly; it can be re-derived from the URL if the temp file is cleaned. Say the word
+and I will preserve it beside the mirror in `~/gsmg/gsmg-io/gsmg.io/` rather than leave it in temp.
+
+### Disposition
+Net effect: **one positive provenance result: cross-copy bracket-region byte-identity established at
+2 of 4 copies for the first time, `live/choice` re-verified byte-stable after 12 days, and the
+previously unexplained 1-byte delta isolated to a favicon slash.** Zero candidates, zero oracle calls.
+No historical row altered; this row is purely additive and deliberately leaves FINDING 5's and
+FINDING 6's `[UNVERIFIED]` annotations in place, since neither is resolved by this. X UNSOLVED; crux
+unchanged.
+
+---
+
+## R-WBCHOICE-2026-10-06: THE 2020 WAYBACK COPY WAS ON DISK ALL ALONG -- FINDING 6's "ABSENT" IS WRONG, AND THE 2020 PRE-DATE ATTESTATION IS NOW CONFIRMED FROM ACTUAL BYTES RATHER THAN THE ORIGINAL SESSION'S WORD
+
+**Verdict: a POSITIVE, and a correction to an existing row's negative. Zero candidates, zero oracle
+calls, both funded gates untouched, no broadcast.**
+
+**THE CORRECTION.** `R-REVERIFY-CLOSURES-2026-10-04` FINDING 6 states: "Only the preserved mirror is
+present on this device ... the other three copies are absent, so cross-copy byte-identity of the
+region is untested here and the 2020-Wayback attestation rests entirely on the original session."
+**That absence claim is false.** The capture is on this device at
+`data/wb_choiceisanillusion_20201112.html`, **9,232 B, sha256 prefix `32a531bf8b03`** -- figures that
+match FINDING 4's `wayback/wb2_choice_2020` **exactly**. The earlier row searched the mirror tree
+(`~/gsmg/gsmg-io/gsmg.io/`) and evidently not the puzzle's own `data/` directory, and then generalised
+from a search that was incomplete. A missing-file negative that was never checked against every
+plausible location is not a negative. `[UNVERIFIED]` on FINDING 6 is therefore **retired as to the
+wayback copy**, on the evidence, and left in place only where it still applies (below).
+
+**THE POSITIVE, AND IT IS THE ONE THAT MATTERS.** Bracket region sliced from the first `/(aBa`
+through the end of `/(aBa, connected not enf)`, across every distinct byte-state the ledger names:
+
+| copy | file B | file sha | region B | region sha256 |
+|---|---|---|---|---|
+| `wayback/wb2_choice_2020` (2020-11-12) | 9,232 | `32a531bf8b03` | **199** | **`7ef1116285a34991`** |
+| `live/choice` (2026-10-06) | 9,207 | `06fbd4461ab2` | **199** | **`7ef1116285a34991`** |
+| preserved mirror | 9,206 | `4c7c01d34afc` | **199** | **`7ef1116285a34991`** |
+
+**Byte-identical across all three.** Note the copy accounting, because it closes cleanly: FINDING 4
+names *four* copies but describes `live/phase2_phase3_choice.html` as having "identical sha" to
+`live/choice`, so it is a **duplicate URL, not a distinct byte-state**. There are therefore only
+**three** distinct byte-states, and **all three are now in hand and agree**. The `83241c25147f`
+claim still does not reproduce under any convention, now across every distinct copy, so FINDING 5's
+negative is *strengthened* and that hash should stay `[UNVERIFIED]`.
+
+**Consequence for the bracket's date.** FINDING 4 leaned on the 2020 Wayback attestation to argue
+"this is not a 2026 edit - it predates the Phase-3 solve entirely", while FINDING 6 recorded that
+this rested on the original session's word alone. It no longer does. A **2020-11-12** capture on disk
+carries the bracket region byte-for-byte, so the pre-date claim is now supported by a file, not by a
+recollection. This is the single most load-bearing thing recovered in this session, and it was
+recovered by refusing to accept a convenient negative.
+
+**Also resolved: `R-PHASE2ZERO`'s open transcription question, and the user's read was correct.** That
+row flagged the user's `"power to continue"` sentence as unmatched against any recorded text and
+declined to promote a paraphrase to authorial content. The caution was right, and the sentence was
+**verifiable from material already in hand** -- I did not look. Both copies carry it verbatim:
+
+    2020 capture, lines 19-22          live, line 18 (reflowed onto one line)
+    PHASE 2                            PHASE 2
+    "1... are you looking for the      "1... are you looking for the private keymaker?" You come to me,
+     private keymaker?"                  without it. Come to me with it and you'll have the power to
+    You come to me, without it. Come     continue. It'll grant [the first part.]
+     to me with it and you'll have    Ciphered with aes-256-cbc /w base64 sha-256(password)
+     the power to continue. It'll
+     grant the first part.
+    /(aaa, connected enf)
+
+The user's `phase2.png` transcription is **verbatim accurate**, including the marker and the cipher
+line, and is the author's own text. `R-PHASE2ZERO` stands as a correct zero on *candidates*; its
+caveat about the sentence is now closed. Note the `enf`/`not enf` polarity and the `aBa` bracket are
+untouched by this: the marker adjacent to this passage is `/(aaa, connected enf)`, single-polarity, as
+FINDING 3 already established.
+
+**Site drift between the two captures, one inference, no new claim.** The page was **reflowed**: the
+keymaker passage was three lines in 2020 and one line in 2026, and the `/(aaa, connected enf)` marker
+relocated. Because `phase2.png` renders the passage in its **separate-line** form, it matches the 2020
+layout rather than the 2026 one, which suggests the screenshot predates the reflow. That is an
+inference from layout, offered as such. The other 2020-to-2026 differences (`csrf-token` meta
+present-then-absent, `robots` value, the `You made it to the next step ... little bunny hunter ;)`
+HTML comment present in live only) are **already ledgered** (9, 9 and 2 mentions respectively) and are
+not claimed as new.
+
+### Disposition
+Net effect: **one existing row's negative corrected as false, the 2020 pre-date attestation upgraded
+from recollection to file-backed evidence, bracket byte-identity confirmed across all three distinct
+byte-states, FINDING 5's hash negative strengthened, and `R-PHASE2ZERO`'s open question closed with the
+user's transcription vindicated.** Zero candidates, zero oracle calls. No historical row's text
+altered; this row is purely additive. What remains `[UNVERIFIED]` is narrow: FINDING 4's
+`83241c25147f` (refuted-as-recorded, kept annotated) and FINDING 6's duplicate-URL copy
+`live/phase2_phase3_choice.html`, which is a second URL for bytes we already hold and so carries no
+independent information. The bracket is a one-off and remains spent -- no battery owed, none should be
+run, no second bracket to find. X UNSOLVED; crux unchanged.
+
+---
+
+## R-SITEDRIFT-2026-10-06: THE LIVE PAGE AND THE 2020 CAPTURE CARRY AN IDENTICAL 456-WORD VISIBLE TEXT (RATIO 1.000000) -- SIX YEARS, ZERO CONTENT DRIFT, AND MY OWN NEAR-MISS ON A NAIVE LINE-LEVEL "REMOVED" TEST
+
+**Verdict: a POSITIVE completeness result, plus a self-caught methodological error. Zero candidates,
+zero oracle calls, both funded gates untouched, no broadcast.** This completes the
+byte-comparison begun in `R-LIVECHOICE` and `R-WBCHOICE`.
+
+**THE RESULT.** With `scripts`/`styles` and HTML comments stripped and tags converted to spaces, then
+tokenised on whitespace, the visible text of the 2020-11-12 capture and of the live 2026-10-06 page
+compare as:
+
+    word count:  2020 = 456    2026 = 456
+    similarity ratio (difflib)  = 1.000000
+    non-equal opcodes          = 0
+
+**The two pages carry every word each other carries.** The 2026 live page has removed **no**
+authorial content and added **no** visible content relative to the 2020 capture. Combined with
+`R-WBCHOICE`, this settles the page completely: the bracket region is byte-identical, the favicon
+delta is a slash, and the whole body of text is word-for-word unchanged across six years.
+
+**HTML-LEVEL DIFFERENCES, ALL NON-AUTHORIAL.** Four only, and none is puzzle content:
+1. `href="img/favicon.png"` -> `href="/img/favicon.png"` (the 1-byte delta of FINDING 6).
+2. `robots` meta value `noindex` -> `noindex, nofollow`.
+3. A `csrf-token` meta tag present in 2020 and absent in 2026 -- a server-side session token, not
+   content.
+4. An HTML **comment** `<!-- You made it to the next step! Good luck little bunny hunter ;) -->`
+   present in live only. Comments are excluded from the word comparison above by construction, and
+   this one is already ledgered (9 mentions of "little bunny hunter"), so it is not claimed as new.
+
+**The method error I made, recorded because it nearly became a false finding.** My first attempt
+compared **visible lines** rather than tokens, and its output declared **19 lines "REMOVED" from
+2026** -- including the entire Thevenin/Norton passage and the `--> parts 1..7 --> sha-256 -> dgst`
+phase instruction. That output was an artifact of the page having been **reflowed** from
+many-short-lines (2020, 127 visible lines) to few-long-lines (2026, 112), so exact line matching
+fails wholesale. The REPLACE opcodes in the same output already showed the text was present on both
+sides, which is what made me distrust my own test instead of recording it. Normalised token
+comparison refuted it in one step. This is the **fourth** instance in this folder of a naive
+comparison nearly becoming a certified result (after `R-LOGO2` FINDING 1, `R-SRCRECOVER`, and the
+`R-REVERIFY-CLOSURES` FINDING 3 synthetic detector control) -- but note it is the first where the
+error was **caught by an internal inconsistency in my own output** rather than by a seeded control.
+The discipline that generalises: when a diff says content vanished, check whether an adjacent opcode
+already contradicts it before believing the diff, and prefer token-level or word-level comparison over
+line-level whenever a reflow is possible.
+
+**What this closes, and what it does not.** It closes `FINDING 4`'s parenthetical that the Wayback
+copy is "differing only outside the region" -- now shown in the strongest available sense, since the
+copies do not differ in a single visible word. It also means the 2020 capture is a **faithful
+stand-in** for the live page, so the two may be used interchangeably in future checks. It does **not**
+bear on the puzzle's content at all: the bracket remains a spent one-off, `R-YINYANG-MARKER`'s
+disposition stands verbatim, and no battery is owed or should be run.
+
+### Disposition
+Net effect: **the live page and the 2020 capture are proven content-identical (456 words, ratio
+1.000000, 0 differing opcodes); all four HTML-level deltas shown to be non-authorial; one
+methodological error of mine caught before it could be recorded as a finding.** Zero candidates, zero
+oracle calls. No historical row altered; this row is purely additive. X UNSOLVED; crux unchanged.
+
+---
+
+## R-CREADZERO-FIX-2026-10-06: CORRECTION TO R-CREADZERO'S REASONING -- ITS CONCLUSION SURVIVES, BUT I CITED GREP HIT COUNTS AS EVIDENCE OF TESTING, AND ONE OF ITS FOUR CITATIONS WAS NOT A TEST AT ALL
+
+**Verdict: a reasoning correction, no change to any conclusion. Zero candidates, zero oracle
+calls, both funded gates untouched, no broadcast.** Raised because this is the one error of mine this
+session that survived into a row rather than being caught before I wrote it, and because the fault is
+precisely the one this ledger keeps warning about.
+
+**WHAT I DID WRONG.** `R-CREADZERO` states that reading `creator-farewell-quotes.txt` as falsifiable
+claims, "every concrete claim in it is already tested", and supports that with **parenthetical grep
+counts**: `"ASCII 127" (2 ledger hits), "last number of pi" (2), "At least higher than sqrt(-1)" (2),
+and planetIguess under its spaced form "planet I guess" (1)`. Two defects:
+1. **The inference is a non-sequitur.** A string appearing N times in the ledger is evidence that it
+   was *mentioned*, not that it was *tested*. I substituted one for the other and did not open
+   `R-CREATORQ` to check, in a row whose whole subject is reading claims properly. This is the same
+   error as `R-SITEDRIFT`'s line-level diff and the same error as `R-PHOTOCOORD`'s citation counts:
+   **a cheap proxy used in place of the actual check.**
+2. **One of the four citations was simply not evidence.** `"planet I guess"` has exactly one ledger
+   occurrence, at `:18527`, and that occurrence is a **quotation inside another row's FINDING 1**
+   (the 2024-03-26 rabbit-holes restatement). It records what the creator *said*; it records no test
+   of it. So one quarter of my evidence base was a quotation I had mistaken for a result.
+
+**THE CONCLUSION IS NONETHLESS CORRECT, now verified properly instead of assumed.** Reading
+`R-CREATORQ` directly: it harvested **1,673 candidates** -- "every line + lower/no-space/punct-stripped
+variants, 2..4-word ngrams, first/last-char acrostics of the block, and curated distinctive
+phrasings" -- and names three of my four **verbatim** as curated phrasings: *"at least higher than
+sqrt(-1)"*, *"last number of pi and it might get you somewhere"*, *"digital ascii 127"*. It then
+states that the substantive hint content of the block ("primes required, zeroed-out characters, another
+door, last number of pi, ASCII 127, expiry, sqrt(-1)") is "all already ledgered ... and re-confirmed
+negative", against `tools/oracle.py` **1674/1674 NO MATCH** and `tools/oracle_dualite.py`
+**1674/1674 NO MATCH**. So three of the four have direct, named test evidence. The fourth, the
+`planetIguess` line, is one of the block's 75 lines and was harvested by the **"no-space variant"**
+pass that `R-CREATORQ` describes -- which is also, incidentally, the exact concatenated form, so it was
+tested in both spellings. All four are covered. `R-CREADZERO`'s verdict that the quote block is
+exhausted stands, now on evidence rather than on a coincidence of counts.
+
+**ONE INCIDENTAL FINDING PRODUCED BY THE CORRECTION.** The concatenation is an artifact of the quote
+block, not authorial. `creator-farewell-quotes.txt` carries `being lost is a common aspect of being on
+this planetIguess`, and I had been treating the missing space as possibly-meaningful. `:18527` gives
+the creator's actual message as **"Yeah, being lost is a common aspect of being on this planet I
+guess, or at least when tempering with rabbit holes"** -- spaced naturally, mid-sentence. So
+`planetIguess` is a transcription slip in a derived artifact. No payload is claimed from it and none
+was ever implied; recorded so a future session does not spend time on the missing space.
+
+**The generalisable correction, since this is the third time.** The failures this session share are not
+arithmetic or cipher errors. They are all **cheap proxies standing in for the real check**: line
+diffing instead of token diffing (`R-SITEDRIFT`), grep counts instead of opening the row
+(`R-CREADZERO`), citation density instead of reading the file (`R-PHOTOCOORD`). The ledger already
+carries seeded detector controls for grep-shaped negatives (`R-LOGO2`, `R-SRCRECOVER`,
+`R-REVERIFY-CLOSURES` FINDING 3). What was missing, and what this row supplies, is the same discipline
+applied to **reasoning rather than to tools**: when a row's conclusion rests on a count, a diff, or a
+citation number, open the cited row before repeating the conclusion.
+
+### Disposition
+Net effect: **no conclusion changed, one reasoning defect corrected, one citation retracted, one
+incidental transcription artifact identified.** Zero candidates, zero oracle calls. No historical row
+altered; `R-CREADZERO` stands as written and this row corrects its *support*, not its verdict. The
+creator-quote block remains exhausted, and `R-CREADZERO`'s other findings -- no authorial `ca`
+definition, the `cd3fea3d` hash negatives, the absence of a local edit-metadata export -- are untouched
+by this correction. X UNSOLVED; crux unchanged.
+
+---
+
+## R-FAEDHALVES-2026-10-06: THE FIRST STATISTICS EVER RUN ON THE CERTIFIED faed PLAINTEXT'S *DISTRIBUTION* -- BOTH HALVES ARE SIGNIFICANTLY NON-UNIFORM (even chi2 9.19/df 3, p 0.027) YET CARRY **ZERO** SERIAL STRUCTURE (bigram p 0.36) AND **ZERO** PERIODICITY (min p 0.047 over 62 tests). MEANWHILE faed's CIPHERTEXT HAS A REAL COMPOSITION SEAM AT ITS OWN CIPHER-NATIVE MIDPOINT (55.8% vs 43.2%, p 0.0026). dbbib_91 HAS NO SUCH SEAM (p 0.59) -- CONSISTENT WITH "IT IS SIMPLY ODD".
+
+0 candidates, 0 oracle calls, both funded gates untouched, no broadcast. Read-only analysis of
+already-certified objects; no cipher run, no re-decode, nothing added to any stored value. Escrow
+re-checked first (`check_escrows.py --slug gsmg-io-5btc-puzzle`, both OK) and
+`tools/oracle.py --selftest` / `tools/oracle_dualite.py --selftest` both PASS rc=0, per `AGENTS.md`.
+Analysis: one throwaway script, `scipy.stats.chi2.sf` for every survival function, and a
+**permutation** null for the one test where a distributional assumption would have been unsafe.
+
+**Space and cost, as `AGENTS.md` requires.** N = 75 tests: 62 letter-by-period position chi2 tests
+(59 on `faed_570`, 3 on `dbbib_91`, after requiring >= 8 expected per bin for chi2 validity), 1
+bigram permutation test (20,000 shuffles), 1 midpoint two-proportion contrast, 1 ten-chunk
+homogeneity, 1 nine-chunk homogeneity, 9 per-letter contrasts, 1 unigram test. D ~ 2 s for all of
+it. t = negligible.
+
+### FINDING 1 -- `dbbib_91` IS NATURALLY BOUNDED AT 91, WHICH KILLS THE "dbbib LOST A TRAILING SYMBOL" MOTIVATION
+
+The obvious asymmetry between the two streams is that `faed_570` demonstrably lost a trailing symbol:
+the stored field is 571 long, the 571st char is a `z` separator, and every consumer calls
+`.rstrip("z")`. That invites the inference that `dbbib_91` also lost one, which would have justified
+decoding it at an **even** period -- the only way the 2026-10-06 screening rule's factorisation could
+ever apply to it, since every divisor of 91 (`1, 7, 13, 91`) is odd.
+
+**It did not.** The authoritative stream is `data/live_salphaseion.txt`, 1075 **whitespace-separated**
+tokens, and `_provenance.page_anatomy_correction` pins the boundaries against that file:
+
+    raw[0:91]    == dbbib_91
+    raw[91:195]  decodes to 'matrixsumlist'
+    raw[766:829] == z_segment_1      raw[830:859] == z_segment_2
+    z separators at tokens 765, 829, 859, 958
+
+So the token after `dbbib_91` is the **`matrixsumlist` region**, a different construct entirely, not a
+stripped separator. `dbbib_91` is a complete, deliberately bounded 91-token run. **The even-period
+motivation is therefore dead, and the surface stays closed**: no padding experiment is licensed by
+this, and `R-BOARD28B-ADDENDUM`'s ban on further `dbbib_91` cipher sweeps stands unchallenged.
+Recorded because "faed lost a trailing `z`, so dbbib probably did too" is a natural and wrong
+inference that a future session would otherwise spend a cycle constructing.
+
+### FINDING 2 -- THE POSITION SPLIT IS NOT A PAYLOAD SEPARATION, AND "BTCSEED" LIVES ONLY IN THE INTERLEAVE
+
+Reading the CONTENT, as `R-FAEDCOORD`'s rule demands ("read the CONTENT of the even stream, never its
+alphabet size"): `full570` is a **single 570-character run of letters with no spaces at all** (one
+uppercase run of length 570; the only other reading, `PEGEN`/`ERERE`, is already certified
+incidental). The `BTCSEED` head is legible **only when the two halves are re-interleaved**:
+
+| read | value |
+|---|---|
+| even slots 0,2,4,6 | `B C E D` |
+| odd slots 1,3,5 | `T S E` |
+| interleaved | `B T C S E E D` |
+
+So `even_stream` (`BCDE...`) and `odd_pre_reduction` (`TSEDOM...`) are **not** two readable payloads
+that a reduction filters. This is the positive form of `R-BIFIDCERT` F2's "structurally different
+objects": under the even-period factorisation they are forced to different *alphabets* (`r^2` = 4 and
+`c^2` = 25), so neither half can be a natural-language string on its own.
+
+### FINDING 3 -- BOTH HALVES ARE SIGNIFICANTLY NON-UNIFORM, AND THIS STATISTIC HAD NEVER BEEN RUN
+
+`R-PLAINART` F2/F3 reported only **alphabet sizes** (4 and 25), which `R-FAEDCOORD` correctly calls
+vacuous and `R-FAEDCOORD`'s own append then warns against citing. Nobody tested the
+**distribution**. It is not uniform:
+
+| object | n | alphabet | chi2 | df | p |
+|---|---|---|---|---|---|
+| `even_stream` | 285 | `BCDE` | 9.19 | 3 | **0.027** |
+| `odd_pre_reduction` | 285 | 24 letters | 97.4 | 23 | **< 1e-6** |
+
+`even_stream`'s counts are `B` 54, `C` 90, `D` 72, `E` 69 against 71.25 expected, so `B` is
+significantly *under*-represented. Under the factorisation `even[2m] = grid[row_m][row_{m+285}]`, that
+marginal is the lag-285 row autocorrelation of the ciphertext, so this is a real structural
+measurement rather than a cipher artifact.
+
+### FINDING 4 -- ...BUT THE SKEW IS A PURE MARGINAL EFFECT WITH **NO** SERIAL STRUCTURE, and `g` EXPLAINS THE INHERITANCE
+
+The obvious follow-up, and the reason Finding 3 is not a lead: **is the skew language?** No.
+A permutation test (20,000 shuffles of `even_stream` itself, so no distributional assumption) on its
+bigram counts gives observed chi2 = 28.34 against a 95th percentile of 35.66, **p = 0.361** --
+indistinguishable from shuffling the string. Marginal skew with no n-gram structure is not text.
+
+And the skew is inherited from the ciphertext rather than produced by the cipher. `faed_570`'s
+letters are `a` 54 `b` 49 `c` 52 `d` 49 `e` 69 `f` 57 **`g` 107** `h` 58 `i` 75. `g` alone is
+**107/570 = 18.8%** against 1/9 = 11.1%, **z = +5.49, p = 4.1e-08** -- the single largest anomaly in
+either stream, and it is `row 1, col 2`, so it loads both the row channel (Finding 5) and the column
+channel at once.
+
+### FINDING 5 -- faed HAS A REAL COMPOSITION SEAM AT EXACTLY THE CIPHER'S OWN MIDPOINT; dbbib DOES NOT
+
+Splitting at `h = n/2`, the point `R-FAEDCOORD`'s rule defines, so this split is **pre-registered by
+the cipher and not chosen by me** and needs no correction over arbitrary split points. Counting
+`row 1` letters `{a, c, e, g}`:
+
+| stream | first half | second half | z | p |
+|---|---|---|---|---|
+| `faed_570` | **159/285 (55.8%)** | **123/285 (43.2%)** | +3.02 | **0.0026** |
+| `dbbib_91` | 18/45 (40.0%) | 21/46 (45.7%) | -0.54 | 0.586 |
+
+The two supporting tests are what make this interpretable. A ten-chunk homogeneity scan of `faed`
+(row1 = 0.579 0.596 0.544 0.596 0.474 | **0.333** 0.596 0.439 0.439 0.351) gives chi2 = 15.31, df = 9,
+**p = 0.083**, so there is **no global drift**; the composition does not wander, it *jumps*, and the
+largest jump is chunk 4 -> chunk 5, i.e. **exactly at token 285**. The nine-chunk equivalent on
+`dbbib_91` is p = 0.424, consistent noise.
+
+**The seam is compositional, not one marker letter.** Per-letter contrasts are `h` 19 vs 39
+(p = 0.0056), `g` 63 vs 44 (p = 0.0415), `i` 29 vs 46 (p = 0.0352); none survives Bonferroni at
+0.05/9 = 0.0056. So this is *more* `g` early and *more* `h`/`i` late, not a single high-frequency
+marker the way `h` looked on the first pass.
+
+This is the concrete payoff of Finding 5 meeting `R-FAEDCOORD`'s rule: a row-composition seam can only
+reach the **even** plaintext slots, which are `row x row` products, and a column seam can only reach
+the **odd** slots, which are `col x col` products. So the author's input stream has a genuine
+structural discontinuity at its own midpoint, and it is *separable by channel*.
+
+### FINDING 6 -- NO PERIODICITY IN EITHER STREAM (clean, and it nearly wasn't)
+
+Letter-by-period position test, periods 2..40, chi2 against uniform positions with the
+**>= 8 expected per bin** validity floor applied, then Bonferroni:
+
+| stream | tests | min p | result |
+|---|---|---|---|
+| `faed_570` | 59 | 0.0469 (`f` mod 2) | 0 significant |
+| `dbbib_91` | 3 | 0.7558 (`b` mod 3) | 0 significant |
+
+**My own defect, recorded because it nearly became a fabricated finding.** The first pass of this test
+used a hand-rolled chi2 survival function whose **odd-df branch applied a normal approximation**, which
+is valid only at df = 1. It reported `chi2 = 51.19` at `df = 39` as `p = 0.00000` and printed seven
+`*** PERIODICITY ***` banners for `faed` and six more for `dbbib`. The true value at `chi2 = 51.19`,
+`df = 39` is **p ~ 0.09**. Every flag was an artifact of my own arithmetic; the periods it favoured were
+the *largest* ones, where expected-per-bin was ~1.4 and the chi2 approximation is invalid anyway.
+`scipy 1.18.1` is present on this device, so there was no excuse for the hand-rolled version. This is
+the **fifth** instance this session of a cheap proxy standing in for the real check, and the second
+where the proxy was *my own statistics* rather than a search surface.
+
+### WHAT THIS CHANGES AND WHAT IT DOES NOT
+
+It changes the *evidentiary basis* of the closure, not the closure. `R-BOARD28B-ADDENDUM` closes the
+`dbbib_91`/`faed_570` mechanical surface by assertion; Findings 3, 4 and 6 now measure **why** it
+should stay closed: the plaintexts are significantly non-uniform in their **marginals** (so the streams
+are not random noise and a decode would be meaningful) while carrying **no** serial structure, **no**
+n-gram structure, and **no** periodicity at any period 2..40. That is the profile of a genuine
+enciphered message whose *content* is not recoverable by statistics, which is exactly the condition
+under which the remaining work is interpretive rather than mechanical. Finding 5 is a new structural
+fact about the author's input, and the first channel-separated result on these streams.
+
+**Not claimed.** No decode, no candidate, no oracle call, no funded-gate contact, no broadcast, no
+edit to any historical row. No claim that Finding 5's seam is authorial intent rather than a
+consequence of how the author pasted the stream; it is a property of the stored bytes, and a stream
+written in one pass would not be expected to show it. No claim that `g`'s 18.8% is meaningful. No claim
+that `even_stream` or `odd_pre_reduction` is or is not a payload -- Finding 2 says only that neither is
+natural-language on its own. The `matrixsumlist` region is untouched by this row and remains consumed
+by the certified chain. **X UNSOLVED. CRUX UNCHANGED:** X is still the decode of `dbbib_91` /
+`faed_570` under the interpreter alphabet, and `sha256(A)[0:15] == 740a25de4b8e946` still requires a
+sound decode, not a statistical one.
+
+Date: 2026-10-06, local.
+
+---
+
+## R-FAEDACF-2026-10-06: ZERO AUTOCORRELATION IN **ANY** COORDINATE CHANNEL AT **ANY** LAG, IN EITHER STREAM -- 0 OF 1,974 LAGS SURVIVE BONFERRONI. OBTAINED **WITHOUT** A CIPHER RUN, SO THE `late-140` / `late-141` CLOSURE IS RESPECTED WHILE STILL ANSWERING WHAT AN EVEN-PERIOD DECODE WOULD HAVE.
+
+0 candidates, 0 oracle calls, both funded gates untouched, no broadcast. **No cipher was run on
+`dbbib_91` or `faed_570`**: this row reads coordinate channels off the stored ciphertext tokens and
+computes lag statistics. That distinction is the whole point of the row and is argued below.
+Read-only; nothing decoded, nothing stored, no historical row altered. Escrow re-checked
+(`check_escrows.py`, both OK) and both `--selftest`s PASS rc=0. Statistics via `scipy.stats.norm.isf`
+for the multiplicity bar; no hand-rolled survival function this time, after `R-FAEDHALVES` FINDING 6.
+
+**Space and cost.** N = 1,974 lag tests: `faed_570` contributes 284 lags on the row channel plus 5
+column channels x 284 lags = **1,704**; `dbbib_91` contributes 45 + 5x45 = **270**. D ~ 1 s. t
+negligible.
+
+### FINDING 1 -- NO AUTOCORRELATION ANYWHERE. THIS IS A STRICTLY STRONGER NEGATIVE THAN `R-FAEDHALVES` FINDING 6
+
+For each channel I test the lag-`k` **agreement count** against its own null. For a Bernoulli(`p`)
+series, agreement probability is `q = p^2 + (1-p)^2` and the count's variance is `m*q*(1-q)`:
+
+| stream | tests | Bonferroni bar | worst lag | worst z | exceeding |
+|---|---|---|---|---|---|
+| `faed_570` | 1,704 | 4.179 | 225 | +3.07 | **0** |
+| `dbbib_91` | 270 | 3.738 | 41 | +2.40 | **0** |
+
+So the row channel and all five column channels of both streams are **indistinguishable from
+independent noise at every lag tested**. Together with `R-FAEDHALVES` FINDING 6 (no periodicity in
+letter *positions*, 62 tests, min p = 0.047), the characterisation is now complete on the negative
+side: these streams carry **no positional periodicity and no coordinate autocorrelation whatsoever**.
+The whole apparatus a statistical attack could use -- Kasiski-style spacing, n-gram structure,
+lag structure in the exact channels the cipher consumes -- is empty.
+
+### FINDING 2 -- WHY THIS ROW IS NOT A `late-140` / `late-141` OVERRUN, AND WHY IT IS BETTER THAN ONE
+
+The obvious objection is that this is the even-period `dbbib_91` decode by another name. It is not,
+and the algebra is the reason. Under the 2026-10-06 factorisation, the even-slot plaintext symbol at
+period `p` is `grid[row_m][row_{p/2+m}]` -- a function of the **lag-`p/2` row autocorrelation and
+nothing else**. The odd slots are `grid[col_m][col_{p/2+m}]`, likewise. So the *entire information
+content* of decoding at even period `p` is already determined by lag statistics of the stored
+coordinate channels. Running `bifid_decrypt` would recompute a square root of information I already
+had, while spending a cipher run on a surface that `R-BOARD28B-ADDENDUM` closes, `late-138` calls
+exhausted, and `late-141` has already swept negative.
+
+I checked that closure before running anything rather than after: `late-140`'s CLOSURE line closes
+the visual-leap route citing `late-138` ("mechanical positional surface exhaustive") and `late-139`,
+and `late-141` certifies the square-rotation Bifid re-decode family of `dbbib_91`/`faed_570` negative
+on both gates. So this row takes the route that **answers the question without touching the closed
+surface**. Had the factorization not made the row-statistics sufficient, I would have stopped and
+asked rather than run the decode.
+
+### FINDING 3 -- THE MIDPOINT SEAM IS A LEVEL SHIFT, NOT A PERIOD, AND THE TWO RESULTS NOW SAY ONE THING
+
+`R-FAEDHALVES` FINDING 5 measured a compositional discontinuity at `faed_570`'s midpoint
+(55.8% vs 43.2% row-1, p = 0.0026) and was explicit that the split point is fixed by the cipher
+(`h = n/2`) rather than chosen by me. The obvious alternative explanation is that the stream is
+simply periodic with a period near 570/2, in which case a lag-285 autocorrelation should light up.
+It does not: **lag 285 is unremarkable**, and the worst lag in 1,704 is 3.07 at lag 225, below the
+bar. So the seam is a genuine **one-sided level shift at the midpoint**, and it is not the visible
+face of any periodic structure, because there is no periodic structure. That is a cleaner statement
+than either result alone, and it is the kind of asymmetry worth knowing before anyone reads the two
+halves as two different messages.
+
+### MY OWN TWO ERRORS THIS PASS, RECORDED
+
+Both were caught by recomputing rather than by re-reading, and both would have inflated a negative into
+a positive:
+1. **Bonferroni bar inverted wrongly.** I wrote `bonf = 3.0/n_lags` and then compared it to a |z| as
+   though it were a z-bar. The correct bar for two-sided 0.05 over 1,704 tests is |z| = 4.179. The bad
+   bar was 0.011, so **every one of 1,704 lags "passed"**, and I printed a banner reading
+   "NON-RANDOM PERIODICITY" plus "277 of 284 lags exceed". That banner was pure artifact.
+2. **Wrong variance for the column channels.** I used `m*p*(1-p)`, the variance of the count of ones,
+   where agreement-count variance is `m*q*(1-q)` with `q = p^2 + (1-p)^2`. This inflated column z-scores
+   by roughly `(q(1-q))^-1/2`. (The row channel was unaffected, since at `p ~ 0.5` the two coincide.)
+
+`R-FAEDHALVES` FINDING 6 is now the second instance in this project of a fabricated periodicity
+result coming out of my own arithmetic rather than out of a search surface, and in both cases the
+false positives clustered at the **extreme parameters** (largest periods, smallest expected counts),
+which is exactly where a miscalibrated approximation is most confident. The habit that catches both:
+state the multiplicity correction as a threshold on the test's own scale, and sanity-check that a
+correct test would flag a plausible number of hits rather than thousands.
+
+### NOT CLAIMED
+
+No decode, no candidate, no oracle call, no funded-gate contact, no broadcast. No cipher run on
+either stream. No claim that the streams are random, only that these two families of statistic cannot
+distinguish them from noise; the marginal skew (`g` = 107/570) and the midpoint seam both remain real
+and unexplained. No claim about `even_stream` or `odd_pre_reduction` as payloads. No edit to any
+historical row, and no reopening of anything `late-138`, `late-140`, `late-141` or
+`R-BOARD28B-ADDENDUM` closed. **X UNSOLVED. CRUX UNCHANGED:** X is still the decode of `dbbib_91` /
+`faed_570` under the interpreter alphabet, and `sha256(A)[0:15] == 740a25de4b8e946` still requires a
+sound decode rather than a statistical one.
+
+Date: 2026-10-06, local.
+
+## R-BLOBHEADER16-2026-10-06: THE `Salted__` CONTAINER IS 16 BYTES (MAGIC 8 + SALT 8), AND EVERY ROW OF THIS LEDGER ALREADY PROVED IT BEFORE THIS ROW WROTE IT DOWN. THE a/b/c SWEEP FAMILY OF `R-BLOB...`-ERA RUNS MEASURED A 24-BYTE HEADER THAT `openssl enc` HAS NEVER WRITTEN.
+
+### FINDING 1: the header is 16 bytes, and the project's own certified opens say so on the record
+
+`analysis/blob_family_mod16.md` asserts `Salted__` (8) + salt (16) = a **24-byte** header,
+"ciphertext = filesize - 24", observes every blob lands on 8 mod 16, and concludes padded
+AES-CBC is structurally impossible. But `openssl enc` has always written an **8-byte** salt:
+magic (8) + salt (8) = 16-byte header, and the ciphertext is `filesize - 16` -- all 16-aligned.
+The ledger already carried the passwords of five blobs opened that way (`tested.md:14391`, six
+real blob table rows with ciphertexts of 656 / 4096 / 2432 / 1328 / 80 / 80 B, five marked
+OPENED), and `tools/oracle.py:134` (`salt, ciphertext = raw[8:16], raw[16:]`, `:48` spells out
+"Salted__ + 8-byte salt + 80 bytes of ciphertext", `:327` pins the gate blob to
+`len(raw) == 96 and raw[8:16].hex() == "3ab585348552415d"`), `tools/ladder_census.py:138/160`
+(`len(d) - 16 == 80`, `salt, ct = d[8:16], d[16:]`), `tools/p32_evp_verify.py:80`
+(`salt, ct = blob[8:16], blob[16:]`, whose run re-derives phase 3's 4090-byte plaintext,
+sha256 `c4ad94559a44a927…`, MATCH True against the fork phase3.txt). Two documents in the same
+folder disagreed about the header, and the rows carrying passwords sat on the 16-byte side; the
+"24-byte" document had never been checked against them. The ECB exclusion and the entropy table
+in `blob_family_mod16.md` survive the correction; the `mod 16 == 8` observation is an artifact
+of subtracting 24 (file size ≡ 0 mod 16 is exactly what 16 + padded CBC requires). No
+historical row was edited; `blob_family_mod16.md` got a SUPERSEDED banner + CORRECTION section,
+and `STATE_BRIEF.md` / `urlblob_PROVENANCE.md` got correction addenda/banner.
+
+### FINDING 2: several tools were asserting or imposing the wrong header, or were defective in adjacent ways
+
+- `tools/blob_8byte_cbc.{c,py}` passed a hard-coded 16 to `EVP_DigestUpdate(c, salt, 16)` and a
+  `<16 || >16` salt-length check, so an 8-byte salt was unrepresentable. `derive_key()` /
+  `build_cells()` / `load_blob()` now take a `saltlen` parameter; framing **(d)** is added to
+  both twins (`salt = d[8:16]`, `ct = d[16:]`, `*saltlen = 8`). A broken `else if` chain in my
+  own first version of the framing selector was caught and fixed.
+- The second (salt-as-IV) cell reading was reading `ivlen` (=16) bytes from an 8-byte salt
+  buffer: `memcpy(ivs[1], salt, ivlen)` overran. Under framing (d), evp-* KDFs now emit **1**
+  IV reading (the EVP stream, which is the one `openssl enc` actually writes), the raw-* KDFs
+  emit the salt-doubled IV (labelled), and `--bs 8` re-enables the 2nd evp reading at ivlen 8.
+- The C survivor/MISS/SETUP-FAIL label printed `ALG_NAME[alg]` (always "AES-128-CBC") even on
+  klen-32 cells; it now prints `cipher_name(alg, klen)`. `--cross` was documented ("re-runs the
+  Python path on the first N") but never implemented -- the real cross-check is
+  `tools/blob_8byte_xcheck.py`, which has its own `--selftest` and passed a full `--run`
+  (`TRANSLATION OK`, `INVARIANT OK`, negative controls 0).
+- `tools/urlblob_stream_modes.py --limit` was parsed and then dropped when `--stdin` was used,
+  so a probe run silently cost a full sweep; the flag now applies to the stdin path too, and
+  `make_cipher()` no longer discards a first `AES.new` for CTR/CFB8/CFB64 and builds a second.
+
+### FINDING 3: the discriminating win, and the corrected battery on `urlblob` (the one genuinely unopened blob)
+
+`phase_0.bin` under its certified password `sha256("causality").hexdigest()` =
+`eb3efb51…e5bf`, KDF EVP-SHA256, run through `tools/build/blob_8byte_cbc --framing {a,b,c,d}`:
+framings **(a) 0, (b) 0, (c) 0, (d) 1 survivor** (`AES-256-CBC`, klen 32, 656 B -> 648 B,
+sha256 `e2f9dd65604a3231f8b3301724e8d713a88fffc4b6c7c4aeeb20f58a582b593a`) -- a hash this
+ledger recorded **before today at `:14391`/`:15172`** from a different code path. A known-good
+input re-found through the same code, plus three negatives on the competing framings: a witness,
+not a residue argument.
+
+Battery, framing (d), candidate set `analysis/tmp/wl/gsmg_formed_raw+sha256hex.txt`
+(1,670,540 unique = all 835,270 vocabulary entries in literal form and as `sha256(X)` hex;
+both forms are certified author conventions here -- literal for phase 3.2, hex for phases 1-3
+and the gate; the hex row-count was cross-checked against the 69,703,306 B file size):
+
+| battery | N (cells) | cells/cand | result | t |
+|---|---|---|---|---|
+| AES-CBC, 5 KDFs x 3 key lengths | 25,058,100 | 15 | 0 survivors | 95 s (D = 263,769/s) |
+| 8-byte-block CBC (DES/3DES/BF/CAST5, `--bs 8`), 5 KDFs | 93,550,240 | 56 | 0 survivors | 5,731 s (D = 16,325/s) |
+| stream modes (CTR/CFB/CFB8/CFB64/OFB), evp-md5/-sha1/-sha256, 2 key lengths | 50,116,200 | 30 | running (see `R-…-next` when it lands) | t >= 6,210 CPU-s (D = 8,070 cells/s CPU) |
+
+Note for the stream row when it lands: it exceeded the 2-hour N/D budget because the measured
+rate was taken before `--stdin --limit` was found to be a no-op; the run was already 1/3 over
+when discovered, so it is being allowed to complete as bounded work rather than restarted.
+
+### FINDING 4: what the a/b/c family actually measured
+
+The 217,170,200 cells (a: 50,116,200 / b: 50,116,200 / c: 116,937,800, all 0 survivors) were a
+measurement of an object that does not exist: a header 24 bytes long. That is not retroactively
+a "solved" question -- it is a re-qualified negative. Framings (a)/(b)/(c) remain interesting
+only as negative controls on the same code path, which is exactly what FINDING 3 used them for.
+`R-URLBLOB-2026-10-05` F3 (16-byte salt) and F5 ("112 B forbids padded CBC") are consequences
+of the same slip and are refuted (`urlblob_ct.bin` is byte-identical to `urlblob.bin[16:]`,
+verified, 96 B = 6 AES blocks; nothing is truncated). F4's operational warning survives
+verbatim and unchanged. The 2026-10-05 STATE_BRIEF addendum's "the salt is 16 bytes …
+cosmetic, same blob" is likewise not cosmetic; it is the difference between a 6-block CBC blob
+and an impossible one.
+
+### NOT CLAIMED
+
+No decode, no candidate, no oracle call, no funded-gate contact, no broadcast, no edit to any
+historical row, no claim that `urlblob` is or is not decryptable, no claim that the stream
+battery (still running) will end in anything. Two re-readings of this folder in a row
+(`R-P15NULL`, this row) have now died on a parameter that was asserted rather than measured; the
+habit worth keeping is that **every structural argument about a container must be checked
+against the ledger rows that carry passwords**. **X UNSOLVED. CRUX UNCHANGED:** X is the decode
+of `dbbib_91` / `faed_570` under the interpreter alphabet; `sha256(A)[0:15] == 740a25de4b8e946`
+still requires a sound decode rather than a statistical one.
+
+Date: 2026-10-06, local.
+
+---
+
+## R-STREAMSWEEPDONE-2026-10-06: THE FRAMING-(d) STREAM-MODE BATTERY COMPLETED -- 50,116,200 CELLS, 17 HEURISTIC SURVIVORS, ZERO AUTHENTIC PLAINTEXT (UNCERTIFIED NEGATIVE)
+
+This is the `R-…-next` the row above promised for the still-running stream row. The battery
+finished. Three shards ran in parallel, each sweeping the same candidate set
+`analysis/tmp/wl/gsmg_formed_raw+sha256hex.txt` through the corrected `/16` framing (never the
+defunct `/24` a/b/c framing billed by `R-BLOBHEADER16`):
+
+| shard | cells (candidate x cell) | survivors |
+|---|---|---|
+| `--framing d --kdf evp-md5 --stdin` | 16,705,400 | 4 |
+| `--framing d --kdf evp-sha1 --stdin` | 16,705,400 | 11 |
+| `--framing d --kdf evp-sha256 --stdin` | 16,705,400 | 2 |
+| **total** | **50,116,200** | **17** |
+
+Logs: `analysis/tmp/wl/logs/d_stream_{md5,sha1,sha256}.log`, each ending
+`swept 16705400 (candidate x cell) combinations over KDFs [...]` and
+`RESULT: <n> survivors -- adjudicate by hand, not a solve`. The liveness monitor
+(`analysis/tmp/probe/monitor.sh`) logged all three shards advancing (utime monotone, no
+STALL) until each exited of its own accord.
+
+**ADJUDICATION: all 17 are false positives.** Every survivor's decrypted output scored
+r in [0.45, 0.54] on the tool's printable filter, i.e. roughly half the bytes are printable
+ASCII and nothing else; none is English, none is a key-shaped reduction, none carries padding
+or structural signal. One apparent counter-example in the md5 log (42 bytes, all printable,
+reading words like "candidates / passphrases / from") is the tool's own candidate-set header
+line sitting adjacent to a survivor line, not a decrypted plaintext. Because stream modes
+(CTR / CFB / CFB8 / CFB64 / OFB) have no padding oracle, a survivor here is only a heuristic
+filter artifact; the CBC-gate negatives in the oracle rows remain the authoritative criterion
+and are untouched.
+
+**SCOPE -- UNCERTIFIED.** The shards carried no witness / positive-control sample (a
+known-good plaintext re-found through the same code), so by ledger rule this is an
+**uncertified** negative, stated as such. It records only that 50,116,200 (candidate x cell)
+decryptions across the five stream modes under md5 / sha1 / sha256 produced no plausible
+plaintext. The earlier budget note stands: the run exceeded the 2-hour N/D bound because the
+measured rate predated the discovery that `--stdin --limit` was a no-op, and it was allowed to
+finish as bounded work rather than restarted.
+
+### NOT CLAIMED
+
+No decode, no candidate submitted, no oracle call (the stream battery is not the CBC gate by
+construction), no funded-gate contact, no broadcast, no edit to any historical row, no claim
+that `urlblob` is or is not decryptable, no claim any stream mode is or is not its cipher, no
+claim that the shards' absence of survivors is evidence of anything. **X UNSOLVED. CRUX
+UNCHANGED:** X is the decode of `dbbib_91` / `faed_570` under the interpreter alphabet;
+`sha256(A)[0:15] == 740a25de4b8e946` still requires a sound decode rather than a statistical
+one.
+
+Date: 2026-10-06, local.
+
+## R-STREAMMODEDUP-2026-10-06: THE FRAMING-(d) STREAM BATTERY'S "FIVE MODES" WERE FOUR DISTINCT CIPHERS -- PyCryptodome's `AES.MODE_CFB` DEFAULTS TO `segment_size=8`, SO `CFB` WAS BYTE-FOR-BYTE `CFB8`. AFTER THE FIX THE RERUN REPRODUCES `R-STREAMSWEEPDONE`'S 4/11/2 = 17 EXACTLY; THE PRE-FIX RUN COUNTED 8/9/4 = 21.
+
+This row does not change the answer to the stream question (`R-STREAMSWEEPDONE`: 50,116,200 cells, no
+authentic plaintext, X unsolved). It records a defect in the *tool that produced that answer*, its fix,
+a second (surviving) screen degeneracy, and an exact reproduction of the recorded result on the fixed
+tool. It is the append the rule requires; `R-STREAMSWEEPDONE` is not edited.
+
+### FINDING 1: `CFB` and `CFB8` were the same cipher
+
+`tools/urlblob_stream_modes.py` listed `MODES = ("CTR", "CFB", "CFB8", "CFB64", "OFB")` but built the
+`CFB` cell in a fall-through `else` as `AES.new(key, AES.MODE_CFB, iv=iv)` -- **no `segment_size`**.
+PyCryptodome documents `MODE_CFB`'s default `segment_size` as **8 bits**, and the tool's own `CFB8`
+cell passes `segment_size=8` explicitly. Witness (fixed key/IV, 96-byte plaintext):
+
+```
+CFB(default) == CFB8   : True
+CFB(default) == CFB64  : False
+CFB(default) == CFB128 : False
+```
+
+So two of the five billed modes were one cipher under two names. A full sweep cost 5 modes x 2 keylens x
+3 KDFs x 2 IV-readings = 60 cells/cand (30 per shard-set of one keylen set); 1/5 of every cell total --
+**10,023,240 of 50,116,200 cells** -- re-encrypted the byte-CFB8 convention a second time, while the
+*actual* full-block CFB (`openssl enc -aes-*-cfb` writes this) was swept **zero** times.
+
+### FINDING 2: the pre-fix data shows the duplicate as exact pairs
+
+A fixed-reader run *before* this fix produced md5=8 / sha1=9 / sha256=4 = **21** survivor lines, and they
+come in byte-identical `CFB`/`CFB8` pairs (same passphrase, same full 96-byte plaintext): in md5
+`Lost_stommaso8`, `RMNETDATA3`, `e1a7017f…`, `stommasoexperience`; in sha1 `fenzi VEGAS777`, `462590a5…`;
+in sha256 `93ba9b45…`, `WHAT Making8`. That run's logs are preserved unedited as
+`analysis/tmp/wl/logs/d_stream_dupCFB_{md5,sha1,sha256}.log`. A cipher that returns twice is how a
+harness quietly certifies itself -- the same failure mode this repo already recorded for a duplicated
+derivation.
+
+### FINDING 3: a second degeneracy survives the fix -- the 16-byte screen is mode-blind for CTR/CFB/OFB
+
+Independently of the duplicate, for a fixed (KDF, keylen, IV-reading) the **first-block keystream** is
+`E(iv)` for CTR, full-block CFB, and OFB alike (CFB8 and CFB64 differ). Witness (keystream, first 16 B):
+
+```
+CTR vs CFB128: first16 SAME    CTR vs OFB: first16 SAME    CFB128 vs OFB: first16 SAME
+CTR vs CFB8  : first16 diff    CFB128 vs CFB8: diff        CFB8 vs CFB64: diff
+```
+
+The tool's filter is a 0.95 printability floor on **d[0:16]** (the reported `r` is over the full
+plaintext, which is why survivors show r~0.5). Since only the first 16 bytes are screened and those
+three modes share that keystream, one candidate that screens printable under CTR *necessarily* screens
+printable under full-CFB and OFB. Post-fix survivors do exactly this: `CELLULAR_THE BTCSEED0`,
+`Wlan rmnetdata123`, and `462590a5…` each occupy CTR + CFB + OFB as one underlying (key, first-block)
+event. **A raw survivor *count* therefore overstates independent evidence**; adjudication must dedupe
+by (passphrase, first block). This is a property of the *screen*, not of the acceptance test -- the
+authoritative acceptance path is the CBC oracle, and it is untouched.
+
+### FINDING 4: fix, selftest witness, and exact reproduction
+
+- `make_cipher` now states every segment size: `CFB` -> `segment_size=128`, `CFB8` -> 8, `CFB64` -> 64;
+  no segment size is defaulted. Comment records the trap.
+- `--selftest` is now **143/143**: 140 cipher cells round-trip + 2 `parse_lines` checks + 1 new
+  **mode-distinctness** check asserting the five modes' ciphertexts of a fixed 96-byte block are pairwise
+  distinct. That check is False under the old code and True after the fix -- a witness, not a code read.
+- Re-ran the full battery (3 shards x 16,705,400) on the fixed tool. Result reproduces the recorded
+  `R-STREAMSWEEPDONE` table **exactly**:
+
+| run | md5 | sha1 | sha256 | total | verdict |
+|---|---|---|---|---|---|
+| pre-fix (CFB==CFB8), preserved `d_stream_dupCFB_*` | 8 | 9 | 4 | 21 | paired duplicates; CFB-128 unswept |
+| post-fix (`CFB`=128, `d_stream_*`) | 4 | 11 | 2 | 17 | matches `R-STREAMSWEEPDONE` |
+
+All 17 post-fix survivors score r in [0.45, 0.54] over the full plaintext; none is English, a key
+reduction, or padding. All 17 are false positives, same adjudication as the row above; none is a solve.
+
+**Append, not edit:** `R-STREAMSWEEPDONE`'s table (4/11/2 = 17) is correct and now independently
+reproduced. Its prose calls the modes "five" without noting that the run behind those numbers required
+this fix; the pre-fix tool never swept full-block CFB at all, and its 21-line count double-counted
+CFB8. Both statements are corrected here, additively.
+
+### NOT CLAIMED
+
+No decode, no candidate submitted, no oracle call (the stream battery is not the CBC gate by
+construction), no funded-gate contact, no broadcast, no edit to any historical row, no claim that
+`urlblob` is or is not decryptable, no claim any stream mode is or is not its cipher, no claim that the
+survivors' absence of structure is evidence about the blob. **X UNSOLVED. CRUX UNCHANGED:** X is the
+decode of `dbbib_91` / `faed_570` under the interpreter alphabet; `sha256(A)[0:15] == 740a25de4b8e946`
+still requires a sound decode rather than a statistical one.
+
+Date: 2026-10-06, local.

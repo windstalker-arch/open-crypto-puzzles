@@ -74,11 +74,22 @@ FAMILY = {
 
 
 def load_blob(which, framing="c"):
-    """Return (salt, ciphertext) under one of the three framings.
+    """Return (salt, ciphertext) under one of the four framings.
 
-    (c) 24-byte header, 8-byte-block cipher  -> d[24:],      padding checkable
-    (a) 32-byte header, 16-byte-block cipher -> d[32:],      padding checkable
-    (b) 24-byte header, final 8 bytes lost   -> d[24:-8],    NOT checkable
+    (d) 16-byte header, the author's own container  -> d[16:], salt 8 B, checkable
+    (c) 24-byte header, 8-byte-block cipher          -> d[24:],      padding checkable
+    (a) 32-byte header, 16-byte-block cipher         -> d[32:],      padding checkable
+    (b) 24-byte header, final 8 bytes lost           -> d[24:-8],    NOT checkable
+
+    (d) is not a hypothesis. Every blob this project has decrypted is opened
+    with `Salted__` + an 8-byte salt: README.md line 133 (small gate blob, salt
+    3ab585348552415d), tools/oracle.py, tools/ladder_census.py,
+    tools/p32_evp_verify.py and tested.md:12283/:12284. Phase 2's ciphertext is
+    656 B = 41 AES blocks and phase 3's is 4096 B = 256 AES blocks, both
+    multiples of 16 only under a 16-byte header -- so blob_family_mod16.md's
+    "ciphertext length is 8 mod 16, therefore not CBC" rests on reading the
+    header 8 bytes too long, and (a)/(b)/(c) sweep the artifact rather than the
+    container. This framing had never been swept before 2026-10-06.
 
     Framing (a) puts bytes d[24:32] in a header field rather than the
     ciphertext; framing (b) treats the last 8 bytes as missing. Both make the
@@ -86,10 +97,17 @@ def load_blob(which, framing="c"):
     already assumed, so both must be swept rather than argued away. Framing (a)
     is the one that would make "the AES passes were structurally impossible"
     wrong, so it is tested rather than dismissed.
+
+    `which` may be a family name or an absolute path, so a known-answer blob can
+    be pushed through the identical code path (tools/blob_8byte_xcheck.py) without
+    writing into the archived sources directory.
     """
-    p = os.path.join(SOURCES, FAMILY[which])
+    p = which if os.path.isabs(which) else os.path.join(SOURCES, FAMILY[which])
     d = open(p, "rb").read()
     assert d[:8] == b"Salted__", f"{which} is not a Salted__ blob"
+    if framing == "d":
+        assert len(d) >= 16, f"{which} shorter than a 16-byte header"
+        return d[8:16], d[16:]
     salt = d[8:24]
     if framing == "a":
         return salt, d[32:]
@@ -132,11 +150,24 @@ def cells_for(pw: bytes, salt: bytes, klen: int, kdf: str, ivlen: int = 8):
 
     Under `openssl enc` the key and IV come out of ONE EVP_BytesToKey stream, so
     the IV is the `ivlen` bytes following the key. The second reading (IV =
-    leading salt bytes) covers a blob written with an explicit short IV."""
+    leading salt bytes) covers a blob written with an explicit short IV -- but it
+    exists only when the salt is at least `ivlen` bytes long. Framing (d)'s salt
+    is 8 bytes, so `salt[:16]` is not an AES IV: dropping the reading is what
+    keeps the reference honest, and it also removes what would have been a silent
+    16-byte slice of an 8-byte object. Every certified open takes its IV from the
+    EVP stream, which is the reading that survives.
+
+    A raw key has no derivation to hang an IV on; with a short salt the doubled
+    salt is used (mirroring the C twin) so the cell still varies per blob."""
     if kdf.startswith("evp-"):
         s = evp_bytes_to_key(pw, salt, klen + ivlen, KDF_DIGEST[kdf])
-        return [(s[:klen], s[klen:klen + ivlen]), (s[:klen], salt[:ivlen])]
-    return [(key_for(pw, salt, klen, kdf), salt[:ivlen])]
+        cells = [(s[:klen], s[klen:klen + ivlen])]
+        if len(salt) >= ivlen:
+            cells.append((s[:klen], salt[:ivlen]))
+        return cells
+    if len(salt) >= ivlen:
+        return [(key_for(pw, salt, klen, kdf), salt[:ivlen])]
+    return [(key_for(pw, salt, klen, kdf), salt + salt[:ivlen - len(salt)])]
 
 
 # An 8-byte-block cipher (DES/3DES/Blowfish/CAST5) needs an 8-byte IV. AES needs
@@ -321,19 +352,24 @@ def candidates(limit):
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
-    ap.add_argument("--blob", default="urlblob", choices=sorted(FAMILY))
+    ap.add_argument("--blob", default="urlblob")
+    ap.add_argument("--path", default="")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--full", action="store_true")
     ap.add_argument("--kdf", default="evp-md5,evp-sha256")
     ap.add_argument("--floor", type=float, default=0.90)
-    ap.add_argument("--framing", default="c", choices=("a", "b", "c"))
+    ap.add_argument("--framing", default="c", choices=("a", "b", "c", "d"))
+    ap.add_argument("--bs", type=int, default=0,
+                    help="override the block size the framing implies (8 or 16)")
     a = ap.parse_args()
 
     if a.selftest:
         return selftest()
 
-    salt, ct = load_blob(a.blob, a.framing)
-    bs = 8 if a.framing == "c" else 16
+    salt, ct = load_blob(a.path or a.blob, a.framing)
+    bs = a.bs or (8 if a.framing == "c" else 16)
+    if bs not in (8, 16):
+        ap.error("--bs wants 8 or 16")
     padded = a.framing != "b"
     print(f"{a.blob} framing={a.framing}: salt {salt.hex()}  "
           f"ciphertext {len(ct)} B  ct%16={len(ct) % 16}  "
