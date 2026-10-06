@@ -442,12 +442,22 @@ method notes for each row are in `analysis/tested.md`.
    legible string or an address match.
 
 6. **Decode the even-position stream of the Bifid output** (hours of reasoning).
-   The reconstruction on the archived capture exposes 285 symbols drawn from only
-   four letters (B, C, D, E) carrying every even slot of the output: an authored
-   channel with no public account, either a second message, a key or mask for the
-   256-symbol object, or the author's unfound "second way". Confirmed by any
-   encoding that yields a legible string or an address match; killed by exhausting
-   four-symbol encodings at length 285 (which factors 3 x 5 x 19).
+   Corrected 2026-10-06, and the correction matters more than the lead did. The
+   285 symbols of that stream use only four letters (B, C, D, E), and I had
+   recorded that narrow alphabet as "an authored channel with no public
+   account". It is not. It is arithmetic: `faed` uses nine letters, and those nine
+   letters are the first nine characters of the square's own key string, so they
+   sit in two rows of the 5x5 grid; a full-period Bifid decode whose even slots
+   are products of two row indices can then only ever land in the 2x2 block at
+   those rows, which is those four cells. Every 9-letter ciphertext does this. See
+   `R-FAEDCOORD-2026-09-27`, which also shows the same 1-in-20,000 coincidence
+   that made the square look confirmed is true of the square by construction.
+   So the lead survives only in a weaker form: read the stream's CONTENT, never
+   cite its alphabet size. Its 2-bit-per-symbol base-4 packing (570 bits) and the
+   raw row channel (570 bits) are already tested under six packings with no hit
+   against 1,991 documented hashes. Confirmed by any encoding that yields a
+   legible string or an address match; killed by exhausting four-symbol
+   encodings at length 285 (which factors 3 x 5 x 19).
 
 7. **Determine whether the 256-symbol object is the right target at all** (an
    afternoon of reasoning, not a sweep). Every negative in row 1 to row 5 of the

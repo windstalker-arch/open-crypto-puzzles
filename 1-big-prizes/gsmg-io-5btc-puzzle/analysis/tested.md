@@ -16490,6 +16490,57 @@ function of (raw faed, period, square)**. A candidate square can therefore be re
 `plaintext_head` comparison; none of the expensive downstream reduction needs to be re-run per
 candidate. Cost per candidate square is O(1), not O(570) plus reduction.
 
+### APPEND 2026-10-06 — the scope of the confinement is exactly the parity of the period, and this was predictable
+
+This row stated the row-row/col-col split for `period == len(input)`. I re-derived the mechanism
+independently (rebuilt the square, re-decoded, re-split, no stored values reused; the certified
+`plaintext_head` / `even_stream` / `odd_pre_reduction` hashes all reproduce, `even_stream`
+`33fc727b5a9d1d11`) and then measured where the confinement actually stops holding. It is not a
+full-length-period special case.
+
+**FINDING 1 — THE CONFINEMENT HOLDS AT EVERY EVEN PERIOD AND FAILS AT EVERY ODD ONE.** An EVEN
+period places every block on an even stream offset, so slot parity inside a block equals slot parity
+in the whole stream and the split survives; an ODD period flips the parity on alternate blocks, so
+it does not. Control = random 9-letter ciphertexts over `{A..I}`, so this is a property of the
+cipher and not of the author's message:
+
+| period | 2 | 4 | 10 | 38 | 114 | 190 | 570 | 3 | 5 | 15 | 19 | 95 | 285 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| even-slot alphabet != `BCDE` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 100 | 100 | 100 | 100 | 100 | 100 |
+
+`0/700` exceptions at the seven even periods, `600/600` at the six odd ones (100 random ciphertexts
+each, seed fixed). Generalised, and this is the reusable screening rule: **in any 5x5 Bifid square,
+for any ciphertext letter set spanning `r` rows and `c` columns, decoded at any even period, the
+even-slot plaintext alphabet is exactly `r^2` letters and the odd-slot alphabet is exactly `c^2`
+letters.** Quote a stream's CONTENT. Never cite its alphabet size as evidence.
+
+**FINDING 2 — THIS ONE FACT EXPLAINS THE `dbbib_91` ASYMMETRY THAT WAS LOGGED SEPARATELY, SO THE
+TWO OBSERVATIONS ARE ONE.** `R-BIFIDCERT-2026-10-05` recorded that the split factorises on
+`faed_570` (even length) and does **not** on `dbbib_91` (odd length 91, `h = 45`, token 45 straddles
+the boundary so the two halves overlap by one token). That is the odd-period column of the table
+above. It was filed as a puzzle-specific quirk of one 91-letter stream; it is the same parity fact,
+which is why it showed up as an asymmetry in the first place. Nothing about `dbbib_91` is special —
+it is simply odd.
+
+**WHAT THIS DOES NOT CHANGE.** Still 0 new gate input, 0 candidates, 0 oracle calls, 0 funded-gate
+contact. The six base-4 / row-channel packings re-run against the now-current 1,991 documented
+64-hex tokens: **6 candidates, 0 hits**, hashes unchanged (`even_base4_msb` `2604de566aa7d78b359c6063`,
+`even_base4_lsb` `f7b183536c502b773fff3753`, `rowbits_msb_71B` `2133ae9cc5e35678ca4cd0b5`,
+`rowbits_msb_72B` `5fa4b843db702e7a045f3503`). The lead survives only in its weaker form, and I have
+corrected the README accordingly: read the CONTENT of the even stream, never its alphabet size.
+
+**ONE MEASUREMENT THAT ADDED NOTHING, RECORDED SO IT IS NOT RE-RUN.** A vocabulary scan of the
+570-character `faed` plaintext (runtime system corpus, 64,039 words of length 5-10, no wordlist
+stored) finds **2** incidental hits — `PEGEN` at 293 and `ERERE` at 346 — against a Monte-Carlo
+null of **0.91** for parity-constrained random streams over the same even alphabet `{B,C,D,E}` and
+odd alphabet of 25 letters (20,000 draws). `z = +1.14`, i.e. not significant, and `ERERE` at an even
+position is 2-of-4 by construction rather than by meaning. The head `BTCSEED...` is **not** in the
+scan, because the scan vocabulary is the system corpus and `btcseed` is a puzzle-specific term — so
+this is a lower bound on hits and the honest reading is that the plaintext contains no vocabulary at
+all beyond noise, which agrees with the `late-303` disposition rather than overturning it. Note the
+vocabulary is device-dependent, so unlike the period table this part is not certified; it is
+reported as a measured observation.
+
 ### Disposition
 Net effect on the frontier: **zero new gate input, one retracted over-claim, one killed false
 positive, one correction to how IC evidence may be used in this puzzle, and a cheap reusable

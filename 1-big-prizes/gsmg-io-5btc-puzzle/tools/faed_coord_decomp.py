@@ -147,7 +147,51 @@ def main():
     print("  (vacuous null) P(9 random cells occupy exactly 2 rows) = %d/%d = %.3e"
           % (two, tot, two / tot))
 
-    print("\n== 4. untested bit-channel packings from the decomposition ==")
+    print("\n== 4. scope of the confinement: which Bifid periods preserve it ==")
+    print("  The statement above was made for period == len(input). The scope is sharper than that,")
+    print("  and the boundary is the same parity structure. An EVEN period puts every block on an")
+    print("  even stream offset, so slot parity inside a block equals slot parity in the whole stream")
+    print("  and the row-row / col-col split survives. An ODD period flips the parity on alternate")
+    print("  blocks, so it does not. Measured, not assumed:")
+    import random as _random
+    rng = _random.Random(20261006)
+    even_periods = (2, 4, 10, 38, 114, 190, 570)
+    odd_periods = (3, 5, 15, 19, 95, 285)
+    want = "".join(sorted(set(even)))
+    n = len(mapped)
+    trials = 100
+    even_exc, odd_exc = {}, {}
+    for period in even_periods:
+        bad = 0
+        for _ in range(trials):
+            ct = "".join(rng.choice("ABCDEFGHI") for _ in range(n))
+            if set(B.bifid_decrypt(ct, period, grid, pos)[0::2]) != set(even):
+                bad += 1
+        even_exc[period] = bad
+    for period in odd_periods:
+        bad = 0
+        for _ in range(trials):
+            ct = "".join(rng.choice("ABCDEFGHI") for _ in range(n))
+            if set(B.bifid_decrypt(ct, period, grid, pos)[0::2]) != set(even):
+                bad += 1
+        odd_exc[period] = bad
+    print("    even periods, random 9-letter ciphertexts, exceptions/%d:" % trials)
+    print("      " + ", ".join("p=%d:%d" % kv for kv in sorted(even_exc.items())))
+    print("    odd periods, same control, exceptions/%d:" % trials)
+    print("      " + ", ".join("p=%d:%d" % kv for kv in sorted(odd_exc.items())))
+    even_holds = sum(even_exc.values()) == 0
+    odd_fails = sum(odd_exc.values()) == len(odd_periods) * trials
+    ok &= even_holds and odd_fails
+    print("  confinement holds at every even period: %s" % even_holds)
+    print("  confinement fails at every odd period:   %s" % odd_fails)
+    print("  => generalisation: ANY 5x5 square, ANY ciphertext letter set spanning r rows and")
+    print("     c columns, ANY EVEN period -> even-slot alphabet is exactly r^2 letters and")
+    print("     odd-slot alphabet is exactly c^2 letters. Quote stream CONTENT, never alphabet size.")
+    print("  => and this PREDICTS the asymmetry recorded on dbbib_91 elsewhere on this ledger:")
+    print("     dbbib_91 has odd length 91, so its halves overlap and the split does not factor.")
+    print("     Both halves of that observation are now the same parity fact.")
+
+    print("\n== 5. untested bit-channel packings from the decomposition ==")
     docs = documented_hashes(puzzle, root)
     print("  documented 64-hex tokens: %d" % len(docs))
     idx = {c: i for i, c in enumerate("DCBE")}  # D(0,0) B(0,1) C(1,0) E(1,1)
