@@ -369,7 +369,12 @@ against a key the puzzle does not produce.
 What would confirm it: nothing further; the derivation is now certified against the
 phase-2 blob, and the selftest asserts that MD5 fails on the same blob.
 What this changes: negatives obtained through the shipped oracle are void rather than
-negative. Section 9's sweeps have been re-run under the corrected derivation. Anyone who
+negative. Section 9's vocabulary family has been re-run under the corrected derivation
+(section 113, 2026-09-02, 835,270 candidates, 0 match, witnessed). Its other families - the
+1,194,789-entry system word list and the text-derived windows, last-N-word and
+stage-password families - were never re-run and cannot be, because their generator and the
+word list are not archived; their old-oracle negatives remain void rather than negative
+(see `analysis/tested.md` row `R-LEAD3AUDIT-2026-10-06`). Anyone who
 swept this pipeline independently before this date should assume the same.
 Cost: the pipeline runs at about 76,800 candidates per second per core, so re-running a
 past sweep costs roughly what the original cost.

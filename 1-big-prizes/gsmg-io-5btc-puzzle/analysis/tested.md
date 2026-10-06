@@ -23973,3 +23973,276 @@ decode of `dbbib_91` / `faed_570` under the interpreter alphabet; `sha256(A)[0:1
 still requires a sound decode rather than a statistical one.
 
 Date: 2026-10-06, local.
+
+## R-OBJ256SUBST-2026-10-06: object_256 is not a monoalphabetic substitution of English (certified negative; positive-control witness)
+
+A check no prior row had run: whether object_256 (the 256-char, 23-letter {A-Z minus I,J,O}
+certified odd-channel artifact) could be a plain monoalphabetic substitution of an English text.
+Section 126 ran IC + Vigenere identification on it but never a substitution solve; ledger suite 143
+"substitution x 38" ran keyed-alphabet decrypts over the RAW streams only, not this object.
+
+COUNT: 360,000 scored candidate maps (6 restarts x 60,000 simulated-annealing mapping swaps)
+over the 256-char object, quadgram log-likelihood.
+
+METHOD: monoalphabetic-ciphertext solve by simulated annealing; letter-quadgram frequencies
+estimated from a 2.4M-token letters-only English corpus built from the folder's own texts
+(ledger + leads + README); objective separation validated beforehand.
+
+WITNESS (positive control, identical path and corpus): a genuine 256-char README passage
+randomly monoalphabetic-substituted is recovered to 100% of characters in 4 restarts,
+final likelihood +1,063 - the instrument demonstrably finds real substitution-of-English.
+
+RESULT: object_256's best likelihood plateaus at -1,002 (best of 6 restarts), roughly 2,000
+units below the attainable English aggregate on the same corpus; top-8 letters = 59.8%
+(S,N,G,M,L,D,A,R) with no dominant E-like peak (S and N tie at 10.2% each); no readable
+fragment survives in any restart. The interleaved 570-char Bifid output is dropped by
+construction: IC 0.0941 with 57% of the text in the even-channel letters B,C,D,E is the
+coordinate-channel dominance already characterized in section 126, not substitution text.
+
+CONCLUSION: object_256 is not monoalphabetic ciphertext of English; its just-above-random
+IC 0.0563 (section 126) and plateau profile reflect partial coordinate/alphabet structure,
+not hidden natural language. Closes the last classical-cipher reading left open for this
+artifact; the interpreter-alphabet crux stands and no new plaintext target arises; no oracle
+submission made. Date: 2026-10-06, local.
+
+## R-HINT4LIT-2026-10-06: the four first hints' literal commands and sentences as direct X, both funded gates, ALL NEGATIVE
+
+R-HINT4 (2026-09-27) transcribed the four first hints but left "the last command"
+undetermined - the three literal commands ("Type /help", "Press E", "Go back to the
+first puzzle piece") and every hint sentence were never submitted to the gates as
+X. The 2026-09-09 leap row used these phrases as VIC alphabet sources, not as
+literal X; the shabefour...lastcommand slug family was already closed.
+
+COUNT: 155 unique direct-X forms: verbatim sentences (original punctuation, case,
+spaces) of all four hints + lowercase/hyphen/underscore/spaced/Title/ALLCAPS word-
+joins of every distinctive phrase (roses, yellow/blue numbers, go back to the first
+puzzle piece, one door, the rabbit's nest, hushhush, decentraland /help, press e to
+enter and start, the hope quote, next halving, 2nd/second door, half the price) +
+the directive words (four first hints is your last command...) + the firsttint family
+(which no gate had ever seen). 310 oracle submissions (155 x 2 gates).
+
+METHOD: verbatim transcription from tools/hint_first_four.py (community mirror,
+filename order as publication-order proxy); mechanical case/delimiter variants,
+deduplicated. X -> sha256(X).hex() EVP/MD5 AES path identical to every prior gate
+family, fed through the same stdin harness for both gates.
+
+WITNESS: both oracles ran their self-tests first (address half certified against
+on-chain data; AES half re-finds a known-password blob) - PASS. All 155 lines
+submitted, 0 empty inputs, exit codes consistent (0 only on MATCH).
+
+RESULT: 0 MATCH on the small gate 1GSMG1JC9, 0 MATCH on the dualite gate
+17ucy1K9Z. Caveat on coverage: some no-space lowercase slugs may already sit
+inside the 491,187 decode-forms of the 2026-09-09 leap row, so only the verbatim
+sentences (capitalization/punctuation/spaces) are guaranteed-new submissions;
+both sets are zero at both gates.
+
+CONCLUSION: no literal command or sentence of the four hints is X. The "last
+command" of the directive is not any surface token of the transcribed hints; it
+would have to be an instruction readable only after the puzzle's own decode,
+consistent with the unprotected interpreter-alphabet crux. No new candidate
+family is implied by this negative. Date: 2026-10-06, local.
+
+## R-WORDROUTE-2026-10-06: lexicon-scored route search of both odd channels for an English-shaped plaintext, controlled, NEGATIVE (0 oracle calls)
+
+Acquired a full English anagram lexicon (~/briefcase/english-words: 466,550 words,
+370,105 alpha-only) as a deciphering lexicon - held outside the repo, linked not copied,
+per the wordlist rule. No prior row ever scored a channel against a full English
+vocabulary: R-OBJ256SUBST covered monoalphabetic substitution, section 119's
+columnar/route readings were a 61-example gate-X family at sticker widths only, and the
+236xx structural rows covered distribution, not readability. This row is the missing
+lexicon-scored route search.
+
+COUNT: 124 unique route readings (object_256: 9 divisor shapes x routes = 66; odd_285:
+8 shapes x 58 routes) each greedy-segmented against 369,351 words, plus an existence scan
+of every window 3..15 chars in all five channel strings (even/odd/object/dropped/head) =
+15,156 substring checks. 0 oracle calls - nothing reached English shape, so nothing was
+worth a gate submission.
+
+METHOD: each target laid into every divisor grid shape (w x h); standard readings per
+shape = row-major, boustrophedon rows, column-major, their reverses, CW and CCW spirals
+and reverses. Each reading scored by greedy longest-word segmentation: % letters covered
+by >=3-letter lexicon words, longest contiguous English span, word count. Controls run in
+the same scorer: (a) a known English sentence = 0.938 coverage, 17-char contiguous; (b) 50
+seeded shuffles of each target's own letters - object_256 median 0.344, max 0.430;
+odd_285 median 0.414, max 0.509.
+
+RESULT: best reading of object_256 = 0.422 (16x16), best of odd_285 = 0.484 (5x57) - at or
+inside the shuffle envelope, neither above chance. Longest contiguous English on any
+reading: 8-10 letters vs 17 on the control; a real English plaintext would score ~0.9+,
+and the existence scan's own positive control ("SEED" sits literally in the head
+BTCSEED...) proves the scanner catches words when they are present. The only >4-letter
+tokens found in odd/object channels are incidental 5-letter runs (PRANK, PRANKS, NIGEL)
+that would arise by chance in 285 random letters; even_stream hosts BCDE-built words
+(DECEDED, DEEDED, EBBED) formed entirely from its own four-letter mechanism alphabet,
+which is the recorded corner-block artefact, not language.
+
+WITNESS: English control re-scored exactly (0.938 / 17); shuffles seeded and reproducible;
+full per-reading table written to analysis/tmp/engvel_route_results.json; head contains a
+verified member of the same lexicon ("SEED"), so an existing word would have matched.
+
+CONCLUSION: no grid/route reading of either odd channel is an English message; coverage at
+every shape and route is at shuffle-chance, sharply separated from the English control.
+This retires the recurring intuition that object_256's 16x16 is a transposed English text,
+with a real lexicon instead of a guess. Consistent with R-OBJ256SUBST (no substitution
+route to English) and the 236xx structural rows (marginal skew, no serial structure):
+whichever alphabet the author intended, its output is not English under any standard route,
+so the interpreter step precedes and shapes the text. CRUX UNCHANGED; no new candidate
+family implied. Date: 2026-10-06, local.
+
+ADDENDUM (same date): the even/odd/object lexicon-substring counts were then put
+under their own shuffle control (50 same-letter shuffles each). even_stream 21 vs
+median 18/mean 17.8/max 22; odd285 61 vs 67; object256 46 vs 47. All observed counts
+sit inside the shuffle envelope, so the RS2 hits (DECEDED, DEEDED, PRANKS, NIGEL...)
+are random-residue noise from a 4-letter alphabet, not language. Closing the BCDE-words
+coincidence with the same control discipline as the body of this row.
+
+
+## R-EVOCR-2026-10-06: evidence images OCR'd for embedded text; header crop identified, 4E chart confirmed label-free (0 oracle calls)
+
+The 2026-09 evidence crops had never been OCR'd for words - the 4E family's "what
+it depicts" was left to human eyes strictly, and the header/string crops were never
+read at all. Eight images OCR'd (grayscale render, whole-page + sparse psm): 4E
+render and contrast, the topright/middleband/lowerband crops, the inverted header,
+and the two 1:1 crops.
+
+RESULT: (1) the inverted crop is the gsmg.io site header - cleanly reads "GSMG.IO 5
+BTC PUZZLE CHALLENGE" over the small-gate address, and the address string is
+recognizable in the 1:1 crop, which doubles as the witness that OCR works on this
+image set. So the June 2026 evidence is a screenshot of the puzzle's own header, not
+a separate object. (2) The 4E chart contains no words or labels anywhere: the
+render/contrast return only `[`/`-` strokes, the middleband reads as vertical bar
+runs ("REREN | AT ..." are misreads of the three bars + staircase), and the lowerband
+run field is dense data-like glyphs (mask/length runs), not text. The chart is a
+run-density/barcode-style rendering with no caption, axis labels or legend - which is
+itself information: there is nothing textual to transcribe, so human eyes on it gain
+only the figure's shape, not reading.
+
+WITNESS: the header text and the gate address recovered verbatim in two different
+images with the same engine; 4E images return stroke-only output on every crop/psm.
+
+CONCLUSION: the evidence set is the puzzle header + one unlabeled run-density figure.
+The 4E figure's depiction question is narrowed to "what the run pattern codes for",
+mechanical reading of which was already certified out of scope (classified as a
+rendered image, not payload). No new candidate family is implied. CRUX UNCHANGED.
+Date: 2026-10-06, local.
+
+## R-HTMLSHELL-2026-10-06: the two page shells audited as documents; no structural chrome, object names confirmed (0 oracle calls)
+
+The live SalPhaseIon page and the 2020-11-12 phase-2/3 capture have always been mined
+as token/stream sources; neither was ever read as a DOM. Read both in full as
+documents. live_salphaseion.html is exactly: two `<h1>` titles ("SalPhaseIon",
+"Cosmic Duality"), two bare `<textarea>` blocks (the token stream ending
+`...z shabefourfirsthintisyourlastcommand U2FsdGVkX18...`, and the Cosmic Duality
+Salted__ base64), no IDs, classes, comments, scripts or data attributes. The 2020-11-12
+capture is the shared SPA shell plus PHASE 2/PHASE 3 textarea blobs and the already-
+mined prose (Thevenin ruler passage, chess FEN, "parts 1..7 -> sha-256 -> dgst"
+instruction); its only extra element is a per-page session csrf-token meta, which is
+framework chrome, not a clue. The one novelties worth recording: the page titles are
+the objects' own names ("SalPhaseIon" / "Cosmic Duality"), and the stream's tail
+visually confirms piece-3's `shabefourfirsthintisyourlastcommand` sits directly
+against the base64 blob (the R-ROW43-AUDIT z-split trap, corroborated at raw HTML).
+
+WITNESS: the shabefour prose and the U2FsdGVkX1 base64 magic appear verbatim in the
+shell ahead of the entitlements; every token/dht object in both files matches an
+already-held datum byte-for-byte.
+
+CONCLUSION: no un-mined document remains in the local corpus; the shells add no new
+candidate material, no alphabet name, no vocabulary. Consistent with R-AUTHORPAGES:
+the next step is a primary authorial artifact (external) or human eyes on the two
+visual surfaces (analysis/visual-eyes-brief.md). No new candidate family implied. CRUX
+UNCHANGED. Date: 2026-10-06, local.
+
+## R-LIVECHECK-2026-10-06: 24h surface liveness re-check after R-AUTHORPAGES; zero change observed (0 oracle calls)
+
+Per R-LIVEFETCH's rule (re-sweep external surfaces only when one is *observed* to
+have changed), ran the delta check against every dated surface R-AUTHORPAGES left on
+record. (1) Live `/` re-fetched: sha256 `2f896807a859e2f71a2f6e1e8277986af73b80dc0dd79a685a67c7f7f8c3303b` -
+byte-identical to the 10-05 hash, UNCHANGED. (2) Wayback CDX from=20261005: one entry,
+`/img/favicon.png` 20261005164942, type `warc/revisit` of the already-held digest
+`L2O45LGR7RVSRZ5ZVSLXFPZXUNEPO7PK` (670 B) - a re-crawl of known content, no new page
+path, no new class. (3) Naddiseo fork: top still `9e616934` "Update README.md", no new
+commits since 10-05. (4) SolvingGSMG: top still `4681dcf7` "add", unchanged.
+
+WITNESS: the live hash reproduced exactly; the CDX entry carries its own revisit-
+digest; both repo tops match the recorded consecutive-state values.
+
+CONCLUSION: no surface changed inside 24 hours, so the sanctioned external re-sweep
+condition is NOT met and nothing is re-mined. The folder's only two forward paths stay
+unchanged: human eyes on the two visual surfaces (analysis/visual-eyes-brief.md), or a
+primary authorial artifact appearing - after which and only then this re-check is worth
+running again. No new candidate family implied. CRUX UNCHANGED. Date: 2026-10-06, local.
+
+## R-LEAD3AUDIT-2026-10-06: scope of the pre-fix-oracle re-audit (leads.md section 8); re-run complete for the vocabulary family only, the rest unreconstructable (0 oracle calls)
+
+The 2026-08-20 correction (commit 7c9d672) relabelled section 9's sweeps as "negative for
+SHA-256 only", and `leads.md` section 8 states "Section 9's sweeps have been re-run under
+the corrected derivation". Audited which of section 9's families that actually covers, so
+that a later sweep does not cite a re-run that never happened.
+
+METHOD: fixed the pre-fix window from `git log --follow -- tools/oracle.py` (shipped
+e924aa3 2026-08-16; wrong-digest d886295 2026-08-19; two-digest fix 7c9d672 2026-08-20),
+then grepped the ledger for every section-9 family count (4,174 / 49,808 / 5,608 / 17,125
+/ 1,194,789 / 12,544 / 74,256).
+
+RESULT: (1) section 9 (`tested.md:127`, 2026-08-19) is the *only* sweep from the pre-fix
+window - section 8 (2026-07-28) predates the oracle and uses a direct address comparison,
+not this pipeline, and every sweep from section 16 on (2026-08-27+) postdates the fix.
+(2) Section 9's vocabulary family (four cases + reversed, and ordered pairs) is subsumed
+by section 113 (`tested.md:2763`, 2026-09-02: `tools/gsmg_wordlist.py` -> 835,270 ->
+`tools/oracle.py --stdin`, 0 MATCH, witnessed), so it *is* re-run under the corrected
+oracle. (3) Section 9's remaining family counts occur nowhere else in the ledger, i.e.
+were never re-run. (4) Those families are not reconstructable from the archive: the
+generator is uncommitted and lost, the Architect message is not held as plaintext, the
+live-page prose was a re-fetch, and the 1,194,789-entry system word list is not in the
+repo (`tools/faed_baseN.py:75` expects an absent `tools/en_words.txt`; the wordlist rule
+forbids copying one in).
+
+WITNESS: `tools/oracle.py --selftest` OK (both digests certified, MD5 asserted to fail on
+the phase-2 blob); section 113's 835,270-candidate re-run is the covering witness for the
+vocabulary family; the family-count grep is exact (each count appears only in section 9,
+except a spurious `4174` inside an unrelated funding-tx row).
+
+CONCLUSION: `leads.md` section 8 is true for section 9's vocabulary family only. Section
+9's system-word-list and text-derived families remain *void*, not negative: their negation
+was reached through an oracle that (a) used the wrong EVP digest and (b) tested only the
+`sha256(X)` password form, never the raw-X form the small gate actually anchors on. They
+are unrecoverable locally, a permanent scope limit unless the original word list is
+produced. This does not open X: the vocabulary family - the only one carrying real puzzle
+content - is negative under the full corrected oracle. CRUX UNCHANGED; 0 oracle calls.
+Date: 2026-10-06, local.
+
+## R-SHA4-2026-10-06: "sha be four first hints is your last command" - sha256-digest forms of the four first hints as X, both gates, ALL NEGATIVE
+
+R-HINT4LIT tested the four hints' literal text as X. What it never tested, and what
+the site's own directive reads most literally as, is the HASH step: "sha be four
+[first hints] is your last command" = the four first hints' sha256 digest IS X (a
+different object from the hints-as-strings, and absent from the ledger's §77 and
+1949 families, which used sha256(hint) as a decode key / concat ingredient). After
+the 10-06 liveness check confirmed no surface changed, this was the one locally-
+testable reading of the directive not yet submitted.
+
+COUNT: 48 unique candidates. Construction: the four canonical hint transcriptions
+(garbled-OCR lines normalised to the readings in R-HINT4LIT's list - hint 1 roses,
+hint 2 Decentraland /help + Press E, hint 3 the hope quote, hint 4 the halving) in
+4 uniform string forms (verbatim case, lower, alnum-slug, hyphenated-lower) x 2
+orders (chronological, reverse) x 2 join separators (none, space) hashed as
+sha256(join); plus the four individual digests concatenated (both orders, both
+hex cases); each digest submitted in lower and upper hex. 96 total oracle
+submissions (48 x 2 gates).
+
+WITNESS: both gates ran their self-tests first - PASS (address half certified vs
+on-chain; AES half re-finds a known-password blob). All 48 lines consumed at both
+gates, 0 empty inputs, exit contract observed.
+
+RESULT: 48 NO MATCH on 1GSMG1JC9, 48 NO MATCH on 17ucy1K9Z. Caveat: byte-exactness
+of the author's intended hint spelling is unknowable from OCR, so this is a
+bounded negative over the natural readings, not an exhaustive proof; but the 8
+natural join forms x the two most defensible orderings all came out zero at both
+gates, so the "hash the four hint texts" reading has no surviving variant worth a
+further sweep.
+
+CONCLUSION: the directive's "sha be four" is not an instruction to hash the four
+hint texts into X. Consistent with the standing crux - the directive is only
+readable after the streams' own decode, and the interpreter alphabet stays
+unreconstructed. No further locally-testable reading of the directive remains.
+CRUX UNCHANGED. Date: 2026-10-06, local.
