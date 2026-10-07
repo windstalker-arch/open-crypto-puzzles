@@ -110,7 +110,32 @@ consumed, not as a witnessed negative in this project's strict sense.
 
 ## Solution
 
-Swept on 2026-09-22 (block 968,171, [tx `e2544433`](https://mempool.space/tx/e2544433184d0fe4157ca10a8e1ce753bb52a7b0bbcf833740d7448ed25e8e8e)), 551,745 sats to `bc1qw50q83k7psugw5z5548kwnxqqjxjxvx2pkvz0s`, a plain spend with no message, after almost 8 years unsolved. Reported in [issue #34](https://github.com/floflo777/open-crypto-puzzles/issues/34). The solver did not announce and the reading of the hint's 3 undefined terms is not public; the sweep went to a fresh single-use address, which is consistent with a solver claiming the prize rather than the author reclaiming it, but this is not confirmed. If the solver reads this, a write-up gets full credit here.
+Solved on 2026-09-22 by the author of a [public write-up](https://echo.ls/zden-level-5/), who found
+the formula experimentally. The escrow was swept the same
+day (block 968,171,
+[tx `e2544433`](https://mempool.space/tx/e2544433184d0fe4157ca10a8e1ce753bb52a7b0bbcf833740d7448ed25e8e8e)),
+551,745 sats to `bc1qw50q83k7psugw5z5548kwnxqqjxjxvx2pkvz0s`.
+
+Each rectangle gives four measurements: width, height, and the left/right and top/bottom border
+thicknesses (opposite borders are equal, so `left` and `top` suffice). The 2021 update's two
+horizontal lines give the "true" width of the rectangles they sit under. The bottom-left diagram
+points at a transform built from `-1`, `times 10`, and `64`:
+
+```
+x = (10 * width  + left - 1) / 64
+y = (10 * height + top  - 1) / 64
+```
+
+`x * y` lands within 1/6 of an integer for every rectangle, so `round(x * y)` fills an 8 by 8
+matrix. The 2018 hint, "Sum of two consecutive following rectangles areas creates one byte of the
+private key," collapses that matrix to 32 bytes, concatenated row-major:
+
+```
+f4bfad68198549d3e5612fa3b1cabad14679c634359e2f5efdd804ddce8a9f51
+```
+
+Those 32 bytes as a secp256k1 private key, uncompressed public key, give the published vanity
+address `1cryptoGeCRiTzVgxBQcKFFjSVydN1GW7`, which is the escrow. Verified here with `tools/oracle.py`.
 
 ## Visual inspection crops
 

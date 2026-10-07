@@ -1,4 +1,4 @@
-# Wonderabbit: Prometheus (1,031,123 sats, [OPEN])
+# Wonderabbit: Prometheus (1,031,123 sats, [SOLVED])
 
 WONDERABBIT, the performance-puzzle arm of the Bitcoin-only venue Cyphermunk House in London,
 staged "Prometheus," billed as the world's first Bitcoin performance puzzle, in 2025. A 12-word
@@ -19,12 +19,12 @@ gated on a physical object, not on computation.
 | Prize | 1,031,123 sats (about $650 at BTC = $63,000, 2026-08-16) |
 | Chain | bitcoin |
 | Escrow | `bc1q3nxe7436s3mlrkyrg3uv2a40yt5dcmfu7tggx5` ([explorer](https://mempool.space/address/bc1q3nxe7436s3mlrkyrg3uv2a40yt5dcmfu7tggx5)) |
-| Last on-chain check | 2026-08-16: funded 1,052,123 sats across 4 UTXOs, 21,000 sats spent as a documented self-test, 1,031,123 sats unspent |
-| Status | OPEN |
+| Last on-chain check | 2026-09-28: swept in block 968,978, tx `2f5f60f6`, 1,030,810 sats out; escrow now empty |
+| Status | SOLVED; swept 2026-09-28 by an unknown party, method not published |
 | Puzzle type | bip39-seed, physical-object, text-cipher |
 | Target format | BIP39 12 words; each word expressed as text, a 1-2048 wordlist index, or an 11-bit binary; derivation path (BIP44/49/84) not established |
 | Certified oracle | no: see "Derivation and oracle" below |
-| What remains | the companion puzzle programme itself has never been published; 0 of the 12 words are extracted |
+| What remains | nothing on-chain; the solving method is not public |
 | Series | none |
 
 ## The puzzle as published
@@ -101,6 +101,15 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
    cost). A precedent exists (the 2025-09-03 "claw" question), though unanswered so far.
 3. **Watch for a third staging of the show** (ongoing, no cost). The author hinted at one on
    2026-01-22 ("needs a new stage. Any ideas?"); a new performance would mean a new programme.
+
+## Solution
+
+Swept on 2026-09-28 (block 968,978,
+[tx `2f5f60f6`](https://mempool.space/tx/2f5f60f69779e32c87829203d000ebfe5fbf6dd82707a560d7f252d3b462365c)),
+1,030,810 sats to `bc1qrzcf6kuh84nyk03lh9s2hlktcxm0ggydnn5nld`, a plain spend with no message.
+Reported in [issue #36](https://github.com/floflo777/open-crypto-puzzles/issues/36) by Andy00L. The
+solver has not published the method, and the companion puzzle programme was never made public. If
+the solver reads this, a write-up gets full credit here.
 
 ## Files in this folder
 

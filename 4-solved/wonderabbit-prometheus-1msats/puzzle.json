@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "slug": "wonderabbit-prometheus-1msats",
+  "title": "Wonderabbit: Prometheus",
+  "tier": "solved",
+  "status": "solved",
+  "dead_end_reason": null,
+  "series": null,
+  "author": {
+    "name": "WONDERABBIT (Cyphermunk House)",
+    "handles": [
+      "nostr:npub1gclc9l83teatpeymmyawc8u4mzal9r0kvh58hq9rwvfy7ys2qn4sr6wdfh",
+      "nostr:npub17mzfuxmmwyrty75gy493dlhqmq6lezk2rkmcu2svhx3l0zwyrtysal50aq"
+    ],
+    "url": "https://wonderabbit.org"
+  },
+  "published": {
+    "date": "2025-04-01",
+    "url": "https://cyphermunkhouse.com/wonderabbit"
+  },
+  "chain": "bitcoin",
+  "prize": {
+    "amount": 1031123,
+    "asset": "sats",
+    "usd_estimate": 650,
+    "usd_snapshot": "2026-08-16",
+    "note": "current balance after a documented 21000-sats self-test transaction that the author sent to and from themselves before funding the prize; not the prize moving"
+  },
+  "addresses": [
+    {
+      "address": "bc1q3nxe7436s3mlrkyrg3uv2a40yt5dcmfu7tggx5",
+      "chain": "bitcoin",
+      "role": "escrow",
+      "label": "main",
+      "explorer": "https://mempool.space/address/bc1q3nxe7436s3mlrkyrg3uv2a40yt5dcmfu7tggx5",
+      "expected": "0 sats (1,031,123 sats until 2026-09-28)",
+      "verified_on": "2026-10-03",
+      "verified_state": "swept"
+    }
+  ],
+  "puzzle_type": [
+    "bip39-seed",
+    "physical-object",
+    "text-cipher"
+  ],
+  "target_format": "BIP39 12 words, each expressed as text, a 1-2048 wordlist index, or an 11-bit binary; derivation path not established",
+  "derivation": {
+    "summary": "no ciphertext has been extracted from public material; once words, indices, or binaries are recovered from the companion programme, derive BIP44/49/84 and compare to the escrow address",
+    "oracle": null,
+    "oracle_certified": false,
+    "certified_against": ""
+  },
+  "difficulty_left": "external-info",
+  "difficulty_note": "the encoding rules are fully published by the author, but the companion puzzle programme that turns those rules into an actual 12-word phrase has never appeared online; nothing is computable until it is obtained",
+  "tested_total": {
+    "candidates": 0,
+    "families": 4,
+    "certified": false
+  },
+  "leads": [
+    {
+      "rank": 1,
+      "title": "obtain the companion puzzle programme",
+      "cost": "needs-a-person",
+      "status": "open"
+    },
+    {
+      "rank": 2,
+      "title": "ask a specific yes-or-no question on Nostr",
+      "cost": "needs-a-person",
+      "status": "open"
+    },
+    {
+      "rank": 3,
+      "title": "watch for a third staging of the show",
+      "cost": "needs-new-information",
+      "status": "open"
+    }
+  ],
+  "solutions": [
+    {
+      "lot": "main",
+      "date": "2026-09-28",
+      "answer": "unknown (swept without a published solution)",
+      "key_material_disclosed": false,
+      "payout_txid": "2f5f60f69779e32c87829203d000ebfe5fbf6dd82707a560d7f252d3b462365c",
+      "payout_amount": "1030810 sats",
+      "payout_to": "bc1qrzcf6kuh84nyk03lh9s2hlktcxm0ggydnn5nld",
+      "explorer": "https://mempool.space/tx/2f5f60f69779e32c87829203d000ebfe5fbf6dd82707a560d7f252d3b462365c"
+    }
+  ],
+  "artifacts": [],
+  "sources": [
+    {
+      "title": "Prometheus rules, Cyphermunk House",
+      "url": "https://cyphermunkhouse.com/wonderabbit",
+      "date": "2026-08-02",
+      "archived": null
+    },
+    {
+      "title": "Show description, wonderabbit.org",
+      "url": "https://wonderabbit.org",
+      "date": "2026-08-02",
+      "archived": null
+    },
+    {
+      "title": "WONDERABBIT on Nostr",
+      "url": "https://njump.me/npub1gclc9l83teatpeymmyawc8u4mzal9r0kvh58hq9rwvfy7ys2qn4sr6wdfh",
+      "date": "2026-08-16",
+      "archived": null
+    },
+    {
+      "title": "issue #36, sweep reported by Andy00L",
+      "url": "https://github.com/floflo777/open-crypto-puzzles/issues/36",
+      "date": "2026-09-28",
+      "archived": null
+    }
+  ],
+  "third_party_material": "the rules and show description are the author's own published text, quoted verbatim in clues/author-posts.md; no recording, script, or programme scan exists to include",
+  "last_updated": "2026-08-16"
+}
