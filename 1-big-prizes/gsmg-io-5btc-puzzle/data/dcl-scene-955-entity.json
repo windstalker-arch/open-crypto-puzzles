@@ -1,0 +1,50 @@
+{
+ "entity_id": "QmRK2YoLei9wrxLvHUKisywobxEvczTicXepPxKLKzN51v",
+ "scene.json_sha256": "dd48778735cee440da425bddfae2bc8447deba38295fdce260dab9a7a6c1a5c9",
+ "metadata": {
+  "display": {
+   "title": "GSMG.io Puzzle piece",
+   "favicon": "favicon_asset"
+  },
+  "contact": {
+   "name": "GSMG.io",
+   "email": ""
+  },
+  "owner": "0x5D801b2B0B216790A49898b322246282547b546b",
+  "scene": {
+   "parcels": [
+    "-41,-16",
+    "-41,-17"
+   ],
+   "base": "-41,-17"
+  },
+  "communications": {
+   "type": "webrtc",
+   "signalling": "https://signalling-01.decentraland.org"
+  },
+  "policy": {
+   "contentRating": "E",
+   "fly": true,
+   "voiceEnabled": false,
+   "blacklist": []
+  },
+  "main": "bin/game.js",
+  "tags": [],
+  "spawnPoints": [
+   {
+    "name": "spawn1",
+    "default": true,
+    "position": {
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    "cameraTarget": {
+     "x": 8,
+     "y": 1,
+     "z": 8
+    }
+   }
+  ]
+ }
+}

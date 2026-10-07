@@ -57,6 +57,20 @@ One-page onboarding for any solver/agent/contributor. Companion to `AUDIT-2026-0
 (invariant + certified-boundary audit) and `analysis/leads.md` (ranked, dated leads).
 Ledger: `analysis/tested.md` (all rows below).
 
+> **ADDENDUM 2026-10-07 (`R-GHNEWMATERIAL`, full row in tested.md).** GitHub issues/comments
+> pulled past the 2026-08-26 archive snapshot confirm **no new authorial string or artifact
+> exists through 2026-10-05** (6 new issues #108-#113, 35 comments; every solve claim in the
+> window is unverified or retracted; on the Cosmic-Duality opener Naddiseo 2026-10-01: "No one
+> knows yet"). Two creator-attributed constraints now stand (via Naddiseo, the only non-creator
+> maintainer): **(a)** #106 2026-09-23 - the creator says the faed part IS solvable, no further
+> hints, ~5 years since discovery => the crux is a real stage, not a red herring; **(b)** #109
+> 2026-09-30 - Cosmic Duality should decrypt to **plain English text, not key material**, and
+> `keyinfo.txt` is not part of the puzzle (only the two gate addresses matter). Also
+> authoritative: `cosmic_A.bin` is LLM fabrication (#88 2026-09-28), corroborating `R-CACDX`/
+> `R-CAFULL`. Implication for unblocker item 1 below: any future unblock must STILL be a new
+> authorial artifact; and if a cosmic-stage plaintext is ever reached, expect English, never a
+> key.
+
 ## The situation
 
 gsmg.io (2019), 5 BTC split across two funded gate addresses. All *solved* stages were

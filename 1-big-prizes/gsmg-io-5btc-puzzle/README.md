@@ -30,7 +30,7 @@ reproducible; what is missing is the password (or, on the older readings, a dire
 | Puzzle type | text-cipher, pixel-code, web-tree, raw-private-key |
 | Target format | a candidate answer string X; password = sha256(X) hex; decrypts an OpenSSL "Salted__" AES-256-CBC blob printed on the final page; plaintext reduces to a 32-byte private key; uncompressed secp256k1 public key; P2PKH address |
 | Certified oracle | yes, in two independent parts: `tools/oracle.py --selftest` (address-derivation half certified against the escrow's own on-chain public key; AES-decrypt half certified against a self-made round-trip vector; see "Certified against") |
-| What remains | the password of either 80-byte lock (SalPhaseIon's small blob, or the phase 3.2.2 blob of 2019), or the preimage of the creator's unmessaged planted address of 2020-04-07, the third door; all three are exact offline oracles |
+| What remains | the password of either 80-byte lock (SalPhaseIon's small blob, or the phase 3.2.2 blob of 2019); both are exact offline oracles. The third door, `1NULY7...` of 2020-04-07, was ruled out as a planted oracle on 2026-10-04 (row `R-TDTIP`) and is no longer a remaining target |
 | Series | none |
 
 ## The puzzle as published
@@ -385,18 +385,15 @@ method notes for each row are in `analysis/tested.md`.
 
 ## Open leads, ranked
 
-1. **The third door: the preimage of the unmessaged planted address of 2020-04-07**
-   (an insight, then seconds). `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9` is an exact,
-   free, offline oracle at about 176,000 keys/s on one core, and everything textual
-   is negative under all six key constructions: the puzzle's vocabulary, the system
-   dictionary, short word windows of every text and of the three films, the image's
-   text and numbers, the 8 image texts, every page hashed, the phase 2.1 riddle. What
-   would open it is a rule the creator gave between the January 2020 poem and the
-   April 2020 audio hint ("Yellow has a number and so does Blue", "primes", "zeroed
-   out"), read on a non-textual object; or, when noise is acceptable, a GPU
-   brainwallet pass over large dictionaries (SHA-256 construction) and a CPU pass for
-   the raw construction (at most 32 bytes). Confirmed by an address match; killed
-   family by family.
+1. **[VOID 2026-10-04, row `R-TDTIP`: the third door was a third party's tip label, not a
+   planted oracle.]** `1NULY7DhzuNvSDtPkFzNo6oRTZQWBqXNE9` is the `Tips:` label in the source
+   of `keyjoke/vs-kangaroo-hybrid`, a GPU Kangaroo fork (`main.cpp:455`), and its one
+   transaction is a 1,050 sat donation from the creator's wallet with no `OP_RETURN` and
+   nothing encoded. There is no stage answer to recover, so this is void as a premise, not
+   as a computation: every battery already filed against it keeps its count and witness,
+   and `tools/third_door.py` remains a sound, free, offline address checker. Kept here so a
+   reader arriving at this heading first does not rebuild it. The rank it used to hold is
+   covered by leads 2 through 5 below.
 
 2. **Every password against both 80-byte locks, with extended readings** (seconds
    per family). The phase 3.2.2 blob (2019) and the SalPhaseIon blob (2021) have the
@@ -418,7 +415,14 @@ method notes for each row are in `analysis/tested.md`.
    the same derivation it then decrypted with, which certifies self-consistency rather than the
    digest. Every negative reached through that oracle is therefore suspect, which is why this
    sits above the leads that extend it. Confirmed by a re-run that reproduces a match; killed
-   by re-running and still finding none.
+   by re-running and still finding none. **[SCOPE RESOLVED 2026-10-06, row
+   `R-LEAD3AUDIT-2026-10-06`:** the audit found exactly one sweep from the pre-fix window left
+   to re-run (`analysis/tested.md` section 9, 2026-08-19). Its remaining generator families
+   cannot be re-run here, because the generator and the Architect plaintext are gone and the
+   system word list is absent, so their old-oracle results are void rather than negative.
+   Section 8 (2026-07-28) predates the pipeline and used a direct address comparison, and its
+   vocabulary family was already re-run under the corrected oracle by section 113 (2026-09-02,
+   835,270 candidates, 0 MATCH, witnessed).]**
 
 4. **Replay the dynamically-constructed candidates a filter bug never reached**
    (hours to days). A 2026-07-28 review found that an appearance-based

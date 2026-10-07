@@ -1,0 +1,17 @@
+{
+  "description": "gsmg.io hash-slug facts: the 7 still-open 64-hex slug URLs, and the 3 recovered preimages used as the match_targets witness.",
+  "targets": [
+    "0b0f37ecaf7107f86ee2f477992f25bc7abe8f799d0dd713658c17d37496ee32",
+    "10d6a2c5320bfbd47d35f18dd67f177ae5a5f4b5d18a8a5127361c2941a92908",
+    "673e3b1a60ebe6fc4a8be88acde2600e12afd9efb2543e26b1b30039f8356b0d",
+    "a2aefdbb953b70aa20d640effda4accee1e1f48acf1e4fcebdc2fc011418b0b1",
+    "aca20ae7c6b5f425bdd9bd809583b28fd086b3380990689e37b6e94f3fb5ed9a",
+    "c2eef34b479eb6c89c7aa89c49229ff5f67563da4e56d5782574489c4b776625",
+    "f9719d6d531e6c3b5129644cd05da57bc6fdd075c9a61267c41d4b9627936096"
+  ],
+  "known": {
+    "ourfirsthintisyourlastcommand": "e24bd2c0fd454632f9fdd26cbdc210597f79e9fca9719c126a6d30cb41ef0238",
+    "hopeisthequintessentialhumandelusion": "c1780cbbaa105784949cd6a2924e1f51a947b4258a0655defd0cd2e6f6544046",
+    "anstoo": "21ef053324184a4db5dc19b760e2d6ef61b07376a6f8a1514bb529d99de1fe0f"
+  }
+}

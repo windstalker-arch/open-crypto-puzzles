@@ -2241,3 +2241,15 @@ The `[23,16,7]` -> `BUT`/`HYE` -> `mirror9` -> `BYE` -> `CIAO BELLA O` chain not
 - The one surviving step, `mirror9(HYE) = BYE`, is a true identity but evidentially empty: "only word among the six permutations" is 18 readings, and P(>=1 three-letter word in 18 draws) = 0.47-0.72. Finding exactly one word is the expected result.
 - `CIAO BELLA O` remains what it always was: the author's literal closing words and the strongest available recognition target after yin-yang. Not a password, not a selector, not an operation. No gate input.
 - Corrected 2026-10-02 (`R-ALPHABET23-RECANT-2026-10-02`): my note here originally claimed our `alphabet` stream has 23 distinct symbols. That was a miscount - `alphabet` is a human-readable note, not a stream, and its 23 "characters" are letters, spaces and parentheses. The real 23-symbol object is `object_256` (`ABCDEFGHKLMNPQRSTUVWXYZ`, A-Z less {I,J,O}, 256 symbols), already documented at leads.md:222/:1165 and tested.md:752/:977, with 23x3 = 69 = `dbbib`. So the point stands but it is pre-existing knowledge, not a new finding: 23 is structural as a POPULATION COUNT and still gives no support to the demoted cipher-layer reading.
+
+## Research note (2026-10-07, `R-GHNEWMATERIAL`): community is stuck at the same frontier; two creator-attributed constraints added
+
+GitHub issues+comments pulled past the archive snapshot (6 new issues #108-#113, 35 new comments, to 2026-10-05). Every solve claim in the window (#108 base64-typo "SOLVED", #109 Satoshi-wallet red herring, #99 imneomutfua, #69 "#SOLUTION", #112/#113 Mohamed-nsr Bifid/spiral-direction claims) is unverified or retracted; Naddiseo's proof bar (sign a message with the private key of 1GSMG1JC.../17ucy1K9...) has been met by nobody. Community frontier == ours (Cosmic-Duality opener unknown; "No one knows yet", 2026-10-01).
+
+New standing constraints (creator-attributed via Naddiseo, the only non-creator maintainer; @puzzlehunt/Jrk inactive ~1yr, "doesn't read this repository"):
+- **faed IS solvable** (#106, 2026-09-23): "Puzzle creator says it's solvable. There have been no further hints." Revives faed as a REAL stage, not a red herring - but supplies no method, so the crux stays unspecifiable.
+- **Cosmic Duality decrypts to plain English, not key material** (#109, 2026-09-30); `keyinfo.txt` is not puzzle material (split-key vanity tooling); only the two gate addresses matter.
+- `cosmic_A.bin` is LLM fabrication (#88, 2026-09-28) - independent corroboration of `R-CACDX`/`R-CAFULL`.
+- Any address derived from "cosmic" is coincidental, "nothing to do with the puzzle itself" (#110, 2026-09-05).
+
+Verdict: unblocker remains exactly STATE_BRIEF item 1 (new authorial string/artifact) or item 2 (human visual read). This pass added no new lead to rank. Do not re-poll the GitHub API on a schedule; only on a concrete new-artifact lead.

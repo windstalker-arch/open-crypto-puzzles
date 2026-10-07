@@ -1,0 +1,48 @@
+{
+  "id": "bifid_cert",
+  "method": "Declarative re-certification of the certified Bifid chain against the stored salphaseion streams (mirrors tools/bifid_repro.py).",
+  "stages": [
+    {
+      "op": "load_stream_json",
+      "file": "data/finalpage-digit-streams.json",
+      "key": "faed_570",
+      "output": "raw",
+      "strip_trailing": "z"
+    },
+    {
+      "op": "remap",
+      "inputs": ["raw"],
+      "output": "ct",
+      "table": {"a": "A", "b": "B", "c": "C", "d": "D", "e": "E", "f": "F", "g": "G", "h": "H", "i": "I"}
+    },
+    {
+      "op": "bifid",
+      "inputs": ["ct"],
+      "output": "full",
+      "alphabet": "DBIFHCEGAKLMNOPQRSTUVWXYZ",
+      "period": 570
+    },
+    {
+      "op": "position_split",
+      "inputs": ["full"],
+      "outputs": {
+        "head": "head",
+        "even": "even_stream",
+        "odd": "odd_pre_reduction",
+        "object": "object_256",
+        "dropped": "dropped_29"
+      }
+    },
+    {
+      "op": "verify_equals",
+      "file": "data/salphaseion-streams.json",
+      "checks": {
+        "head": "plaintext_head",
+        "even_stream": "even_stream",
+        "odd_pre_reduction": "odd_pre_reduction",
+        "object_256": "object_256",
+        "dropped_29": "dropped_29"
+      }
+    }
+  ]
+}

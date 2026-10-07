@@ -1,0 +1,78 @@
+{
+  "id": "slug_cert",
+  "method": "DSL certification slice of section 159's slug-preimage class: page-word joins + the extra vocabulary phrases sha256-hashed and matched against the 7 open slugs. Full 62,014-candidate sweep already certified in the ledger via tools/slug_join_sweep.py; this spec certifies the shared fact file and the match_targets op inside the engine.",
+  "stages": [
+    {
+      "op": "load_inline",
+      "output": "words",
+      "items": [
+        "shabef",
+        "matrixsumlist",
+        "enter",
+        "lastwordsbeforearchichoice",
+        "thispassword",
+        "ourfirsthintisyourlastcommand",
+        "anstoo"
+      ]
+    },
+    {
+      "op": "load_inline",
+      "output": "extra",
+      "items": [
+        "yellowblueprimesmatrixsumlistlastwordsbeforearchichoiceyinyang",
+        "blueyellowprimesmatrixsumlistlastwordsbeforearchichoiceyinyang",
+        "thearchitectschoice",
+        "halfandbetterhalf",
+        "causality",
+        "theseedisplanted",
+        "yourlastcommand",
+        "secondanswer",
+        "shabefanstoo",
+        "shabefour",
+        "theflowerblossomsandwiltsofthefaithfulservant",
+        "followthewhiterabbit"
+      ]
+    },
+    {
+      "op": "join",
+      "inputs": ["words"],
+      "output": "wordjoins",
+      "forms": ["lower"],
+      "orders": ["fwd", "rev"],
+      "seps": ["", "_", "."]
+    },
+    {
+      "op": "sha256_hex",
+      "inputs": ["wordjoins"],
+      "output": "wj",
+      "cases": ["lower"]
+    },
+    {
+      "op": "sha256_hex",
+      "inputs": ["extra"],
+      "output": "eh",
+      "cases": ["lower"]
+    },
+    {
+      "op": "merge",
+      "inputs": ["wj", "eh"],
+      "output": "primary"
+    },
+    {
+      "op": "materialize",
+      "inputs": ["primary"],
+      "output": "primary",
+      "cap": 100000
+    },
+    {
+      "op": "match_targets",
+      "file": "data/hash-slugs.json",
+      "inputs": ["primary"]
+    },
+    {
+      "op": "record",
+      "mode": "report",
+      "title": "Slug-preimage class certification slice via the DSL"
+    }
+  ]
+}

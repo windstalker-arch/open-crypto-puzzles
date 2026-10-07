@@ -1,0 +1,58 @@
+{
+  "id": "r_sha4_replay",
+  "method": "R-SHA4-2026-10-06 byte-replay: sha256 join-hash family of the four first hints (48 forms), both gates, expected 0 MATCH.",
+  "stages": [
+    {
+      "op": "load_inline",
+      "output": "hints",
+      "items": [
+        "Roses are White but often Red. Yellow has a number and so does Blue. Go back to the first puzzle piece without further ado. It might have shown you only one door, beware that the rabbits nest may contain a whole lot more. Hush hush.",
+        "Decentraland: Type /help for info about controls Press E to enter and start",
+        "Humph. Hope, it's the quintessential human delusion, simultaneously the source of your greatest strength, and your greatest weakness.",
+        "Let's see what bitcoin is worth the next halving and who knows what you'll find after opening the 2nd door. The price's in half, @ but what does it mean."
+      ]
+    },
+    {
+      "op": "join",
+      "inputs": ["hints"],
+      "output": "joins",
+      "forms": ["verbatim", "lower", "slug", "hyphen"],
+      "orders": ["fwd", "rev"],
+      "seps": ["", " "]
+    },
+    {
+      "op": "sha256_hex",
+      "inputs": ["joins"],
+      "output": "primary",
+      "cases": ["lower", "upper"]
+    },
+    {
+      "op": "digest_concat",
+      "inputs": ["hints"],
+      "output": "concat",
+      "forms": ["verbatim", "lower", "slug", "hyphen"],
+      "orders": ["fwd", "rev"],
+      "cases": ["lower", "upper"]
+    },
+    {
+      "op": "merge",
+      "inputs": ["primary", "concat"],
+      "output": "primary"
+    },
+    {
+      "op": "materialize",
+      "inputs": ["primary"],
+      "output": "primary",
+      "cap": 100000
+    },
+    {
+      "op": "gates",
+      "targets": ["small", "dualite"]
+    },
+    {
+      "op": "record",
+      "mode": "report",
+      "title": "Replay of R-SHA4-2026-10-06 via the DSL"
+    }
+  ]
+}
