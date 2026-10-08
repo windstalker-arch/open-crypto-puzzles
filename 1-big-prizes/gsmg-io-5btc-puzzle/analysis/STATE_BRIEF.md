@@ -219,9 +219,13 @@ SalPhaseIon page.
      preserved the *human* question of which dot is the anomaly, but the follow-on `R-BOARD28B`
      withdrew the missing-alphabet framing that the question depended on, so the item no longer has a
      well-posed mechanical form.
-   - the one tile question still genuinely open is the 44px `black_banking - war` icon, which is not a
-     Lead 0 micro-item at all: it is a tile-corpus item, and `R-ASSEMBLY` treats the tile corpus as
-     closed gate input.
+- the one tile question still genuinely open is the 44px `black_banking - war` icon, which is not a
+      Lead 0 micro-item at all: it is a tile-corpus item, and `R-ASSEMBLY` treats the tile corpus as
+      closed gate input.
+    **UPDATE 2026-10-08 (`R-WARCOLORS`): fully closed.** The 6px micro-band was human-read as "war"
+      (consistent with the certified whole-word read at tested.md:19087); the band's glyphs turn out to be
+      a colored (chromatic RGB-split) render, which is why 2-tone threshold reads disagreed. No unblocker
+      remains on this axis; the tile corpus is fully certified against its slugs.
 
 3. ~~**Alphabet hypothesis** (any word/phrase) -> `tools/lead0_try.sh`~~ - **RETRACTED.** "Any word or
    phrase" is not an unblocker, it is a guess, and `R-BOARD28B-ADDENDUM` FINDING 4 records this
@@ -1519,6 +1523,10 @@ corpus**" does not survive:
     verified present in `GSMG_JRK.md`, and its 23-of-62 reply split reproduces exactly.
   - **New data-quality note:** `GSMG_JRK.md:431` has a `### 2023-04-07` header glued to the end of
     the previous bullet, so date-attributed parsers misfile the 2023-03-03 `🐰` message into April.
+    **RESOLVED 2026-10-08 (`R-JRKCLEAN`):** the certified original stays untouched; a derived
+    de-glued copy lives outside git at `~/gsmg-preserved/gsmg-jrk/GSMG_JRK_clean.md` (sha256
+    `221243af...`), and under the ledger's own parser the correction is exactly the two messages
+    `#8288` and `#8483`, taking date agreement with the raw export from 425/427 to **427/427**.
 
 **3. THE 18 VOID-ROW COUNT REPRODUCES, BUT ROW 180 IS A FALSE POSITIVE - AND THE TWO
 BOOKKEEPING NUMBERS IN ADDENDUM 2 ARE WRONG.** Re-derived the `R-DBBIBFIELD3` rule by rebuilding
