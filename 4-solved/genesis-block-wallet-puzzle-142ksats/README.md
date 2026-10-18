@@ -1,42 +1,56 @@
-# Genesis Block Wallet Puzzle (168,779 sats, [OPEN])
+# Genesis Block Wallet Puzzle (947,620 sats, [SOLVED])
 
-On 2026-08-22 an anonymous author published a 252-byte OP_RETURN message in block 963,629:
-a Bitcoin wallet generated only from data in Satoshi's genesis block, "extremely low"
-entropy, nothing backed up. The prize sits in the first output of that same transaction, a
-P2WSH address, and it grows every time someone pays for a hint: the author answers questions
-on chain and relays every payment into the escrow. Eleven author messages so far fix the
-shape of the lock: a 2-of-2 multisig, both keys from one genesis field, no hash, a field you
-can read in The Times, the BIP48 level order, and since 2026-09-11 the root itself: a
-12-word BIP39 mnemonic whose entropy is genesis data, with a passphrase, and a genesis value
-as the BIP48 account number. The oracle is exact and offline. Two passes on 2026-08-29 had
-exhausted the mechanical readings of the earlier hints (611,008 keys, 5.7e11 ordered pairs,
-0 match, witnesses re-found); the two September answers, obtained by a reader who sent the
-exact questions drafted in this folder, re-bound the space to 128-bit windows of the genesis
-block plus a passphrase.
+**Swept on 2026-10-17.** The escrow `bc1qfkhx02v89u2qyyyljeczw6hu9sr437y44t7ae5yf09thrdukfqesnjg2wj`
+was emptied in block 971,803 by
+[transaction 1c70c474](https://mempool.space/tx/1c70c4745fad5bf891b9ee2a9f8b0b5cd3f328eb847eb09c9bebb92f5f7e900b),
+935,266 sats to `bc1qdu8mh9qjtjhy89mvhmcgf66ul6ld92rdr6qzad`; later dust sweeps brought the
+total to 947,620 sats. The solver left an OP_RETURN in block 971,840: "My GPU searched
+everywhere except the PBKDF2 settings. Well played!" The author PGP-signed an on-chain
+reveal in block 971,886 as **CaesarCoder** (github.com/caesrcd). Nobody has published the
+keys, the cut ranges or the passphrase as of 2026-10-18; the research below is kept as it
+stood.
+
+On 2026-08-22 the (then anonymous) author published a 252-byte OP_RETURN message in block
+963,629: a Bitcoin wallet generated only from data in Satoshi's genesis block, "extremely
+low" entropy, nothing backed up. The prize sits in the first output of that same
+transaction, a P2WSH address, and it grew every time someone paid for a hint: the author
+answered questions on chain and relayed every payment into the escrow. Eleven author
+messages during the open phase fixed the shape of the lock: a 2-of-2 multisig, both keys
+from one genesis field, no hash, a field you can read in The Times, the BIP48 level order,
+and since 2026-09-11 the root itself: a 12-word BIP39 mnemonic whose entropy is genesis
+data, with a passphrase, and a genesis value as the BIP48 account number. The oracle is
+exact and offline. Two passes on 2026-08-29 had exhausted the mechanical readings of the
+earlier hints (611,008 keys, 5.7e11 ordered pairs, 0 match, witnesses re-found); the two
+September answers, obtained by a reader who sent the exact questions drafted in this
+folder, re-bound the space to 128-bit windows of the genesis block plus a passphrase. The
+solve dialogue from 2026-09-13 to the sweep is archived in the escrow's own transactions
+(see [clues/author-posts.md](clues/author-posts.md)).
 
 ## At a glance
 
 | | |
 |---|---|
-| Author | anonymous, on-chain only (every message is an OP_RETURN sent to the escrow) |
+| Author | CaesarCoder, revealed on chain 2026-10-17 via a PGP-signed OP_RETURN ([github.com/caesrcd](https://github.com/caesrcd)); before that, anonymous and on-chain only (every message is an OP_RETURN sent to the escrow) |
 | Published | 2026-08-22, OP_RETURN in block 963,629 ([transaction](https://mempool.space/tx/b691de3657880d9a1eabd2783b1a9fa8c5313ced338495bf10e85727012d7a77)) |
-| Prize | 168,779 sats (about $106 at BTC = $63,000, the 2026-08-16 snapshot; about $130 at the 2026-09-12 price); 142,779 sats on 2026-08-29, growing with each paid question |
+| Prize | 947,620 sats total received by the escrow (about $106 at BTC = $63,000, the 2026-08-16 snapshot, at its 168,779-sat size); grew with each paid question until the 2026-10-17 sweep |
 | Chain | bitcoin |
 | Escrow | `bc1qfkhx02v89u2qyyyljeczw6hu9sr437y44t7ae5yf09thrdukfqesnjg2wj` ([explorer](https://mempool.space/address/bc1qfkhx02v89u2qyyyljeczw6hu9sr437y44t7ae5yf09thrdukfqesnjg2wj)) |
-| Last on-chain check | 2026-08-29: funded and unspent, 18 outputs, 0 spent, confirmed on mempool.space and blockstream.info |
-| Status | OPEN |
-| Puzzle type | multisig, raw-private-key |
-| Target format | P2WSH (v0), witness script `OP_2 <keyA> <keyB> OP_2 OP_CHECKMULTISIG`, both keys derived from one genesis-block field |
+| Last on-chain check | 2026-10-18: swept, 0 balance; main sweep 2026-10-17 block 971,803, tx 1c70c474, 935,266 sats to `bc1qdu8mh9qjtjhy89mvhmcgf66ul6ld92rdr6qzad` |
+| Status | SOLVED 2026-10-17 by an independent solver |
+| Puzzle type | multisig, bip39-seed, raw-private-key |
+| Target format | P2WSH (v0), witness script `OP_2 <keyA> <keyB> OP_2 OP_CHECKMULTISIG`, both keys from 12-word BIP39 mnemonics with genesis-cut entropy and a passphrase, BIP48 `m/48'/0'/account'/2'` |
 | Certified oracle | yes: `tools/oracle.py --selftest` (certified against the BIP-173 P2WSH vector and a real 2-of-2 spent in block 963,629) |
-| What remains | insight: the meaning of "root" and "genesis_data" in the author's rule (one paid question); the mechanical readings are exhausted |
+| What remains | nothing on chain; the solver has not published the cut ranges, passphrases or account numbers |
 | Series | none |
 
 ## The puzzle as published
 
-The author has no website, no forum thread and no handle. Everything is in OP_RETURN outputs
-of transactions paid to the escrow, readable by anyone. Verbatim texts with txids are in
-[clues/author-posts.md](clues/author-posts.md); the full ledger of the 18 transactions is in
-[data/on-chain-dialogue.json](data/on-chain-dialogue.json).
+The author has no website, no forum thread and no handle (until the 2026-10-17 PGP-signed
+reveal as CaesarCoder). Everything was in OP_RETURN outputs of transactions paid to the
+escrow, readable by anyone. Verbatim texts with txids are in
+[clues/author-posts.md](clues/author-posts.md); the ledger of the escrow transactions as of
+2026-09-12 is in [data/on-chain-dialogue.json](data/on-chain-dialogue.json), and the
+solve-period dialogue and close are in the same clues file.
 
 Announcement, 2026-08-22 19:45:38 UTC, block 963,629,
 `b691de3657880d9a1eabd2783b1a9fa8c5313ced338495bf10e85727012d7a77`:
@@ -143,9 +157,10 @@ positive. Measured on one CPU core: about 1,200,000 pairs/s once public keys exi
 
 ### Established facts
 
-1. The escrow holds 168,779 sats in 24 unspent outputs as of 2026-09-12, checked on
-   mempool.space (142,779 sats in 18 outputs on 2026-08-29). The first funding (20,000 sats) confirmed in block
-   963,517 on 2026-08-22 02:45 UTC, 17 hours before the announcement.
+1. The escrow held 168,779 sats in 24 unspent outputs as of 2026-09-12, checked on
+   mempool.space (142,779 sats in 18 outputs on 2026-08-29), and continued to receive paid
+   questions until the 2026-10-17 sweep, for 947,620 sats total received. The first funding
+   (20,000 sats) confirmed in block 963,517 on 2026-08-22 02:45 UTC, 17 hours before the announcement.
 2. Every payment sent with a question ends up in the escrow. Four questions were paid
    directly to the author's change addresses (12,909, 32,357, 6,465 and 12,963 sats); the
    author re-posted each question to the escrow with the same amount minus fees, then
@@ -195,21 +210,77 @@ windows, readings and derivation paths. Reproduce with `tools/candidates.py --wr
 
 ## Open leads, ranked
 
-1. **Ask the author for the passphrase's nature** (needs a person; 10,000 sats bought each
+All leads are closed by the 2026-10-17 sweep. The ranked list below is historical.
+
+1. ~~**Ask the author for the passphrase's nature**~~ (needs a person; 10,000 sats bought each
    September answer within the hour). Pass 3 (below, 2026-09-12) says that under the
-   September model the passphrase is none of 53 obvious readings of the block, so it is the
-   one unknown left. Draft, 79 bytes:
-   `Passphrase: from genesis text/Times headline/other? Same 16 genesis bytes both keys?`
-   The two questions drafted here on 2026-08-29 were sent by a reader on 2026-09-10 and
-   2026-09-11 and both were answered; that is the working channel.
-2. **Pass 3 wave 2** (about 15 minutes on one GPU): the same model with the coinbase text
+   September model the passphrase is none of 53 obvious readings of the block, so it was the
+   one unknown left. During the September-October solve dialogue the author's only public
+   nudge on this question was: "Key question of the passphrase: Who received the first
+   transaction?"
+2. ~~**Pass 3 wave 2**~~ (about 15 minutes on one GPU): the same model with the coinbase text
    without spaces, lowercased, the hashes as hex ASCII, and every substring of the coinbase
-   text (3 to 69 bytes) as passphrase. Cheap, but it only tests more guesses at the same
-   unknown; the question above tests it directly.
-3. **Watch the channel** (minutes). Re-read the escrow's transactions before any work:
-   a new OP_RETURN from the author's change chain is a new constraint; a spend closes the
-   puzzle. The author's current change address (unspent on 2026-09-12) is
-   `bc1qw720l9e6g4a675vfraghzm93gvyw8s2fjgtdxy`; it moves with every message.
+   text (3 to 69 bytes) as passphrase. Superseded by the solve.
+3. ~~**Watch the channel**~~ (minutes). The spend closed the puzzle on 2026-10-17.
+
+## Solution
+
+Solved 2026-10-17 by an independent solver, not by this repository. The escrow was emptied
+in block 971,803 by
+[transaction 1c70c474](https://mempool.space/tx/1c70c4745fad5bf891b9ee2a9f8b0b5cd3f328eb847eb09c9bebb92f5f7e900b):
+117 escrow inputs, 935,266 sats to `bc1qdu8mh9qjtjhy89mvhmcgf66ul6ld92rdr6qzad`. Later
+dust sweeps of question payments that trickled in after the main take brought the total to
+947,620 sats. The solver's messages, all OP_RETURNs on transactions spending from the
+escrow itself:
+
+| Date (UTC) | Block | Solver's message |
+|---|---|---|
+| 2026-10-17 05:43 | 971,814 | "Thank you for the fascinating puzzle!" |
+| 2026-10-17 10:29 | 971,840 | "My GPU searched everywhere except the PBKDF2 settings. Well played!" |
+
+The author then PGP-signed an on-chain reveal in block 971,886 (tx
+[473a314b](https://mempool.space/tx/473a314bcb3f5abc8dc4500e8d0ab80525ff65a846d55406c1e1e10fa8c8e46c)):
+handle **CaesarCoder**, GitHub [github.com/caesrcd](https://github.com/caesrcd), PGP
+fingerprint `E2A0 BF0D 72D7 4483 064D 4FF9 3049 5240 7A6E 5C38`, motto "Every cipher tells
+a story. Every puzzle bears its creator's mark."
+
+### What the dialogue established about the winning construction
+
+The solve-period dialogue (2026-09-13 to 2026-10-17, dozens of paid shape-only questions
+on the escrow) bound the pipeline much tighter than this folder's passes 1-3 ever did.
+Everything below is the solver's own on-chain confirmation or the author's on-chain reply,
+summarized; the verbatim OP_RETURN texts with txids are in
+[clues/author-posts.md](clues/author-posts.md):
+
+1. **Source text**: the usual lowercase genesis raw-block hex, 570 continuous hex characters,
+   the same bytes as `mempool.space/api/block/.../raw`.
+2. **Range extraction**: `cut -b N-M` on that hex string. The author confirmed "cut -b N-M:
+   it deleted everything outside the selected range." Newlines were stripped with
+   `tr -d '\n'` before the cut.
+3. **Hash to entropy**: `sha256sum` of the cut text, first 32 hex digits of the digest used
+   as raw entropy in Ian Coleman's BIP39 tool, Entropy Type Hex, standard English wordlist,
+   12 words. The two cosigner master fingerprints in play were `0852014c` and `040e2791`.
+4. **Passphrase**: a BIP39 passphrase, the binding unknown for the whole open phase. The
+   author's only public nudge, paid for by the solver: "Key question of the passphrase: Who
+   received the first transaction? That's all I've got to say." The solver's post-sweep note
+   points the same way: the GPU covered the key space, the PBKDF2 settings (the passphrase
+   input to BIP39's PBKDF2-HMAC-SHA512) were the step that had to be gotten right. The
+   exact passphrase string has not been published.
+5. **Derivation**: BIP48 `m/48'/0'/account'/2'` for each cosigner (the author had already
+   fixed the level order on 2026-08-28); the two BIP48 account numbers were derived from
+   genesis data without hashing, from two different pieces (the solver confirmed shape
+   answers a and c on a paid question, values withheld).
+6. **Scale**: the solver described the pre-passphrase search as order 2^23 (about 8
+   million) candidate cut-range/material combinations, consistent with `cut -b` ranges over
+   a 570-character source, not with this folder's 128-bit-window model.
+
+The gap that defeated passes 1-3 was exactly the gap the solver named in their sweep note:
+every pass treated the BIP39 passphrase as one more field to enumerate over genesis
+readings, while the winning passphrase was external to the block (an answer to the author's
+riddle, not a substring of the corpus). The PBKDF2 iteration count and HMAC structure of
+BIP39 mean a wrong passphrase fails in a way no amount of key-space coverage can fix; the
+solver's GPU found every (cut, account, path) the space allowed and still needed the right
+passphrase string.
 
 ## Files in this folder
 

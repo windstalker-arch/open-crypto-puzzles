@@ -66,3 +66,124 @@ to the author (12,909 sats, `1b4bde84af7df419`, 14:34:56) and once to the escrow
 Player 4's two questions (2026-09-10 and 2026-09-11, 10,000 sats each) are, word for word, the
 draft questions written in this folder's `analysis/leads.md` on 2026-08-29. I did not send them;
 a reader did, and the author answered both within the hour.
+
+## Solve period (2026-09-13 to 2026-10-17)
+
+From 2026-09-13 a single solver ran a sustained, paid shape-only campaign on the escrow:
+dozens of transactions, most of them asking the author to confirm or deny structural facts
+(cut range widths, hex source, Ian Coleman settings, BIP48 account shape, passphrase
+character classes) without revealing values. The full OP_RETURN log, both directions, is
+readable on the escrow address; the arc and the load-bearing messages are below.
+
+2026-09-13 (block 969,361): the solver's model hardens into `cut -b` on genesis raw hex.
+Author answers the same day (block 969,361, `3678a0e393de3e66`):
+
+> 1) hex; 2) substring/cut; 3) N
+
+2026-09-13 (block 969,390, `b050d6450f7d12ee` and `41a68f4a564a4fc5`), author:
+
+> 1) Y; 2) N (bitcoin-cli/explorer); 3) Y; 4) N
+
+> 1) N; 2) genesis block; 3) Y; 4) Y
+
+2026-09-15 (block 969,576, `d98ac606deeb8f2d`), author, shape-only on cosigner 0852014c
+(questions 1-4), and the solver's question about the passphrase hint's meaning:
+
+> Shape only, no secret values requested. For cosigner 0852014c (the one you confirmed used
+> Coleman Hex): 1) Before sha256sum, did any command delete, translate or squeeze hex digits,
+> beyond letter-case conversion and whitespace removal? Y/N; if Y, which operation? 2) Procedure
+> = one SHA-256 of the UTF-8 hex text, first 32 hex digits of the digest as raw entropy,
+> standard English BIP39, 12 words? Y/N; if N, which step differs? 3) Your hint 'first
+> transaction' = a) genesis coinbase b) the 10 BTC payment in block 170 c) other: which
+> block/tx? 4) Does the passphrase contain any character other than ASCII letters A-Z/a-z or
+> a space (any digit, punctuation, accent, non-Latin letter)? Y/N
+
+2026-09-16 (block 969,650, `719623a4f2c94413`), author. The passphrase nudge, paid for by
+the solver and the only public sentence the author ever gave on the subject:
+
+> 1) Y; cut -b N-M: it deleted everything outside the selected range.
+> 2) Y.
+> 3) Key question of the passphrase: Who received the first transaction? That's all I've got to say.
+> 4) N.
+
+2026-09-17 (block 969,708, `8c1e0c1b1e70d70c`), author, on fingerprint 0852014c and the
+full path shape:
+
+> 1) Is 0852014c the fingerprint of the depth-0 BIP32 master public key derived from the
+> 12-word mnemonic with the BIP39 passphrase applied? Y/N. If N, which node does it identify
+> (no account number needed)?
+> 2) Are both escrow public keys at the complete path m/48h/0h/Xh/2h/c/i (any X), with either
+> c=0 and i=0..9, or c=1 and i=0..4? Y/N. If N: a larger index, or a different path?
+> 3) How many space characters does the passphrase contain, counting any leading or trailing
+> space: 0, 1, 2, or 3+?
+
+2026-09-26 to 2026-10-01: the author declines step-level test vectors as equivalent to
+revealing the keys piece by piece (block 971,743, `3de07be481e97c9a`):
+
+> Declined. For a test vector with predefined inputs, I can only provide the final result.
+> Step-level answers would be the same as uncovering the individual secrets one by one.
+
+but does answer fixed-cut final fingerprints (blocks 971,770 and 971,789, `39a7dd0c` and
+`484fef192e43bd6c`):
+
+> 1) e4caa034; 2) 9fb54bad; 3) e4caa034; 4) e79c9765; 5) 8b9b2fea; 6) 68ab4226; 7) 9290f941.
+
+> 1) e4caa034; 2) 9fb54bad; 3) 3bc42789.
+
+The same evening the solver paid 10,000+1,000 sats for a test vector with a substituted cut
+range and BIP39 passphrase "Test Example" (blocks 971,753 and 971,770,
+`f1aeed6d1fb79335` and `5b7ff44c779abced`); the author's final-fingerprint replies above
+are the answers to those vectors, and the solver's own pipeline disagreed with them
+(block 971,734, `f1027314f59377f9`), which is how the last pipeline mismatch was pinned
+down before the sweep.
+
+## Close (2026-10-17)
+
+2026-10-17 03:40:20, block 971,803, `1c70c4745fad5bf891b9ee2a9f8b0b5cd3f328eb847eb09c9bebb92f5f7e900b`:
+the sweep. 117 escrow inputs, 935,266 sats to `bc1qdu8mh9qjtjhy89mvhmcgf66ul6ld92rdr6qzad`,
+no message.
+
+2026-10-17 04:43:33, block 971,810, `bcfc8cbeb5498d803dc1b1384233eb5e9f2da79c2077b9a0907bc0187e2e4465`
+(inputs from a third-party address, not the author's change chain; recorded as posted):
+
+> "Shoutout to the player who cracked the puzzle!
+>
+> Thanks to everyone who joined in."
+
+2026-10-17 05:43:52, block 971,814, `3367997d30d4b0363ff96e9fb587c28622a691044ab3ea9ce5c30c5d730b422f`
+(inputs from the payout address; solver):
+
+> "Thank you for the fascinating puzzle!"
+
+2026-10-17 10:29:04, block 971,840, `4b2d29ec21e2c9a37dae5ca7ddc49d6f34b0efbf4b0aa1afed6405dec8067b78`
+(inputs from the escrow's last two dust outputs; solver):
+
+> "My GPU searched everywhere except the PBKDF2 settings. Well played!"
+
+2026-10-17 17:01:47, block 971,886, `473a314bcb3f5abc8dc4500e8d0ab80525ff65a846d55406c1e1e10fa8c8e46c`
+(author, PGP-signed):
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA512
+>
+>               [ PUZZLE AUTHOR ]
+>
+>   Handle : CaesarCoder
+>   GitHub : github.com/caesrcd
+>
+>   PGP Fingerprint:
+>   E2A0 BF0D 72D7 4483 064D
+>   4FF9 3049 5240 7A6E 5C38
+>
+>   "Every cipher tells a story.
+>    Every puzzle bears its creator's mark."
+>
+>               -- CaesarCoder
+>
+> -----BEGIN PGP SIGNATURE-----
+> (signature as posted on chain)
+> -----END PGP SIGNATURE-----
+
+Later same day the remaining dust that had trickled in after the sweep (question payments
+relayed by third parties who had not yet seen the spend) was swept as well, bringing the
+escrow's lifetime total received to 947,620 sats, fully spent.

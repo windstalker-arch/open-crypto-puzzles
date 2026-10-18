@@ -113,3 +113,16 @@ as hardened BIP32 indexes.
   every ordered pair checked on the GPU: 200,634,118,084 pairs, 0 match, the witness pair
   re-found in all 9 head/middle/tail combinations, 103 s. Full scope in `tested.md`.
 - **Status**: killed (the literal readings are closed; the puzzle is not)
+
+## Close (2026-10-17)
+
+All leads are killed by the sweep. The winning construction, reconstructed from the
+on-chain solve dialogue (see `clues/author-posts.md` and the README Solution section):
+`cut -b N-M` on the 570-char lowercase genesis raw-block hex, `tr -d '\n'` first,
+`sha256sum`, first 32 hex digits of the digest as raw entropy in Ian Coleman's BIP39 tool
+(Entropy Type Hex), 12 words, a BIP39 passphrase answering the author's riddle "Who
+received the first transaction?", BIP48 `m/48'/0'/account'/2'` per cosigner, two cosigners
+(master fingerprints 0852014c and 040e2791 in the dialogue), 2-of-2 P2WSH. The solver's
+own scale estimate for the pre-passphrase space was order 2^23, not the 2^128 window model
+of pass 3. The passphrase was the binding step, exactly as lead 1 of this file had ranked
+it; the answer arrived through the paid channel the lead recommended, just not from us.

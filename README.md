@@ -20,7 +20,7 @@ on-chain right now.
 | Arweave | 1,900 AR | $3,400 |
 | Litecoin | 3.03 LTC | $200 |
 | Stablecoins | 306 USDT + 0 USDC | $300 |
-| **Total** | **across 28 funded puzzles** | **$403,000** |
+| **Total** | **across 27 funded puzzles** | **$403,000** |
 
 Checked 2026-08-16 at BTC $63,000, ETH $1,880, AR $1.81. Prices and balances move; verify each escrow yourself.
 <!-- totals:end -->
@@ -115,7 +115,6 @@ grouped by prize, is in the tables below.
 ## Small prizes (< $100)
 | Puzzle | Prize | USD | Chain | Type | What remains | Escrow checked | Status |
 |---|---|---|---|---|---|---|---|
-| [Genesis Block Wallet Puzzle](3-small-prizes/genesis-block-wallet-puzzle-142ksats/) | 168,779 sats | 106 | bitcoin | multisig, raw-private-key | insight | 2026-09-12 | open |
 | [Crypto Puzzles 2018: Puzzle #2](3-small-prizes/crypto-puzzles-2018-puzzle-2-0-05eth/) | 0.05 ETH | 94 | ethereum | raw-private-key, image-stego, video-series | external-info | 2026-08-16 | open |
 | [Exitonly Bitcoin Challenge 14](3-small-prizes/exitonly-challenge-14-30ksats/) | 30,000 sats | 18.90 | bitcoin | bip39-seed, word-selection | uneconomic | 2026-08-16 | open |
 
@@ -128,6 +127,7 @@ grouped by prize, is in the tables below.
 | [VeteranHODL: Hunting Time](4-solved/veteranhodl-hunting-time-420ksats/) | 420000 sats | [d3783a1cde2c491a6edfbead81aeebda90257c8c25b4b0c9b2bac89bc5cd607a](https://mempool.space/tx/d3783a1cde2c491a6edfbead81aeebda90257c8c25b4b0c9b2bac89bc5cd607a) | 2026-08-18 | solved by a reader after publication, not by me |
 | [Keysa: Crack the Seed Game](4-solved/keysa-crack-the-seed-369ksats/) | 369150 sats | [d072de42a72e5dd75f5eb4776f32eb26727ce37c5f7d54ee94c74347ed4eb2d7](https://mempool.space/tx/d072de42a72e5dd75f5eb4776f32eb26727ce37c5f7d54ee94c74347ed4eb2d7) | 2026-09-08 | swept on 2026-09-08 (block 966,260, 369,150 sats to bc1q82gz5dnpxnqmvzrkusm8yc0nt4dcqp8gd3y59j); the author confirmed the crack on X on 2026-09-10 without naming the solver; neither the 12 words nor the selection rule has been published; the negatives ledger stays as a record of what the selection rule is not |
 | [FTPK Season 4: Something in Common](4-solved/ftpk-season-4-166usdc/) | 181 USDC | [0x4c10674a4856cbba9b66543cc027a77e6b3a1ba458085f8fe680d588ffdd8f37](https://etherscan.io/tx/0x4c10674a4856cbba9b66543cc027a77e6b3a1ba458085f8fe680d588ffdd8f37) | 2026-08-20 | solved by a reader after publication, not by me |
+| [Genesis Block Wallet Puzzle](4-solved/genesis-block-wallet-puzzle-142ksats/) | 935,266 sats (main sweep, block 971803); later dust sweeps brought the total to 947,620 sats | [1c70c4745fad5bf891b9ee2a9f8b0b5cd3f328eb847eb09c9bebb92f5f7e900b](https://mempool.space/tx/1c70c4745fad5bf891b9ee2a9f8b0b5cd3f328eb847eb09c9bebb92f5f7e900b) | 2026-10-17 | solved 2026-10-17 by an independent solver after 8 weeks; the GPU key search was not the bottleneck (the solver's own post-sweep OP_RETURN: 'My GPU searched everywhere except the PBKDF2 settings'); the binding insight was the BIP39 passphrase step, for which the author's only public nudge was 'Who received the first transaction?' The exact cut ranges, passphrases and account numbers remain unpublished; the on-chain dialogue (blocks 963629-971896) is the primary record |
 | [bc1q21 Time-Lock Challenge, Level 5](4-solved/bc1q21-timelock-challenge-l5-100ksats/) | 99604 sats | [73baf40f668fb221b6b9c934f199a51f7e0ab1f1bb585e07c18a7b3e88dfd7ed](https://mempool.space/tx/73baf40f668fb221b6b9c934f199a51f7e0ab1f1bb585e07c18a7b3e88dfd7ed) | 2026-07-24 | solved; the claim transaction confirms the answer |
 | [Bitcoin Movie Enigma](4-solved/bitcoin-movie-enigma-100ksats/) | 99766 sats | [bd3b088164ae32458b97b917af8fab14056461c5e954499f7bd4cf3a67d6c5f4](https://mempool.space/tx/bd3b088164ae32458b97b917af8fab14056461c5e954499f7bd4cf3a67d6c5f4) | 2026-09-07 | solved by a reader (rabbidbird) after publication, not by me; the winning 24-word phrase fails the BIP39 checksum, so every checksum-filtered sweep, mine included, had discarded it |
 | [LuckyLurker Seed Riddles](4-solved/luckylurker-seed-riddles-80ksats/) | 80000 sats | [75e570a5ea243c492e2804916482f046b2392b463c51be15624e6e25a84119f7](https://mempool.space/tx/75e570a5ea243c492e2804916482f046b2392b463c51be15624e6e25a84119f7) | 2026-08-17 | solved by a reader after publication, not by me |
