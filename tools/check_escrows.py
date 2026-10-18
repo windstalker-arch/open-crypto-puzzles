@@ -49,6 +49,9 @@ ETH_RPC_ENDPOINTS = [
     "https://cloudflare-eth.com",
     "https://ethereum-rpc.publicnode.com",
 ]
+ETH_USDC = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+ERC20_BALANCEOF_SELECTOR = "0x70a08231000000000000000000000000"
+ERC1155_BALANCEOF_SELECTOR = "0x00fdd58e"
 BASE_RPC_ENDPOINT = "https://mainnet.base.org"
 
 
@@ -169,19 +172,76 @@ def _eth_rpc(url, method, params):
     return body["result"]
 
 
-def check_evm(address, endpoints):
+def _erc20_balance_of(addr, contract, rpc_endpoints):
+    data = ERC20_BALANCEOF_SELECTOR + addr[2:].lower().zfill(64)
+    last_exc = None
+    for url in rpc_endpoints:
+        try:
+            res = _eth_rpc(url, "eth_call", [{"to": contract, "data": data}, "latest"])
+            return int(res, 16)
+        except Exception as exc:
+            last_exc = exc
+            continue
+    raise RuntimeError(str(last_exc))
+
+
+def _erc1155_balance_of(addr, contract, token_id, rpc_endpoints):
+    data = (
+        ERC1155_BALANCEOF_SELECTOR
+        + addr[2:].lower().zfill(64)
+        + token_id[2:].lower().zfill(64)
+    )
+    last_exc = None
+    for url in rpc_endpoints:
+        try:
+            res = _eth_rpc(url, "eth_call", [{"to": contract, "data": data}, "latest"])
+            return int(res, 16)
+        except Exception as exc:
+            last_exc = exc
+            continue
+    raise RuntimeError(str(last_exc))
+
+
+def check_evm(address, endpoints, asset="ETH", role="escrow", entry=None):
     last_exc = None
     for url in endpoints:
         try:
-            balance_hex = _eth_rpc(url, "eth_getBalance", [address, "latest"])
-            tx_count_hex = _eth_rpc(url, "eth_getTransactionCount", [address, "latest"])
-            balance_wei = int(balance_hex, 16)
-            tx_count = int(tx_count_hex, 16)
-            if balance_wei == 0 and tx_count == 0:
+            eth_bal = int(_eth_rpc(url, "eth_getBalance", [address, "latest"]), 16)
+            tx_count = int(_eth_rpc(url, "eth_getTransactionCount", [address, "latest"]), 16)
+            token_bal = 0
+            if asset == "USDC":
+                try:
+                    token_bal = _erc20_balance_of(address, ETH_USDC, endpoints)
+                except Exception:
+                    token_bal = 0
+            nft_bal = None
+            if entry and entry.get("erc1155_contract") and entry.get("erc1155_id"):
+                try:
+                    nft_bal = _erc1155_balance_of(
+                        address, entry["erc1155_contract"], entry["erc1155_id"], endpoints
+                    )
+                except Exception:
+                    nft_bal = None
+            if nft_bal is not None:
+                if nft_bal > 0:
+                    return "funded-unspent", f"erc1155_balance={nft_bal} eth_balance_wei={eth_bal} nonce={tx_count} (via {url})"
+                if tx_count > 0:
+                    return "swept", f"erc1155_balance=0 nonce={tx_count} (via {url})"
+                return "unfunded", f"erc1155_balance=0 nonce={tx_count} (via {url})"
+            if asset == "USDC":
+                if token_bal == 0 and tx_count > 0:
+                    return "swept", f"usdc_balance_wei=0 eth_dust_wei={eth_bal} nonce={tx_count} (via {url})"
+                if token_bal == 0:
+                    return "unfunded", f"usdc_balance_wei=0 eth_dust_wei={eth_bal} nonce={tx_count} (via {url})"
+                return "funded-unspent", f"usdc_balance_wei={token_bal} eth_balance_wei={eth_bal} nonce={tx_count} (via {url})"
+            total_funded = eth_bal > 0
+            if not total_funded and tx_count == 0:
                 return "unfunded", f"balance=0 nonce=0 (via {url})"
-            if balance_wei == 0 and tx_count > 0:
+            if not total_funded and tx_count > 0:
                 return "swept", f"balance=0 nonce={tx_count} (via {url})"
-            return "funded-unspent", f"balance_wei={balance_wei} nonce={tx_count} (via {url})"
+            if role == "contract":
+                return "contract-holds-funds", f"balance_wei={eth_bal} nonce={tx_count} (via {url})"
+            return "funded-unspent", f"balance_wei={eth_bal} nonce={tx_count} (via {url})"
         except Exception as exc:
             last_exc = exc
             continue
@@ -242,9 +302,12 @@ def check_address(entry):
     if chain == "bitcoin":
         return check_bitcoin(address)
     if chain == "ethereum":
-        return check_ethereum(address)
+        asset = None
+        if "USDC" in entry.get("expected", "").upper():
+            asset = "USDC"
+        return check_evm(address, ETH_RPC_ENDPOINTS, asset=asset or "ETH", role=entry.get("role", "escrow"), entry=entry)
     if chain == "base":
-        return check_base(address)
+        return check_evm(address, [BASE_RPC_ENDPOINT], role=entry.get("role", "escrow"), entry=entry)
     if chain == "arweave":
         return check_arweave(address)
     if chain == "litecoin":

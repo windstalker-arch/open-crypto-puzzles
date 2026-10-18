@@ -21,7 +21,7 @@ winner wallet, all negative, and no higher-resolution source of the image is kno
 | Prize | 0.55 ETH held by the prize contract (about $1,034 at ETH = $1,880, 2026-08-16) |
 | Chain | base |
 | Escrow | `0x831102C7eb86f9EC8f79dF891bDeA187D54344Dd` ([explorer](https://basescan.org/address/0x831102C7eb86f9EC8f79dF891bDeA187D54344Dd)) |
-| Last on-chain check | 2026-08-16: contract holds 0.55 ETH, winner wallet `0x635739254BDE27d28301f25aD57c3cAC3C3468f3` still at dust balance (0.006404376568548341 ETH) and outgoing transaction count 2, unchanged since the prior check |
+| Last on-chain check | 2026-10-18: contract balance 0 (was 0.55 ETH on 2026-08-16), code still deployed; winner wallet `0x635739254BDE27d28301f25aD57c3cAC3C3468f3` now at 0.000224101625832368 ETH with outgoing transaction count 4 (was 2) - likely claimed by a third party, payout txid not yet identified |
 | Status | OPEN |
 | Puzzle type | image-stego, bip39-seed, word-selection, smart-contract |
 | Target format | BIP39 12 words (English), BIP44 `m/44'/60'/0'/0/0`, no passphrase, address must equal the winner wallet |

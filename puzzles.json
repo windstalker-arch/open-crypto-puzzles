@@ -2549,9 +2549,9 @@
           "role": "escrow",
           "label": "prize contract",
           "explorer": "https://basescan.org/address/0x831102C7eb86f9EC8f79dF891bDeA187D54344Dd",
-          "expected": "0.25 ETH minimum, growing toward the full contract balance",
-          "verified_on": "2026-08-16",
-          "verified_state": "contract-holds-funds"
+          "expected": "0 ETH (0.55 ETH held on 2026-08-16; contract balance 0 as of 2026-10-18)",
+          "verified_on": "2026-10-18",
+          "verified_state": "swept"
         }
       ],
       "puzzle_type": [
@@ -2568,7 +2568,7 @@
         "certified_against": "the public BIP39 all-zero-entropy test vector and the artist's own prior solved 'Bifurcations' BIP84 vector"
       },
       "difficulty_left": "insight",
-      "difficulty_note": "the carrier (the POAP clock image, not the audio), the order (clock position), and the derivation path are all confirmed; 3 of 12 hours read with no ambiguity and over 3.3 million combinations of the rest have been tested negative; the blocker is a resolution limit on the only known copy of the image (a numeral spans about 2 text rows, so 9 of 12 hours carry about 3 candidate words each), not raw compute, so an unrecovered insight into the exact readout rule or a finer source is what remains",
+      "difficulty_note": "the carrier (the POAP clock image, not the audio), the order (clock position), and the derivation path are all confirmed; 3 of 12 hours read with no ambiguity and over 3.3 million combinations of the rest have been tested negative. 2026-10-18 chain check: the prize contract balance is 0 (was 0.55 ETH on 2026-08-16), code still deployed (12,701 bytes), and the winner wallet 0x6357...68f3 has new activity (nonce 2 to 4, balance drawn down to 0.00022 ETH) - consistent with a claim, but the payout transaction is not yet identified (no free Base explorer API available). Treat as likely solved by a third party; formalize when the claim txid is found.",
       "tested_total": {
         "candidates": 3319137,
         "families": 3,
@@ -2636,7 +2636,7 @@
         }
       ],
       "third_party_material": "the POAP artwork in clues/ is the author's own published puzzle material; the album audio, video, and stems are the artist's commercial work and are not included, only our own text findings about them; the 2 prior-puzzle write-ups are cited by URL for method precedent, not reproduced",
-      "last_updated": "2026-08-16",
+      "last_updated": "2026-10-18",
       "folder": "2-mid-prizes/logicbeach-powerful-moss-0-54eth"
     },
     {
@@ -2901,9 +2901,11 @@
           "role": "escrow",
           "label": "main",
           "explorer": "https://etherscan.io/address/0x18f87ec9c527aba1db44f715456bf28b0dae478d",
-          "expected": "1 NFT (Magic Internet moneyGAN, 445/512)",
+          "expected": "1 NFT (Magic Internet moneyGAN, 445/512; ERC-1155 id 0x...0001 on OpenSea Shared Storefront)",
           "verified_on": "2026-08-16",
-          "verified_state": "funded-unspent"
+          "verified_state": "funded-unspent",
+          "erc1155_contract": "0x495f947276749ce646f68ac8c248420045cb7b5e",
+          "erc1155_id": "0x55372173689c288552885d897d32f5f706f79aa6000000000002940000000001"
         }
       ],
       "puzzle_type": [

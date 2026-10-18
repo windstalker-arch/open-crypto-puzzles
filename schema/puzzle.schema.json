@@ -249,6 +249,14 @@
               "zero-balance-contract",
               "unknown"
             ]
+          },
+          "erc1155_contract": {
+            "type": "string",
+            "description": "Optional ERC-1155 token contract for NFT prizes; checked via balanceOf instead of native ETH"
+          },
+          "erc1155_id": {
+            "type": "string",
+            "description": "Optional ERC-1155 token id (hex) for NFT prizes"
           }
         },
         "allOf": [
